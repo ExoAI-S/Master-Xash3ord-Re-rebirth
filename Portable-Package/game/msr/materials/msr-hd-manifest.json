@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "bindings": [
+    {
+      "model": "models/monsters/Orc.mdl",
+      "texture": "Orcface.bmp",
+      "original_dimensions": [
+        188,
+        154
+      ],
+      "replacement": "materials/models/monsters/Orc/Orcface.tga",
+      "dimensions": [
+        1386,
+        1135
+      ],
+      "source": "orcface-hd-v1.png",
+      "sha256": "71c1df465cd663827920e88722811a435f04dd406a6eba8db28fd269dc771144",
+      "model_sha256": "13ff3719f0efc1a20649c1d31265088f692f4bd1736a20aeea4b3f88f7abd439"
+    },
+    {
+      "model": "models/human/male1/male1.mdl",
+      "texture": "BODY.bmp",
+      "original_dimensions": [
+        300,
+        300
+      ],
+      "replacement": "materials/models/human/male1/male1/BODY.tga",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "source": "player-body-hd-v1.png",
+      "sha256": "a3919186c24d897072096b450d6d01bc3f7ae1baa202b78fa0b5e583bc0d45b6",
+      "model_sha256": "1e8664090aba884f69d62d870bbf68746f64e6a08811f7fcc651cfea9012b003"
+    },
+    {
+      "model": "models/human/reference.mdl",
+      "texture": "body.bmp",
+      "original_dimensions": [
+        256,
+        292
+      ],
+      "replacement": "materials/models/human/reference/body.tga",
+      "dimensions": [
+        1174,
+        1339
+      ],
+      "source": "reference-body-hd-v1.png",
+      "sha256": "af628fa82c604d4a7b1f0ff0b9a07a4b57a8252bc17b5dbe8e1b5b0675dd7fcd",
+      "model_sha256": "9d09efc0fd5cc2f98f59caaf9f6d07cb00f664df3aaeb112803368270d089f11"
+    },
+    {
+      "model": "models/npc/guard1.mdl",
+      "texture": "leatherarmor.bmp",
+      "original_dimensions": [
+        420,
+        340
+      ],
+      "replacement": "materials/models/npc/guard1/leatherarmor.tga",
+      "dimensions": [
+        1394,
+        1128
+      ],
+      "source": "guard-armor-hd-v1.png",
+      "sha256": "d7c9eba38516ec8fc1bd60fff84863501dfe06a4460da11638499ff9e7aa55ca",
+      "model_sha256": "cdb8d6a3aeff730a213041ee408ae7f7315c71f806355f6aa495694f8fd82c19"
+    }
+  ]
+}

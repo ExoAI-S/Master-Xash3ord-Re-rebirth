@@ -1,0 +1,71 @@
+diff --git a/ref/gl/gl_studio.c b/ref/gl/gl_studio.c
+index bdaf2e4..bb88037 100644
+--- a/ref/gl/gl_studio.c
++++ b/ref/gl/gl_studio.c
+@@ -2321,6 +2321,12 @@ R_StudioSetRemapColors
+ */
+ static void R_StudioSetRemapColors( int newTop, int newBottom )
+ {
++	// Client-created MSR equipment deliberately uses entity number -1.  It has
++	// no persistent remap slot, so do not pass that sentinel to the engine's
++	// remap array.
++	if( !RI.currententity || RI.currententity->curstate.number < 0 )
++		return;
++
+ 	if( gEngfuncs.CL_EntitySetRemapColors( RI.currententity, RI.currentmodel, newTop, newBottom ))
+ 		m_fDoRemap = true;
+ }
+@@ -3255,17 +3261,12 @@ void R_DrawStudioModel( cl_entity_t *e )
+ 	}
+ 	else if( e->curstate.movetype == MOVETYPE_FOLLOW )
+ 	{
+-		cl_entity_t *parent = CL_GetEntityByIndex( e->curstate.aiment );
+-
+-		if( !parent || !parent->model || parent->model->type != mod_studio )
+-			return;
+-
+-		parent = R_FindParentEntity( e, tr.draw_list->solid_entities, tr.draw_list->num_solid_entities );
++		cl_entity_t *parent = R_FindParentEntity( e, tr.draw_list->solid_entities, tr.draw_list->num_solid_entities );
+ 
+ 		if( !parent )
+ 			parent = R_FindParentEntity( e, tr.draw_list->trans_entities, tr.draw_list->num_trans_entities );
+ 
+-		if( parent )
++		if( parent && parent->model && parent->model->type == mod_studio )
+ 		{
+ 			RI.currententity = parent;
+ 			R_StudioDrawModelInternal( RI.currententity, 0 );
+diff --git a/ref/soft/r_studio.c b/ref/soft/r_studio.c
+index 03790d8..06efe0c 100644
+--- a/ref/soft/r_studio.c
++++ b/ref/soft/r_studio.c
+@@ -2045,6 +2045,9 @@ R_StudioSetRemapColors
+ */
+ static void R_StudioSetRemapColors( int newTop, int newBottom )
+ {
++	if( !RI.currententity || RI.currententity->curstate.number < 0 )
++		return;
++
+ 	if( gEngfuncs.CL_EntitySetRemapColors( RI.currententity, RI.currentmodel, newTop, newBottom ))
+ 		m_fDoRemap = true;
+ }
+@@ -2868,17 +2871,12 @@ void R_DrawStudioModel( cl_entity_t *e )
+ 	}
+ 	else if( e->curstate.movetype == MOVETYPE_FOLLOW )
+ 	{
+-		cl_entity_t *parent = CL_GetEntityByIndex( e->curstate.aiment );
+-
+-		if( !parent || !parent->model || parent->model->type != mod_studio )
+-			return;
+-
+-		parent = R_FindParentEntity( e, tr.draw_list->solid_entities, tr.draw_list->num_solid_entities );
++		cl_entity_t *parent = R_FindParentEntity( e, tr.draw_list->solid_entities, tr.draw_list->num_solid_entities );
+ 
+ 		if( !parent )
+ 			parent = R_FindParentEntity( e, tr.draw_list->trans_entities, tr.draw_list->num_trans_entities );
+ 
+-		if( parent )
++		if( parent && parent->model && parent->model->type == mod_studio )
+ 		{
+ 			RI.currententity = parent;
+ 			R_StudioDrawModelInternal( RI.currententity, 0 );

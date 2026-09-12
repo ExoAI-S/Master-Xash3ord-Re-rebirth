@@ -1,0 +1,20 @@
+Chapel
+by CSS
+
+A small map that leads the players through many different landscapes until they come across the chapel. Do you dare step up to the altar?
+
+Level Difficulty: Low-mid (5-15)
+Map Secrets: 2
+
+--
+Installation:
+Extract to your msc folder
+--
+
+
+--
+ReMix: Diablo 'WetGrass Inspired' by AmIEviL
+thanks to OverClocked ReMix (www.ocremix.org)
+--
+
+Map completed after many trials and betas! Thanks to all who beta tested and everyone that gave their two cents. Enjoy.

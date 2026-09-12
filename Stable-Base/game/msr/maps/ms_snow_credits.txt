@@ -1,0 +1,22 @@
+Frozen Summit
+Map for Master Sword Continued 
+Created by: Avoozl with the help of P|Barnum
+2006
+
+-----------------------------------------------------------------------
+
+Introduction:
+
+The Frozen Summit (ms_snow) is a large map with a lot of ice themed monsters such as the Moragor Orcs and the Ice Elementals. The setting is near the peak of a snow covered moutain with a very ancient cavern system close by. There are four transitions in different regions of the map and therefore many different ways to play through. This map is of great difficulty and is geared towards players level 30+ with groups. I do not reccomend this map to anyone wishing to raise their sword skill Wink. 
+
+-----------------------------------------------------------------------
+
+Files:
+
+Included are the models, music, gfx, and map, along with 
+a .RES file for your server.
+
+-----------------------------------------------------------------------
+Contact:
+
+Avoozl in game or MrAvoozl@hotmail.com

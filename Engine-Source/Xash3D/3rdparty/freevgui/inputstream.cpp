@@ -1,0 +1,287 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (C) 2024-2026 Alibek Omarov
+
+#include "inputstream.h"
+
+using namespace vgui;
+
+DataInputStream::DataInputStream( InputStream *is ) :
+	stream( is )
+{
+
+}
+
+void DataInputStream::seekStart( bool &success )
+{
+	if( stream )
+		stream->seekStart( success );
+	else success = false;
+}
+
+void DataInputStream::seekRelative( int count, bool &success )
+{
+	if( stream )
+		stream->seekRelative( count, success );
+	else success = false;
+}
+
+void DataInputStream::seekEnd( bool &success )
+{
+	if( stream )
+		stream->seekEnd( success );
+	else success = false;
+}
+
+int DataInputStream::getAvailable( bool &success )
+{
+	if( stream )
+		return stream->getAvailable( success );
+
+	success = false;
+	return 0;
+}
+
+void DataInputStream::readUChar( unsigned char *buf, int count, bool &success )
+{
+	if( stream )
+		stream->readUChar( buf, count, success );
+	else success = false;
+}
+
+unsigned char DataInputStream::readUChar( bool &success )
+{
+	if( stream )
+		return stream->readUChar( success );
+
+	success = false;
+	return 0;
+}
+
+void DataInputStream::close( bool &success )
+{
+	if( stream )
+		stream->close( success );
+	else success = false;
+}
+
+void DataInputStream::close()
+{
+	bool success;
+	close( success );
+}
+
+bool DataInputStream::readBool( bool &success )
+{
+	if( stream )
+		return stream->readUChar( success );
+
+	success = false;
+	return false;
+}
+
+char DataInputStream::readChar( bool &success )
+{
+	if( stream )
+		return stream->readUChar( success );
+
+	success = false;
+	return false;
+}
+
+unsigned short DataInputStream::readUShort( bool &success )
+{
+	unsigned short ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+short int DataInputStream::readShort( bool &success )
+{
+	short int ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+int DataInputStream::readInt( bool &success )
+{
+	int ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+unsigned int DataInputStream::readUInt( bool &success )
+{
+	unsigned int ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+long int DataInputStream::readLong( bool &success )
+{
+	long int ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+unsigned long DataInputStream::readULong( bool &success )
+{
+	unsigned long ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+float DataInputStream::readFloat( bool &success )
+{
+	float ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+double DataInputStream::readDouble( bool &success )
+{
+	double ret = 0;
+
+	if( stream )
+		stream->readUChar( (unsigned char *)( &ret ), sizeof( ret ), success );
+	else success = false;
+
+	return ret;
+}
+
+void DataInputStream::readLine( char *str, int count, bool &success )
+{
+	unsigned char ch = 0;
+
+	if( !stream )
+	{
+		success = false;
+		return;
+	}
+
+	if( count > 0 )
+	{
+		for( int i = 0; i < count; i++ )
+		{
+			str[i] = 0;
+
+			stream->readUChar( &ch, sizeof( ch ), success );
+			if( !success )
+				return;
+
+			if( ch == '\n' )
+				return;
+
+			str[i] = ch;
+		}
+	}
+
+	while( true )
+	{
+		stream->readUChar( &ch, sizeof( ch ), success );
+		if( !success )
+			return;
+
+		if( ch == '\n' )
+			break;
+	}
+}
+
+FileInputStream::FileInputStream( const char *name, bool textmode )
+{
+	fp = fopen( name, textmode ? "rt" : "rb" );
+}
+
+void FileInputStream::seekStart( bool &success )
+{
+	if( fp )
+		success = fseek( fp, 0, SEEK_SET ) != 0; // ???
+	else success = false;
+}
+
+void FileInputStream::seekRelative( int count, bool &success )
+{
+	if( fp )
+	{
+		// a1ba: VGUI1 is probably written by idiots
+		success = fseek( fp, SEEK_CUR, count ) != 0;
+	}
+	else success = false;
+}
+
+void FileInputStream::seekEnd( bool &success )
+{
+	if( fp )
+	{
+		// a1ba: same mistake
+		success = fseek( fp, SEEK_END, 0 ) != 0;
+	}
+	else success = false;
+}
+
+int FileInputStream::getAvailable( bool &success )
+{
+	// a1ba: it was that hard to use ftell?
+	success = false;
+	return 0;
+}
+
+void FileInputStream::readUChar( unsigned char *buf, int count, bool &success )
+{
+	if( fp )
+		success = fread( buf, count, 1, fp ) == 1;
+	else success = false;
+}
+
+unsigned char FileInputStream::readUChar( bool &success )
+{
+	if( fp )
+	{
+		unsigned char ch;
+		success = fread( &ch, sizeof( ch ), 1, fp ) == 1;
+		return ch;
+	}
+
+	success = false;
+	return 0;
+}
+
+void FileInputStream::close( bool &success )
+{
+	if( fp )
+		success = fclose( fp ) == 0;
+	success = false;
+}
+
+void FileInputStream::close()
+{
+	bool success;
+	close( success );
+}

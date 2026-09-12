@@ -1,0 +1,310 @@
+600
+//Name			RES SPRITENAME	X	Y	WIDTH	HEIGHT
+selection			320 320hud1	160	160	80	20
+
+bucket1			320 320hud2	108	16	12	12
+bucket2			320 320hud2	108	28	12	12
+bucket3			320 320hud2	108	40	12	12	
+bucket4			320 320hud2	108	52	12	12
+bucket5			320 320hud2	108	64	12	12				
+bucket0			320 320hud2	108	76	12	12
+
+dmg_bio			320 320hud4	0	0	32	32
+dmg_poison		320 320hud4	0	0	32	32
+dmg_chem		320 320hud4	32	0	32	32
+dmg_cold		320 320hud4	64	0	32	32
+dmg_drown		320 320hud4	96	0	32	32
+dmg_heat		320 320hud4	128	0	32	32
+dmg_gas			320 320hud4	160	0	32	32
+dmg_rad			320 320hud4	192	0	32	32
+dmg_shock		320 320hud4	224	0	32	32
+
+number_0		320 320hud2	0	0	12  16
+number_1		320 320hud2	12	0	12  16
+number_2		320 320hud2	24	0	12  16
+number_3		320 320hud2	36	0	12  16
+number_4		320 320hud2	48	0	12  16
+number_5		320 320hud2	60	0	12  16
+number_6		320 320hud2	72	0	12  16
+number_7		320 320hud2	84	0	12  16
+number_8		320 320hud2	96	0	12  16
+number_9		320 320hud2	108	0	12  16
+
+char_a			320 MShudtext	0	12	9  	17
+char_b			320 MShudtext	9	12	9  	16
+char_c			320 MShudtext	17	12	7  	16
+char_d			320 MShudtext	24	12	10  	17
+char_e			320 MShudtext	33	12	9  	19
+char_f			320 MShudtext	42	12	7  	22
+char_g			320 MShudtext	48	12	10  	22
+char_h			320 MShudtext	57	12	9  	16
+char_i			320 MShudtext	68	12	4  	16
+char_j			320 MShudtext	73	12	5  	20
+char_k			320 MShudtext	79	12	9  	16
+char_l			320 MShudtext	86	12	5  	16
+char_m			320 MShudtext	91	12	14  	17
+char_n			320 MShudtext	106	12	10  	16
+char_o			320 MShudtext	115	12	9  	16
+char_p			320 MShudtext	124	12	9  	22
+char_q			320 MShudtext	135	12	9  	22
+char_r			320 MShudtext	141	12	8  	16
+char_s			320 MShudtext	150	12	8  	20
+char_t			320 MShudtext	158	12	6  	17
+char_u			320 MShudtext	164	12	9  	16
+char_v			320 MShudtext	173	12	9  	17
+char_w			320 MShudtext	182	12	15  	17
+char_x			320 MShudtext	196	12	11  	19
+char_y			320 MShudtext	208	12	10  	23
+char_z			320 MShudtext	219	12	10  	16
+
+char_A			320 MShudtext	0	36	23  	22
+char_B			320 MShudtext	9	12	9  	16
+char_C			320 MShudtext	40	36	16  	18
+char_D			320 MShudtext	55	36	17  	23
+char_E			320 MShudtext	72	36	16  	23
+char_F			320 MShudtext	88	36	18  	23
+char_G			320 MShudtext	49	12	9  	22
+char_H			320 MShudtext	120	36	22  	22
+char_I			320 MShudtext	142	36	13  	22
+char_J			320 MShudtext	73	12	5  	20
+char_K			320 MShudtext	79	12	9  	16
+char_L			320 MShudtext	88	12	5  	16
+char_M			320 MShudtext	206	36	24  	21
+char_N			320 MShudtext	106	12	10  	16
+char_O			320 MShudtext	116	12	8  	16
+char_P			320 MShudtext	15	60	18  	23
+char_Q			320 MShudtext	135	12	9  	22
+char_R			320 MShudtext	47	60	19  	22
+char_S			320 MShudtext	65	60	17  	23
+char_T			320 MShudtext	81	60	18  	22
+char_U			320 MShudtext	164	12	9  	16
+char_V			320 MShudtext	175	12	9  	16
+char_W			320 MShudtext	137	60	25  	22
+char_X			320 MShudtext	198	12	11  	19
+char_Y			320 MShudtext	209	12	10  	23
+char_Z			320 MShudtext	219	12	10  	16
+
+charslash		320 MShudtext	0	83	12  	21
+charcolon		320 MShudtext	17	84	9  	18
+
+//divider		320 320hud2	120	0	1	20
+
+cross			320 320hud2	0	72	16	16
+
+suit_full		320 320hud2	0	52	20	20
+suit_empty		320 320hud2	20	52	20	20
+
+flash_full		320 320hud2	16	72	18	16
+flash_empty		320 320hud2	34	72	18	16
+flash_beam		320 320hud2	52	72	6	16
+
+train_back		320	320hud3 0	0	48	48
+train_stop		320	320hud3 48	0	48	48
+train_forward1		320	320hud3 96	0	48	48
+train_forward2		320	320hud3 144	0	48	48
+train_forward3		320	320hud3 192	0	48	48
+
+title_half		320 320hud3 	0	48	128	16
+title_life		320 320hud3 	128 48	116	16
+
+d_skull			320 320hud1	192	240	32	16
+d_tracktrain		320 320hud1	224	208	32	16
+
+item_battery		320 320hud2	48	52	20	20
+item_healthkit		320 320hud2	68	52	20	20
+item_longjump		320 320hud2	88	52	20	20
+
+grenade			320 320hud2     36      34      18      18
+
+smlnum_0 		320 MShudtext	0	0	8  	10
+smlnum_1 		320 MShudtext	9	0	6  	10
+smlnum_2 		320 MShudtext	15	0	8  	10
+smlnum_3 		320 MShudtext	22	0	7  	10
+smlnum_4 		320 MShudtext	28	0	9  	10
+smlnum_5 		320 MShudtext	37	0	7  	10
+smlnum_6 		320 MShudtext	44	0	7  	10
+smlnum_7 		320 MShudtext	51	0	8  	10
+smlnum_8 		320 MShudtext	59	0	7  	10
+smlnum_9 		320 MShudtext	66	0	7  	10
+smlslash		320 MShudtext	73	0	5  	10
+
+//inventory_xtra		320 invxtra	  	0	0	64	16
+
+hnd_l  			320 MSHandWpns  0	201	32	28
+hnd_r  			320 MSHandWpns  0	229	32	28
+hnd_skullblade		320 MSHandWpns  0	0	32	116
+hnd_battleaxe   	320 MSHandWpns  32	0	46	116
+hnd_merldagger  	320 MSHandWpns  0	116	32	85
+hnd_torch  		320 MSHandItms  0	0	24	85
+hnd_ironshield 		320 MSHandItms  24	0	56	73
+hnd_armor       	320 MSHandItms  96      0       96      96
+hnd_arrows      	320 MSHandItms  0       91      64      64
+hnd_sword       	320 MSHandItms  223     0       32      125
+hnd_axe         	320 MSHandItms  64      131     48      125
+hnd_bow         	320 MSHandItms  122     130     64      125
+hnd_mace        	320 MSHandItms  0       160     32      96
+hnd_hammer      	320 MSHandItms  33      160     32      96
+hnd_sheath      	320 packHUD320  62      0       82      82
+hnd_quiver      	320 packHUD320  64      80      101     78
+hnd_pack        	320 packHUD320  0       0	72      122
+hnd_item        	320 packHUD320  77      160     32      32
+hud_talk        	320 MSTalkHud   0       0       64      64
+hud_shout       	320 MSTalkHud   64      0       64      64
+hud_party       	320 MSTalkHud   128     0       64      64
+hud_trans       	320 mshudmisc1 	0     	0       16      16
+//===========================================
+
+
+selection		640 640hud3	0	180	170	45
+
+bucket1			640 640hud7	168	72	20	20
+bucket2			640 640hud7	188	72	20	20		
+bucket3			640 640hud7	208	72	20	20		
+bucket4			640 640hud7	168	92	20	20		
+bucket5			640 640hud7	188	92	20	20		
+bucket0			640 640hud7	208	92	20	20		
+
+dmg_bio			640 640hud8	128	0	64	64
+dmg_poison		640 640hud8	128	0	64	64
+dmg_chem		640 640hud8	0	0	64	64
+dmg_cold		640 640hud9	64	0	64	64
+dmg_drown		640 640hud8	64	0	64	64
+dmg_heat		640 640hud9	128	0	64	64
+dmg_gas			640 640hud9	0	0	64	64
+dmg_rad			640 640hud9	192 0	64	64
+dmg_shock		640 640hud8	192	0	64	64
+
+number_0		640 640hud7	0	0	20	24
+number_1		640 640hud7	24	0	20	24
+number_2		640 640hud7	48	0	20	24
+number_3		640 640hud7	72	0	20	24
+number_4		640 640hud7	96	0	20	24
+number_5		640 640hud7	120	0	20	24
+number_6		640 640hud7	144	0	20	24
+number_7		640 640hud7	168	0	20	24
+number_8		640 640hud7	192	0	20	24
+number_9		640 640hud7	216	0	20	24
+
+char_a			640 MShudtext	0	12	9  	17
+char_b			640 MShudtext	9	12	9  	16
+char_c			640 MShudtext	17	12	7  	16
+char_d			640 MShudtext	24	12	10  	17
+char_e			640 MShudtext	33	12	9  	19
+char_f			640 MShudtext	42	12	7  	22
+char_g			640 MShudtext	48	12	10  	22
+char_h			640 MShudtext	57	12	9  	16
+char_i			640 MShudtext	68	12	4  	16
+char_j			640 MShudtext	73	12	5  	20
+char_k			640 MShudtext	79	12	9  	16
+char_l			640 MShudtext	86	12	5  	16
+char_m			640 MShudtext	91	12	14  	17
+char_n			640 MShudtext	106	12	10  	16
+char_o			640 MShudtext	115	12	9  	16
+char_p			640 MShudtext	124	12	9  	22
+char_q			640 MShudtext	135	12	9  	22
+char_r			640 MShudtext	141	12	8  	16
+char_s			640 MShudtext	150	12	8  	20
+char_t			640 MShudtext	158	12	6  	17
+char_u			640 MShudtext	164	12	9  	16
+char_v			640 MShudtext	173	12	9  	17
+char_w			640 MShudtext	182	12	15  	17
+char_x			640 MShudtext	196	12	11  	19
+char_y			640 MShudtext	208	12	10  	23
+char_z			640 MShudtext	219	12	10  	16
+
+char_A			640 MShudtext	0	36	23  	22
+char_B			640 MShudtext	9	12	9  	16
+char_C			640 MShudtext	40	36	16  	18
+char_D			640 MShudtext	55	36	17  	23
+char_E			640 MShudtext	72	36	16  	23
+char_F			640 MShudtext	88	36	18  	23
+char_G			640 MShudtext	105	36	15  	23
+char_H			640 MShudtext	120	36	22  	22
+char_I			640 MShudtext	142	36	13  	22
+char_J			640 MShudtext	73	12	5  	20
+char_K			640 MShudtext	79	12	9  	16
+char_L			640 MShudtext	88	12	5  	16
+char_M			640 MShudtext	206	36	24  	21
+char_N			640 MShudtext	106	12	10  	16
+char_O			640 MShudtext	116	12	8  	16
+char_P			640 MShudtext	15	60	18  	23
+char_Q			640 MShudtext	135	12	9  	22
+char_R			640 MShudtext	47	60	19  	22
+char_S			640 MShudtext	65	60	17  	23
+char_T			640 MShudtext	81	60	18  	22
+char_U			640 MShudtext	164	12	9  	16
+char_V			640 MShudtext	175	12	9  	16
+char_W			640 MShudtext	137	60	25  	22
+char_X			640 MShudtext	198	12	11  	19
+char_Y			640 MShudtext	209	12	10  	23
+char_Z			640 MShudtext	219	12	10  	16
+
+charslash		640 MShudtext	0	83	12  	21
+charcolon		640 MShudtext	17	84	9  	18
+
+//divider		640 640hud7	240	0	2	40
+
+cross			640 640hud7	80	24	32	32
+
+suit_full		640 640hud7	0	24	40	40
+suit_empty		640 640hud7	40	24	40	40
+
+train_back		640 640hud5 	170	0	72	72
+train_stop		640 640hud5 	170	72	72	72
+train_forward1		640 640hud5 	170	144	72	72
+train_forward2		640 640hud6 	170	0	72	72
+train_forward3		640 640hud6 	170	72	72	72
+
+title_half		640 640hud4	0	226	256	30
+title_life		640 640hud5	0	226	220	30
+
+d_skull			640 640hud1	192	224	32	16
+d_tracktrain		640 640hud1	192	240	32	16
+
+grenade			640 640hud7 	48      96      24      24
+
+//itemshow_dagger		640 itemshow	0	0	64	64
+//itemshow_knife		640 itemshow	128	0	64	64
+//itemshow_bow		640 itemshow	64	0	64	64
+//itemshow_shortsword 	640 itemshow	0	64	64	64
+//itemshow_quiver 	640 itemshow	64	64	64	64
+//itemshow_sabre 		640 itemshow	128	64	64	64
+//itemshow_clawborn   	640 itemshow	0	128	117	30
+
+smlnum_0 		640 MShudtext	0	0	8  	10
+smlnum_1 		640 MShudtext	9	0	6  	10
+smlnum_2 		640 MShudtext	15	0	8  	10
+smlnum_3 		640 MShudtext	22	0	7  	10
+smlnum_4 		640 MShudtext	29	0	8  	10
+smlnum_5 		640 MShudtext	37	0	7  	10
+smlnum_6 		640 MShudtext	44	0	7  	10
+smlnum_7 		640 MShudtext	51	0	8  	10
+smlnum_8 		640 MShudtext	59	0	7  	10
+smlnum_9 		640 MShudtext	66	0	7  	10
+smlslash		640 MShudtext	73	0	5  	10
+
+//inventory_xtra		640 invxtra	   	0	0	64	16
+
+//hnd_skullblade  	640 MSHandWpns  0	0	32	116
+//hnd_battleaxe  		640 MSHandWpns  32	0	46	116
+//hnd_merldagger  	640 MSHandWpns  0	116	32	85
+//hnd_l  			640 MSHandWpns  0	201	32	28
+//hnd_r  			640 MSHandWpns  0	229	32	28
+//hnd_torch  		640 MSHandItms  0	0	24	85
+//hnd_ironshield 		640 MSHandItms  24	0	56	73
+//hnd_armor       	640 MSHandItms  96      0       96      96
+//hnd_arrows      	640 MSHandItms  0       91      64      64
+//hnd_sword       	640 MSHandItms  223     0       32      125
+//hnd_axe         	640 MSHandItms  64      131     48      125
+//hnd_bow         	640 MSHandItms  122     130     64      125
+//hnd_mace        	640 MSHandItms  0       160     32      96
+//hnd_hammer      	640 MSHandItms  33      160     32      96
+//hnd_sheath      	640 packHUD320  62      0       82      82
+//hnd_quiver      	640 packHUD320  64      80      101     78
+//hnd_pack        	640 packHUD640  0       0       89      126
+//hnd_item        	640 packHUD320  77      160     32      32
+//hnd_apple              640 MSHandItms  205     205     50	50
+//hud_talk        	640 MSTalkHud   0	0       64      64
+//hud_shout       	640 MSTalkHud   64      0       64      64
+//hud_party       	640 MSTalkHud  	128     0       64      64
+hud_trans       	640 mshudmisc1 	0     	0       16      16

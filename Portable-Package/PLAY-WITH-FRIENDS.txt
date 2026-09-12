@@ -1,0 +1,42 @@
+MASTER SWORD REBIRTH - PORTABLE PERSONAL EDITION
+
+1. Extract the entire ZIP into a writable folder (for example Documents\MasterSword).
+   Do not run the game from inside the ZIP viewer.
+2. Run Create-Shortcuts.cmd once. It makes desktop shortcuts for this folder.
+3. To join someone else's game, use Master Sword - Join a Server, or Join-Server.cmd.
+
+JOIN THE ORIGINAL HOST ON THE SAME LAN
+Connect to the same home network, then enter one of these addresses:
+  Realm One: 192.168.4.25:27025
+  Realm Two: 192.168.4.25:27035
+These addresses are for the original host and can change if the router assigns a new IP.
+The host must leave Start-Host.cmd running. Guest Wi-Fi isolation can block LAN joining.
+
+JOIN OVER THE INTERNET
+Run Master Sword - Join a Server (or Join-Server.cmd) and choose:
+  1. Realm One: schmidt-council.tun.ply.gg:48715
+  2. Realm Two: schmidt-once.tun.ply.gg:63800
+Both Playit UDP addresses have been queried successfully through the Internet tunnel.
+Both realms are password-free. The host must leave the game realms and the private
+Playit agent running. FN port 5710 stays private. Internet directory registration is
+separate; direct joining with these addresses already works.
+
+CHARACTERS ACROSS BOTH REALMS
+Use the same extracted copy of the game for both servers. Your player-profile.json
+is generated on first use and identifies your characters on the host's FN service.
+Disconnect normally, then join the other realm and select the same character slot.
+Keep your own profile file; do not copy another player's profile into your game.
+The original host's personal profiles, characters and passwords are excluded.
+
+HOST YOUR OWN
+Master Sword - Steam Independent starts your own two realms and the server browser.
+Master Sword - Start Realms runs your own servers without opening the game.
+Master Sword - Stop Realms saves and stops those servers.
+Your own FN service is separate from the original host's character database.
+
+FILES AND DISPLAY
+The package includes game assets, maps, scripts, the Xash3D engine, client/server
+DLLs, required game runtimes, the local FN service, and modified source code.
+Steam installation and login are not required by this build.
+Choose your resolution and display mode in the game. Inventory: I. Main menu: G.
+See START-HERE.md for hosting, backups and further details.

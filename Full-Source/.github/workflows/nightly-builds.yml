@@ -1,0 +1,236 @@
+name: nightly-builds
+on: 
+  push:
+    paths-ignore:
+      - 'documentation/**'
+  pull_request:
+    paths-ignore:
+      - 'documentation/**'
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+
+jobs:
+  build-generic:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            cmake_preset: windows-x86-debug
+            build_conf: Debug
+            devenv_arch: amd64_x86
+          - os: windows-2022
+            cmake_preset: windows-x64-debug
+            build_conf: Debug
+            devenv_arch: amd64
+          - os: windows-2022
+            cmake_preset: windows-x64-release
+            build_conf: RelWithDebInfo
+            devenv_arch: amd64
+          - os: ubuntu-24.04
+            cmake_preset: linux-x64-debug
+            build_conf: Debug
+            devenv_arch: none
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Enables the vcpkg dependency graph integration.
+      VCPKG_FEATURE_FLAGS: dependencygraph
+    steps:
+      - name: Obtain running job information
+        uses: qoomon/actions--context@v4
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Create build environment
+        run: cmake -E make_directory ${{ github.workspace }}/build
+
+      - uses: TheMrMilchmann/setup-msvc-dev@v4
+        if: runner.os == 'Windows'
+        with:
+          arch: ${{ matrix.devenv_arch }}
+
+      # We need this because previous step overwrites VCPKG_ROOT envvar on Windows runners 
+      - name: Setup vcpkg-related environment variables
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.exportVariable('VCPKG_ROOT', `${process.env.GITHUB_WORKSPACE}/external/vcpkg`.replaceAll('\\', '/'));
+            core.exportVariable('VCPKG_DEFAULT_BINARY_CACHE', `${process.env.GITHUB_WORKSPACE}/external/vcpkg/bincache`.replaceAll('\\', '/'));
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib cmake
+          sudo apt-get install qtbase5-dev
+
+      - name: Install ninja-build tool
+        uses: seanmiddleditch/gha-setup-ninja@v4
+
+      - name: "Create directory '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'"
+        shell: bash
+        run: mkdir -p ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
+
+      # Restore vcpkg from the GitHub Action cache service. Note that packages are restored by vcpkg's binary caching
+      # when it is being run afterwards by CMake.
+      - name: Restoring cached vcpkg assets
+        id: vcpkg-cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          # The first path is the location of vcpkg: it contains the vcpkg executable and data files, as long as the
+          # built package archives (aka binary cache) which are located by VCPKG_DEFAULT_BINARY_CACHE env var.
+          # The other paths starting with '!' are exclusions: they contain termporary files generated during the build of the installed packages.
+          path: |
+            ${{ env.VCPKG_ROOT }}
+            !${{ env.VCPKG_ROOT }}/buildtrees
+            !${{ env.VCPKG_ROOT }}/packages
+            !${{ env.VCPKG_ROOT }}/downloads
+            !${{ env.VCPKG_ROOT }}/installed
+          # The key is composed in a way that it gets properly invalidated whenever a different version of vcpkg is being used.
+          key: vcpkg-${{ hashFiles('.git/modules/external/vcpkg/HEAD') }}-${{ runner.os }}-${{ env.GITHUB_JOB_ID }}
+          restore-keys: vcpkg-${{ hashFiles('.git/modules/external/vcpkg/HEAD') }}-${{ runner.os }}
+
+      - name: Configure CMake
+        working-directory: ${{ github.workspace }}/build
+        run: cmake "${{ github.workspace }}" -DVCPKG_FORCE_USE_SUBMODULE_DIST=ON --preset ${{ matrix.cmake_preset }}
+
+      - name: Build
+        working-directory: ${{ github.workspace }}/build
+        run: cmake --build . --parallel $(nproc)
+
+      - name: Prepare artifacts
+        shell: bash
+        run: |
+          ls -l build/
+          mkdir artifacts/
+          mkdir -p publish/primext/bin
+          mkdir -p publish/primext/devkit
+          cp -r build/${{ matrix.build_conf }}/primext/* publish/primext/
+          cp build/${{ matrix.build_conf }}/primext_run publish/ || true
+          cp build/${{ matrix.build_conf }}/primext.exe publish/ || true
+          cp -r game_dir/* publish/primext
+
+      - name: Pack artifact files to archive (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          pushd publish
+          zip -r ../artifacts/primext-${{ matrix.cmake_preset }}.zip ./*
+          popd
+
+      # we forced to do this split because Git on Windows can't use zip, bruh
+      - name: Pack artifact files to archive (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          Compress-Archive -Path publish\* -Destination artifacts\primext-${{ matrix.cmake_preset }}.zip
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.cmake_preset }}
+          path: artifacts/*
+
+      - name: Saving vcpkg assets to cache
+        uses: actions/cache/save@v4
+        if: ${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+        with:
+          path: |
+            ${{ env.VCPKG_ROOT }}
+            !${{ env.VCPKG_ROOT }}/buildtrees
+            !${{ env.VCPKG_ROOT }}/packages
+            !${{ env.VCPKG_ROOT }}/downloads
+            !${{ env.VCPKG_ROOT }}/installed
+          key: ${{ steps.vcpkg-cache-restore.outputs.cache-primary-key }}
+
+  build-android:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        conf: [Debug]
+    env:
+      BUILD_TYPE: ${{ matrix.conf }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib cmake ninja-build
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.6.0
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build
+        run: chmod +x ./gradlew && ./gradlew assembleDebug
+        working-directory: android
+        env:
+          ANDROID_NDK_ROOT: /usr/local/lib/android/sdk/ndk/26.1.10909125
+
+      - name: Prepare artifacts
+        run: |
+          mkdir artifacts/
+          cp android/app/build/outputs/apk/debug/app-debug.apk artifacts/primext-debug.apk
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-android-debug
+          path: artifacts/*
+
+  release:
+    name: release-builds
+    runs-on: ubuntu-latest
+    needs: [build-generic]
+    if: ${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+    steps:
+      - name: Fetch artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Remove old release
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        with:
+          delete_release: true
+          tag_name: continious
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Repackage binaries and allow GitHub to process removed release for few seconds
+        continue-on-error: true
+        run: |
+          cd artifacts/
+          for i in artifact-*; do
+            mv "$i"/* .
+            rm -rf "$i"
+          done
+          ls -R .
+          cd ../
+          sleep 20s
+
+      - name: Upload new release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: artifacts/*
+          tag_name: continious
+          draft: false
+          prerelease: true
+          name: PrimeXT Continuous Build

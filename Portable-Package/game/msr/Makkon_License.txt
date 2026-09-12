@@ -1,0 +1,15 @@
++----------------------------------------------------------------+
+All textures made from scratch in Substance Designer by Ben "Makkon" Hale.
+Modification is allowed and encouraged, with credit.
+Not for commercial use without express written permission.
+
+All sets come with color variations, with exception of a few. This makes for many textures to import and process. As a result, I have not cut up many of the trimsheets into separate trim textures, as this would result in several hundred textures to process. If you need your trims separated, feel free to cut them up yourself. I would otherwise encourage you to use the trims as a sheet, it's better for organization and performance, and makes it extremely easy to swap to different colors.
+
+Use for or in association with NFTs, Web3, blockchain technology, crypto currency, machine learning, AI art, or AI aided image generation in any way is not permitted, including promotional material.
+
+These textures were built for and look best in Nearest filtering.
+
+~Ben "Makkon" Hale
+https://twitter.com/makkon_art
+https://www.artstation.com/makkon
++----------------------------------------------------------------+

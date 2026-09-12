@@ -1,0 +1,10 @@
+{
+  "bind": "127.0.0.1",
+  "port": 5710,
+  "allowed_ips": [
+    "127.0.0.1"
+  ],
+  "database": "data/FN.sqlite3",
+  "manifest": "content-manifest.json",
+  "backups": "backups"
+}

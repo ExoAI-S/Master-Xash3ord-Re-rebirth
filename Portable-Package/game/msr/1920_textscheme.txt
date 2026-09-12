@@ -1,0 +1,108 @@
+///////////////////// TEXT FILE DESCRIPTION /////////////////////
+// 1280xYYY text scheme file
+//
+// Resolutions:
+// 	640
+// 	720
+// 	800
+// 	1024
+// 	1152
+// 	1176
+// 	1280
+// 	1360
+// 	1366
+// 	1440
+// 	1600
+// 	1680
+// 	1768
+// 	1920
+//
+
+// SchemeName defines a new scheme
+//SchemeName = "Basic Text"
+
+// FontName is the string name of the font the scheme uses
+//FontName   = "Veranda"
+
+// FontSize defines the height of the font (the rest is derived from that)
+//FontSize   = 21
+
+// FontWeight thickens the font (700 is bold, 1400 very bold)
+//FontWeight = 0
+
+// foreground colors (RGBA, A=0 being fully transparent, A=255 fully solid)
+//FgColor          = "255 170 0 255"
+//FgColorArmed     = "255 255 255 255"
+//FgColorMousedown = "255 255 255 255"
+
+// background colors (note that these always default to "0 0 0 0")
+//BgColor          = "0 0 0 0"
+//BgColorArmed     = "0 0 0 0"
+//BgColorMousedown = "0 0 0 0"
+
+///////////////////// TFC FONTS /////////////////////
+
+
+//1600x1200 text scheme file
+
+// DEFAULT BUTTON TEXT
+SchemeName = "Primary Button Text"
+FontName = "Sitka"
+FontSize = 27
+FgColor = "255 170 0 255"
+BgColor = "0 0 0 141"
+FgColorArmed = "255 255 255 255"
+BgColorArmed = "255 170 0 67"
+
+// COMMAND MENU TEXT
+SchemeName = "CommandMenu Text"
+FontName = "Sitka"
+FontSize = 24
+FgColor = "255 170 0 255"
+BgColor = "0 0 0 141"
+FgColorArmed = "255 255 255 255"
+BgColorArmed = "255 170 0 67"
+
+// SCOREBOARD TEXT
+SchemeName = "Scoreboard Text"
+FontName = "Sitka"
+FontSize = 23
+FontWeight = 0
+
+// SCOREBOARD TITLE TEXT (team names, team scores)
+SchemeName = "Scoreboard Title Text"
+FontName = "Sitka"
+FontSize = 20
+FontWeight = 700
+
+// SCOREBOARD SMALL TEXT (headers, player #)
+SchemeName = "Scoreboard Small Text"
+FontName = "Sitka"
+FontSize = 16
+FontWeight = 0
+
+// TITLE FONT in TFC selection menus
+SchemeName = "Title Font"
+FontName = "Sitka"
+FontSize = 30
+FgColor = "255 170 0 255"
+
+// CLASSDESC, MAPDESC, MOTD text windows
+SchemeName = "Briefing Text"
+FontName = "Sitka"
+FontSize = 16
+FontWeight = 0
+FgColor = "255 170 0 255"
+
+// Team info text (list of players, etc)
+// fgColor is automatically set to the teams color
+SchemeName = "Team Info Text"
+FontName = "Sitka"
+FontSize = 16
+FontWeight = 0
+
+// ID Text
+SchemeName = "ID Text"
+FontName = "Sitka"
+FontSize = 16
+FontWeight = 0

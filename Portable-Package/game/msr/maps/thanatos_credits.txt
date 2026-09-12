@@ -1,0 +1,13 @@
+Thanatos by J
+A map for Master Sword: Continued
+
+Here's my third MSC map. I had seen the boss level in Titan Quest and thought
+it was pretty cool. One day, I was just playing around in Hammer to see if I
+could make something similar in style. At first, it wasn't supposed to become
+a map but I decided to expand it and this is what it became. I felt like
+making something big and outdoors, and I think it turned out pretty well.
+
+Thanks again to Thothie for the script, J-M v2.5.5 for the testing, Sabre and
+FER for the modeling, and anyone else who helped me.
+
+-J (aka JJJ, JJJL and whatnot)

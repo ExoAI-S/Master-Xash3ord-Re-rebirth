@@ -1,0 +1,728 @@
+//TITLES FOR HALF-LIFE
+// Position command $position x y 
+// x & y are from 0 to 1 to be screen resolution independent
+// -1 means center in each dimension
+// Effect command $effect <effect number>
+// effect 0 is fade in/fade out
+// effect 1 is flickery credits
+// effect 2 is write out (training room)
+// Text color r g b command $color
+// fadein time fadeout time / hold time
+// $fadein (message fade in time - per character in effect 2)
+// $fadeout (message fade out time)
+// $holdtime (stay on the screen for this long)
+
+
+// Game title
+// This is a placeholder to hold the effects controls for the "Half-Life" title
+$position -1 -1
+// Only effect 0 is supported for game title
+$effect 0
+// This is the final color
+$color 180 180 180
+// Not used color2
+$color2 0 0 0
+// This is the time it takes to fade in the title
+$fadein 1.0
+// How long to hold the message on the screen (after it scans out)
+$holdtime 3.0
+// How long it takes to fade out the message after holding
+$fadeout 1.5
+
+GAMETITLE
+{
+Master Sword
+}
+
+//HAZARD COURSE TEXT
+
+// Test values -- JAY
+$position -1 0.65
+// Scan-out text effect
+$effect 2
+// This is the final color
+$color 100 100 100
+// This is the highlight color
+$color2 0 200 50
+// This is the time it takes to fade each character
+$fadein 0.005
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.5
+// How long to hold the message on the screen (after it scans out)
+$holdtime 3.5
+// How long it takes to fade out the message after holding
+$fadeout 1.5
+
+// Spectator Menu
+Spec_Mode1
+{
+Locked Chase-Camera Mode
+}
+
+Spec_Mode2
+{
+Free Chase-Camera Mode
+}
+
+Spec_Mode3
+{
+Free Roaming Mode
+}
+
+Spec_NoTarget
+{
+No valid targets. Cannot switch to Chase-Camera Mode.
+}
+
+Spec_Help
+{
+ENTER to Play  FIRE for Next Target  ALT-FIRE for Prev Target  JUMP to Change Modes
+}
+
+Spec_Help2
+{
+Your text messages can only be seen by other Spectators
+}
+
+// Multiplayer Scoreboard
+Spectators
+{
+Spectators
+}
+
+Unassigned
+{
+Unassigned
+}
+
+TEAMS
+{
+TEAMS
+}
+
+PLAYERS
+{
+PLAYERS
+}
+
+PARTY
+{
+Party
+}
+
+SCOREBOARD_TITLE
+{
+Players
+}
+
+TITLE
+{
+Title
+}
+
+SKILLLEVEL
+{
+Skill level
+}
+
+LATENCY
+{
+PING
+}
+
+// other menu text
+Menu_OK
+{
+OK
+}
+
+Menu_Cancel
+{
+CANCEL
+}
+
+CANCEL
+{
+Cancel
+}
+
+CLOSE
+{
+Close
+}
+
+REMOVE
+{
+Remove
+}
+
+USE
+{
+Use
+}
+
+GOLD
+{
+Gold
+}
+
+
+PLAYER_GOLD
+{
+Gold: %i
+}
+
+SELL
+{
+Sell
+}
+SELL_SUBTITLE
+{
+Select items to sell
+}
+SELL_ITEM_VALUE
+{
+Worth: %i gold
+}
+
+BUY
+{
+Buy
+}
+BUY_SUBTITLE
+{
+Select an item to buy
+}
+INV_SUBTITLE
+{
+Select an item to take
+}
+
+STORE_BTN_BUY
+{
+    1. Buy
+}
+STORE_DESC_BUY
+{
+Purchase items from %s
+}
+STORE_BTN_SELL
+{
+    2. Sell
+}
+STORE_DESC_SELL
+{
+Sell items to %s
+}
+STORE_BTN_CANCEL
+{
+    3. Cancel
+}
+STORE_DESC_CANCEL
+{
+Cancel
+}
+
+STORAGE_SUBTITLE_STORAGE
+{
+Move selected items from storage to your inventory
+}
+STORAGE_SUBTITLE_INVENTORY
+{
+Move selected items from your inventory to storage
+}
+STORAGE_ITEM_COST
+{
+Fee: %i gold
+}
+STORAGE_ITEM_FREE
+{
+Free
+}
+
+TAKE
+{
+Take
+}
+
+PLAYER_HANDS
+{
+Player Hands
+}
+
+ITEM_COST
+{
+Cost: %i gold
+}
+
+CHOOSECHAR_PANE_CHOOSE
+{
+Choose Character
+}
+
+CHOOSECHAR_PANE_NEW
+{
+Create New Character
+}
+
+CHOOSECHAR_CREATE
+{
+Create New
+}
+
+CHOOSECHAR_LOADING
+{
+Loading...
+}
+
+CHOOSECHAR_NAME
+{
+Name: 
+}
+
+CHOOSECHAR_GENDERLBL
+{
+Gender: 
+}
+
+CHOOSECHAR_GENDER_MALE
+{
+Male
+}
+
+CHOOSECHAR_GENDER_FEMALE
+{
+Female
+}
+
+CHOOSECHAR_RACE
+{
+Choose your race
+}
+
+CHOOSECHAR_RACE_HUMAN
+{
+Human
+}
+
+CHOOSECHAR_RACE_DWARF
+{
+Dwarf
+}
+
+CHOOSECHAR_RACE_ELF
+{
+Elf
+}
+
+CHOOSECHAR_BACK
+{
+<< Back
+}
+
+CHOOSECHAR_CREATE
+{
+Create New
+}
+
+CHOOSECHAR_DELETEQUESTION
+{
+Delete char?
+}
+
+CHOOSECHAR_DELETE
+{
+Delete
+}
+
+CHOOSECHAR_WEAPON
+{
+Choose your weapon
+}
+
+CHOOSECHAR_SERVER
+{
+Characters are stored on the server
+}
+
+CHOOSECHAR_LOCAL
+{
+Characters are stored on your computer
+}
+
+CHOOSECHAR_LAN
+{
+- Using LAN Characters
+}
+
+CHOOSECHAR_CENTRALNETWORK
+{
+- Server is connected to a Central Network
+}
+
+CHOOSECHAR_CENTRALNETWORK_DOWN
+{
+- Central Network connection broken.
+  You cannot join at this time
+}
+
+CHOOSECHAR_ENTERING
+{
+Entering: %s
+}
+
+YES
+{
+Yes
+}
+
+NO
+{
+No
+}
+
+ITEMINFO_QUANTITY
+{
+Quantity: %i
+}
+
+ITEMINFO_QUALITY
+{
+Quality: %i
+}
+
+ACTION_QUERY
+{
+Action:
+}
+
+ACTION_STAND_IDLE
+{
+Stand idle
+}
+
+ACTION_STAND_NORMAL
+{
+Stand normal
+}
+
+ACTION_SIT
+{
+Sit down
+}
+
+ACTION_STAND
+{
+Stand up
+}
+
+ACTION_NOD_YES
+{
+Nod yes
+}
+
+ACTION_NOD_NO
+{
+Nod no
+}
+
+$position -1 -1
+$effect 2
+$color 64 64 128
+$color2 128 128 255
+$fadein 0.01
+$fxtime 0.25
+$holdtime 3.5
+$fadeout 1.5
+
+MS_SAVEDHELENA
+{
+Congratulations! You have saved the town of Helena!
+}
+
+$position -1 -1
+$effect 2
+$color 128 32 32
+$color2 255 64 64
+$fadein 0.01
+$fxtime 0.25
+$holdtime 3.5
+$fadeout 1.5
+
+MS_NSAVEDHELENA
+{
+The townspeople have been slaughtered, you have lost the battle...
+}
+
+
+PARTY_JOIN
+{
+Join Party
+}
+
+PARTY_JOIN_DESC
+{
+Create or join a party
+}
+
+PARTY_CREATE
+{
+Create New Party
+}
+
+PARTY_JOIN_BTN
+{
+Request join
+}
+
+PARTY_EXISTS1
+{
+You are in the party
+}
+
+PARTY_EXISTS2
+{
+
+Do you want to leave this party?
+}
+
+PARTY_LEAVE
+{
+Leave Party
+}
+
+PARTY_NONE
+{
+There are no parties to join.
+}
+
+PARTY
+{
+Party
+}
+
+VOTEKICK
+{
+Vote Kick
+}
+
+VOTETIME
+{
+Vote Time
+}
+
+VOTE_CAST
+{
+Cast Vote
+}
+
+VOTE_CAST_DESC
+{
+
+To cast a vote in favor of this, click Yes.
+}
+
+VOTE_KICK_TITLE
+{
+Kick vote
+}
+
+VOTE_KICK_DESC
+{
+Choose a player, then choose Kick to initiate vote
+}
+
+VOTE_KICK_CONFIRM
+{
+Kick
+}
+
+VOTE_KICK_INPROGRESS_TITLE
+{
+Vote Kick
+}
+
+VOTE_KICK_INPROGRESS_DESC
+{
+%s voted to kick %s
+}
+
+VOTE_NONE
+{
+There are no other players on the server.
+}
+
+VOTE_HUD_TITLE
+{
+Vote in progress:
+}
+
+VOTE_ADVTIME_TITLE
+{
+Advance Time
+}
+
+VOTE_ADVTIME_DESC
+{
+Choose how far to advance time, then click OK
+}
+
+VOTE_ADVTIME_OPT0
+{
+3 Hours
+}
+
+VOTE_ADVTIME_OPT1
+{
+6 Hours
+}
+
+VOTE_ADVTIME_OPT2
+{
+12 Hours
+}
+
+VOTE_ADVTIME_CONFIRM
+{
+OK
+}
+
+VOTE_ADVTIME_INPROGRESS_TITLE
+{
+Time Change
+}
+
+VOTE_ADVTIME_INPROGRESS_DESC0
+{
+%s voted to advance time 3 hours
+}
+VOTE_ADVTIME_INPROGRESS_DESC1
+{
+%s voted to advance time 6 hours
+}
+VOTE_ADVTIME_INPROGRESS_DESC2
+{
+%s voted to advance time 12 hours
+}
+
+MAIN_MENU
+{
+Main Menu
+}
+
+STAMINA
+{
+Stamina
+}
+
+WEIGHT
+{
+Weight
+}
+
+CENTRALSV_TITLE
+{
+Central Network
+}
+
+CENTRALSV_ONLINE
+{
+Server is actively connected to the Central Network
+}
+
+CENTRALSV_OFFLINE
+{
+This server is not connected to the Central Network
+You cannot join until the connection is re-established
+}
+
+CENTRALSV_RECONNECTED
+{
+The server has re-established its link to the Central Network
+}
+
+CENTRALSV_DISCONNECTED
+{
+This server has lost its connection to the Central Network
+Characters cannot be loaded or saved until a connection is 
+re-established
+}
+
+CENTRALSV_ONLINE_SCORES
+{
+Connected to Central Network
+}
+
+CENTRALSV_OFFLINE_SCORES
+{
+Central Network connection broken
+}
+
+JOINRESET_TITLE
+{
+Auto-map change
+}
+
+JOINRESET_TEXT
+{
+No one can spawn a character here.
+Changing to start map Edana...
+}
+
+QUICKSLOT_CREATE
+{
+Assigned Quickslot #%i
+}
+
+MENU_INTERACT_TITLE
+{
+Interact
+}
+
+MENU_INTERACT_TRADE
+{
+Trade
+}
+
+MENU_INTERACT_FORGIVE
+{
+Forgive
+}
+
+SHOP
+{
+Shop
+}
+
+HEALTH
+{
+Health
+}
+
+$color 255 0 0
+$holdtime 5
+BEARGODSMAD
+{
+The Bear Gods are demanding retribution in blood!
+}
+
+LOCALPAGE_TEST1_PAR0
+{
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at quam pharetra, tristique lorem eu, imperdiet sapien. Suspendisse varius metus a quam efficitur, id interdum urna suscipit. Aenean quis rhoncus ipsum. Sed nec est feugiat, elementum arcu et, eleifend elit. Pellentesque quis sollicitudin lorem. Ut quam ligula, laoreet non venenatis non, luctus ac eros. Curabitur leo odio, vehicula ac fermentum ac, fermentum sed velit. Donec eget rhoncus nulla. In tristique congue felis eu viverra. Morbi volutpat diam eget commodo sollicitudin. Aenean purus libero, euismod quis dui ac, ultricies vulputate felis. Cras sed dolor massa. Nullam gravida nulla pharetra, convallis turpis id, sagittis metus. Nullam in laoreet diam, vel tempor elit.
+}
+LOCALPAGE_TEST1_PAR1
+{
+    Donec eget fermentum tortor. Praesent id iaculis elit. Donec velit ligula, condimentum id lectus ac, tempus interdum velit. Fusce elementum in est nec maximus. Proin faucibus, ligula facilisis dapibus luctus, erat dolor fringilla neque, eu euismod tellus ex eget lectus. Vestibulum scelerisque ullamcorper euismod. Morbi blandit nibh non odio accumsan tempus. Donec vitae eros et elit suscipit cursus. Nam eget bibendum erat. Phasellus mattis non tortor eu dictum. Ut sit amet dui dictum, pretium justo ac, consequat risus. Praesent eu laoreet diam. Nulla urna justo, accumsan nec suscipit id, congue sit amet dui.
+}
+LOCALPAGE_TEST1_PAR2
+{
+    Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce quis orci sed neque viverra commodo sed in neque. Nullam semper fermentum sem quis luctus. Ut elementum neque neque, euismod varius nisl auctor eget. Suspendisse pulvinar ullamcorper dictum. Nam nec viverra risus. Phasellus congue ac ipsum sit amet malesuada. Pellentesque pretium, velit id vestibulum pretium, nisl diam consectetur erat, ac bibendum lectus justo eget magna.
+}
+LOCALPAGE_TEST1_PAR3
+{
+    Proin fringilla pharetra metus ut mollis. Nulla facilisi. Integer auctor volutpat imperdiet. Donec lectus ipsum, tincidunt varius iaculis at, mollis a sem. Praesent molestie, dui ut pulvinar tempus, mauris diam molestie sem, et interdum velit lorem pharetra felis. Phasellus dictum ultrices ornare. Suspendisse lacus quam, efficitur convallis quam et, interdum cursus sapien. Praesent vitae molestie lectus. In scelerisque interdum velit, vel commodo ex fermentum a. Sed dignissim ornare ligula id pharetra. Integer vel nisi luctus, sodales sapien non, dignissim metus. Nam consequat urna eu metus pulvinar blandit. Fusce posuere venenatis orci, nec porttitor turpis.
+}
+LOCALPAGE_TEST1_PAR4
+{
+    Donec eu rutrum erat, a gravida libero. Aenean vulputate libero neque, eu volutpat enim scelerisque ac. Suspendisse vehicula pellentesque tempus. Integer dictum et erat quis vestibulum. Nullam finibus nibh sed malesuada sagittis. Aliquam eu lacus egestas, aliquam libero in, porttitor justo. Mauris ut lectus iaculis, consequat nibh ac, tincidunt ligula. Maecenas eu felis vel eros tristique placerat. Nulla facilisi. Mauris viverra est in justo suscipit pellentesque. Sed consectetur fringilla vehicula. Maecenas iaculis ante mi, et faucibus risus eleifend pretium. Curabitur vitae eros quis elit vulputate condimentum quis a leo.
+}

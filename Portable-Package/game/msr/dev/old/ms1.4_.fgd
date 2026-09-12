@@ -1,0 +1,1177 @@
+//
+// Master Sword game definition file (.fgd) 
+// version 1.4, for Valve Hammer Editor 3.4 and above
+//
+// Thothie changes:
+// = AUG2007a
+// - Added ms_npcscript
+// - Removed "multimanager" typo
+// - Added nplayers property to basenpc
+// - Added reqhp property to basenpc
+// - Stripped most redundant/faulty entities (to be combined with Halflife.fgd)
+// = AUG2007b
+// - Added title property to basenpc
+// = SEP2007a
+// - added dmgmulti to basenpc
+// - added hpmulti to basenpc
+// = NOV2007a
+// - added proper scripts to mstrig_weather (want to change this entity)
+// = DEC2007a
+// - added params to basenpc
+// = MAY2008a
+// - Added ZHLT Custom Entity Support (info_compile_parameters and info_texlights)
+// - see http://zhlt.info/entity-changes.html for more info
+// = JAN2010
+// - Point class version of msarea_monsterspawn added (ms_monsterspawn)
+// - Point class version of trigger_counter (ms_counter)
+// = DEC2010
+// - mstrig_weather to new weather system
+// = JAN2011
+// - Changed default model for ms_player_spawn
+// = AUG2011
+// - zhlt_invisible all invisible brushes
+// - removed "renderless" from point entity ms_monsterspawn (29th)
+// = MAR2013
+// - Added Angles to some entities to cut down on false missing key value errors
+// - Removed spawnwith from ms_basenpc - doesn't exist in code
+// = NOV2014
+// - added msarea_music_dynamic
+//-- added msarea_transition_local
+// - added new properties to msarea_music and mstrig_music
+// = OCT2015
+// - added hpreq/nplayers to ms_monsterspawn/msarea_monsterspawn
+
+//Double Flags
+@SolidClass = worldspawn : "World entity"
+[
+	message(string) : "Map Description / Title"
+	skyname(string) : "environment map (cl_skyname)"
+//	gametype(choices) : "Game Type" : 0 =
+//	[	
+//		0 : "Adventure"
+//		1 : "Assault (Not supported yet)"
+//	]	
+	sounds(integer) : "CD track to play" : 1
+	light(integer) : "Default light level"
+	WaveHeight(string) : "Default Wave Height"
+	MaxRange(string) : "Max viewable distance" : "4096"
+	chaptertitle(string) : "Chapter Title Message"
+	startdark(choices) : "Level Fade In" : 0 =
+	[	
+		0 : "No"
+		1 : "Yes"
+	]
+	gametitle(choices) : "Display game title" : 0 = 
+	[	
+		0 : "No"
+		1 : "Yes"
+	]
+	invertpk(choices) : "Invert TownArea PK use" : 0 = 
+	[	
+		0 : "No"
+		1 : "Yes"
+	]
+]
+@BaseClass = Angles
+[
+	angles(string) : "Pitch Yaw Roll (Y Z X)" : "0 0 0"
+]
+@BaseClass = Targetname 
+[ 
+	targetname(target_source) : "Name"
+	note(string) : "notes"
+]
+@BaseClass = Target 
+[ 
+	target(target_destination) : "Target" 
+]
+@BaseClass base(Target, Targetname) = Trigger
+[
+	killtarget(target_destination) : "Kill target"
+	netname(target_destination) : "Target Path"
+	style(integer) : "Style" : 32
+	master(string) : "Master" 
+	sounds(choices) : "Sound style" : 0 =
+	[
+		0 : "No Sound"
+	]
+	delay(string) : "Delay before trigger" : "0"
+	message(string) : "Message (set sound too!)"
+	spawnflags(flags) = 
+	[
+		1: "Monsters" : 0
+		2: "No Clients" : 0
+		4: "Pushables": 0
+	]
+]
+@BaseClass = MSRenderless
+[
+	zhlt_invisible(integer) : "Renderless" : 1
+]
+@BaseClass = mstarget
+[
+	target(target_destination) : "Target"
+]
+@BaseClass = msscripted
+[ 
+	scriptfile(string) : "Script File" 
+]
+@BaseClass size(-16 -16 -36, 16 16 36) color(255 255 255) = spawnspot 
+[ 
+	target(target_destination) : "Trigger on player spawn"
+	//JAN2010
+	note(string) : "notes"
+]
+@BaseClass base(Targetname,Angles) size(-16 -16 0, 16 16 72) = ms_basenpc
+[ 
+	target(target_destination) : "Trigger on Spawn" 
+	killtarget(target_destination) : "Trigger on Death" 
+        perishtarget(target_destination) : "Trigger on Final Death"
+	scriptfile(string) : "Custom Script File" 
+	title(string) : "Change Name To"
+	spawnarea(string) : "Spawn Area Name"
+	delaylow(integer) : "Spawn Delay Low" : 1
+	delayhigh(integer) : "Spawn Delay High" : 2
+	//spawnwith(string) : "Spawn with Partner" 
+	lives(integer) : "Lives (0=Infinite)" : 1
+	spawnchance(string) : "Spawn Chance (%)" : "100"
+	spawnstart(choices) : "Start spawning" : 0 =
+	[
+		0 : "With Spawn Area"
+		1 : "Only when triggered"
+	]
+	nplayers(integer) : "Require Players" : 0
+	reqhp(integer) : "Req. Total HP (min;max)" : 0
+	hpmulti(integer) : "Multiply HP" : 0
+	dmgmulti(integer) : "Multiply Damage" : 0
+	params(string) : "Additional Params"
+]
+
+@BaseClass base(Targetname, msscripted) = ms_baseitem
+[ 
+	container(string) : "Put inside named container"
+	duration(integer) : "Expire delay (seconds)"
+]
+
+@BaseClass base(Targetname,MSRenderless) = ms_area
+[ 
+]
+
+@PointClass base(Angles,spawnspot) studio("models/human/male1/male1.mdl") = ms_player_spawn : "Generic spawn point" 
+[
+	message(string) : "Link to Transition"
+]
+@PointClass base(Angles,spawnspot) studio("models/human/female1/female1.mdl") = ms_player_begin : "New Character spawn point" [ ]
+@PointClass base(Angles,spawnspot) studio("models/monsters/eye_medium_float.mdl") = ms_player_spec : "Spec spot before spawning" [ ]
+
+@PointClass base(ms_baseitem) = msitem_spawn : "MS Item"
+[
+	spawnstart(choices) : "Start spawning" : 1 =
+	[
+		0 : "Upon map start"
+		1 : "Only when triggered"
+	]
+]
+
+@PointClass base(ms_basenpc) = ms_npc
+[
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Boar.mdl") = msmonster_boar : "Boar"
+[
+	defscriptfile(string) : "Default Script (do not change)" : "monsters/boar"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/hawk.mdl") = msmonster_hawk : "Hawk"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/hawk"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/rat.mdl") = msmonster_giantrat : "Giant Rat"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/giantrat"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Bat.mdl") = msmonster_bat : "Bat"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/bat"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Giant_Bat.mdl") = msmonster_giantbat : "Giant Bat"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/giantbat"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/skeleton.mdl") = msmonster_skeleton : "Skeleton"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/skeleton"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Orc.mdl") = msmonster_orcwarrior : "Orc Warrior"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/orcwarrior"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Orc.mdl") = msmonster_orcberserker : "Orc Berserker"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/orcberserker"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Orc.mdl") = msmonster_orcarcher : "Orc Archer"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/orcarcher"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/Orc.mdl") = msmonster_orcranger : "Orc Ranger"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/orcranger"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/troll.mdl") = msmonster_troll : "Orc Troll"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/troll"
+]
+@PointClass base(ms_basenpc) color(0 128 0) studio("models/npc/human1.mdl") = msnpc_human1 : "Default Human"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "NPCs/default_human"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/goblin_new.mdl") = msmonster_goblin : "Goblin"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/goblin"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/goblin_new_boss.mdl") = msmonster_hobgoblin : "Hobgoblin"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/hobgoblin"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/dwarf/male1.mdl") = msmonster_dwarf : "Dwarf"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/dwarf_zombie_random"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/hollow_one.mdl") = msmonster_wizard : "Evil Wizard"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/burning_one"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/boar2.mdl") = msmonster_bigboar : "Big Boar"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/boar2"
+]
+@PointClass base(ms_basenpc) color(128 0 0) studio("models/monsters/boar3.mdl") = msmonster_giantboar : "Giant Boar"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/boar3"
+]
+@PointClass base(Targetname,Angles) color(128 0 0) studio("models/monsters/ogre_cave.mdl") = msmonster_random : "Randomized Monster"
+[
+	random_1_scriptfile(string) : "#1 Script File" 
+	random_1_title(string) : "#1 Change Name To"
+	random_1_nplayers(integer) : "#1 Require Players"
+	random_1_reqhp(integer) : "#1 Req. Total HP (min;max)"
+	random_1_hpmulti(integer) : "#1 Multiply HP"
+	random_1_dmgmulti(integer) : "#1 Multiply Damage"
+	random_1_params(string) : "#1 Additional Params"
+
+	random_2_scriptfile(string) : "#2 Script File" 
+	random_2_title(string) : "#2 Change Name To"
+	random_2_nplayers(integer) : "#2 Require Players"
+	random_2_reqhp(integer) : "#2 Req. Total HP (min;max)"
+	random_2_hpmulti(integer) : "#2 Multiply HP"
+	random_2_dmgmulti(integer) : "#2 Multiply Damage"
+	random_2_params(string) : "#2 Additional Params"
+
+	random_3_scriptfile(string) : "#3 Script File" 
+	random_3_title(string) : "#3 Change Name To"
+	random_3_nplayers(integer) : "#3 Require Players"
+	random_3_reqhp(integer) : "#3 Req. Total HP (min;max)"
+	random_3_hpmulti(integer) : "#3 Multiply HP"
+	random_3_dmgmulti(integer) : "#3 Multiply Damage"
+	random_3_params(string) : "#3 Additional Params"
+
+	random_4_scriptfile(string) : "#4 Script File" 
+	random_4_title(string) : "#4 Change Name To"
+	random_4_nplayers(integer) : "#4 Require Players"
+	random_4_reqhp(integer) : "#4 Req. Total HP (min;max)"
+	random_4_hpmulti(integer) : "#4 Multiply HP"
+	random_4_dmgmulti(integer) : "#4 Multiply Damage"
+	random_4_params(string) : "#4 Additional Params"
+
+	target(target_destination) : "Trigger on Spawn" 
+	killtarget(target_destination) : "Trigger on Death" 
+        perishtarget(target_destination) : "Trigger on Final Death"
+	spawnarea(string) : "Spawn Area Name"
+	lives(integer) : "Lives (0=Infinite)" : 1
+	delaylow(integer) : "Spawn Delay Low" : 1
+	delayhigh(integer) : "Spawn Delay High" : 2
+	spawnchance(string) : "Spawn Chance (%)" : "100"
+	spawnstart(choices) : "Start spawning" : 0 =
+	[
+		0 : "With Spawn Area"
+		1 : "Only when triggered"
+	]
+
+	defscriptfile(string) : "Default Script (do not change!)" : "monsters/giantrat"
+]
+
+@PointClass base(ms_basenpc) color(128 0 128) studio("models/misc/treasure_4hammer.mdl") = msworlditem_treasure : "Treasure Chest"
+[
+	defscriptfile(string) : "Default Script (do not change!)" : "worlditems/treasurechest"
+]
+
+
+@SolidClass base(ms_area) = msarea_monsterspawn : "Monster Spawn area" [
+	spawnloc(choices) : "Monster Spawn Location" : 0 = 
+	[
+		0 : "At monster placement"
+		1 : "Random, within box"
+	]
+	spawnstart(choices) : "Start spawning" : 1 =
+	[
+		0 : "Upon map start"
+		1 : "Only when triggered"
+	]
+	resetwhen(choices) : "Reset When" : 0 =
+	[
+		0 : "All monsters are depleted"
+		1 : "Any monster is depleted"
+		2 : "Whenever triggered"
+	]
+	fireallperish(string) : "Fire when depleted (buggy)"
+	reqhp(string): "Req. Total HP (min;max)" : 0
+	nplayers(integer): "Require Players" : 0
+	params(string) : "Pass AddParams"
+]
+@PointClass base(Targetname,mstarget) = mstrig_relay : "Trigger Relay"
+[
+	spawnflags(flags) =
+	[
+		1: "Remove On fire" : 0
+	]
+	triggerstate(choices) : "Trigger State" : 0 = 
+	[
+		0: "Off"
+		1: "On"
+		2: "Toggle"
+	]
+	random(string) : "Fire Chance (%)" : "100"
+	delay(string) : "Delay before trigger" : "0"
+]
+
+//JAN2010
+@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) color(0 255 0) = ms_monsterspawn : "Monster Spawn" [
+//	spawnloc(choices) : "Monster Spawn Location" : 0 = 
+//	[
+//		0 : "At monster placement"
+//		1 : "Random, within box"
+//	]
+	spawnstart(choices) : "Start spawning" : 1 =
+	[
+		0 : "Upon map start"
+		1 : "Only when triggered"
+	]
+	resetwhen(choices) : "Reset When" : 0 =
+	[
+		0 : "All monsters are depleted"
+		1 : "Any monster is depleted"
+		2 : "Whenever triggered"
+	]
+	fireallperish(string) : "Fire when depleted (buggy)"
+	reqhp(string): "Req. Total HP (min;max)" : 0
+	nplayers(integer): "Require Players" : 0
+	params(string) : "Pass AddParams"
+]
+
+
+@SolidClass base(ms_area) = msarea_music : "Music Area"
+[
+	song(string) : "idle mp3"
+	songlength(string) : "minutes (float)"
+	master(string) : "master"
+]
+
+@SolidClass base(ms_area) = msarea_music_dynamic : "Trigger to set idle and combat music"
+[
+	midle(string) : "Idle MP3" : "none"
+	midlelen(string) : "Idle MP3 Length (Minutes)" : "0"
+	mcombat(string) : "Combat MP3" : "none"
+	mcombatlen(string) : "Combat MP3 Length (Minutes)" : "0"
+	
+	playall(choices) : "All Clients" : 0 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	playnow(choices) : "Play Now" : 0 = 
+	[
+		0 : "Neither"
+		1 : "Idle Music"
+		2 : "Combat Music"
+	]
+	master(string) : "master"
+]
+
+
+@SolidClass base(ms_area) = msarea_town : "Town Area" 
+[
+	pkill(choices) : "Allow PKilling" : 0 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+@SolidClass base(ms_area) = msarea_nosave : "No Save" [ ]
+
+@SolidClass base(ms_area) = msarea_transition : "Level transition" 
+[
+	destname(string) : "Destination description"
+	destmap(string) : "Destination bsp"
+	desttrans(string) : "Destination spawn point"
+	master(string) : "master"
+]
+@SolidClass base(Targetname, msscripted) = msarea_scripted : "Brush with Scriptfile" 
+[
+]
+
+
+@PointClass base(Targetname) = mstrig_setplayerspeed : "Set Player Speed"
+[
+	speed(integer) : "New Speed %" : 0
+	duration(integer) : "duration (-1 indefinate)" : 0
+]
+@PointClass base(Targetname) = mstrig_resetplayerspeed : "Reset Player Speed"
+[
+]
+@PointClass base(Targetname) = mstrig_music : "Play music (Use keynames for song names and keyvalues for length)"
+[
+	song(string) : "song"
+	songlength(string) : "minutes (float)"
+]
+@PointClass base(Targetname) = mstrig_stopspawn : "Stop Spawn Area"
+[
+	target(target_destination) : "Spawn Area Name"
+]
+@PointClass base(Targetname) = mstrig_changelevel : "Change Level"
+[
+	destmap(string) : "Destination map"
+	desttrans(string) : "Destination transition"
+]
+@PointClass base(Targetname) = mstrig_weather : "Change the weather"
+[
+	weather(choices) : "Change To Weather" : "clear" =
+	[
+		"clear" : "Clear"
+		"snow" : "Snow"
+		"rain" : "Rain"
+		"rain_storm" : "Storm"
+		"fog" : "fog-normal"
+		"fog_black" : "fog-black"
+		"fog_green" : "fog-green"
+		"fog_brown" : "fog-swamp"
+		"fog_red" : "fog-red"
+	]
+	options(choices) : "Lock Weather" : 1 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+@PointClass base(Targetname) = mstrig_multi : "MultiTarget Manager" 
+[
+	spawnflags(Flags) = 
+	[
+		1 : "multithreaded" : 0
+	]
+	random(choices) : "Fire One Random Target" : 0 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+@PointClass base(Targetname) = mstrig_act : "NPC Action"
+[
+	target(string) : "Monster Name"
+	type(choices) : "Type" : 0 = 
+	[
+		0 : "Move"
+		1 : "Play Anim"
+		2 : "Run Script Event"
+		3 : "Move, then Play Anim"
+		4 : "Move, then Run Script Event"
+	]
+	moveanim(string) : "Move Anim"
+	actionanim(string) : "Action Anim"
+	eventname(string) : "Script Event"
+	firewhendone(string) : "Fire, when finished"
+	firedelay(string) : "Fire when finished Delay" : "0"
+	fireonbreak(string) : "Fire, if AI interrupts me"
+	stopai(choices) : "Disable Monster AI" : 1 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+
+//
+// Half-Life game definition file (.fgd) 
+// version 1.57
+// for Worldcraft 2.0 and above, and Half-Life 1.0.0.9 and above
+// last update: 24 may 1999
+//
+// updated by autolycus / autolycus@gamedesign.com
+// http://halflife.gamedesign.net/
+// email me with improvements and suggestions
+//
+// special thanks to: everyone at Valve Software!
+//
+
+//
+// BaseClasses
+//
+
+//@BaseClass = Appearflags
+//[
+//	spawnflags(Flags) =
+//	[
+//		2048 : "Not in Deathmatch" : 0
+//	]
+//]
+//
+//@BaseClass size(0 0 0, 32 32 32) color(80 0 200) base(Appearflags) = Ammo []
+//
+//@BaseClass size(-16 -16 0, 16 16 32) color(0 0 200) base(Targetname, Appearflags) = Weapon []
+//@BaseClass = Global 
+//[ 
+//	globalname(string) : "Global Entity Name" 
+//]
+//
+//@BaseClass base(Target) = Targetx 
+//[
+//	delay(string) : "Delay before trigger" : "0"
+//	killtarget(target_destination) : "KillTarget"
+//]
+//
+//@BaseClass = RenderFxChoices
+//[
+//	renderfx(choices) :"Render FX" : 0 =
+//	[
+//		0: "Normal"
+//		1: "Slow Pulse"
+//		2: "Fast Pulse"
+//		3: "Slow Wide Pulse"
+//		4: "Fast Wide Pulse"
+//		9: "Slow Strobe"
+//		10: "Fast Strobe"
+//		11: "Faster Strobe"
+//		12: "Slow Flicker"
+//		13: "Fast Flicker"
+//		5: "Slow Fade Away"
+//		6: "Fast Fade Away"
+//		7: "Slow Become Solid"
+//		8: "Fast Become Solid"
+//		14: "Constant Glow"
+//		15: "Distort"
+//		16: "Hologram (Distort + fade)"
+//	]
+//]
+//
+//@BaseClass base(RenderFxChoices) = RenderFields 
+//[
+//	rendermode(choices) : "Render Mode" : 0 =
+//	[
+//		0: "Normal"
+//		1: "Color"
+//		2: "Texture"
+//		3: "Glow"
+//		4: "Solid"
+//		5: "Additive"
+//	]
+//	renderamt(integer) : "FX Amount (1 - 255)"
+//	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+//]
+//
+//@BaseClass base(Appearflags) size(-16 -16 -36, 16 16 36) color(0 255 0) = PlayerClass []
+//
+//@BaseClass base(Target, Targetname, RenderFields) color(0 200 200) = Monster 
+//[
+//	TriggerTarget(String) : "TriggerTarget"
+//      TriggerCondition(Choices) : "Trigger Condition" : 0 =
+//	[
+//		0 : "No Trigger"
+//		1 : "See Player, Mad at Player"
+//		2 : "Take Damage"
+//		3 : "50% Health Remaining"
+//		4 : "Death"
+//		5 : "(N/A) Squad Member Dead"
+//		6 : "(N/A)Squad Leader Dead"
+//		7 : "Hear World"
+//		8 : "Hear Player"
+//		9 : "Hear Combat"
+//		10: "See Player Unconditional"
+//		11: "See Player, Not In Combat"
+//	]
+//	spawnflags(Flags) = 
+//	[
+//		1 : "WaitTillSeen" 	: 0
+//		2 : "Gag"		: 0
+//		4 : "MonsterClip"	: 0
+//		16: "Prisoner"		: 0
+//		128: "WaitForScript" 	: 0
+//		256: "Pre-Disaster" 	: 0
+//		512: "Fade Corpse"	: 0
+//	]
+//]
+//
+//@BaseClass = TalkMonster
+//[
+//	UseSentence(String) : "Use Sentence"
+//	UnUseSentence(String) : "Un-Use Sentence"
+//]
+//
+//@BaseClass size(-16 -16 -16, 16 16 16) = gibshooterbase
+//[
+//	targetname (target_source) : "Name"
+//
+//	// how many pieces to create
+//	m_iGibs(integer) : "Number of Gibs" : 3
+//	
+//	// delay (in seconds) between shots. If 0, all gibs shoot at once.
+//	delay(string) : "Delay between shots" : "0"
+//
+//	// how fast the gibs are fired
+//	m_flVelocity(integer) : "Gib Velocity" : 200
+//
+//	// Course variance
+//	m_flVariance(string) : "Course Variance" : "0.15"
+//
+//	// Time in seconds for gibs to live +/- 5%
+//	m_flGibLife(string) : "Gib Life" : "4"
+//
+//	spawnflags(Flags) = 
+//	[
+//		1 : "Repeatable" 	: 0
+//	]
+//]
+//
+//@BaseClass = Light 
+//[
+//	_light(color255) : "Brightness" : "255 255 128 200"
+//      style(Choices) : "Appearance" : 0 =
+//	[
+//		0 : "Normal"
+//		10: "Fluorescent flicker"
+//		2 : "Slow, strong pulse"
+//		11: "Slow pulse, noblack"
+//		5 : "Gentle pulse"
+//		1 : "Flicker A"
+//		6 : "Flicker B"
+//		3 : "Candle A"
+//		7 : "Candle B"
+//		8 : "Candle C"
+//		4 : "Fast strobe"
+//		9 : "Slow strobe"
+//	]
+//	pattern(string) : "Custom Appearance"
+//]
+//
+//@BaseClass base(Targetname,Global) = Breakable
+//[
+//	target(target_destination) : "Target on break"
+//	health(integer) : "Strength" : 1
+//	material(choices) :"Material type" : 0 =
+//	[
+//		0: "Glass"
+//		1: "Wood"
+//		2: "Metal"
+//		3: "Flesh"
+//		4: "Cinder Block"  
+//		5: "Ceiling Tile"
+//		6: "Computer"
+//		7: "Unbreakable Glass"
+//		8: "Rocks"
+//	]
+//	explosion(choices) : "Gibs Direction" : 0 =
+//	[
+//		0: "Random"
+//		1: "Relative to Attack"
+//	]
+//	delay(string) : "Delay before fire" : "0"
+//	gibmodel(string) : "Gib Model" : ""
+//	spawnobject(choices) : "Spawn On Break" : 0 =
+//	[
+//		0: "Nothing"
+//		1: "Battery"
+//		2: "Healthkit"
+//		3: "9mm Handgun"
+//		4: "9mm Clip"
+//		5: "Machine Gun"
+//		6: "Machine Gun Clip"
+//		7: "Machine Gun Grenades"
+//		8: "Shotgun"
+//		9: "Shotgun Shells"
+//		10: "Crossbow"
+//		11: "Crossbow Bolts"
+//		12: "357"
+//		13: "357 clip"
+//		14: "RPG"
+//		15: "RPG Clip"
+//		16: "Gauss clip"
+//		17: "Hand grenade"
+//		18: "Tripmine"
+//		19: "Satchel Charge"
+//		20: "Snark"
+//		21: "Hornet Gun"
+//	]
+//	explodemagnitude(integer) : "Explode Magnitude (0=none)" : 0
+//]
+//
+//@BaseClass base(Appearflags, Targetname, RenderFields, Global) = Door
+//[
+//	killtarget(target_destination) : "KillTarget"
+//	speed(integer) : "Speed" : 100
+//	master(string) : "Master" 
+//	movesnd(choices) : "Move Sound" : 0 = 
+//	[
+//		0: "No Sound"
+//		1: "Servo (Sliding)"
+//		2: "Pneumatic (Sliding)"
+//		3: "Pneumatic (Rolling)"
+//		4: "Vacuum"
+//		5: "Power Hydraulic"
+//		6: "Large Rollers"
+//		7: "Track Door"
+//		8: "Snappy Metal Door"
+//		9: "Squeaky 1"
+//		10: "Squeaky 2"
+//	]
+//	stopsnd(choices) : "Stop Sound" : 0 = 
+//	[
+//		0: "No Sound"
+//		1: "Clang with brake"
+//		2: "Clang reverb"
+//		3: "Ratchet Stop"
+//		4: "Chunk"
+//		5: "Light airbrake"
+//		6: "Metal Slide Stop"
+//		7: "Metal Lock Stop"
+//		8: "Snappy Metal Stop"
+//	]
+//	wait(integer) : "delay before close, -1 stay open " : 4
+//	lip(integer) : "Lip"
+//	dmg(integer) : "Damage inflicted when blocked" : 0
+//	message(string) : "Message if triggered"
+//	target(target_destination) : "Target"
+//	delay(integer) : "Delay before fire" 
+//	netname(string) : "Fire on Close"
+//	health(integer) : "Health (shoot open)" : 0
+//	spawnflags(flags) =
+//	[
+//		1 : "Starts Open" : 0
+//		4 : "Don't link" : 0
+//		8: "Passable" : 0
+//	    	32: "Toggle" : 0
+//		256:"Use Only" : 0
+//		512: "Monsters Can't" : 0
+//	]
+//	// NOTE: must be duplicated in BUTTON
+//	locked_sound(choices) : "Locked Sound" : 0 = 
+//	[
+//		0: "None"
+//		2: "Access Denied"
+//		8: "Small zap"
+//		10: "Buzz"
+//		11: "Buzz Off"
+//		12: "Latch Locked"
+//	]
+//	unlocked_sound(choices) : "Unlocked Sound" : 0 = 
+//	[
+//		0: "None"
+//		1: "Big zap & Warmup"
+//		3: "Access Granted"
+//		4: "Quick Combolock"
+//		5: "Power Deadbolt 1"
+//		6: "Power Deadbolt 2"
+//		7: "Plunger"
+//		8: "Small zap"
+//		9: "Keycard Sound"
+//		10: "Buzz"
+//		13: "Latch Unlocked"
+//	]
+//	locked_sentence(choices) : "Locked Sentence" : 0 = 
+//	[
+//		0: "None"
+//		1: "Gen. Access Denied"
+//		2: "Security Lockout"
+//		3: "Blast Door"
+//		4: "Fire Door"
+//		5: "Chemical Door"
+//		6: "Radiation Door"
+//		7: "Gen. Containment"
+//		8: "Maintenance Door"
+//		9: "Broken Shut Door"
+//	]
+//	unlocked_sentence(choices) : "Unlocked Sentence" : 0 = 
+//	[
+//		0: "None"
+//		1: "Gen. Access Granted"
+//		2: "Security Disengaged"
+//		3: "Blast Door"
+//		4: "Fire Door"
+//		5: "Chemical Door"
+//		6: "Radiation Door"
+//		7: "Gen. Containment"
+//		8: "Maintenance area"
+//	]	
+//	_minlight(string) : "Minimum light level"
+//]
+//
+//@BaseClass base(Targetname, Target, RenderFields, Global) = BaseTank
+//[
+//	spawnflags(flags) =
+//	[
+//		1 : "Active" : 0
+//		16: "Only Direct" : 0
+//		32: "Controllable" : 0
+//	]
+//
+//	// Mainly for use with 1009 team settings (game_team_master)
+//	master(string) : "(Team) Master" 
+//
+//	yawrate(string) : "Yaw rate" : "30"
+//	yawrange(string) : "Yaw range" : "180"
+//	yawtolerance(string) : "Yaw tolerance" : "15"
+//	pitchrate(string) : "Pitch rate" : "0"
+//	pitchrange(string) : "Pitch range" : "0"
+//	pitchtolerance(string) : "Pitch tolerance" : "5"
+//	barrel(string) : "Barrel Length" : "0"
+//	barrely(string) : "Barrel Horizontal" : "0"
+//	barrelz(string) : "Barrel Vertical" : "0"
+//	spritesmoke(string) : "Smoke Sprite" : ""
+//	spriteflash(string) : "Flash Sprite" : ""
+//	spritescale(string) : "Sprite scale" : "1"
+//	rotatesound(string) : "Rotate Sound" : ""
+//	firerate(string) : "Rate of Fire" : "1"
+//	bullet_damage(string) : "Damage Per Bullet" : "0"
+//	persistence(string) : "Firing persistence" : "1"
+//	firespread(choices) : "Bullet accuracy" : 0 =
+//	[
+//		0: "Perfect Shot"
+//		1: "Small cone"
+//		2: "Medium cone"
+//		3: "Large cone"
+//		4: "Extra-large cone"
+//	]
+//	minRange(string) : "Minmum target range" : "0"
+//	maxRange(string) : "Maximum target range" : "0"
+//	_minlight(string) : "Minimum light level"
+//]
+//
+//@BaseClass = PlatSounds 
+//[
+//	movesnd(choices) : "Move Sound" : 0 = 
+//	[
+//		0: "No Sound"
+//		1: "big elev 1"
+//		2: "big elev 2"
+//		3: "tech elev 1"
+//		4: "tech elev 2"
+//		5: "tech elev 3"
+//		6: "freight elev 1"
+//		7: "freight elev 2"
+//		8: "heavy elev"
+//		9: "rack elev"
+//		10: "rail elev"
+//		11: "squeek elev"
+//		12: "odd elev 1"
+//		13: "odd elev 2"
+//	]
+//	stopsnd(choices) : "Stop Sound" : 0 = 
+//	[
+//		0: "No Sound"
+//		1: "big elev stop1"
+//		2: "big elev stop2"
+//		3: "freight elev stop"
+//		4: "heavy elev stop"
+//		5: "rack stop"
+//		6: "rail stop"
+//		7: "squeek stop"
+//		8: "quick stop"
+//	]
+//	volume(string) : "Sound Volume 0.0 - 1.0" : "0.85"
+//]
+//
+//@BaseClass base(Targetname, RenderFields, Global, PlatSounds) = Trackchange
+//[
+//	height(integer) : "Travel altitude" : 0
+//	spawnflags(flags) =
+//	[
+//		1: "Auto Activate train" : 0
+//		2: "Relink track" : 0
+//		8: "Start at Bottom" : 0
+//		16: "Rotate Only" : 0
+//		64: "X Axis" : 0
+//		128: "Y Axis" : 0
+//	]
+//	rotation(integer) : "Spin amount" : 0
+//	train(target_destination) : "Train to switch"
+//	toptrack(target_destination) : "Top track"
+//	bottomtrack(target_destination) : "Bottom track"
+//	speed(integer) : "Move/Rotate speed" : 0
+//]
+
+//===================== END Halflife Base Entries
+
+//Static Model
+@PointClass studio() base(Angles,Targetname) = env_model : "Static Model"
+[
+	model(studio) : "Model"
+	skin(integer) : "Skin" : 0 
+	body(integer) : "Body (fixed!)" : 0
+	sequence(integer) : "Sequence" : 0
+	framerate(string) : "Animation Speed" : "1.0"
+	scale(string) : "Scale" : "1.0"
+	renderfx(choices) :"Render FX" : 0 =
+	[
+		0: "Normal"
+		1: "Slow Pulse"
+		2: "Fast Pulse"
+		3: "Slow Wide Pulse"
+		4: "Fast Wide Pulse"
+		9: "Slow Strobe"
+		10: "Fast Strobe"
+		11: "Faster Strobe"
+		12: "Slow Flicker"
+		13: "Fast Flicker"
+		5: "Slow Fade Away"
+		6: "Fast Fade Away"
+		7: "Slow Become Solid"
+		8: "Fast Become Solid"
+		14: "Constant Glow"
+		15: "Distort"
+		16: "Hologram (Distort + fade)"
+	]
+	rendermode(choices) : "Render Mode" : 0 =
+	[
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		3: "Glow"
+		4: "Solid"
+		5: "Additive"
+	]
+	renderamt(integer) : "FX Amount (1 - 255)"
+	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+		
+	dmg(choices) : "Solidity" : 0 =
+	[
+		0: "Non-solid"
+		1: "Solid"
+	]
+	mins(string) : "Mins" : "-16 -16 0"
+	maxs(string) : "Maxs" : "16 16 36"
+]
+@PointClass base(Targetname) = ms_npcscript : "NPC Script"
+[
+	target(string) : "Monster Name"
+	type(choices) : "Type" : 0 = 
+	[
+		0 : "Move"
+		1 : "Play Anim"
+		2 : "Run Script Event"
+		3 : "Move, then Play Anim"
+		4 : "Move, then Run Script Event"
+	]
+	moveanim(string) : "Move Anim"
+	actionanim(string) : "Action Anim"
+	eventname(string) : "Script Event"
+	firewhendone(string) : "Fire, when finished"
+	firedelay(string) : "Fire Delay" : "0"
+	stopai(choices) : "Disable Monster AI" : 0 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+
+//Overrides and duplicates
+@PointClass base(Targetname, Target) size(-8 -8 -8, 8 8 8) = env_message : "HUD Text Message" 
+[
+	message(string) : "Titles Entry" : "OPENTITLE3"
+	spawnflags(flags) =
+	[
+		1: "Play Once" : 0
+		2: "All Clients" : 0
+	]
+	messagesound(string) : "Sound effect"
+	messagevolume(string) : "Volume 0-10" : "10"
+	messageattenuation(Choices) : "Sound Radius" : 0 =
+	[
+		0 : "Small Radius"
+		1 : "Medium Radius"
+		2 : "Large  Radius"
+		3 : "Play Everywhere"
+	]
+]
+
+@PointClass base(Targetname, Target) size(-8 -8 -8, 8 8 8) = game_text : "HUD Text Message" 
+[
+	spawnflags(flags) =
+	[
+		1: "All Players" : 1
+	]
+
+	message(string) : "Message Text"
+	master(string) : "Master (Untested)" 
+]
+
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = ms_text : "Text Message" 
+[
+	spawnflags(flags) =
+	[
+		1: "All Players" : 1
+	]
+
+	message(string) : "Message Text"
+	sayasnpc(Choices) : "Say as NPC" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	npcname(string) : "NPCs Name"
+
+]
+
+//@SolidClass base(Trigger, Angles) = trigger_push : "Trigger player push"
+//[
+//	spawnflags(flags) = 
+//	[ 
+//		1: "Once Only" : 0 
+//		2: "Start Off" : 0
+//		32: "Only Players" : 0
+//	]
+//	speed(integer) : "Speed of push" : 40
+//]
+
+@SolidClass base(Trigger, Angles, MSRenderless) = mstrig_push : "Trigger player push"
+[
+	spawnflags(flags) = 
+	[ 
+		1: "Once Only" : 0 
+		2: "Start Off" : 0
+		32: "Only Players" : 0
+	]
+	speed(integer) : "Speed of push" : 40
+]
+
+//  ZHLT 2.5.3 Merl's Custom Build 1.7 Custom Entity Support
+
+@PointClass size(-8 -8 0, 8 8 32) = info_compile_parameters : "Compile Options" 
+[ 
+    hlcsg(choices) : "HLCSG" : 1 =
+    [
+        1 : "Normal"
+        2 : "Onlyents"
+        0 : "Off"
+    ]
+    hlbsp(choices) : "HLBSP" : 1 =
+    [
+        0 : "Off" 
+        1 : "Normal"
+        2 : "Leakonly"
+    ]
+    hlvis(choices) : "HLVIS" : 2 = 
+    [ 
+        0 : "Off"
+        1 : "Fast"
+        2 : "Normal" 
+        3 : "Full"
+    ]
+    hlrad(choices) : "HLRAD" : 1 =
+    [
+        0 : "Off"
+        1 : "Normal"
+        2 : "Extra"
+    ]
+    texdata(string) : "Texture Data Memory (in KB)" : "4096" 
+    estimate(choices) : "Estimate Compile Times?" : 0 = 
+    [ 
+        0: "Yes" 
+        1: "No" 
+    ] 
+    bounce(integer) : "Number of radiosity bounces" : 0 
+    ambient(string) : "Ambient world light (0.0 to 1.0, R G B)" : "0 0 0" 
+    smooth(integer) : "Smoothing threshold (in degrees)" : 0 
+    dscale(integer) : "Direct Lighting Scale" : 1 
+    chop(integer) : "Chop Size" : 64 
+    texchop(integer) : "Texture Light Chop Size" : 32 
+    hullfile(string) : "Custom Hullfile" 
+    priority(choices) : "Priority Level" : 0 =
+    [
+        0 : "Normal"
+        1 : "High"
+        -1 : "Low"
+    ]
+    wadautodetect(choices) : "Wad Auto Detect" : 0 =
+    [
+        0 : "Off"
+        1 : "On"
+    ]
+    wadconfig(string) : "Custom Wad Configuration" : ""
+    verbose(choices) : "Verbose compile messages" : 0 =
+    [
+        0 : "Off"
+        1 : "On"
+    ]
+    noclipeconomy(choices) : "Strip Uneeded Clipnodes?" : 1 = 
+    [
+        1 : "Yes"
+        0 : "No"
+    ]
+    nocliphull(choices) : "Generate clipping hulls" : 0 =
+    [
+        0 : "Yes"
+        1 : "No"
+    ]
+    noskyclip(choices) : "No Sky Clip" : 0 =
+    [
+        1 : "On"
+        0 : "Off"
+    ]
+    sparse(choices) : "Vismatrix Method" : 2 =
+    [
+        0 : "No Vismatrix"
+        1 : "Sparse Vismatrix"
+        2 : "Normal"
+    ]
+    circus(choices) : "Circus RAD lighting" : 0 =
+    [
+        0 : "Off"
+        1 : "On"
+    ]
+]
+
+//does not exist (maybe a zhlt thang)
+@PointClass color(255 128 0) = info_texlights : "Texture Light Config" []
+
+
+//JAN2010
+@PointClass base(Trigger) size(-4 -8 -4, 4 8 4) color(255 0 0) = ms_counter : "MSTrigger Counter" 
+[
+	spawnflags(flags) = 
+	[ 
+		1 : "No Message" : 0 
+	]
+//	master(string) : "Master" 
+	count(integer) : "Count before activation" : 2
+]
+
+//NOV2014
+@SolidClass base(ms_area) = msarea_transition_local : "Point to point in-map transition" 
+[
+	title(string) : "To Dest Description"
+	teleport(string) : "Teleport Target"
+	firetarget(string) : "Trigger on Activate"
+	touchtarget(string) : "Trigger when Touched"
+	spawntotie(string) : "Tie to ms_player_spawn"
+	rallplayers(choices) : "Require All Players" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	master(string) : "master"
+]
+
+@SolidClass base(Targetname,MSRenderless) = ms_func_playerclip : "Player clip brush"
+[
+	dmg(integer) : "Push amount" : 0
+	spawnflags(flags) =
+	[
+		1: "Start OFF" : 0
+	]
+]

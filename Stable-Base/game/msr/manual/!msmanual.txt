@@ -1,0 +1,127 @@
+Master Sword Manual
+
+Introduction
+
+1 Starting up
+2 Controls
+3 Travelling
+4 Merchants
+5 Experience
+6 Titles
+
+1. Starting up
+
+
+REMEMBER TO SELECT A NAME IN 'CUZTOMIZE' BEFORE CHOOSING LAN OR INTERNET PLAY
+
+When you first start Master Sword, you have no character created.
+You can hold up to three characters saved.
+Your starting town must be Edana, else you wont be able to create a character.
+To begin with, you choose Male or Female, then your starting weapon.
+After the creation of yourself, you may walk around in the temple and talk
+to the priests for some storytelling about Daragoth. Sembelbim is a good
+one for that. He is just right behind you when you are created,
+or you can go straight to the killing by exiting the temple.
+
+2. Controls
+
+[Command]	[Default Key]	[Description]
+
+use		q		Wears the currently held pack/sheath or quickly retrieves a sword
+				from a sheath
+remove		r		Lists items you're wearing and allows you to remove them
+drop		c		Drops the currently held item
+get		x		Picks up any items in front of you
++attack2	mouse2		Switch hands, if you're holding two items
++special	SHIFT		Do certain actions when combined with certain keys:
+  +attack       mouse1          Unwields your weapon or closes a pack you're holding
+  +attack2      mouse2          Displays a description of the currently held item
+playerinfo      p          	Displays your current race, class, stats and gold
+act             v          	Brings up a list of actions you can do
+setsay		u		Switches between talk, shout and talk to party modes
+slot[number]	0-9		Opens packs, quivers or sheathes in certain body locations
+				1 - Back
+				2 - Belt
+				3 - Shoulder
+mainmenu	F1		Brings up Master Sword's main menu
+offer		F2		Offers the currently held item to someone
+choosechar	F8		Allows you to choose another character to play
+joinparty <name>		Joins a party
+leaveparty			Leaves your current party
+forgive		F4		Removes an accidental PK from your killer's record.
+togglebrowser			Toggles the in-game browser used to change servers
+
+Other Commands
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+Running:	                Quickly press forward twice and hold it the second time.  This action
+                                uses stamina quickly.
+
+CVars:
+¯¯¯¯¯
+
+ms_music		        Set to '1' and Master Sword will play the level's music
+ms_music_volume 	        Controls the volume of the music (1.0 = FULL, 0.0 = SILENT)
+
+
+3. Travelling
+
+A usual transition zone is an open area.
+To travel you must press the Accept button (default: Enter).
+If there are more than one player in the server, all have to
+go to the transition zone and accept the travel.
+
+4. Merchants
+
+Merchants sell you different kind of goods.
+You must tell them you wish to [buy] something to make them
+show what they have for sale.
+Sometimes you might even have to start a conversation before
+they trust their shop to you. Do that by simply "Hail" them.
+Some NPCs in town will give you a task if you ask for "job" or "work"
+
+5. Skill
+
+Skill is gained by killing monsters.  It's only given in the weapon that
+you used to kill the monster.  If two or more attacks the same monster, skill 
+is given by damage and shared among the group.
+You can share your own experience on two skills by attacking with multiple
+weapons.  When the monster dies, you will raise in both skills, but less than if 
+you had attacked with only one weapon.
+
+6. Titles
+
+There are no classes to select, but you gain titles as you fight.
+Some titles require a combination of two skills.
+
+
+"Adventurer" - Beginner
+
+"Swordsman" - Swordsmanship
+"Martial Artist" - Martial Arts
+* Can learn "kick"
+
+"Rogue" - Small Arms
+"Barbarian" - Axehandling
+"Footman" - Blunt Arms
+"Marksman" - Archery
+
+"Assasin" - Swordsmanship + Small Arms
+"Blademaster" -  Swordsmanship + Martial Arts
+"Knight" - Swordsmanship + Axehandling
+"Chevalier" - Swordsmanship + Blunt Arms
+"Ranger" - Swordsmanship + Archery
+
+"Mercenary" - Martial Arts + Small arms
+"Punisher" - Martial Arts + Axehandling
+"Agent" - Martial Arts + Bluntarms
+"Brigand" - Martial Arts + Archery
+
+"Thrasher" - Small Arms + Axehandling
+"Bandit" - Small Arms + Bluntarms
+"Shadow Archer" - Small Arms + Archery
+
+"Berserker" - Axehandling + Bluntarms
+"Scout" - Axehandling + Archery
+
+"Hardy Archer" - Bluntarms + Archery

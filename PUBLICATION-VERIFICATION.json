@@ -1,0 +1,14 @@
+{
+  "extracted_files_verified": 24956,
+  "extracted_bytes": 313357736,
+  "new_docs_links": "all local links resolve",
+  "private_key_fixture_files": 229,
+  "maximum_source_file_bytes": 14256203,
+  "retained_binary_build_inputs": 18,
+  "excluded_categories": {
+    "runtime payload or package metadata": 14074,
+    "generated or platform-specific binary tool/library": 7,
+    "runtime MScript pack (available in complete release)": 1,
+    "duplicate historical source ZIP": 2
+  }
+}

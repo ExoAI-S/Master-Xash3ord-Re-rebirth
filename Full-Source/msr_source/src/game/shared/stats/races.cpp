@@ -1,0 +1,68 @@
+#include "statdefs.h"
+#include "races.h"
+#include <stdio.h>
+#include <string.h>
+
+//Races
+
+mslist<race_t> CRaceManager::Races;
+
+void CRaceManager::AddRace(race_t &Race)
+{
+	Races.push_back(Race);
+}
+void CRaceManager::DeleteAllRaces()
+{
+	Races.clear();
+}
+race_t *CRaceManager::GetRacePtr(const char* pszName)
+{
+	if (!pszName || strlen(pszName) < 1) //Null or empty string
+		return NULL;
+
+	for (unsigned int r = 0; r < Races.size(); r++)
+	{
+		race_t &Race = Races[r];
+		if (!_stricmp(Race.Name, pszName))
+			return &Race; //Valid race
+	}
+	return NULL; //Race not found
+}
+bool CRaceManager::RelationshipContains(msstringlist &RaceList, const char* pszTargetRace)
+{
+	for (unsigned int i = 0; i < RaceList.size(); i++)
+	{
+		const char* pszRaceName = RaceList[i];
+
+		if (!_stricmp(pszRaceName, "all"))
+			return true;
+
+		if (!_stricmp(pszRaceName, pszTargetRace))
+			return true;
+	}
+
+	return false;
+}
+relationship_e CRaceManager::Relationship(const char* pszSourceRace, const char* pszTargetRace)
+{
+	race_t *pSourceRace = GetRacePtr(pszSourceRace); //Source race doesn't exist
+	if (!pSourceRace)
+		return RELATIONSHIP_NO;
+
+	race_t *pTargetRace = GetRacePtr(pszTargetRace); //Target race doesn't exist
+	if (!pTargetRace)
+		return RELATIONSHIP_NO;
+
+	//if( !_stricmp(pszSourceRace,pszTargetRace) )									//Same race, assume we're friends
+	//	return RELATIONSHIP_AL;
+
+	//it's possible for one race to be wary of another one even if that race isn't wary of them.
+	if (RelationshipContains(pSourceRace->Wary, pTargetRace->Name) || RelationshipContains(pTargetRace->Wary, pSourceRace->Name)) //Found wary
+		return RELATIONSHIP_WA;
+	if (RelationshipContains(pSourceRace->Allies, pTargetRace->Name)) //Found Friend
+		return RELATIONSHIP_AL;
+	if (RelationshipContains(pSourceRace->Enemies, pTargetRace->Name)) //Found Enemy
+		return RELATIONSHIP_HT;
+
+	return RELATIONSHIP_NE; //No relationship, so set to neutral.
+}

@@ -1,0 +1,51 @@
+{
+const NO_RUMOR 1
+const NO_JOB 1
+}
+#include NPCs/human_guard
+#include monsters/base_chat
+{ npc_spawn
+name_unique edana_raid_guard
+name "Captain Brenn, Edana Watch"
+roam 0
+invincible 1
+menu.autoopen 1
+catchspeech edana_ask_raid orc orcs raid raiders attack danger trouble report
+catchspeech edana_guard_hello hi hello hail greet hey
+}
+{ edana_guard_hello
+saytext "Hail, traveller. Scouts have seen Orc tracks outside Edana. Ask me about the [Orcs] if you are ready to help."
+}
+{ edana_ask_raid
+local EDANA_SPEAKER $get(ent_lastspoke,id)
+callexternal GAME_MASTER edana_try_orc_raid EDANA_SPEAKER
+}
+{ game_menu_getoptions
+local reg.mitem.id edana_orc_raid
+local reg.mitem.title "Ask about the Orc activity"
+local reg.mitem.type callback
+local reg.mitem.callback edana_request_raid
+menuitem.register
+}
+{ edana_request_raid
+callexternal GAME_MASTER edana_try_orc_raid PARAM1
+}
+{ edana_raid_started
+volume 10
+playsound 0 10 voices/human/male_guard_shout2.wav
+saytext "To arms! Orcs are attacking the village gate!"
+}
+{ edana_raid_busy
+saytext "The raid is already underway. Help us finish the Orcs at the gate!"
+}
+{ edana_raid_cooldown
+saytext "The road is quiet for now. Give the watch a few minutes to regroup."
+}
+{ edana_raid_won
+playanim once yes
+saytext "Edana still stands. Well fought, traveller."
+}
+{ edana_raid_ended
+playanim once pondering
+saytext "They slipped back into the wilds. We will be ready when they return."
+}

@@ -1,0 +1,48 @@
+//Scripted effects
+
+//Flags
+
+constexpr const char* EFFECT_ID		= "game.effect.id";
+constexpr const char* EFFECT_FLAGS	= "game.effect.flags";
+
+
+enum scripteffect_e {
+	SCRIPTEFFECT_NORMAL = (0),
+	SCRIPTEFFECT_PLAYERACTION = (1 << 0),
+	SCRIPTEFFECT_NOSTACK = (1 << 1)
+};
+
+
+//Interface for monsters, items, etc.
+/*class IScriptedEffect
+{
+public:
+	
+	~IScriptedEffect( ) { foreach( i, m_Effects.size() ) { delete m_Effects[i]; m_Effects.erase( i ); i--; } }
+
+	mslist<CScriptedEffect *> m_Effects;
+};*/
+
+struct globalscripteffect_t
+{
+	globalscripteffect_t() {}
+	globalscripteffect_t(msstring Name, msstring Scriptname, int Flags)
+	{
+		m_Name = Name;
+		m_ScriptName = Scriptname;
+		m_Flags = Flags;
+	}
+
+	msstring m_Name, m_ScriptName;
+	int m_Flags;
+};
+
+class CGlobalScriptedEffects
+{
+public:
+	static mslist<globalscripteffect_t> Effects;
+
+	static void RegisterEffect(globalscripteffect_t &Effect);
+	static CScript *ApplyEffect(const char* ScriptName, IScripted *pScriptTarget, CBaseEntity *pTarget, msstringlist *Parameters = NULL);
+	static void DeleteEffects();
+};

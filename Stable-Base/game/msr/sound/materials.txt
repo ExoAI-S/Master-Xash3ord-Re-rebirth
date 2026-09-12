@@ -1,0 +1,81 @@
+// Mastersword Material Sound File - Compiled by SoulXIII
+
+// Only the first 12 characters of the texture name are used.
+// A maximum of 512 textures may be tagged in this file.
+// Stone is the default material sound.
+
+// Footstep Sounds:
+// D = Dirt
+// G = Grate
+// M = Metal
+// S = Slosh Liquid
+// T = Wood
+// V = Grass
+// A = Snow (Lockdown)
+// N = Snow too (Undocumented made Lockdown angry)
+
+// Debris Sounds:
+// P = Computer
+// W = Wood
+// Y = Glass
+
+//----------
+D ms_dirt01
+D ms_dirt02
+D ms_dirt03
+D ms_grs01pth
+D ms_grs01pth_
+D ms_sand01
+
+G ms_mtlgate01
+
+T ms_floor04
+T ms_plank01
+T ms_plank02
+T ms_roof01
+T ms_roof02
+T ms_wood01
+T ms_wood02
+T ms_wood03
+T ms_wood04
+
+V ms_grass01
+V ms_grass02
+V ms_grass03
+V ms_foliage01
+
+// Hemlock
+V hem_floor_blend
+V hem_grass
+V hem_path
+V hem_riv_blend
+D DryRivrBed01-EM
+D DryRivrBed02-EM
+S transp_web2
+
+// Skycastle2
+T snow_wood3
+N snow_ground1
+
+// Lodagond-3
+V medgrass2_ewok1
+V ms_sand01
+
+// ShenderEast
+A Snow03-MO
+A Snow02-MO
+D Dirt3
+D ground_river
+T snow_wood2
+T snow_wood1
+
+// Underkeep
+V grass_moss
+D rock_04
+D Torrien_Dirt3
+D Dirt
+T woodpn101
+T GGFD
+T floor_48
+T floor_81
+T BN_wood4

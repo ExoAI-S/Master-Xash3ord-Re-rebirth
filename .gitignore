@@ -1,0 +1,47 @@
+# Local builds and dependency checkouts
+/.dependencies/
+/build/
+**/build-msr*/
+**/vcpkg_installed/
+**/buildtrees/
+**/packages/
+**/downloads/
+**/.verification/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Generated runtime state and private identities
+**/player-profile.json
+**/host-settings.json
+**/host-state.json
+**/client-state.json
+**/.host-private/
+**/.xash_id
+**/private_join.cfg
+**/private_fn_listen.cfg
+**/FN/data/
+**/FN/backups/
+**/logs/
+**/save/
+**/saves/
+**/savegames/
+**/crashdumps/
+**/screenshots/
+**/*.lock
+*.sqlite
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.dmp
+*.log
+/Diagnostics/
+/Version-Backups/
+/active-version.json
+
+# Locally rebuilt launcher and downloaded complete release
+/MSR-Launcher.exe
+/MSR-Launcher.pdb
+/*.zip
+/*.zip.001
+/*.zip.002

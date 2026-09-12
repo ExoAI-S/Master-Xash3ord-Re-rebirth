@@ -1,0 +1,11 @@
+Ara by J
+A map for Master Sword: Continued
+
+Thanks to J-M v2.5.5, LordThraxis, Mikkel, Tao and a bunch of other people for
+helping me test the map, and, of course, thanks to Thothie for the scripts,
+support and a lot of playtesting. The boat (originally made by Ewok) was
+decompiled from the Deralia bsp (for the sake of consistency) and
+reconstructed by me. The textures were taken from the default Master Sword:
+Continued wads. Music composed by me. 
+
+-J (aka JJJ, JJJL and whatnot)

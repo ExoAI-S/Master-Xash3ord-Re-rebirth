@@ -1,0 +1,33 @@
+//
+// Validate scripts.pak
+//
+
+#include "rapidjson/document.h"
+#include "ValidateScriptsReq.h"
+#include "FNSharedDefs.h"
+#include "msdllheaders.h"
+#include "global.h"
+
+ValidateScriptsRequest::ValidateScriptsRequest(const char* url) :
+	HTTPRequest(HTTPMethod::GET, url)
+{
+}
+
+void ValidateScriptsRequest::OnResponse(int iRespCode)
+{
+	if (iRespCode != 200)
+		return;
+
+	JSONDocument doc = ParseJSON(m_sResponseBody.c_str());
+
+	if (!doc.HasMember("data") || !doc["data"].IsBool())
+	{
+		FNShared::Print("Malformed script validation response!");
+		return;
+	}
+
+	if (doc["data"].GetBool())
+		FNShared::Print("Scripts verified for FN.");
+	else
+		FNShared::Print("Script file not verified for FN!");
+}

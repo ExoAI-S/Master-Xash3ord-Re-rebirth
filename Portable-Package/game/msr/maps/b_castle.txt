@@ -1,0 +1,26 @@
+========================
+========================
+======= b_castle =======
+========================
+========================
+
+Map, models and rares created by Patrick Barnum.
+
+Music made by Eric Barnum.
+
+If you are going to use the music made for this level (crimson_field.mp3 and dark_woods.mp3)
+
+Please credit Eric Barnum for making them.
+
+
+========================
+========================
+== Special Thanks to: ==
+========================
+========================
+
+Angie - Textures, testing, ideas.
+
+RiP Guild - Testing, ideas.
+
+Thothie - Scripts, ideas, testing, putting up with me.

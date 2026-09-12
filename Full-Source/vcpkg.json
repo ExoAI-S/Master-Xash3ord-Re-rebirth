@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "primext",
+  "version-string": "latest",
+  "builtin-baseline": "962e5e39f8a25f42522f51fffc574e05a3efd26b",
+  "dependencies": [
+    { "name": "fmt", "version>=": "10.1.0" }
+  ],
+  "overrides": [
+    { "name": "physx", "version": "4.1.2#6" }
+  ],
+  "features": {
+    "client": {
+      "description": "Build client library",
+      "dependencies": [
+        { "name": "imgui", "version>=": "1.89.9" }
+      ]
+    },
+    "server": {
+      "description": "Build server library",
+      "dependencies": []
+    },
+    "utils": {
+      "description": "Build utilities",
+      "dependencies": [
+        { "name": "miniz", "version>=": "3.0.2" },
+        { "name": "rapidjson", "version>=": "2025-02-26#0" }
+      ]
+    },
+    "physx": {
+      "description": "Enable PhysX support",
+      "dependencies": [
+        "physx"
+      ]
+    }
+  }
+}

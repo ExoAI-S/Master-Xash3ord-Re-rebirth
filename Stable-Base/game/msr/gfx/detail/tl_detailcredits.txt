@@ -1,0 +1,6 @@
+=MS:C Detail Textures=
+All textures courtesy of cgtextures.com
+
+All texture wrangling(editing) and saddling(detail file writing) done by Glorfindel/Elanoides -book911(at)gmail.com-
+
+54 detailtextures, 57 detail txt files

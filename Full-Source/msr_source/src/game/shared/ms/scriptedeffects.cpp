@@ -1,0 +1,62 @@
+#include "msdllheaders.h"
+#include "script.h"
+#include "scriptedeffects.h"
+#include "mslogger.h"
+
+//  ==============================================================
+//								Global
+//  ==============================================================
+mslist<globalscripteffect_t> CGlobalScriptedEffects::Effects;
+
+void CGlobalScriptedEffects::RegisterEffect(globalscripteffect_t &Effect)
+{
+	for (unsigned int i = 0; i < Effects.size(); i++)
+	{
+		if (!_stricmp(Effects[i].m_Name, Effect.m_Name))
+			return;
+	} //Effect already exists
+
+	Effects.add(Effect);
+}
+
+//Apply an effect
+CScript *CGlobalScriptedEffects::ApplyEffect(const char* ScriptName, IScripted *pScriptTarget, CBaseEntity *pTarget, msstringlist *Parameters)
+{
+	CScript *Script = pScriptTarget->Script_Add(ScriptName, pTarget);
+	if (!Script)
+	{
+		MS_ERROR("CGlobalScriptedEffects::ApplyEffect(): Scripted Effect '%s' does not exist!", ScriptName);
+		return NULL;
+	}
+
+	Script->RunScriptEvents(); //Initialize 'game.effect.X'
+
+	//Check if this effect is being stacked
+	if (Script->VarExists(EFFECT_ID))
+		for (unsigned int i = 0; i < pScriptTarget->m_Scripts.size(); i++)
+			if (pScriptTarget->m_Scripts[i] != Script && FStrEq(pScriptTarget->m_Scripts[i]->GetVar(EFFECT_ID), Script->GetVar(EFFECT_ID)))
+			{
+				//Check if the effect doesn't allow stacking
+				if (Script->VarExists(EFFECT_FLAGS))
+					if (strstr(Script->GetVar(EFFECT_FLAGS), "nostack"))
+					{
+						Script->m.RemoveNextFrame = true; //The effect doesn't allow stacking, delete the effect script
+						return NULL;
+					}
+
+				//The effect allows stacking, warn new effect that it is being stacked
+				Script->RunScriptEventByName("game_duplicated");
+				break;
+			}
+
+	//if( Effect.m_Type == SCRIPTEFFECT_PLAYERACTION )
+	//	Script->SetVar( "game.effect.updateplayer", 1 ); //Make sure the player gets an initial update
+
+	Script->RunScriptEventByName("game_activate", Parameters); //A player action script shouldn't respond to this.. only scripts that get activated when applied
+	return Script;
+}
+
+void CGlobalScriptedEffects::DeleteEffects()
+{
+	Effects.clear();
+}

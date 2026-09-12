@@ -1,0 +1,8 @@
+# SHA256 checksums for release downloads
+69371efe0a9661734dcdf0395fe2b5d07dd29237ae34b9fa4bd19df5ebbbf0be  MSR-PrimeXT-DM-Magic-Fix-Debug-Complete-2026-09-12.zip.001
+e39a0698c63aef49b367109470af150b3d47a05cefbe2eba1a661955878d17ae  MSR-PrimeXT-DM-Magic-Fix-Debug-Complete-2026-09-12.zip.002
+6f48906fc03aa2fab3526de192a7de52e90245cfe6861d3bb9b78a9d6dbe6ea3  RELEASE-NOTES.md
+74f5c1dc0bbc26a77bfdd8fe07bd8b5cd6bd784d7fdd193d54dda750591e197e  Restore-Game-Zip.cmd
+
+# Original ZIP produced by Restore-Game-Zip.cmd
+8f62cafa56c06e1efaa907677b6bcb4b52ac53cc6c1b70130fdcd28c4d922b81  MSR-PrimeXT-DM-Magic-Fix-Debug-Complete-2026-09-12.zip

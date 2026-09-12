@@ -1,0 +1,27 @@
+Isles of Dread 1 by J
+A map for Master Sword: Continued
+
+This is my second map for MSC. Thanks to Thothie again for writing the
+scripts. I've used the default MSC textures and a bunch of custom ones, many
+of them slightly modified for my purposes. Here's a list of the custom
+textures used as provided or as a base for new textures:
+
+Palm leaves .......... palme.wad (http://www.cs-maps.org/)
+Jungle textures ...... 3D_Mike_Junglepack.wad (http://www.cs-maps.org/)
+Sand texture ......... czde_dust.wad (http://www.cs-maps.org/)
+Grass texture ........ ms_generic.wad (default MSC wad)
+Swamp tree texture ... mastersword.wad (default MSC wad)
+
+I believe the skybox is Crinity's (http://crinity.planethalflife.gamespy.com/)
+Tropical, though the download link on the site didn't work. Luckily, I was
+able to find it in a CS map named fy_poolparty.
+
+The boat you can see in the map was originally made for Deralia by Ewok. It
+was decompiled and reconstructed by me to keep things consistent.
+
+As for the name, I don't know who came up with it but the Isles of Dread were
+marked on the MSC world map and my map seemed to be suitable to be one of
+them. Turns out the Isle of Dread is some D&D thing, but this map has nothing
+to do with that.
+
+-J (aka JJJ, JJJL and whatnot)

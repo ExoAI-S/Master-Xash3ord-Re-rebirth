@@ -1,0 +1,11 @@
+The following maps created by Cyax:
+
+ms_caves
+ms_quest
+ms_swamp
+ms_town
+
+They are intended for low level, single players.
+
+For more third party maps, visit:
+http://www.msremake.com/forums

@@ -1,0 +1,8 @@
+#include "extdll.h"
+#include "util.h"
+#include "cbase.h"
+#include "monsters.h"
+#include "../msitemdefs.h"
+#include "../weapons/weapons.h"
+#include "../player/player.h"
+#include "gamerules.h"

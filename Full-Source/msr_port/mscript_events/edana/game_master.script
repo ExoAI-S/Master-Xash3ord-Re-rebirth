@@ -1,0 +1,110 @@
+#scope server
+{
+const EDANA_RAID_COOLDOWN 180.0
+const EDANA_RAID_TIMEOUT 180.0
+setvard EDANA_RAID_ACTIVE 0
+setvard EDANA_RAID_NEXT_TIME 0
+setvard EDANA_RAID_GUARD_ID 0
+setvard EDANA_RAID_ORC1 0
+setvard EDANA_RAID_ORC2 0
+setvard EDANA_RAID_ORC3 0
+setvard EDANA_RAID_ORC4 0
+}
+{ [server] game_spawn
+precachefile edana/raid_guard
+precachefile monsters/orc_weak
+precachefile monsters/orc_warrior
+// Beside the Thornlands entrance, clear of the transition and arrival slots.
+createnpc edana/raid_guard (1740,2520,-127)
+setvard EDANA_RAID_GUARD_ID $get(ent_lastcreated,id)
+}
+{ [server] edana_try_orc_raid
+if ( game.cvar.ms_event_active )
+{
+callexternal EDANA_RAID_GUARD_ID edana_raid_busy PARAM1
+exitevent
+}
+if ( EDANA_RAID_ACTIVE )
+{
+callexternal EDANA_RAID_GUARD_ID edana_raid_busy PARAM1
+}
+else
+{
+if ( game.time < EDANA_RAID_NEXT_TIME )
+{
+callexternal EDANA_RAID_GUARD_ID edana_raid_cooldown PARAM1
+}
+else
+{
+callevent edana_begin_orc_raid PARAM1
+}
+}
+}
+{ [server] edana_begin_orc_raid
+setvard EDANA_RAID_ACTIVE 1
+setvard EDANA_RAID_ORC1 0
+setvard EDANA_RAID_ORC2 0
+setvard EDANA_RAID_ORC3 0
+setvard EDANA_RAID_ORC4 0
+local EDANA_RAID_PLAYER PARAM1
+// Outdoor courtyard positions checked against Edana's BSP collision geometry.
+// A circle around the caller could put raiders inside the gate walls or shops.
+local EDANA_RAID_POS1 (1500,2250,-126)
+local EDANA_RAID_POS2 (1680,2280,-126)
+local EDANA_RAID_POS3 (1536,2450,-126)
+createnpc monsters/orc_weak EDANA_RAID_POS1
+setvard EDANA_RAID_ORC1 $get(ent_lastcreated,id)
+createnpc monsters/orc_weak EDANA_RAID_POS2
+setvard EDANA_RAID_ORC2 $get(ent_lastcreated,id)
+createnpc monsters/orc_weak EDANA_RAID_POS3
+setvard EDANA_RAID_ORC3 $get(ent_lastcreated,id)
+if ( game.players.totalhp >= 300 )
+{
+local EDANA_RAID_POS4 (1664,2460,-126)
+createnpc monsters/orc_warrior EDANA_RAID_POS4
+setvard EDANA_RAID_ORC4 $get(ent_lastcreated,id)
+}
+infomsg all "EDANA IS UNDER ATTACK!" "Orc raiders are closing on the village gate!"
+playmp3 all combat media/Half-Life11.mp3
+callexternal EDANA_RAID_GUARD_ID edana_raid_started EDANA_RAID_PLAYER
+callevent 2.0 edana_raid_check
+callevent EDANA_RAID_TIMEOUT edana_raid_timeout
+}
+{ [server] edana_raid_check
+if ( EDANA_RAID_ACTIVE )
+{
+local EDANA_RAID_ALIVE 0
+if ( $get(EDANA_RAID_ORC1,isalive) ) add EDANA_RAID_ALIVE 1
+if ( $get(EDANA_RAID_ORC2,isalive) ) add EDANA_RAID_ALIVE 1
+if ( $get(EDANA_RAID_ORC3,isalive) ) add EDANA_RAID_ALIVE 1
+if ( $get(EDANA_RAID_ORC4,isalive) ) add EDANA_RAID_ALIVE 1
+if ( EDANA_RAID_ALIVE <= 0 ) callevent edana_raid_finished
+else callevent 2.0 edana_raid_check
+}
+}
+{ [server] edana_raid_finished
+if ( EDANA_RAID_ACTIVE )
+{
+setvard EDANA_RAID_ACTIVE 0
+setvard EDANA_RAID_NEXT_TIME game.time
+add EDANA_RAID_NEXT_TIME EDANA_RAID_COOLDOWN
+playmp3 all stop
+infomsg all "EDANA DEFENDED" "The Orc raiders have been defeated."
+callexternal EDANA_RAID_GUARD_ID edana_raid_won
+}
+}
+{ [server] edana_raid_timeout
+if ( EDANA_RAID_ACTIVE )
+{
+if ( $get(EDANA_RAID_ORC1,exists) ) deleteent EDANA_RAID_ORC1 fade
+if ( $get(EDANA_RAID_ORC2,exists) ) deleteent EDANA_RAID_ORC2 fade
+if ( $get(EDANA_RAID_ORC3,exists) ) deleteent EDANA_RAID_ORC3 fade
+if ( $get(EDANA_RAID_ORC4,exists) ) deleteent EDANA_RAID_ORC4 fade
+setvard EDANA_RAID_ACTIVE 0
+setvard EDANA_RAID_NEXT_TIME game.time
+add EDANA_RAID_NEXT_TIME EDANA_RAID_COOLDOWN
+playmp3 all stop
+infomsg all "THE RAIDERS RETREAT" "The remaining Orcs scatter from Edana."
+callexternal EDANA_RAID_GUARD_ID edana_raid_ended
+}
+}

@@ -1,0 +1,74 @@
+			**** Special Master Sword Commands ****
+
+They are lised in this order:
+The command you need to bind - The default binding - What the Command does
+
+[Binding]	[Default Key]	[Description]
+
+use		q		Wears the currently held pack/sheath or quickly retrieves a sword
+				from a sheath
+remove		r		Lists items you're wearing and allows you to remove them
+drop		c		Drops the currently held item
+get		x		Picks up any items in front of you
++attack2	mouse2		Use the non-active item
+switchhand	mouse3		Switch the active hand
+playerinfo      p       	Displays your current race, class, stats and gold
+listskills     	f          	Allows you to activate a skill
+listspells     	z          	Allows you to cast a spell
+act		v       	Brings up a list of actions you can do
+setsay		u		Switches between talk, shout and talk to party modes
+slot[number]	0-9		Opens packs, quivers or sheathes in certain body locations
+				1 - Back
+				2 - Belt
+				3 - Shoulder
+mainmenu	F1		Brings up Master Sword's main menu
+offer		F2		Offers the currently held item to a player or NPC
+desc		F3		Displays a description of the item you're holding
+forgive		F4		Removes an accidental PK from the killer's record.
+joinparty <name>		Joins a party.  Members of a party can't hurt each other.
+leaveparty			Leaves your current party
+togglebrowser			Toggles the in-game browser used to change servers
+thirdperson	insert		Switches to third-person mode
+firstperson	delete		Switches to first-person mode
+
+
+Other Commands
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+Running:	Quickly press forward twice and hold it the second time.  This action
+                uses stamina quickly.
+
+PGUP/PGDN	Use to scroll the on-screen consoles or view individual stats in the player
+		info screen.  By default, the chat box will scroll. Press HOME to switch
+		between the chat box and the event console.
+
+CVars:
+¯¯¯¯¯
+
+	Client
+	------
+ms_music <0-1>		Set to '1' and Master Sword will play the level's music
+ms_music_volume <0-1> 	Controls the volume of the music (1.0 = FULL, 0.0 = SILENT)
+ms_evthud_size	<0-10>	Controls how many lines can be displayed at once in the on-screen console
+ms_evthud_history <1-100> Controls how many lines are saved in the on-screen console
+ms_evthud_decaytime <sec> The event console will shrink by one line every <sec> seconds
+ms_evthud_bgcolor <r g b a> Controls the background color of the event console
+ms_txthud_width	<0-640>	Controls how wide the chat box is (in pixels)
+ms_txthud_size	<0-10>	Controls how many lines can be displayed at once in the chat box
+ms_txthud_history <1-100> Controls how many lines are saved in the chat box
+ms_txthud_decaytime <sec> The chat box will shrink by one line every <sec> seconds
+ms_txthud_bgcolor <r g b a> Controls the background color of the chat
+
+
+	Server
+	------
+ms_serverchar <0-3>	Set to 0 for client-side characters.  A setting of 1-3 causes server to 
+			store that many characters for each player.
+ms_pklevel <0-2>	0 = No Player Killing allowed
+			1 = Pk allowed outside of town
+			2 = Pk allowed anywhere
+msallowvote <0-1>	Set to '1' to allow vote kicking
+ms_timelimit <min>	After server is empty for <min> minutes, The server will change maps.  If
+			no mapcycle.txt is found, Edana is the default map.
+ms_joinreset <0-1>	When a player joins the empty server and can't spawn due to spawn restrictions,
+			the map will immediately change to Edana

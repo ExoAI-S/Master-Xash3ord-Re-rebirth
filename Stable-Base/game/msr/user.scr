@@ -1,0 +1,163 @@
+// NOTE:  THIS FILE IS AUTOMATICALLY REGENERATED, 
+//DO NOT EDIT THIS HEADER, YOUR COMMENTS WILL BE LOST IF YOU DO
+// User options script
+//
+// Format:
+//  Version [float]
+//  Options description followed by 
+//  Options defaults
+//
+// Option description syntax:
+//
+//  "cvar" { "Prompt" { type [ type info ] } { default } }
+//
+//  type = 
+//   BOOL   (a yes/no toggle)
+//   STRING
+//   NUMBER
+//   LIST
+//
+// type info:
+// BOOL                 no type info
+// NUMBER       min max range, use -1 -1 for no limits
+// STRING       no type info
+// LIST          delimited list of options value pairs
+//
+//
+// default depends on type
+// BOOL is "0" or "1"
+// NUMBER is "value"
+// STRING is "value"
+// LIST is "index", where index "0" is the first element of the list
+
+
+// Half-Life User Info Configuration Layout Script (stores last settings chosen, too)
+// File generated:  Thu Sep 10 05:46:59 PM
+//
+//
+// Cvar	-	Setting
+
+VERSION 1.0
+
+DESCRIPTION INFO_OPTIONS
+{
+	"ms_autocharge"
+	{
+		"Auto-charge weapons"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"ms_doubletapsprint"
+	{
+		"Double Tap Sprint"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"ms_sprinttoggle"
+	{
+		"Shift Sprint Toggle"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"r_detailtextures"
+	{
+		"Detail Textures"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"ms_reflect"
+	{
+		"Reflections"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"ms_lildude"
+	{
+		"Show third-person view on first person HUD"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"ms_txthud_size"
+	{
+		"# lines of chat to show"
+		{ NUMBER 0 25 }
+		{ "14.000000" }
+	}
+
+	"ms_txthud_decaytime"
+	{
+		"# secs before chat lines vanish"
+		{ NUMBER 0 10000 }
+		{ "10.000000" }
+	}
+
+	"ms_evthud_size "
+	{
+		"# lines to show in Event Console"
+		{ NUMBER 1 40 }
+		{ "14.000000" }
+	}
+
+	"ms_evthud_bgtrans"
+	{
+		"Transparent Event Console"
+		{ BOOL }
+		{ "0" }
+	}
+
+	"ms_txthud_bgtrans"
+	{
+		"Transparent Chat Box"
+		{ BOOL }
+		{ "0" }
+	}
+
+	"mp_decals"
+	{
+		"Multiplayer decal limit"
+		{ NUMBER 0 300 }
+		{ "300.000000" }
+	}
+
+	"ms_doubletapdodge"
+	{
+		"Double tap direction to dodge"
+		{ BOOL }
+		{ "0" }
+	}
+
+	"ms_chargebar_sound"
+	{
+		"Charge Bar 8-bit Wav File"
+		{ STRING }
+		{ "magic/chargebar.wav" }
+	}
+
+	"ms_chargebar_volume"
+	{
+		"Charge Bar Volume"
+		{ NUMBER 0 10 }
+		{ "10" }
+	}
+
+	"cl_crosshair_draw"
+	{
+		"Crosshair Toggle"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"cl_crosshair_type"
+	{
+		"Crosshair Style"
+		{ NUMBER 0 8 }
+		{ "0" }
+	}
+
+}

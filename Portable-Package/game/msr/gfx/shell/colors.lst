@@ -1,0 +1,31 @@
+//234 234 234
+//160 160 160
+//35 80 35
+
+
+HELP_COLOR						160 160 255
+//menu description text colour
+
+PROMPT_BG_COLOR						56 56 126
+//quit prompt background colour (leave it)
+
+PROMPT_TEXT_COLOR					234 234 255
+//quit prompt question colour
+
+PROMPT_TITLE_COLOR					234 234 255
+//?
+
+INPUT_TEXT_COLOR					234 234 255
+//?
+
+INPUT_BG_COLOR						56 56 126
+//? (leave it)
+
+REFRESH_TITLE_COLOR 					234 234 255
+//'refreshing servers' text colour
+
+REFRESH_TEXT_COLOR  					234 234 255
+//'refreshing servers' server names colour
+
+REFRESH_BG_COLOR					56 56 56
+//'refreshing servers' background colour (leave it)

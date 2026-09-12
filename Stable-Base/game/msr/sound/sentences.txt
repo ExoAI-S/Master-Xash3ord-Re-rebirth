@@ -1,0 +1,34 @@
+// Master Sword 'speech' sentances
+
+// outdoor
+WILD0 ambience/(v30) quail1(p103), quail1(t10), quail1(p101)
+WILD1 ambience/bee1(v75)
+WILD2 ambience/bee2(p105)
+WILD3 ambience/hawk1(p98 v30)
+WILD4 ambience/hawk1(p105 v20)
+WILD5 ambience/(v50 p97) quail1, quail1(t15)
+WILD6 ambience/bee1(p98 v50)
+WILD7 ambience/bee1(p97)
+WILD8 ambience/quail1(p98 v20))
+WILD9 ambience/des_wind1(v50)
+WILD10 ambience/des_wind2(v50)
+WILD11 ambience/des_wind3(v50)
+WILD9 ambience/des_wind1(v40 p105)
+WILD10 ambience/des_wind2(v40 p98)
+WILD11 ambience/des_wind3(v40 p103)
+WILD12 ambience/wren1(v80)
+WILD13 ambience/quail1(p98 v20))
+WILD14 ambience/hawk1(p98 v30)
+WILD15 ambience/des_wind1(v40 p105)
+WILD16 ambience/(v50 p97) quail1, quail1(t15)
+WILD17 ambience/bee2(p105)
+WILD18 ambience/bee1(p97)
+
+// rocket
+ROCKET0 ambience/steamburst1
+ROCKET1 ambience/steamburst1(p80)
+ROCKET2 ambience/steamburst1(p120)
+ROCKET3 ambience/rocket_groan1
+ROCKET4 ambience/rocket_groan2
+ROCKET5 ambience/rocket_groan3
+ROCKET6 ambience/rocket_groan4

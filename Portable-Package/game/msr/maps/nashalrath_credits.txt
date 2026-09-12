@@ -1,0 +1,16 @@
+Nashalrath by LittleFrodo, J, Gurluas and Thothie
+A map for Master Sword: Continued
+
+Credits:
+    LittleFrodo    Mapping
+    J              Mapping, fixes
+    Gurluas        Story
+    Thothie        Scripts, fixes
+
+Nashalrath, based on a story by Gurluas, was originally a 3-part map series
+being developed by LittleFrodo. The development was, however, halted and the
+map was put in the WIP archives. I took the sources and combined all 3 parts
+to make one map, I also replaced the beginning that was directly taken
+from Jester's Unrest map.
+
+-J (aka JJJ, JJJL and whatnot)
