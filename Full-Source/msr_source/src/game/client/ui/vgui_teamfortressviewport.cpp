@@ -102,6 +102,9 @@ void VGUI_Think()
 	{
 		gViewPort->m_Menus[i]->Think();
 	}
+	// Store/inventory panels are created separately from m_Menus.
+	if (gViewPort->m_pContainerMenu)
+		gViewPort->m_pContainerMenu->Think();
 }
 
 class CMenuPanel *CreateNewCharacterPanel();

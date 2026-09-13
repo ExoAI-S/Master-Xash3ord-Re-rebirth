@@ -33,17 +33,24 @@ internal static class MSRLauncher
         string root = AppDomain.CurrentDomain.BaseDirectory;
         try
         {
-            if (args.Length == 1 && args[0] == "--self-test") { SelfTest(root); return 0; }
+            if (args.Length == 1 && args[0] == "--self-test")
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                SelfTest(root);
+                return 0;
+            }
             if (args.Length == 1 && args[0] == "--create-shortcuts")
             {
                 CreateShortcuts(root);
-                MessageBox.Show("Created five MSR desktop shortcuts for the two realms, Enhanced, Stable Base, and Dungeon Master.", "MSR shortcuts");
+                MessageBox.Show("Created MSR, Join Realm One, Join Realm Two, and Dungeon Master desktop shortcuts.", "MSR shortcuts");
                 return 0;
             }
             string version = "Portable-Package";
             string realm = null;
             string hostAction = null;
             bool dungeonMaster = false;
+            bool validateOnly = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i] == "--version" && i + 1 < args.Length)
@@ -60,6 +67,7 @@ internal static class MSRLauncher
                 }
                 else if (args[i] == "--address" && i + 1 < args.Length) { realm = ValidateAddress(args[++i]); }
                 else if (args[i] == "--dm") { dungeonMaster = true; }
+                else if (args[i] == "--validate-only") { validateOnly = true; }
                 else if (args[i] == "--host-action" && i + 1 < args.Length)
                 {
                     hostAction = args[++i].ToLowerInvariant();
@@ -70,6 +78,8 @@ internal static class MSRLauncher
             }
             if ((realm != null ? 1 : 0) + (hostAction != null ? 1 : 0) + (dungeonMaster ? 1 : 0) > 1)
                 throw new ArgumentException("Choose one launcher action at a time.");
+            // CLI validation must never write profiles, open a window or touch a host.
+            if (validateOnly) return 0;
             if (realm != null) { Launch(root, version, realm, true); return 0; }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -78,7 +88,12 @@ internal static class MSRLauncher
             else Application.Run(new LauncherForm(root, version));
             return 0;
         }
-        catch (Exception error) { ShowError(root, error); return 1; }
+        catch (Exception error)
+        {
+            if (Array.IndexOf(args, "--validate-only") >= 0) return 2;
+            ShowError(root, error);
+            return 1;
+        }
     }
 
     internal static void ShowError(string root, Exception error)
@@ -134,7 +149,7 @@ internal static class MSRLauncher
         string key = File.Exists(profilePath) ? ReadKey(profilePath) : null;
         string other = File.Exists(otherPath) ? ReadKey(otherPath) : null;
         if (key != null && other != null && key != other)
-            throw new InvalidDataException("Stable and Enhanced have different player identities. Keep both player-profile.json files and restore the intended identity before joining. Neither file was changed.");
+            throw new InvalidDataException("The current and recovery builds have different player identities. Keep both player-profile.json files and restore the intended identity before joining. Neither file was changed.");
         if (key == null)
         {
             key = other;
@@ -218,8 +233,9 @@ internal static class MSRLauncher
         object shell = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell", true));
         try
         {
-            string[] names = { "MSR - Join Realm One", "MSR - Join Realm Two", "MSR - Enhanced", "MSR - Stable Base", "MSR - Dungeon Master" };
-            string[] arguments = { "--realm one", "--realm two", "--host-action play --version enhanced", "--host-action play --version stable", "--dm" };
+            string[] names = { "MSR", "MSR - Join Realm One", "MSR - Join Realm Two", "MSR - Dungeon Master" };
+            string[] arguments = { "", "--realm one", "--realm two", "--dm" };
+            string[] descriptions = { "Open MSR: join a realm, play locally, or use Dungeon Master controls.", "Join MSR Realm One.", "Join MSR Realm Two with the same character profile.", "Manage Dungeon Master permissions on realms hosted on this PC." };
             for (int i = 0; i < names.Length; i++)
             {
                 object shortcut = shell.GetType().InvokeMember("CreateShortcut", BindingFlags.InvokeMethod, null, shell, new object[] { Path.Combine(desktop, names[i] + ".lnk") });
@@ -228,10 +244,32 @@ internal static class MSRLauncher
                     Property(shortcut, "TargetPath", exe);
                     Property(shortcut, "Arguments", arguments[i]);
                     Property(shortcut, "WorkingDirectory", root);
-                    Property(shortcut, "Description", "MSR server launcher; Enhanced includes Dungeon Master mode.");
+                    Property(shortcut, "Description", descriptions[i]);
                     shortcut.GetType().InvokeMember("Save", BindingFlags.InvokeMethod, null, shortcut, new object[0]);
                 }
                 finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shortcut); }
+            }
+            // Consolidate only old shortcuts that still belong to this installation.
+            foreach (string oldName in new string[] { "MSR - Enhanced", "MSR - Stable Base" })
+            {
+                string oldPath = Path.Combine(desktop, oldName + ".lnk");
+                if (!File.Exists(oldPath)) continue;
+                object oldShortcut = shell.GetType().InvokeMember("CreateShortcut", BindingFlags.InvokeMethod, null, shell, new object[] { oldPath });
+                bool owned;
+                try
+                {
+                    string target = (string)oldShortcut.GetType().InvokeMember("TargetPath", BindingFlags.GetProperty, null, oldShortcut, new object[0]);
+                    string legacyCmd = Path.Combine(root, oldName == "MSR - Enhanced" ? "Play-Enhanced.cmd" : "Play-Stable.cmd");
+                    owned = String.Equals(target, exe, StringComparison.OrdinalIgnoreCase) || String.Equals(target, legacyCmd, StringComparison.OrdinalIgnoreCase);
+                }
+                finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(oldShortcut); }
+                if (owned)
+                {
+                    string backup = Path.Combine(root, "Recovery", "Desktop-Shortcut-Backups", Guid.NewGuid().ToString("N"));
+                    Directory.CreateDirectory(backup);
+                    File.Copy(oldPath, Path.Combine(backup, oldName + ".lnk"));
+                    File.Delete(oldPath);
+                }
             }
         }
         finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell); }
@@ -282,8 +320,7 @@ internal static class MSRLauncher
         {
             Dictionary<string, string> expected = new Dictionary<string, string> {
                 { "MSR - Join Realm One", "--realm one" }, { "MSR - Join Realm Two", "--realm two" },
-                { "MSR - Enhanced", "--host-action play --version enhanced" },
-                { "MSR - Stable Base", "--host-action play --version stable" }, { "MSR - Dungeon Master", "--dm" }
+                { "MSR", "" }, { "MSR - Dungeon Master", "--dm" }
             };
             foreach (KeyValuePair<string, string> item in expected)
             {
@@ -298,7 +335,59 @@ internal static class MSRLauncher
             }
         }
         finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell); }
-        Assert(Directory.GetFiles(shortcuts, "*.lnk").Length == 5, "five native launch shortcuts");
+        Assert(Directory.GetFiles(shortcuts, "*.lnk").Length == 4, "four unified launch shortcuts");
+        string legacyPath = Path.Combine(shortcuts, "MSR - Enhanced.lnk");
+        string foreignPath = Path.Combine(shortcuts, "MSR - Stable Base.lnk");
+        object migrationShell = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell", true));
+        try
+        {
+            foreach (string linkPath in new string[] { legacyPath, foreignPath })
+            {
+                object link = migrationShell.GetType().InvokeMember("CreateShortcut", BindingFlags.InvokeMethod, null, migrationShell, new object[] { linkPath });
+                try
+                {
+                    Property(link, "TargetPath", linkPath == legacyPath ? Path.Combine(fixture, "MSR-Launcher.exe") : Path.Combine(fixture, "Other Installation", "MSR-Launcher.exe"));
+                    link.GetType().InvokeMember("Save", BindingFlags.InvokeMethod, null, link, new object[0]);
+                }
+                finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(link); }
+            }
+        }
+        finally { System.Runtime.InteropServices.Marshal.FinalReleaseComObject(migrationShell); }
+        string originalLegacy = Convert.ToBase64String(File.ReadAllBytes(legacyPath));
+        string originalForeign = Convert.ToBase64String(File.ReadAllBytes(foreignPath));
+        CreateShortcuts(fixture, shortcuts);
+        Assert(!File.Exists(legacyPath), "owned old edition shortcut consolidated");
+        Assert(originalForeign == Convert.ToBase64String(File.ReadAllBytes(foreignPath)), "unrelated old-name shortcut preserved");
+        string[] migratedBackups = Directory.GetFiles(Path.Combine(fixture, "Recovery", "Desktop-Shortcut-Backups"), "*.lnk", SearchOption.AllDirectories);
+        Assert(migratedBackups.Length == 1 && originalLegacy == Convert.ToBase64String(File.ReadAllBytes(migratedBackups[0])), "exact legacy shortcut backup preserved before removal");
+        using (LauncherForm form = new LauncherForm(fixture, Versions[0]))
+        {
+            int selectors = 0;
+            foreach (Control control in form.Controls) if (control is ComboBox) selectors++;
+            Assert(selectors == 1, "normal launcher selects a server without an edition selector");
+            Assert(form.Text == "MSR", "unified launcher title");
+            form.ShowInTaskbar = false;
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = new Point(-10000, -10000);
+            form.Show();
+            Application.DoEvents();
+            using (Bitmap preview = new Bitmap(form.Width, form.Height))
+            {
+                form.DrawToBitmap(preview, new Rectangle(0, 0, form.Width, form.Height));
+                preview.Save(Path.Combine(root, "native-launcher-preview.png"), System.Drawing.Imaging.ImageFormat.Png);
+            }
+            form.Close();
+        }
+        // A fresh single-game ZIP must not depend on a recovery runtime being present.
+        string single = Path.Combine(fixture, "Single Game");
+        foreach (string part in Required)
+        {
+            string file = Path.Combine(single, Versions[0], "game", part);
+            Directory.CreateDirectory(Path.GetDirectoryName(file));
+            File.WriteAllText(file, "test fixture; no executable content");
+        }
+        Prepare(single, Versions[0], RealmOne, true);
+        Assert(!Directory.Exists(Path.Combine(single, Versions[1])), "single runtime launch preparation needs no recovery build");
         string dmArgs = NativeHost.Arguments(fixture, Versions[0], "rcon", "realm-two", "ms_dm_grant 31");
         Assert(dmArgs.Contains("--version enhanced --action rcon --server-id realm-two --command \"ms_dm_grant 31\""), "native DM helper contract");
         bool unsafeCommand = false;
@@ -307,7 +396,7 @@ internal static class MSRLauncher
         bool invalidSlot = false;
         try { NativeHost.Arguments(fixture, Versions[0], "rcon", "realm-one", "ms_dm_grant 32"); } catch (ArgumentException) { invalidSlot = true; }
         Assert(invalidSlot, "invalid DM slot rejected");
-        string report = "PASS: relocated path with spaces; new cryptographic identity; existing identity preserved; cross-version identity reuse; conflict rejection; metadata/BOM accepted and duplicate identity keys refused; malformed address rejected before changes; windowed client-only launch arguments; all five native shortcuts created and targets/arguments read back in an isolated fixture; native DM helper command contract; invalid slots and RCON chaining refused.\r\nNo game, service, or real desktop shortcut was started or changed.\r\n";
+        string report = "PASS: relocated path with spaces; new cryptographic identity; existing identity preserved; recovery identity reuse; conflict rejection; metadata/BOM accepted and duplicate identity keys refused; malformed address rejected before changes; windowed client-only launch arguments; all four unified shortcuts created and targets/arguments read back in an isolated fixture; normal launcher has only the server selector; single-runtime preparation; native DM helper command contract; invalid slots and RCON chaining refused.\r\nNo game, service, or real desktop shortcut was started or changed by this self-test.\r\n";
         File.WriteAllText(Path.Combine(root, "native-launcher-self-test.txt"), report);
     }
 }
@@ -315,7 +404,6 @@ internal static class MSRLauncher
 internal sealed class LauncherForm : Form
 {
     private readonly string root;
-    private readonly ComboBox versions = new ComboBox();
     private readonly ComboBox servers = new ComboBox();
     private readonly TextBox address = new TextBox();
     private readonly CheckBox windowed = new CheckBox();
@@ -323,50 +411,52 @@ internal sealed class LauncherForm : Form
     internal LauncherForm(string root, string version)
     {
         this.root = root;
-        Text = "MSR PrimeXT - Join a server";
-        ClientSize = new Size(600, 352);
+        Text = version == "Stable-Base" ? "MSR - Recovery build" : "MSR";
+        ClientSize = new Size(640, 340);
         Font = new Font("Segoe UI", 10F);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         StartPosition = FormStartPosition.CenterScreen;
-        AddLabel("Choose a realm or enter a LAN / Internet server address.", 22, 18, 555, 25);
-        AddLabel("Game version", 22, 57, 150, 25);
-        versions.SetBounds(180, 54, 392, 28);
-        versions.DropDownStyle = ComboBoxStyle.DropDownList;
-        versions.Items.AddRange(new object[] { "Enhanced - Dungeon Master support", "Stable base" });
-        versions.SelectedIndex = version == "Stable-Base" ? 1 : 0;
-        Controls.Add(versions);
-        AddLabel("Server", 22, 100, 150, 25);
-        servers.SetBounds(180, 97, 392, 28);
+        AddLabel("Choose a realm, play locally, or open Dungeon Master controls.", 22, 18, 596, 25);
+        AddLabel("Server", 22, 65, 140, 25);
+        servers.SetBounds(168, 62, 450, 28);
         servers.DropDownStyle = ComboBoxStyle.DropDownList;
         servers.Items.AddRange(new object[] { "Realm One", "Realm Two", "Another server / LAN" });
         servers.SelectedIndexChanged += delegate { address.Text = servers.SelectedIndex == 0 ? MSRLauncher.RealmOne : servers.SelectedIndex == 1 ? MSRLauncher.RealmTwo : "127.0.0.1:27025"; address.ReadOnly = servers.SelectedIndex != 2; };
         Controls.Add(servers);
-        AddLabel("Address", 22, 143, 150, 25);
-        address.SetBounds(180, 140, 392, 28);
+        AddLabel("Address", 22, 108, 140, 25);
+        address.SetBounds(168, 105, 450, 28);
         Controls.Add(address);
         servers.SelectedIndex = 0;
         windowed.Text = "Start in a 1280 x 720 window";
-        windowed.SetBounds(180, 181, 392, 28);
+        windowed.SetBounds(168, 146, 450, 28);
         windowed.Checked = true;
         Controls.Add(windowed);
-        AddLabel("Join server connects to an existing realm. Local host manages this PC.\nYour player identity is reused between Stable and Enhanced.", 22, 224, 550, 52);
+        AddLabel("Join server uses the address above. Play local starts this PC's realms.\nYour player identity stays with the existing character save service.", 22, 187, 596, 48);
         Button shortcuts = new Button { Text = "Desktop shortcuts" };
-        shortcuts.SetBounds(22, 293, 164, 35);
-        shortcuts.Click += delegate { try { MSRLauncher.CreateShortcuts(root); MessageBox.Show("Five MSR shortcuts were created on your desktop.", "MSR shortcuts"); } catch (Exception error) { MSRLauncher.ShowError(root, error); } };
+        shortcuts.SetBounds(428, 292, 190, 32);
+        shortcuts.Click += delegate { try { MSRLauncher.CreateShortcuts(root); MessageBox.Show("MSR and three direct-access shortcuts were created on your desktop.", "MSR shortcuts"); } catch (Exception error) { MSRLauncher.ShowError(root, error); } };
         Controls.Add(shortcuts);
         Button join = new Button { Text = "Join server" };
-        join.SetBounds(408, 293, 164, 35);
+        join.SetBounds(22, 242, 290, 36);
         join.Click += delegate
         {
-            try { MSRLauncher.Launch(root, MSRLauncher.Versions[versions.SelectedIndex], address.Text, windowed.Checked); Close(); }
+            try { MSRLauncher.Launch(root, version, address.Text, windowed.Checked); Close(); }
             catch (Exception error) { MSRLauncher.ShowError(root, error); }
         };
         Controls.Add(join);
-        Button host = new Button { Text = "Local host..." };
-        host.SetBounds(211, 293, 164, 35);
-        host.Click += delegate { using (HostForm form = new HostForm(root, MSRLauncher.Versions[versions.SelectedIndex])) form.ShowDialog(this); };
+        Button play = new Button { Text = "Play local" };
+        play.SetBounds(328, 242, 290, 36);
+        play.Click += delegate { using (HostForm form = new HostForm(root, version, "play")) form.ShowDialog(this); };
+        Controls.Add(play);
+        Button host = new Button { Text = "Host controls" };
+        host.SetBounds(22, 292, 190, 32);
+        host.Click += delegate { using (HostForm form = new HostForm(root, version)) form.ShowDialog(this); };
         Controls.Add(host);
+        Button dm = new Button { Text = "Dungeon Master", Enabled = version == "Portable-Package" };
+        dm.SetBounds(225, 292, 190, 32);
+        dm.Click += delegate { using (DMForm form = new DMForm(root)) form.ShowDialog(this); };
+        Controls.Add(dm);
         AcceptButton = join;
     }
 
@@ -390,13 +480,13 @@ internal sealed class HostForm : Form
     {
         this.root = root;
         this.version = version;
-        Text = "MSR local host - " + (version == "Stable-Base" ? "Stable base" : "Enhanced with DM");
+        Text = version == "Stable-Base" ? "MSR local host - Recovery build" : "MSR local host";
         ClientSize = new Size(690, 470);
         Font = new Font("Segoe UI", 10F);
         StartPosition = FormStartPosition.CenterParent;
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
-        Label hint = new Label { Text = "Start or Play selects this version and preserves local characters with save backups.\nClose the game first. Switching versions stops the other local realms." };
+        Label hint = new Label { Text = version == "Stable-Base" ? "Recovery restores the previous build with save backups. Close the game first.\nSwitching builds disconnects players on the current local realms." : "Play local starts this PC's realms and opens the game. Close the game first.\nIf returning from recovery, local saves are backed up before switching builds." };
         hint.SetBounds(20, 18, 650, 48);
         Controls.Add(hint);
         string[] actions = { "start", "play", "status", "stop" };
@@ -504,13 +594,13 @@ internal sealed class DMForm : Form
     internal DMForm(string root)
     {
         this.root = root;
-        Text = "MSR Dungeon Master - local Enhanced realms";
+        Text = "MSR Dungeon Master - local realms";
         ClientSize = new Size(760, 590);
         Font = new Font("Segoe UI", 10F);
         StartPosition = FormStartPosition.CenterParent;
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
-        Label intro = new Label { Text = "Controls the Enhanced realms hosted on this PC. Join the game, refresh players,\nthen grant the number beside your name in the # column. In game: G > Dungeon Master." };
+        Label intro = new Label { Text = "Controls the realms hosted on this PC. Join the game, refresh players,\nthen grant the number beside your name in the # column. In game: G > Dungeon Master." };
         intro.SetBounds(18, 14, 724, 49);
         Controls.Add(intro);
         realm.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -540,7 +630,7 @@ internal sealed class DMForm : Form
         output.ReadOnly = true;
         output.Font = new Font("Consolas", 9F);
         output.ScrollBars = ScrollBars.Vertical;
-        output.Text = "Start your Enhanced local host first.\r\nGrants expire on disconnect or map change.\r\nFor shared Internet realms, ask their host to grant control.";
+        output.Text = "Start your local host first.\r\nGrants expire on disconnect or map change.\r\nFor shared Internet realms, ask their host to grant control.";
         Controls.Add(output);
         Label note = new Label { Text = "Random events start off. In Edana, stand near the entrance courtyard before summoning." };
         note.SetBounds(18, 551, 724, 28);

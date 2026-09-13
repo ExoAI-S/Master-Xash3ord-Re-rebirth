@@ -237,34 +237,26 @@ inline const char* RETURN_FALSE() {
 	return "0";
 }
 
-// Keep legacy pointer results alive across nested formatting and successive arguments.
-// Each result remains valid until this thread performs another 16 formatting calls.
-inline char* ScriptReturnBuffer() {
-	static thread_local char Buffers[16][MSSTRING_SIZE];
-	static thread_local unsigned int NextBuffer = 0;
-	return Buffers[NextBuffer++ % 16];
-}
-
 inline char * RETURN_FLOAT_PRECISION(const float &prfl) {
-	char* Return = ScriptReturnBuffer();
+	msstring Return;
 	_snprintf(Return, MSSTRING_SIZE, "%f", prfl); 
 	return Return;
 }
 
 inline char* RETURN_FLOAT(const float& fl) {
-	char* Return = ScriptReturnBuffer();
+	msstring Return;
 	_snprintf(Return, MSSTRING_SIZE, "%.2f", fl);
 	return Return;
 }
 
 inline char* RETURN_INT(const int& i) {
-	char* Return = ScriptReturnBuffer();
+	msstring Return;
 	_snprintf(Return, MSSTRING_SIZE, "%i", i);
 	return Return;
 }
 
 inline char* RETURN_VECTOR(const Vector& vec){
-	char* Return = ScriptReturnBuffer();
+	msstring Return;
 	_snprintf(Return, MSSTRING_SIZE, "(%.2f,%.2f,%.2f)",vec.x, vec.y, vec.z);
 	return Return;
 }
@@ -272,7 +264,7 @@ inline char* RETURN_VECTOR(const Vector& vec){
 
 inline const char* VecToString(const Vector& Vec, bool bAs2D)
 {
-	char* Return = ScriptReturnBuffer();
+	msstring Return;
 	if (bAs2D)
 		_snprintf(Return, MSSTRING_SIZE, "(%.2f,%.2f)", Vec.x, Vec.y);
 	else

@@ -1,0 +1,36 @@
+{
+  "inputs": [
+    {
+      "path": "monsters/rat.script",
+      "sha256": "3c2f593964e96077ebeb30e2a99c6a8fea1cb10920c624f7a3530d46e30ef117"
+    },
+    {
+      "path": "items/swords_shortsword.script",
+      "sha256": "5eaf30cc2d31bcc026493c647eeee465050ebf1f7b10e6660b3d0b2911b4b7a2"
+    },
+    {
+      "path": "monsters/base_script_skills.script",
+      "sha256": "48d08e968a27cd9f1a416c76abb1fec81f330737add129252249438c6292240e"
+    }
+  ],
+  "events": 15,
+  "blocks": 73,
+  "handlers": [
+    "ScriptCmd_CallEvent",
+    "ScriptCmd_Desc",
+    "ScriptCmd_If",
+    "ScriptCmd_MathSet",
+    "ScriptCmd_Message",
+    "ScriptCmd_Name",
+    "ScriptCmd_PlaySound",
+    "ScriptCmd_RepeatDelay",
+    "ScriptCmd_SetModel",
+    "ScriptCmd_SetModelBody",
+    "ScriptCmd_SetVar",
+    "ScriptCmd_TokenAdd",
+    "ScriptCmd_TokenSet",
+    "ScriptCmd_Volume",
+    "ScriptCmd_Weight"
+  ],
+  "scope": "Native event control-flow pilot; legacy parser and runtime still required."
+}

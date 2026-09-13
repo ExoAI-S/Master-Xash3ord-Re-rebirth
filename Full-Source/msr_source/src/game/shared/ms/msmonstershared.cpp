@@ -472,18 +472,18 @@ int CMSMonster::GetSkillStat(const char* StatName, int StatProperty)
 {
 
 	CStat *pStat = FindStat(StatName);
-	if (!pStat || StatProperty >= (signed)pStat->m_SubStats.size())
+	if (!pStat || StatProperty < 0 || StatProperty >= (signed)pStat->m_SubStats.size())
 		return 0;
 
-	return pStat->m_SubStats[StatProperty].Value;
+	return pStat->Value(StatProperty);
 }
 int CMSMonster::GetSkillStat(int iStatIdx, int StatProperty)
 {
 	CStat *pStat = FindStat(iStatIdx);
-	if (!pStat || StatProperty >= (signed)pStat->m_SubStats.size())
+	if (!pStat || StatProperty < 0 || StatProperty >= (signed)pStat->m_SubStats.size())
 		return 0;
 
-	return pStat->m_SubStats[StatProperty].Value;
+	return pStat->Value(StatProperty);
 }
 
 int CMSMonster::GetSkillStatCount()

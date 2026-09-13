@@ -1672,7 +1672,9 @@ const char* CBaseEntity::GetProp(CBaseEntity* pTarget, msstring& FullParams, mss
 					else if (Prop.contains(".divination"))	SubSkill = STAT_MAGIC_DIVINATION;
 					else if (Prop.contains(".affliction"))	SubSkill = STAT_MAGIC_AFFLICTION;
 
-					int Max = (SubSkill > -1) ? (int)MAX_STAT_PROPVALUE : (int)MAX_STAT_VALUE;
+                    // Preserve legacy script effect scales: bare skill ratios use 300,
+                    // while property aliases use 100. Neither is the training cap.
+                    int Max = (SubSkill > -1) ? (int)MAX_STAT_PROPVALUE : (int)MAX_STAT_VALUE;
 
 					if (Prop.contains(".max")) return RETURN_INT(Max);
 					else
@@ -6775,11 +6777,6 @@ bool CScript::ScriptCmd_SoundPlay3D(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msstr
 		int chan = Params.size() >= 5 ? atoi(Params[4]) : 0;
 		float sPitch = Params.size() >= 6 ? atof(Params[5]) : PITCH_NORM;
 		float Volume = atof(Params[1]) / 10;
-		if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0)
-		{
-			Vector origin = StringToVec(Params[2]);
-			MS_INFO("[FX] sound.play3d script=%s file=%s origin=(%.1f,%.1f,%.1f) raw=%s volume=%.2f channel=%d pitch=%.1f", m.ScriptFile.c_str(), Params[0].c_str(), origin.x, origin.y, origin.z, Params[2].c_str(), Volume, chan, sPitch);
-		}
 		//gEngfuncs.pEventAPI->EV_PlaySound( 0, *(Vector *)&Origin, chan, Sound, Volume, Attn, 0, 100 );
 		//EngineFunc::Shared_PlaySound3D( Params[0], Volume, StringToVec(Params[2]), Attn );
 		//Thothie MAR2012 - functions to control the channel (so we can end looping sounds)

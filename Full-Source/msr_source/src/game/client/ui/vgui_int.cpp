@@ -21,6 +21,7 @@
 #include "clenv.h"
 #include "mslogger.h"
 #include "ms/vgui_hud.h"
+#include "ms/vgui_containerlist.h"
 
 namespace
 {
@@ -112,6 +113,11 @@ void VGui_Startup()
 	}
 
 	HUD_ResolutionChanged();
+	if (gViewPort && gViewPort->m_pContainerMenu)
+	{
+		gViewPort->m_pContainerMenu->CancelItemDrag();
+		gViewPort->m_pContainerMenu->ApplyLayout();
+	}
 	MS_INFO("[VGui_Startup: HUD layout refreshed for %dx%d]", ScreenWidth(), ScreenHeight());
 	MS_INFO("[VGui_Startup: Complete]");
 

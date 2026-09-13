@@ -59,6 +59,16 @@ set(MSR_INCLUDE_DIRS
 
 add_library(msr_client SHARED ${MSR_CLIENT_SOURCES})
 add_library(msr_server SHARED ${MSR_SERVER_SOURCES})
+
+# Experimental native event control flow. The normal game retains its tested
+# interpreter; this pilot still requires the original script loader and assets.
+option(MSR_NATIVE_EVENT_PILOT "Enable experimental native MScript event execution" OFF)
+if(MSR_NATIVE_EVENT_PILOT)
+    foreach(target IN ITEMS msr_client msr_server)
+        target_compile_definitions(${target} PRIVATE MSR_NATIVE_EVENT_PILOT=1)
+        target_include_directories(${target} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/native_mscript")
+    endforeach()
+endif()
 target_include_directories(msr_client PRIVATE "${CMAKE_SOURCE_DIR}/external/tracy/import/src")
 
 foreach(target IN ITEMS msr_client msr_server)

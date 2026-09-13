@@ -2,6 +2,7 @@
 #include "stats/statdefs.h"
 
 class CMenuHandler_PutInPack;
+class CWeaponProgress;
 #define CONTAINER_INFO_LABELS 1
 #define GENDERPANEL_MAINBTNS 2
 #define INFO_STAT_NUM 6
@@ -16,6 +17,7 @@ private:
 	MSLabel *m_SkillInfoLabel, *m_StatTypeLabel[STAT_MAGIC_TOTAL];
 	CTransparentPanel *pMainPanel, *m_InfoPanel;
 	ScrollPanel *m_pScrollPanel;
+	CWeaponProgress *m_WeaponProgress;
 
 public:
 	CStatPanel(Panel *pParent);

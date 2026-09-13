@@ -170,6 +170,8 @@ set(MSR_AUTHORED_CLIENT_SOURCES
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_choosecharacter.cpp"
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_container.cpp"
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_containerlist.cpp"
+    "${MSR_GAME_ROOT}/client/ui/ms/vgui_characterinventory.cpp"
+    "${MSR_GAME_ROOT}/client/ui/ms/vgui_equipmentdrag.cpp"
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_hud.cpp"
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_localizedpanel.cpp"
     "${MSR_GAME_ROOT}/client/ui/ms/vgui_menubase.cpp"

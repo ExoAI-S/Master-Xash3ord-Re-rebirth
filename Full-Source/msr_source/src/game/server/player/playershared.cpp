@@ -284,10 +284,15 @@ void CBasePlayer::InitialSpawn(void)
 	}
 #else
 	msstringlist strParams = msstringlist();
-	gHUD.m_HUDScript->CreateScript(PLAYER_SCRIPT, strParams, false, PLAYER_SCRIPT_ID);
+	CScript* playerScript = gHUD.m_HUDScript->CreateScript(PLAYER_SCRIPT, strParams, false, PLAYER_SCRIPT_ID);
+	// Client scripts belong to CHudScript, not this player's m_Scripts list.
+	// Initialize the same authored capacities on the script that was created.
+	if (playerScript) playerScript->RunScriptEventByName("game_reset_wear_positions");
 #endif
 
+#ifdef VALVE_DLL
 	CallScriptEvent("game_reset_wear_positions"); //Initialize the wearable positions, in case the player makes a new char
+#endif
 	m_Initialized = true;
 }
 
@@ -1398,6 +1403,16 @@ void CBasePlayer::PreLoadChars(int CharIdx)
 {
 	//Reload the Character list, for players entering server
 #ifdef VALVE_DLL
+	#if defined(MSR_STANDALONE) && defined(_DEBUG)
+	unsigned int loadingSlots = 0;
+	for (unsigned int i = 0; i < MAX_CHARSLOTS; ++i)
+		if (m_CharInfo[i].Status == CDS_LOADING) ++loadingSlots;
+	g_engfuncs.pfnServerPrint(UTIL_VarArgs(
+		"MSR_FN_PRELOAD dedicated=%d enabled=%d serverchars=%d central=%d identity_present=%d initial_attempted=%d slot=%d loading_slots=%u\n",
+		IS_DEDICATED_SERVER() ? 1 : 0, FNShared::IsEnabled() ? 1 : 0,
+		MSGlobals::ServerSideChar ? 1 : 0, MSGlobals::CentralEnabled ? 1 : 0,
+		steamID64 != 0 ? 1 : 0, m_LoadedInitialChars ? 1 : 0, CharIdx, loadingSlots));
+	#endif
 	if (!MSGlobals::ServerSideChar)
 		return;
 

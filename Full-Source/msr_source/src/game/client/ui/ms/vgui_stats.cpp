@@ -25,8 +25,10 @@
 #include "vgui_stats.h"
 #include "vgui_menudefsshared.h"
 #include "stats/stats.h"
+#include "vgui_weaponprogress.h"
 
 long double GetExpNeeded(int StatValue);
+void UpdateVGUIStats();
 
 int TestExpArray[SKILL_MAX_ATTACK][STAT_MAGIC_TOTAL];
 
@@ -192,6 +194,9 @@ CStatPanel::CStatPanel(Panel *pParent) : CMenuPanel(0, false, 0, 0, ScreenWidth(
 	//pLabel->setContentAlignment( Label::a_center );
 	//pLabel->SetFGColorRGB( Color_TitleText );
 
+    m_WeaponProgress = new CWeaponProgress(m_InfoPanel);
+    m_WeaponProgress->setPos(TITLE_GENINFO_X, SKILLINFOPANEL_TITLE_Y + SKILLINFOPANEL_TITLE_H);
+    m_WeaponProgress->setVisible(false);
 	m_ActiveStat = -1;
 
 	m_pScrollPanel->setScrollValue(0, 0);
@@ -207,7 +212,16 @@ int __MsgFunc_Exp(const char *pszName, int iSize, void *pbuf)
 	iStat = READ_BYTE();
 	iStatType = READ_BYTE();
 	Exp = READ_LONG();
-	TestExpArray[iStat][iStatType] = int(Exp);
+    if (iStat >= 0 && iStat < SKILL_MAX_STATS && iStatType >= 0 && iStatType < STAT_MAGIC_TOTAL)
+    {
+        TestExpArray[iStat][iStatType] = int(Exp);
+        CStat* stat = player.FindStat(SKILL_FIRSTSKILL + iStat);
+        if (stat && stat->IsUnifiedWeapon() && iStatType < UnifiedWeapon::Tracks)
+        {
+            stat->m_SubStats[iStatType].Exp = Exp;
+            if (iStatType == UnifiedWeapon::Tracks - 1) UpdateVGUIStats();
+        }
+    }
 	return 1;
 }
 
@@ -299,10 +313,19 @@ void CStatPanel::Update()
 	}
 
 	m_InfoPanel->setVisible(true);
+    m_WeaponProgress->setVisible(false);
 	m_SkillInfoLabel->setText(SkillStatList[m_ActiveStat].Name);
 
 	CStat *pStat = player.FindStat(SKILL_FIRSTSKILL + m_ActiveStat);
-	if (pStat)
+    if (pStat && pStat->IsUnifiedWeapon())
+    {
+        for (int i = 0; i < STAT_MAGIC_TOTAL; ++i) m_StatTypeLabel[i]->setVisible(false);
+        m_WeaponProgress->SetSkill("Base", *pStat, SKILLINFOPANEL_SIZE_X - 2 * TITLE_GENINFO_X);
+        m_WeaponProgress->setVisible(true);
+        m_InfoPanel->setSize(SKILLINFOPANEL_SIZE_X,
+            SKILLINFOPANEL_TITLE_Y + SKILLINFOPANEL_TITLE_H + m_WeaponProgress->getTall() + YRES(8));
+    }
+	else if (pStat)
 	{
 		int Height = SKILLINFOPANEL_TITLE_Y + SKILLINFOPANEL_TITLE_H + SKILLINFOPANEL_BTM_BORDERSPACER_H;
 		int UnusedSlots = 0;

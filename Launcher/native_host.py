@@ -177,6 +177,8 @@ class Host:
         self.state_path = self.root / 'host-state.json'
         self.settings_path = self.root / 'host-settings.json'
         self.config = read_json(self.root / 'FN/config.json')
+        if not isinstance(self.config, dict):
+            raise ValueError('The selected game or recovery runtime is incomplete: FN/config.json is missing or invalid.')
         if self.config['bind'] != '127.0.0.1':
             raise ValueError('FN must be configured on 127.0.0.1.')
         if not 1024 <= int(self.config['port']) <= 65535:
@@ -398,8 +400,12 @@ class Versions:
         self.selected = selected
         self.bundle = selected.bundle
         other = 'stable' if selected.version == 'enhanced' else 'enhanced'
-        self.hosts = {selected.version: selected,
-                      other: Host(self.bundle, other, selected.first_port, selected.bind, selected.win)}
+        self.hosts = {selected.version: selected}
+        other_root = self.bundle / ('Stable-Base' if other == 'stable' else 'Portable-Package')
+        # A normal package has one runnable game. Recovery is optional; if its
+        # directory exists, validate it normally instead of ignoring corruption.
+        if other_root.exists():
+            self.hosts[other] = Host(self.bundle, other, selected.first_port, selected.bind, selected.win)
 
     def validate_profiles(self):
         def unique_object(pairs):
@@ -423,7 +429,7 @@ class Versions:
                 raise RuntimeError(version.title() + ' has an invalid player-profile.json. Restore its backup before switching; no saves or profiles were changed.') from exc
             identities.append(identity)
         if len(set(identities)) > 1:
-            raise RuntimeError('Stable and Enhanced have different player identities. Keep both profiles and restore the intended matching identity before switching; no saves or profiles were changed.')
+            raise RuntimeError('The current and recovery builds have different player identities. Keep both profiles and restore the intended matching identity before switching; no saves or profiles were changed.')
 
     def verify_stable(self):
         manifest = read_json(self.bundle / 'Packaging-Work/stable-base-manifest.json')
@@ -489,7 +495,7 @@ class Versions:
         # Match the original switcher's lock order; lock both versions so another
         # controller cannot start FN while the databases are being copied.
         with ExitStack() as stack:
-            for path in [self.bundle / 'version-switch.lock'] + [self.hosts[v].root / 'host.lock' for v in ('enhanced', 'stable')]:
+            for path in [self.bundle / 'version-switch.lock'] + [self.hosts[v].root / 'host.lock' for v in ('enhanced', 'stable') if v in self.hosts]:
                 handle = self.selected.win.lock(path)
                 stack.callback(self.selected.win.k.CloseHandle, handle)
             # The native client launcher uses the same lock while creating or
@@ -516,7 +522,7 @@ class Versions:
                 self.selected.start()
             finally:
                 self.selected.win.k.CloseHandle(profile_lock)
-            print('Active version: ' + self.selected.version.title())
+            print('Active build: ' + ('Recovery' if self.selected.version == 'stable' else 'MSR'))
             if play:
                 self.selected.launch_client()
 

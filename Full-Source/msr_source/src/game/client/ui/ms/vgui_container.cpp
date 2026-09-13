@@ -163,6 +163,7 @@ VGUI_InventoryPanel::VGUI_InventoryPanel(VGUI_ItemCallbackPanel *pCallbackPanel,
 	m_pCallbackPanel = pCallbackPanel;
 	m_Selected = 0;
 	m_InitializedItemButtons = 0;
+	GearItemButtonTotal = 0;
 
 	m_Scroll = new CTFScrollPanel(0, 0, getWide(), getTall());
 	m_Scroll->setParent(this);
@@ -422,6 +423,7 @@ void VGUI_ContainerPanel::AddInventoryItems()
 	GearItem.ID = 0;
 	GearItem.IsContainer = true;
 	VGUI_Inv_GearItem *pGearItemButton = m_GearPanel->AddGearItem(GearItem);
+	if (!pGearItemButton) return;
 	for (unsigned int i = 0; i < MAX_PLAYER_HANDS; i++)
 	{
 		if (player.Hand(i))
@@ -454,6 +456,7 @@ void VGUI_ContainerPanel::AddInventoryItems()
 		const auto props = pGearItem->MSProperties(); // cache property lookup
 		GearItem.IsContainer = FBitSet(props, ITEM_CONTAINER) ? true : false;
 		pGearItemButton = m_GearPanel->AddGearItem(GearItem);
+		if (!pGearItemButton) break;
 
 		if (GearItem.IsContainer)
 		{

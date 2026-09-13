@@ -1,0 +1,100 @@
+{ [shared]
+const ANIM_IDLE1 0
+const ANIM_THRUST 1
+const MODEL_VIEW misc/item_torch_rview.mdl
+const MODEL_HANDS misc/p_misc.mdl
+const MODEL_WORLD misc/p_misc.mdl
+const SOUND_HITWALL debris/wood2.wav
+const SOUND_SWIPE weapons/swingsmall.wav
+const ITEM_NAME torch
+const SPRITE_FIRE fire1_fixed.spr
+const SPRITE_FIRE_FIXED fire1_fixed.spr
+const MODEL_BODY_OFS 36
+const ANIM_PREFIX torch
+const MELEE_RANGE 60
+const MELEE_DMG_DELAY 0.6
+const MELEE_ATK_DURATION 1.2
+const MELEE_ENERGY 1
+const MELEE_DMG 60
+const MELEE_DMG_RANGE 60
+const MELEE_DMG_TYPE fire
+const MELEE_ACCURACY 30
+const MELEE_STAT bluntarms
+const MELEE_ALIGN_BASE 4,-6 
+const MELEE_ALIGN_TIP 0,6
+const MELEE_VIEWANIM_ATK ANIM_THRUST
+const MELEE_SOUND SOUND_SWIPE
+const MELEE_SOUND_DELAY MELEE_DMG_DELAY
+const MELEE_PARRY_CHANCE 0
+const PLAYERANIM_AIM axe_onehand
+const PLAYERANIM_SWING axe_onehand_swing
+const TORCH_LIGHT_SCRIPT items/item_torch_light
+const LOOPSND_NAME items/torch1.wav
+const LOOPSND_LENGTH 6
+}
+#include items/base_melee
+{ weapon_spawn
+name Torch
+desc A torch
+weight 1
+size 2
+value 1
+sethand left
+sethudsprite hand ITEM_NAME
+sethudsprite trade ITEM_NAME
+setviewmodel MODEL_VIEW
+setmodel MODEL_HANDS
+setmodelbody 0 MODEL_BODY_OFS
+}
+{ game_deploy
+playviewanim ANIM_IDLE1
+playanim idle
+callevent weapon_deploy
+}
+{ melee_strike
+if PARAM1 equals 'npc'
+if PARAM4
+local L_DMG 30
+multiply L_DMG $get(ent_owner,skill.bluntarms.ratio)
+applyeffect PARAM3 effects/dot_fire 3 $get(ent_owner,id) L_DMG bluntarms
+}
+{ bweapon_effect_activate
+callevent end_torch_fx
+callevent do_torch_fx 'game_deploy'
+}
+{ bweapon_effect_remove
+callevent end_torch_fx
+}
+{ game_fall
+callevent do_torch_fx 'game_fall'
+}
+{ game_putinpack
+callevent end_torch_fx
+}
+{ do_torch_fx 
+if !SCRIPT_ID
+if ( PARAM1 equals 'game_deploy' )
+{
+local L_BODY game.item.hand_index
+add L_BODY 1
+clientevent persist all TORCH_LIGHT_SCRIPT $get(ent_owner,index) L_BODY
+setvard SCRIPT_ID game.script.last_sent_id
+}
+else if ( PARAM1 equals 'game_fall' )
+{
+clientevent persist all TORCH_LIGHT_SCRIPT $get(ent_me,index) 1
+setvard SCRIPT_ID game.script.last_sent_id
+playanim torch_floor_idle
+}
+}
+{ end_torch_fx
+if SCRIPT_ID
+clientevent update all SCRIPT_ID remove_me
+setvard SCRIPT_ID 0
+svplaysound const.sound.item 0 LOOPSND_NAME
+}
+{
+repeatdelay LOOPSND_LENGTH
+if SCRIPT_ID
+svplaysound const.sound.item 5 LOOPSND_NAME
+}

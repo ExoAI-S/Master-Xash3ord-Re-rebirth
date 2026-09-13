@@ -46,8 +46,8 @@ void CBasePlayer::CreateChar(createchar_t &CharData)
 		CStat &Stat = m_Stats[i];
 		if (Stat.m_SubStats.size() == 1) //Parry - Only give 1 to proficiency
 			Stat.m_SubStats[0].Value = 1;
-		else if (Stat.m_SubStats.size() <= STAT_PROP_TOTAL) //Weapon Skills - Give 1 to power
-			Stat.m_SubStats[STAT_PROP_POWER].Value = 1;
+		else if (Stat.IsUnifiedWeapon())
+            Stat.SetWeaponLevel(1);
 		else if (Stat.m_SubStats.size() > STAT_PROP_TOTAL) //Spellcasting - Give 1 to each spell category
 			for (unsigned int r = 0; r < Stat.m_SubStats.size(); r++)
 				Stat.m_SubStats[r].Value = 1;
@@ -217,7 +217,7 @@ void chardata_t::ReadSkills1(byte DataID, CPlayer_DataBuffer &m_File)
 
 		// MiB JUL2010_02 - Hacky, but if we add more stats and we load a character that doesn't have said stat in the file
 		//		we set it to the default new stat value (level 0 in Prof and Balance, 1 in Power)
-		unsigned int StatsRemaining = (m_Stats.size() - Stats);
+		unsigned int StatsRemaining = Stats < m_Stats.size() ? (m_Stats.size() - Stats) : 0;
 		for (unsigned int i = 0; i < StatsRemaining; i++)
 		{
 			CStat& Stat = m_Stats[i + Stats];
@@ -497,6 +497,15 @@ void MSChar_Interface::SaveChar(CBasePlayer *pPlayer, savedata_t *pData)
 	//FEB2015_25 Thothie - don't save if <15 hp (char delete bug workaround)
 	if (pPlayer->MaxHP() < 15)
 		return;
+
+    // Do not serialize an invalid/unsupported record. Migration happens only
+    // in memory; a failed validation must leave the original save untouched.
+    for (unsigned int n = 0; n < pPlayer->m_Stats.size(); ++n)
+        if (!pPlayer->m_Stats[n].NormalizeWeapon())
+        {
+            ALERT(at_console, "Save refused: unsupported weapon skill record %u.\n", n);
+            return;
+        }
 
 	//Add this map to the list of maps visited
 	if (!HasVisited(MSGlobals::MapName, pPlayer->m_Maps))

@@ -1,0 +1,275 @@
+{
+  "source": "Final user-selected msrworldmap05daragothv2.jpg; author/date not supplied",
+  "original_file": "msrworldmap05daragothv2-original.jpg",
+  "source_sha256": "7a6d2e16907ea494f576bed00107520631010acf747ddd31656b42e8359791d5",
+  "source_size": [
+    6913,
+    6556
+  ],
+  "atlas_size": [
+    4096,
+    3884
+  ],
+  "tile_size": 1024,
+  "reference_size": [
+    1619,
+    1536
+  ],
+  "processing": "RGB conversion; Lanczos aspect-preserving reduction; uncompressed TGA tiling. No creative edits.",
+  "pins": [
+    {
+      "id": "edana",
+      "x": 636,
+      "y": 808,
+      "u": 0.39283508338480544,
+      "v": 0.5260416666666666
+    },
+    {
+      "id": "thornlands",
+      "x": 619,
+      "y": 784,
+      "u": 0.3823347745521927,
+      "v": 0.5104166666666666
+    },
+    {
+      "id": "mscave",
+      "x": 648,
+      "y": 778,
+      "u": 0.4002470660901791,
+      "v": 0.5065104166666666
+    },
+    {
+      "id": "heras",
+      "x": 663,
+      "y": 706,
+      "u": 0.4095120444718962,
+      "v": 0.4596354166666667
+    },
+    {
+      "id": "gertenheld_cape",
+      "x": 569,
+      "y": 681,
+      "u": 0.35145151327980234,
+      "v": 0.443359375
+    },
+    {
+      "id": "ara",
+      "x": 489,
+      "y": 739,
+      "u": 0.30203829524397774,
+      "v": 0.4811197916666667
+    },
+    {
+      "id": "sfor",
+      "x": 724,
+      "y": 754,
+      "u": 0.44718962322421246,
+      "v": 0.4908854166666667
+    },
+    {
+      "id": "calruin2",
+      "x": 761,
+      "y": 763,
+      "u": 0.47004323656578134,
+      "v": 0.4967447916666667
+    },
+    {
+      "id": "helena",
+      "x": 612,
+      "y": 826,
+      "u": 0.37801111797405806,
+      "v": 0.5377604166666666
+    },
+    {
+      "id": "bloodrose",
+      "x": 662,
+      "y": 848,
+      "u": 0.40889437924644845,
+      "v": 0.5520833333333334
+    },
+    {
+      "id": "deralia",
+      "x": 564,
+      "y": 803,
+      "u": 0.3483631871525633,
+      "v": 0.5227864583333334
+    },
+    {
+      "id": "daragoth",
+      "x": 460,
+      "y": 913,
+      "u": 0.28412600370599134,
+      "v": 0.5944010416666666
+    },
+    {
+      "id": "the_wall",
+      "x": 814,
+      "y": 594,
+      "u": 0.5027794935145151,
+      "v": 0.38671875
+    },
+    {
+      "id": "the_wall2",
+      "x": 814,
+      "y": 594,
+      "u": 0.5027794935145151,
+      "v": 0.38671875
+    },
+    {
+      "id": "tundra",
+      "x": 678,
+      "y": 522,
+      "u": 0.41877702285361335,
+      "v": 0.33984375
+    },
+    {
+      "id": "aluhandra2",
+      "x": 625,
+      "y": 1042,
+      "u": 0.38604076590487957,
+      "v": 0.6783854166666666
+    },
+    {
+      "id": "shad_palace",
+      "x": 489,
+      "y": 1083,
+      "u": 0.30203829524397774,
+      "v": 0.705078125
+    },
+    {
+      "id": "aleyesu",
+      "x": 445,
+      "y": 1165,
+      "u": 0.27486102532427426,
+      "v": 0.7584635416666666
+    },
+    {
+      "id": "ms_wicardoven",
+      "x": 847,
+      "y": 717,
+      "u": 0.5231624459542927,
+      "v": 0.466796875
+    }
+  ],
+  "tiles": [
+    {
+      "file": "msr_world_atlas_0_0.tga",
+      "x": 0,
+      "y": 0,
+      "sha256": "f29cbc5712cad1cde5f15b09f54623f69af6085c444e8496f0dedae404b84a10",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_1_0.tga",
+      "x": 1024,
+      "y": 0,
+      "sha256": "f6198adf178b445a8db3a9ff6ec408d00175106e705596a4f81f79279c48b947",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_2_0.tga",
+      "x": 2048,
+      "y": 0,
+      "sha256": "45ff65a2a8cbbe9d4f33d8a61d426c845b3399a8ca8a3cc36e9c08769112f5c7",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_3_0.tga",
+      "x": 3072,
+      "y": 0,
+      "sha256": "83d1116b84065e3cdc96547869ef591d6d7042bf39ea4fb2ce5d501ccdb965dc",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_0_1.tga",
+      "x": 0,
+      "y": 1024,
+      "sha256": "1535244f0ef56f19d018a382862733d1b87590de96f04dfcc0faf34a02ef70af",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_1_1.tga",
+      "x": 1024,
+      "y": 1024,
+      "sha256": "57e5536e89cdb250dce5ddfc89bf10c3f4bee49d3d83630a45eedbe7e405bb72",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_2_1.tga",
+      "x": 2048,
+      "y": 1024,
+      "sha256": "08f4a804f20d48dc28265b6a42b356e5ddfce10d8159646d1964b29470086a58",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_3_1.tga",
+      "x": 3072,
+      "y": 1024,
+      "sha256": "251374c9ec3279b7af6da3b43e22377522bdd8311c2954e612454b392bd61625",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_0_2.tga",
+      "x": 0,
+      "y": 2048,
+      "sha256": "9f5a5de7664c928079da49cfc5058604c5b75da78dca592f6b163abaf08fd0b8",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_1_2.tga",
+      "x": 1024,
+      "y": 2048,
+      "sha256": "c0fd8afe2a90b60fb02a738bec7cc91bd8e22e28802edc105a89f59fc3efee7e",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_2_2.tga",
+      "x": 2048,
+      "y": 2048,
+      "sha256": "07ef90ecdc3a0cb43073f15319b873d5d19a5eb365f3fb03ab9906ceecae7b86",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_3_2.tga",
+      "x": 3072,
+      "y": 2048,
+      "sha256": "69c4d6a437f5ee3a35abc3594f62d9e3fe5cb7f107ce8ffa0a94359e8283daa4",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_0_3.tga",
+      "x": 0,
+      "y": 3072,
+      "sha256": "25b3e45c37e36c186cefaaa61a4c78a300b0dcda94b5c22c5572d5eb2e581f9e",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_1_3.tga",
+      "x": 1024,
+      "y": 3072,
+      "sha256": "583ef55457a581be8cc737e0e5dab2621646c1605957a0bd1dcda518672a41f9",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_2_3.tga",
+      "x": 2048,
+      "y": 3072,
+      "sha256": "9810e1effe0603e758016f2ccb52878f8ba74b1e9f826c9c3883e9a7e0750875",
+      "bytes": 3145746
+    },
+    {
+      "file": "msr_world_atlas_3_3.tga",
+      "x": 3072,
+      "y": 3072,
+      "sha256": "953837ac204a2bd7e2defa793fb206e7d02c04c551ed0d7ffb82dbc2e40e5187",
+      "bytes": 3145746
+    }
+  ],
+  "limits": [
+    "Pins are approximate named regions, not player coordinates or geographic map boundaries.",
+    "Both public Wall maps share their named region; other unmarked maps have no fabricated pin.",
+    "Artwork labels and symbols are historical illustration, not current travel rules.",
+    "Frozen Tear and Halls of Charthane have no matching current public graph node and are not pinned.",
+    "MSC-world-map-original.jpg is retained as a superseded reference, not used in game."
+  ]
+}

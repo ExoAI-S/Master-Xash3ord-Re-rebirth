@@ -5,10 +5,14 @@ void CRequestManager::Init()
 {
 	Shutdown();
 
+#ifndef MSR_STANDALONE
+	// Legacy public FN remains dedicated-only. Private standalone FN also
+	// serves listen hosts; they need the async character queue after validation.
 	if (!IS_DEDICATED_SERVER())
 	{
 		return;
 	}
+#endif
 
 	if (!m_bLoaded)
 	{
@@ -43,6 +47,9 @@ void CRequestManager::Init()
 		curl_multi_setopt(m_pMultiHandle, CURLMOPT_MAX_HOST_CONNECTIONS, 8L);
 
 		m_bLoaded = true;
+		#if defined(MSR_STANDALONE) && defined(_DEBUG)
+		g_engfuncs.pfnServerPrint(UTIL_VarArgs("MSR_FN_MANAGER_INIT dedicated=%d loaded=1\n", IS_DEDICATED_SERVER() ? 1 : 0));
+		#endif
 	}
 }
 
@@ -209,10 +216,16 @@ bool CRequestManager::QueueRequest(HTTPRequest* req)
 
 	if (!m_bLoaded)
 	{
+		#if defined(MSR_STANDALONE) && defined(_DEBUG)
+		g_engfuncs.pfnServerPrint("MSR_FN_QUEUE accepted=0 manager_loaded=0\n");
+		#endif
 		delete req; // We were handed ownership; don't silently drop it.
 		return false;
 	}
 
 	m_vRequests.push_back(req);
+	#if defined(MSR_STANDALONE) && defined(_DEBUG)
+	g_engfuncs.pfnServerPrint("MSR_FN_QUEUE accepted=1 manager_loaded=1\n");
+	#endif
 	return true;
 }

@@ -1,0 +1,34 @@
+{
+  "candidate": "candidate-09",
+  "frozen_bundle_manifest_sha256": "5d59d864c13b670173fe0bc3c2f1f9240ab16d2a1230ae7e019746ac95c9261e",
+  "frozen_candidate08_manifest_sha256": "6ace20cce187c4e3fdf81aa2fc6fb71a5b017ca873e45f28008d74398ecf3a68",
+  "inputs": [
+    {
+      "packaged_path": "fn-listen/request_manager_tests.cpp",
+      "frozen_path": "tests/fn-listen/request_manager_tests.cpp",
+      "sha256": "7cb9e96e43eb489fd71541146939f26e2a5fb86276cacd1748cdf77b7cb07c49",
+      "adapted": false
+    },
+    {
+      "packaged_path": "fn-listen/Run-Tests.ps1",
+      "frozen_path": "tests/fn-listen/Run-Tests.ps1",
+      "sha256": "84ecfe7a32ce75af629d6bf7af63bf2d462dbd8d8af5663f15f4a3899519dd84",
+      "adapted": false
+    },
+    {
+      "packaged_path": "fn-listen/extract_paths.py",
+      "frozen_path": "tests/fn-listen/extract_paths.py",
+      "original_sha256": "321bb14963205cb00d44a09869b5cd226c1bf143421c5911e414df9e90a466a5",
+      "adapted": "Packaged source/reference discovery and generated provenance moved into build directory; extraction bodies unchanged"
+    },
+    {
+      "packaged_path": "reference/candidate08-game/server/fn/RequestManager.cpp",
+      "frozen_path": "candidate-08/source/msr_source/src/game/server/fn/RequestManager.cpp",
+      "sha256": "343d5fe1c569f9693257f513840680be69b6a3920d5e8414c02d7889ca0d2ecf",
+      "adapted": false
+    }
+  ],
+  "frozen_tests": "56 control + 86 fixed standalone + 56 fixed legacy = 198 passed before freezing candidate09",
+  "packaging_tests_rerun": false,
+  "network_or_engine_executed": false
+}

@@ -1,0 +1,14 @@
+{ game_learnskill
+local WEAPON_LEVEL_EVENT 0
+if ( PARAM2 equals 'Base' ) local WEAPON_LEVEL_EVENT 1
+if ( PARAM2 equals 'Proficiency' ) local WEAPON_LEVEL_EVENT 1
+if WEAPON_LEVEL_EVENT
+if PARAM3 >= 2
+local TEXT "Your weapon skill has gained a level. "
+stradd TEXT "|One weapon level improves your proficiency, balance, and power together."
+stradd TEXT "|Higher weapon levels unlock abilities with certain weapons."
+stradd TEXT "|Double click attack to begin charging an available ability."
+stradd TEXT "||Level 1 charge usually adds damage. Higher weapon levels"
+stradd TEXT "|can unlock more advanced attacks."
+helptip ent_me help_skill_gain "Weapon Skill" TEXT
+}

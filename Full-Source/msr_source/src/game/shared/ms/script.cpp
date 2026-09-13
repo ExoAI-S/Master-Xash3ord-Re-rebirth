@@ -32,6 +32,10 @@ bool GetModelBounds(CBaseEntity* pEntity, Vector Bounds[2]);
 #include "findentities.h"
 #include <iterator>
 #include <unordered_set>
+#ifdef MSR_NATIVE_EVENT_PILOT
+#include "native_bridge.h"
+#include "native_events.inc"
+#endif
 //#include <unordered_map>
 
 const char* CScript::SCRIPTCONST(const char* var) {
@@ -4442,9 +4446,7 @@ const char* CScript::GetVar(const char* pszText)
 	{
 		try
 		{
-			// Getter results own their text; retain it before returning the legacy pointer.
-			Return = (this->*(iFunc->second.GetFunc()))(FullName, ParserName, Params);
-			return Return.c_str();
+			return (this->*(iFunc->second.GetFunc()))(FullName, ParserName, Params);
 		}
 		catch (...)
 		{
@@ -5721,7 +5723,12 @@ bool CScript::Script_ExecuteEvent(SCRIPT_EVENT& Event, msstringlist* Parameters)
 	Script_SetupEvent(Event, Parameters);
 
 	//Execute the commands
-	bool fReturn = Script_ExecuteCmds(Event, Event.Commands);
+	bool fReturn = false;
+#ifdef MSR_NATIVE_EVENT_PILOT
+	// A changed/unsupported tree or binding always keeps the legacy execution.
+	if (!MSRNativePilot::TryEvent(*this, Event, fReturn))
+#endif
+		fReturn = Script_ExecuteCmds(Event, Event.Commands);
 	Event.bFullStop = false; // MiB 07DEC_2014 - "exit" command
 
 	Event.m_Variables.clearitems(); //Erase all local variables
@@ -5804,12 +5811,6 @@ bool CScript::Script_ExecuteCmds(SCRIPT_EVENT& Event, scriptcmd_list& Cmdlist)
 void CScript::SendScript(scriptsendcmd_t& SendCmd)
 {
 #ifdef VALVE_DLL
-	const bool traceEffects = EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0;
-	if (traceEffects)
-	{
-		Vector origin = m.pScriptedEnt ? m.pScriptedEnt->pev->origin : Vector(0, 0, 0);
-		MS_INFO("[FX] send type=%s script=%s target=%s origin=(%.1f,%.1f,%.1f) id=%lu", SendCmd.MsgType.c_str(), SendCmd.ScriptName.c_str(), SendCmd.MsgTarget.c_str(), origin.x, origin.y, origin.z, SendCmd.UniqueID);
-	}
 	bool TargetOk = true;
 	if (g_netmsg[NETMSG_CLDLLFUNC]) //g_netmsgs aren't initialized until the player is spawned... but this may be called earlier from the world.script
 	{
@@ -5844,9 +5845,7 @@ void CScript::SendScript(scriptsendcmd_t& SendCmd)
 				WRITE_STRING(SendCmd.Params[i]);
 			MESSAGE_END();
 		}
-		else if (traceEffects) MS_INFO("[FX] dropped: invalid script recipient");
 	}
-	else if (traceEffects) MS_INFO("[FX] dropped: client-script network message is not initialized");
 #endif
 }
 

@@ -2691,8 +2691,16 @@ std::tuple<bool, int> CMSMonster::LearnSkill(int iStat, int iStatType, int Enemy
 	if (!pStat)
 		return std::make_tuple(false, 0);
 
-	if (iStatType >= (signed)pStat->m_SubStats.size())
+	if (iStatType < 0 || iStatType >= (signed)pStat->m_SubStats.size())
 		return std::make_tuple(false, 0);
+
+    if (pStat->IsUnifiedWeapon())
+    {
+        int accepted = 0, levels = 0;
+        if (!pStat->AwardWeaponXP(EnemySkillLevel, accepted, levels))
+            return std::make_tuple(false, 0);
+        return std::make_tuple(levels > 0, 0);
+    }
 
 	//if ( pStat->Value() >= CHAR_LEVEL_CAP ) return false; //Thoth DEC2008a level cap
 

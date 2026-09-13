@@ -109,8 +109,68 @@ CSubStat& CSubStat::operator=(const CSubStat& Other)
 	return *this;
 }
 
+bool CStat::IsUnifiedWeapon() const
+{
+    return m_Type == STAT_SKILL && m_SubStats.size() == UnifiedWeapon::Tracks;
+}
+
+bool CStat::WeaponProgress(UnifiedWeapon::State& state) const
+{
+    if (!IsUnifiedWeapon()) return false;
+    UnifiedWeapon::Record records[UnifiedWeapon::Tracks];
+    for (int n = 0; n < UnifiedWeapon::Tracks; ++n)
+        records[n] = { m_SubStats[n].Value, static_cast<std::int64_t>(m_SubStats[n].Exp) };
+    return UnifiedWeapon::Read(records, state);
+}
+
+bool CStat::NormalizeWeapon()
+{
+    if (!IsUnifiedWeapon()) return true;
+    UnifiedWeapon::State state{};
+    UnifiedWeapon::Record records[UnifiedWeapon::Tracks];
+    if (!WeaponProgress(state) || !UnifiedWeapon::Write(state, records)) return false;
+    for (int n = 0; n < UnifiedWeapon::Tracks; ++n)
+    {
+        m_SubStats[n].Value = records[n].level;
+        m_SubStats[n].Exp = static_cast<ulong>(records[n].xp);
+    }
+    return true;
+}
+
+bool CStat::SetWeaponLevel(int level)
+{
+    if (!IsUnifiedWeapon()) return false;
+    UnifiedWeapon::Record records[UnifiedWeapon::Tracks];
+    if (!UnifiedWeapon::SetLevel(records, level)) return false;
+    for (int n = 0; n < UnifiedWeapon::Tracks; ++n)
+    {
+        m_SubStats[n].Value = records[n].level;
+        m_SubStats[n].Exp = static_cast<ulong>(records[n].xp);
+    }
+    return true;
+}
+
+bool CStat::AwardWeaponXP(int amount, int& accepted, int& levels)
+{
+    accepted = 0; levels = 0;
+    if (!IsUnifiedWeapon()) return false;
+    UnifiedWeapon::Record records[UnifiedWeapon::Tracks];
+    for (int n = 0; n < UnifiedWeapon::Tracks; ++n)
+        records[n] = { m_SubStats[n].Value, static_cast<std::int64_t>(m_SubStats[n].Exp) };
+    UnifiedWeapon::XP added = 0;
+    if (!UnifiedWeapon::Award(records, amount, added, levels)) return false;
+    accepted = static_cast<int>(added); // Award input is a nonnegative int.
+    for (int n = 0; n < UnifiedWeapon::Tracks; ++n)
+    {
+        m_SubStats[n].Value = records[n].level;
+        m_SubStats[n].Exp = static_cast<ulong>(records[n].xp);
+    }
+    return true;
+}
+
 int CStat::operator=(int Equals)
 {
+    if (IsUnifiedWeapon()) { SetWeaponLevel(Equals); return Value(); }
 	int iAdd = int(Equals / (float)m_SubStats.size());
 	int iExtra = Equals % m_SubStats.size(), i = 0;
 
@@ -131,6 +191,12 @@ int CStat::operator=(int Equals)
 
 int CStat::operator+=(int Add)
 {
+    if (IsUnifiedWeapon())
+    {
+        const std::int64_t level = static_cast<std::int64_t>(Value()) + Add;
+        if (level >= 0 && level <= UnifiedWeapon::LevelCap) SetWeaponLevel(static_cast<int>(level));
+        return Value();
+    }
 	for (Add; abs(Add) > 0; Add -= Add / abs(Add))
 	{
 		int iLowestStat = 0, i;
@@ -144,6 +210,9 @@ int CStat::operator+=(int Add)
 
 int CStat::Value()
 {
+    // Server load/set/award paths keep all three values identical. Reading a
+    // base never derives a new level from a partially received XP message.
+    if (IsUnifiedWeapon()) return m_SubStats[0].Value == 0 ? 1 : m_SubStats[0].Value;
 	int Total = 0;
 	unsigned int iSubStats = m_SubStats.size();
 	for (unsigned int i = 0; i < iSubStats; i++)
@@ -174,10 +243,10 @@ int CStat::Value()
 
 int CStat::Value(int StatProperty)
 {
-	if (StatProperty >= (signed)m_SubStats.size())
+	if (StatProperty < 0 || StatProperty >= (signed)m_SubStats.size())
 		return -1;
 
-	return m_SubStats[StatProperty].Value;
+	return IsUnifiedWeapon() ? Value() : m_SubStats[StatProperty].Value;
 }
 
 void CStat::OutDate() // Makes sure an update will be sent next frame

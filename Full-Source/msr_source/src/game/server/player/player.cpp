@@ -2629,6 +2629,8 @@ void CBasePlayer::Spawn(void)
 
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "slj", "0");
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "hl", "1");
+	// Enables the client equipment drop only when ID-guarded use is supported.
+	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "msr_equip_guard", "1");
 
 	m_iFOV = 0;				  // init field of view.
 	m_iClientFOV = -1;		  // make sure fov reset is sent
@@ -3806,6 +3808,17 @@ void CBasePlayer::UpdateClientData(void)
 			}
 			MESSAGE_END();
 
+            if (Stat.IsUnifiedWeapon())
+            {
+                for (int r = 0; r < UnifiedWeapon::Tracks; ++r)
+                {
+                    MESSAGE_BEGIN(MSG_ONE, g_netmsg[NETMSG_EXP], NULL, pev);
+                    WRITE_BYTE(i - SKILL_FIRSTSKILL);
+                    WRITE_BYTE(r);
+                    WRITE_LONG(Stat.m_SubStats[r].Exp);
+                    MESSAGE_END();
+                }
+            }
 			Stat.Update();
 		}
 	}
@@ -5744,9 +5757,9 @@ tradeinfo_t *CBasePlayer::TradeItem(tradeinfo_t *ptiTradeInfo)
 				ReqSkill = pItem->m_Attacks[0].RequiredSkill;
 				CStat *pStat = FindStat(pItem->m_Attacks[0].StatExp);
 				CSubStat *pSubStat = pItem->m_Attacks[0].PropExp != -1 ? &pStat->m_SubStats[pItem->m_Attacks[0].PropExp] : NULL;
-				CurSkill = pSubStat ? pSubStat->Value : pStat->Value();
+				CurSkill = pSubStat ? pStat->Value(pItem->m_Attacks[0].PropExp) : pStat->Value();
 				StatName = pStat->m_Name.c_str();
-				if (pSubStat)
+				if (pSubStat && !pStat->IsUnifiedWeapon())
 				{
 					StatName += ".";
 					StatName += SkillTypeList[pItem->m_Attacks[0].PropExp];

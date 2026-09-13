@@ -1202,6 +1202,25 @@ void ClientCommand2(edict_t *pEntity)
 			if (CMD_ARGC() > 1)
 				Hand = atoi(CMD_ARGV(1));
 
+			// Optional ID guard for equipment drops. The preceding ordinary
+			// transfer may fail, or a script may move/delete the item. Resolve
+			// only that exact item in the authoritative hand list, and never
+			// fall back to packing a different/current-hand item.
+			if (CMD_ARGC() > 2)
+			{
+				const ulong expectedID = strtoul(CMD_ARGV(2), nullptr, 10);
+				CGenericItem* expected = nullptr;
+				for (int h = 0; h < MAX_NPC_HANDS; ++h)
+				{
+					CGenericItem* item = pPlayer->Hand(h);
+					if (item && expectedID && item->m_iId == expectedID)
+					{ expected = item; Hand = h; break; }
+				}
+				if (!expected || expected->m_pParentContainer || expected->IsWorn() ||
+					expected->CurrentAttack || !expected->CanWearItem())
+					return;
+			}
+
 			pPlayer->UseItem(Hand, true);
 		}
 		else
@@ -1643,10 +1662,11 @@ void ClientCommand2(edict_t *pEntity)
 					{
 						msstring PropName = FullName.substr(StatName.len() + 1);
 						int iProp = GetSubSkillByName(PropName);
-						if (iProp > -1)
-						{
-							int value = atoi(CMD_ARGV(2));
-							pStat->m_SubStats[iProp].Value = min(value, STAT_PROP_MAX_VALUE);
+                        if (iProp >= 0 && iProp < (signed)pStat->m_SubStats.size())
+                        {
+                            int value = atoi(CMD_ARGV(2));
+                            if (pStat->IsUnifiedWeapon()) pStat->SetWeaponLevel(value);
+                            else pStat->m_SubStats[iProp].Value = min(value, STAT_PROP_MAX_VALUE);
 						}
 					}
 				}
@@ -1657,8 +1677,11 @@ void ClientCommand2(edict_t *pEntity)
 					{
 						int iSubStat = atoi(CMD_ARGV(2));
 						int value = atoi(CMD_ARGV(3));
-						if (iSubStat < (signed)pStat->m_SubStats.size())
-							pStat->m_SubStats[iSubStat].Value = min(value, STAT_PROP_MAX_VALUE);
+                        if (iSubStat >= 0 && iSubStat < (signed)pStat->m_SubStats.size())
+                        {
+                            if (pStat->IsUnifiedWeapon()) pStat->SetWeaponLevel(value);
+                            else pStat->m_SubStats[iSubStat].Value = min(value, STAT_PROP_MAX_VALUE);
+                        }
 					}
 				}
 			}

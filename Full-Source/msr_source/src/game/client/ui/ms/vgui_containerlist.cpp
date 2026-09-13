@@ -96,10 +96,12 @@ CContainerPanel::CContainerPanel(int iTrans, int iRemoveMe, int x, int y, int wi
 	m_pCancelButton->setText(Localized("#CLOSE"));
 	m_ActButton->addActionSignal(new CContainer_ActionButtonSignal(this));
     m_ActButton->setVisible(true);
+	InitializeModernUI();
 }
 
 void CContainerPanel::ActionPerformed()
 {
+	CancelItemDrag();
 	mpMoveItemPanel->setVisible(false);
 	if (HasSelectedItems())
 	{
@@ -113,18 +115,24 @@ void CContainerPanel::ActionPerformed()
 
 void CContainerPanel::InvTypeChanged(int vInvType)
 {
+	CancelItemDrag();
 	VGUI_ItemCallbackPanel::InvTypeChanged(vInvType);
 	mpMoveItemPanel->setVisible(false);
+	ApplyLayout();
 }
 
 void CContainerPanel::AlphabeticChanged(bool bAlphabetic)
 {
+	CancelItemDrag();
 	VGUI_ItemCallbackPanel::AlphabeticChanged(bAlphabetic);
 	mpMoveItemPanel->setVisible(false);
+	ApplyLayout();
 }
 
 void CContainerPanel::UpdateSubtitle()
 {
+	if (m_GearPanel->m_Selected < 0 || (unsigned)m_GearPanel->m_Selected >= m_GearPanel->GearItemButtonTotal)
+		return;
 	mslist<VGUI_ItemButton *> SelectedItems;
 	GetSelectedItems(SelectedItems);
 
@@ -184,6 +192,7 @@ void CContainerPanel::ItemSelectChanged(ulong ID, bool fSelected)
 bool CContainerPanel::ItemClicked(void *pData)
 {
 	mpMoveItemPanel->setVisible( false );
+	ItemHighlighted(pData);
 	return false; // Let the button finish handling
 }
 
@@ -257,6 +266,7 @@ void CContainerPanel::MoveItem(VGUI_ItemButton *pButton, int vNumMove)
 
 void CContainerPanel::GearItemSelected(ulong ID)
 {
+	CancelItemDrag();
 	//Unselect all items
 	UnSelectAllItems();
 
@@ -267,13 +277,17 @@ void CContainerPanel::GearItemSelected(ulong ID)
 	{
 		CGenericItem *pGearItem = player.GetGearItem(ID);
 		if (pGearItem)
+		{
 			Title = pGearItem->DisplayName();
+			if (!m_Rebuilding) { containeritem_t data(pGearItem); InspectItem(data); }
+		}
 	}
 	else if (!ID)
 		Title = "Player hands";
 
 	m_pTitle->setText(Title);
 	UpdateSubtitle();
+	ApplyLayout();
 }
 
 bool CContainerPanel::GearItemClicked(ulong ID)
@@ -334,6 +348,8 @@ bool CContainerPanel::GearItemDoubleClicked(ulong ID)
 // Update
 void CContainerPanel::Close(void)
 {
+	CancelItemDrag();
+	mpMoveItemPanel->setVisible(false);
 	player.ClearConditions(MONSTER_OPENCONTAINER);
 	ClientCmd("inv stop");
 	VGUI_ContainerPanel::Close();
@@ -343,6 +359,7 @@ void CContainerPanel::Close(void)
 // Update the Class menu before opening it
 void CContainerPanel::Open(void)
 {
+	CancelItemDrag();
 	//If the button is down, block until its released
 	bool fButtonDown = false;
 #ifdef _WIN32
@@ -356,6 +373,7 @@ void CContainerPanel::Open(void)
 		fBlockVGUIMouseButton1 = false;
 
 	VGUI_ContainerPanel::Open();
+	ShowPage(0);
 
 	//Select the open pack
 	for (unsigned int i = 0; i < m_GearPanel->GearItemButtonTotal; i++)

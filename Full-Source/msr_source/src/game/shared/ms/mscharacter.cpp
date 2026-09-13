@@ -164,6 +164,19 @@ bool chardata_t::ReadData(void *pData, ulong Size)
 
 	m_File.Close();
 
+#ifdef VALVE_DLL
+    if (ValidVersion)
+    {
+        for (unsigned int n = 0; n < m_Stats.size(); ++n)
+        {
+            if (!m_Stats[n].NormalizeWeapon())
+            {
+                ALERT(at_console, "Character rejected: unsupported weapon skill record %u; original save is unchanged.\n", n);
+                return false;
+            }
+        }
+    }
+#endif
 	return ValidVersion;
 }
 bool chardata_t::ReadHeader1(byte DataID, CPlayer_DataBuffer &m_File)

@@ -26,7 +26,6 @@
 #endif
 
 cvar_t displaysoundlist = { "displaysoundlist", "0" };
-static cvar_t ms_debug_effects = { "ms_debug_effects", "0" };
 cvar_t mapcyclefile = { "mapcyclefile", "mapcycle.txt" };
 cvar_t servercfgfile = { "servercfgfile", "server.cfg" };
 cvar_t lservercfgfile = { "lservercfgfile", "listenserver.cfg" };
@@ -104,7 +103,6 @@ void GameDLLInit(void)
 	g_pTempStringLimit[0] = 0;
 
 	CVAR_REGISTER(&displaysoundlist);
-	CVAR_REGISTER(&ms_debug_effects);
 
 	CVAR_REGISTER(&teamplay);
 	CVAR_REGISTER(&timelimit);

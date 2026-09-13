@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "path": "models/viewmodels/v_1hswords.mdl",
+      "bytes": 7530264,
+      "sha256": "547e8d3efd2481ebeed4ded1aa4d16946f79cce4643b441906ec82e3002a5b15"
+    },
+    {
+      "path": "models/weapons/p_weapons1.mdl",
+      "bytes": 7118024,
+      "sha256": "51ddc16587ca39b832bf5a5f8b5cd001c8d18eb3225f67ea4b54da6b2a5c0679"
+    },
+    {
+      "path": "textures/p_weapons1/regular_short.tga",
+      "bytes": 3145772,
+      "sha256": "e1d799630875424dd8d89b3591a685add76ba2f760eb848dcf6b54353c723a3b"
+    },
+    {
+      "path": "textures/p_weapons1/regular_short_gloss.tga",
+      "bytes": 4194348,
+      "sha256": "e4f21107a0ee47c228ed4bd709a13fb67ec9f78653adba23cf25389b88f5a929"
+    },
+    {
+      "path": "textures/p_weapons1/regular_short_norm.tga",
+      "bytes": 3145772,
+      "sha256": "e9389765c79bfe351f579dc56a87d6e663e8249f19934c11b09be481d0242111"
+    },
+    {
+      "path": "textures/p_weapons1/rusty_short.tga",
+      "bytes": 3145772,
+      "sha256": "d03a764c3be728ed92af75a3edbe34e0395a91a02ac0d4920acf3f3b62298467"
+    },
+    {
+      "path": "textures/p_weapons1/rusty_short_gloss.tga",
+      "bytes": 4194348,
+      "sha256": "93f1679971470c19fce3c958ffb7cffabc65f6e031a22f67e5c21f2521d1e7d2"
+    },
+    {
+      "path": "textures/p_weapons1/rusty_short_norm.tga",
+      "bytes": 3145772,
+      "sha256": "4bfd5b2cec7c13292b89e5eb772104ea1b4bef7aeff867b6962505c8a3a0bf1b"
+    },
+    {
+      "path": "textures/v_1hswords/regular_short.tga",
+      "bytes": 3145772,
+      "sha256": "e1d799630875424dd8d89b3591a685add76ba2f760eb848dcf6b54353c723a3b"
+    },
+    {
+      "path": "textures/v_1hswords/regular_short_gloss.tga",
+      "bytes": 4194348,
+      "sha256": "e4f21107a0ee47c228ed4bd709a13fb67ec9f78653adba23cf25389b88f5a929"
+    },
+    {
+      "path": "textures/v_1hswords/regular_short_norm.tga",
+      "bytes": 3145772,
+      "sha256": "e9389765c79bfe351f579dc56a87d6e663e8249f19934c11b09be481d0242111"
+    },
+    {
+      "path": "textures/v_1hswords/rusty_short.tga",
+      "bytes": 3145772,
+      "sha256": "d03a764c3be728ed92af75a3edbe34e0395a91a02ac0d4920acf3f3b62298467"
+    },
+    {
+      "path": "textures/v_1hswords/rusty_short_gloss.tga",
+      "bytes": 4194348,
+      "sha256": "93f1679971470c19fce3c958ffb7cffabc65f6e031a22f67e5c21f2521d1e7d2"
+    },
+    {
+      "path": "textures/v_1hswords/rusty_short_norm.tga",
+      "bytes": 3145772,
+      "sha256": "4bfd5b2cec7c13292b89e5eb772104ea1b4bef7aeff867b6962505c8a3a0bf1b"
+    }
+  ],
+  "external_maps_byte_identical": true
+}

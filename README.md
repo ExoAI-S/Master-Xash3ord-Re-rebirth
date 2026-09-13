@@ -1,73 +1,61 @@
 # Master Xash3ord Re-rebirth
 
-An experimental Windows build of **Master Sword: Rebirth** using a PrimeXT SDK
-integration and Xash3D FWGS, with a private FN character service, two-realm local
-hosting, Dungeon Master controls, and a preserved Stable version for rollback.
-
-The September 12, 2026 release contains the complete playable package. This
-repository contains the corresponding source, build inputs, configuration,
-documentation and regression checks extracted from that package.
+A Windows community build of **Master Sword: Rebirth**, using a PrimeXT SDK
+integration and Xash3D FWGS, with private FN character persistence and Dungeon
+Master controls.
 
 ## Download and play
 
-Open the [DM Debug release](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-dm-debug).
-Download both numbered ZIP parts and **Restore-Game-Zip.cmd** into the same
-folder. Run the command file to join and verify the original ZIP, then extract
-the entire ZIP into a writable folder before launching the game.
+Get the [UI Debug update](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-ui-debug).
+Download **MSR-Unified-Debug-Complete-2026-09-12.zip** and extract it completely
+into a writable folder. It is one complete ZIP containing one current game.
 
-The parts are named:
+Open **MSR-Launcher.exe** or **Play-MSR.cmd** inside the extracted MSR folder.
+Use **Create-Desktop-Shortcuts.cmd** for the MSR, realm-join and Dungeon Master
+shortcuts. **Play-Realm-One.cmd** and **Play-Realm-Two.cmd** join the shared
+Internet realms. Their host and tunnels must be online. **Play local** creates
+your own FN service and two local realms with a separate set of saves.
 
-- `MSR-PrimeXT-DM-Magic-Fix-Debug-Complete-2026-09-12.zip.001`
-- `MSR-PrimeXT-DM-Magic-Fix-Debug-Complete-2026-09-12.zip.002`
+Press **P** to toggle the tabbed **Inventory**, **Character** and **World Map**
+menu. Armor can be dragged from hands or bags to compatible equipment slots on
+an updated server. The world atlas highlights the player's current named
+region, with zoom, centering and a separate transition view. See
+[MENU-GUIDE.md](MENU-GUIDE.md) and [START-HERE.md](START-HERE.md).
 
-Do not try to extract a numbered part on its own. The joined ZIP is
-3,151,413,773 bytes, with SHA-256:
+![Inventory and armor slots](Docs/images/inventory-menu.png)
 
-```text
-8f62cafa56c06e1efaa907677b6bcb4b52ac53cc6c1b70130fdcd28c4d922b81
-```
+![Current-region glow on the Daragoth atlas](Docs/images/world-atlas.png)
 
-Inside the extracted `MSR-PrimeXT-DM` folder:
+## This update
 
-- **MSR-Launcher.exe** opens the launcher and server choices.
-- **Play-Enhanced.cmd** starts local FN and two local realms, then joins the first.
-- **Play-Realm-One.cmd** and **Play-Realm-Two.cmd** join the shared Internet realms.
-- **Dungeon-Master.cmd** opens controls for your own Enhanced realms.
-- **Create-Desktop-Shortcuts.cmd** creates the game, realm and DM shortcuts.
-- **Play-Stable.cmd** switches local hosting to the preserved base version.
+- New inventory layout, character sheet and fantasy ivy/bronze menu decoration.
+- Authored equipment capacities and guarded armor drag-and-drop.
+- Daragoth artwork with a pulsing current-region marker and map transitions.
+- One base level and experience bar for each weapon skill; magic schools and
+  Parry remain separate. Existing weapon-script aliases keep working.
+- Realistic regular and rusty shortswords, with the original player model.
+- A single launcher and game package, retaining Dungeon Master controls and
+  both Internet realm join helpers.
+- FN character requests now run in local Create Game sessions as well as
+  dedicated realms.
 
-For local DM access, join your realm, open the DM controls, refresh players,
-grant your player slot Dungeon Master, then press **G** in game and choose
-**Dungeon Master**. See [START-HERE.md](START-HERE.md) for the complete player,
-hosting, persistence and rollback guide. The shared realms require their host
-PC and Internet tunnels to be online. Local FN and shared-realm FN store
-characters separately.
+The client and server are **Debug** builds with matching PDB symbols. See
+[UI-UPDATE-VALIDATION.md](Release/UI-UPDATE-VALIDATION.md) for completed checks
+and their limits. The optional native MScript event prototype is disabled;
+gameplay still uses the MScript interpreter. Broader character-model and
+weapon experiments are separate from these completed replacements.
 
-GitHub's automatic **Source code** download is a developer snapshot. It does
-not contain the executable game, sound, model and map payloads. Use the release
-assets for the full game; both Enhanced and Stable are included there.
+Keep your old release and private save/profile backups before upgrading.
+[The previous DM Debug release](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-dm-debug)
+remains available for recovery. Restoring only old DLLs does not restore the
+old distribution of weapon subskills after a migrated save has been written.
+See [Recovery/README.md](Recovery/README.md).
 
-## What is included
-
-Enhanced adds the encounter director and Dungeon Master panel, optional random
-encounters, Captain Brenn's Edana entrance encounter, HD textures for existing
-models, and fixes to chat wrapping, standalone player identities, local FN
-setup and spell effects. Stable retains the original game files and provides a
-rollback path through the launcher.
-
-The Enhanced client and server are **Debug** builds with matching PDB symbols
-and linker maps. The latest changes initialize magic sprites before submitting
-them to the engine, check optional dynamic-light arguments, and retain script
-getter return values so spell endpoints and positional sound coordinates stay
-valid. [DEBUG-VALIDATION.md](DEBUG-VALIDATION.md) records the observed tests and
-their limits, including the unresolved diagnosis of a friend's access violation.
-
-The MSR game targets compile within the PrimeXT project. PrimeXT's advanced
-renderer callbacks, PhysX, new meshes and new animations remain future work;
-the presence of their SDK source or staged material resources does not mean
-those features are active in this build. See
-[PORTING_STATUS.md](Full-Source/PORTING_STATUS.md) and the
-[graphics roadmap](Full-Source/msr_port/GRAPHICS_ROADMAP.md).
+GitHub's automatic **Source code** ZIP is a developer snapshot. Use the named
+release ZIP for the executable game, maps, models, sounds and bundled runtime.
+The release also contains its source and editable shortsword artwork.
+PrimeXT SDK features are available for further development; their source or
+material files alone do not establish that every renderer feature is active.
 
 ## Source layout
 
@@ -78,20 +66,21 @@ those features are active in this build. See
 | `Full-Source` | Parent PrimeXT SDK and vendored dependency snapshots |
 | `Engine-Source/Xash3D` | Xash3D FWGS source and dependency snapshots |
 | `Launcher` | Native Windows launcher source and Python host/diagnostic helpers |
-| `Portable-Package/FN` | Enhanced private FN service, protocol implementation and tests |
-| `Stable-Base/FN` | Preserved Stable service implementation |
+| `Portable-Package/FN` | Private FN service, protocol implementation and tests |
+| `Stable-Base/FN` | Historical recovery service source |
 | `Portable-Package/source`, `Stable-Base/source` | Earlier standalone patches, source notes and notices |
 | `Packaging-Work` | Regression checks and verified FN save-transfer support |
 | `SOURCE-INVENTORY.json` | Byte hashes linking extracted source files to the original release ZIP |
 
-The tree keeps release-relative paths so the source can be compared with an
-extracted game package. Runtime configuration and shaders are retained, but
+The source checkout retains Full-Source; the unified ZIP calls this folder
+Source. Compare files using that prefix mapping. Historical baseline manifests
+refer to the earlier release; Release/UI-UPDATE-VALIDATION.md describes this update. Runtime configuration and shaders are retained, but
 game binaries, maps, models, sounds, debug outputs and bundled language runtimes
 are in the complete release. Imported third-party source retains its upstream
 documentation; older upstream build instructions may describe a different
 layout or the original project rather than this integration.
 
-## Build the Enhanced game DLLs on Windows
+## Build the game DLLs on Windows
 
 Install Visual Studio Build Tools with the C++ desktop workload, CMake 3.24 or
 newer, Ninja, Git and Python. Use an **x86 Native Tools Command Prompt** and run
@@ -106,7 +95,7 @@ versioned dependency resolution:
 git clone https://github.com/microsoft/vcpkg.git .dependencies\vcpkg
 git -C .dependencies\vcpkg checkout 962e5e39f8a25f42522f51fffc574e05a3efd26b
 call .dependencies\vcpkg\bootstrap-vcpkg.bat -disableMetrics
-cmake -S Full-Source -B build\msr-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="%CD%/.dependencies/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows -DBUILD_CLIENT=OFF -DBUILD_SERVER=OFF -DBUILD_UTILS=OFF -DBUILD_GAME_LAUNCHER=OFF -DBUILD_MSR_PORT=ON -DENABLE_PHYSX=OFF -DGAMEDIR=msr
+cmake -S Full-Source -B build\msr-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="%CD%/.dependencies/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows -DBUILD_CLIENT=OFF -DBUILD_SERVER=OFF -DBUILD_UTILS=OFF -DBUILD_GAME_LAUNCHER=OFF -DBUILD_MSR_PORT=ON -DMSR_NATIVE_EVENT_PILOT=OFF -DENABLE_PHYSX=OFF -DGAMEDIR=msr
 cmake --build build\msr-debug --target msr_client msr_server --parallel
 ```
 
@@ -114,8 +103,8 @@ The configure step downloads build dependencies. Outputs are in
 `build/msr-debug/Debug/msr/bin`. With the game and its servers stopped, copy
 `client.dll` and `client.pdb` to an extracted release's
 `Portable-Package/game/msr/cl_dlls`, and `ms.dll` and `ms.pdb` to its
-`Portable-Package/game/msr/dlls`. Keep the matching maps for crash diagnosis.
-Preserve the Stable folder when testing changes.
+`Portable-Package/game/msr/dlls`. Keep matching PDB symbols for crash diagnosis. Preserve the previous release
+and raw save backups separately when testing changes.
 
 The release's `scripts.pak` remains required for gameplay. It is supplied in
 the full package, along with the authored Edana script additions in source.

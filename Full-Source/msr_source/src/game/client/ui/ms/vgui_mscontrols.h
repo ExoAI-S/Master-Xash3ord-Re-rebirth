@@ -384,6 +384,7 @@ public:
 	}
 
 	// Returns true if double-clicked
+	void ResetClicks() { mLastClick = 0; mpLastClicked = nullptr; mLastMouseCode = MOUSE_LAST; }
 	bool Click(void *pClicked, MouseCode vMouseCode)
 	{
 		float vCurTime = gEngfuncs.GetClientTime();
@@ -409,6 +410,8 @@ public:
 class VGUI_ItemCallbackPanel : public VGUI_DoubleClickDetector
 {
 public:
+	// Only the player inventory opts into deferred click/drag handling.
+	virtual bool BeginItemDrag(void* data, bool doubleClick) { return false; }
 	virtual void ItemSelectChanged( ulong ID, bool fSelected ) { }
 	virtual bool ItemClicked( void *pData  ) { return false; }		//Return true to override the default behavior
 	virtual void ItemRightClicked( void *pData ) { }

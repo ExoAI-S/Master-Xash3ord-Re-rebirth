@@ -1,0 +1,114 @@
+{
+  "candidate": "candidate-08",
+  "frozen_bundle_manifest_sha256": "12594a8e29e305dca3b697e1112dd8f03cb39eee03487e76fb5ee5be837d289b",
+  "files": [
+    {
+      "packaged_path": "equipment/atlas_tests.cpp",
+      "frozen_path": "tests/equipment/atlas_tests.cpp",
+      "frozen_sha256": "75879a607031642a4e5fd7469ab7c512484b927b42090a0cdc4b6858a652098c",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "equipment/equipment_tests.cpp",
+      "frozen_path": "tests/equipment/equipment_tests.cpp",
+      "frozen_sha256": "72336894eb3764919e875ee43e72e5ec3971681237a53ecc5dd892930bb8f8a8",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "equipment/initialization_tests.cpp",
+      "frozen_path": "tests/equipment/initialization_tests.cpp",
+      "frozen_sha256": "60f61ec51aa8fd870c96200bacb78ea75fbe880e01581f4bfb4b94bccd215bcf",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "equipment/extract_game_paths.py",
+      "frozen_path": "tests/equipment/extract_game_paths.py",
+      "frozen_sha256": "0dde304f754c5f640da744e3a265f51264aabf5f955ac16c3eecbacf3f576fe2",
+      "path_discovery_adapted": true
+    },
+    {
+      "packaged_path": "equipment/source_checks.py",
+      "frozen_path": "tests/equipment/source_checks.py",
+      "frozen_sha256": "51372a1f375298106946447fc25df71f39a7d11ff2c9f6b1846d95705a812c37",
+      "path_discovery_adapted": true
+    },
+    {
+      "packaged_path": "equipment/Run-Tests.ps1",
+      "frozen_path": "tests/equipment/Run-Tests.ps1",
+      "frozen_sha256": "11f10b3c8001e9b799e3f0646cc557e49fe8d7ebbc58e51621456dfb9f1e60f1",
+      "path_discovery_adapted": true
+    },
+    {
+      "packaged_path": "unified/entrypoint_tests.cpp",
+      "frozen_path": "tests/unified/entrypoint_tests.cpp",
+      "frozen_sha256": "d00a2f86d8a93323f67d02e2737676bf0d01cebabe1cd37075e72f050464dbaf",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "unified/unified_tests.cpp",
+      "frozen_path": "tests/unified/unified_tests.cpp",
+      "frozen_sha256": "fd5d0706a104589a0d13f8797f707c06808750afc8d41b940a6cf5a5803317e2",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "unified/extract_entrypoints.py",
+      "frozen_path": "tests/unified/extract_entrypoints.py",
+      "frozen_sha256": "82af6d257204d2637555e0af9cd34275163347bbf11c2de0d1d177387a261b74",
+      "path_discovery_adapted": true
+    },
+    {
+      "packaged_path": "unified/Run-Tests.ps1",
+      "frozen_path": "tests/unified/Run-Tests.ps1",
+      "frozen_sha256": "5665ec62af90f4fb4204cf34aeccbef25f7e21b7509a285bc9f6939aed8c905e",
+      "path_discovery_adapted": true
+    },
+    {
+      "packaged_path": "reference/baseline-game/server/player/playershared.cpp",
+      "frozen_path": "baseline/msr_source/src/game/server/player/playershared.cpp",
+      "frozen_sha256": "d1a413cbee1d6a3fe8a63fd0918fda35462631144fd0223b604cef9b7f0b3050",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/baseline-game/server/monsters/msmonsterserver.cpp",
+      "frozen_path": "baseline/msr_source/src/game/server/monsters/msmonsterserver.cpp",
+      "frozen_sha256": "f6b398c2c7ad9b57c2e59f77036fb28f3ffdb56133edd4855c24ba0cfcadbd87",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/baseline-game/shared/stats/stats.cpp",
+      "frozen_path": "baseline/msr_source/src/game/shared/stats/stats.cpp",
+      "frozen_sha256": "a0e45d0d46fc731269eb3a6896c2410dd5a7daa0507847a7e31818ceb1129d67",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/baseline-game/shared/ms/scriptcmds.cpp",
+      "frozen_path": "baseline/msr_source/src/game/shared/ms/scriptcmds.cpp",
+      "frozen_sha256": "ad64a140cff92a1406e4317ce1926dacca134e799859e539e68971f9d2a65588",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/scripts/player/player_sh_stats.script",
+      "frozen_path": "script-consumer-context/player/player_sh_stats.script",
+      "frozen_sha256": "ceabdbbe9a8c417fd507b475629f1e378ea248f65934bbed50ac14fbb23e1ca3",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/scripts/items/armor_leather.script",
+      "frozen_path": "script-consumer-context/items/armor_leather.script",
+      "frozen_sha256": "2573e1c44e6cc286d9a2a936600569f92420c0a35914dd53cc70a4f60711f1f4",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/scripts/items/item_torch.script",
+      "frozen_path": "script-consumer-context/items/item_torch.script",
+      "frozen_sha256": "d8e5cddc544206549998fdd34f2224fc5a758f7098c94c67576ad7c187e44c2f",
+      "path_discovery_adapted": false
+    },
+    {
+      "packaged_path": "reference/scripts/items/blunt_gauntlets_demon.script",
+      "frozen_path": "script-consumer-context/items/blunt_gauntlets_demon.script",
+      "frozen_sha256": "da2bb0aafc6c5019ca8056d8451a7c81bebc0370f4190350a51ff805892e5fdb",
+      "path_discovery_adapted": false
+    }
+  ]
+}

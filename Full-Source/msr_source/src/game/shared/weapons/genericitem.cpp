@@ -1049,7 +1049,7 @@ bool CGenericItem::CanWearItem()
 					if (pItemWorn->m_WearPositions[iwloc].Name != PlayerPos.Name)
 						continue;
 
-					iSlots += pItemWorn->m_WearPositions[iloc].Slots;
+					iSlots += pItemWorn->m_WearPositions[iwloc].Slots;
 					pItemConflict = pItemWorn;
 					break;
 				}

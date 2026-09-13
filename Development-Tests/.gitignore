@@ -1,0 +1,6 @@
+**/build/
+**/fixtures/
+**/__pycache__/
+*.pyc
+*.log
+equipment/source-checks.json

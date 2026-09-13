@@ -1323,6 +1323,20 @@ bool CMSMonster::Script_ExecuteCmd(CScript *Script, SCRIPT_EVENT &Event, scriptc
 					CStat *pStat = FindStat(Params[0].c_str());
 					if (pStat)
 					{
+                        if (pStat->IsUnifiedWeapon())
+                        {
+                            // Player scripts use a single value; an old equal
+                            // three-value tuple is equivalent. Reject conflicting
+                            // tuples instead of silently picking a property.
+                            const int level = atoi(Params[1]);
+                            bool consistent = true;
+                            for (unsigned int p = 2; p < Params.size(); ++p)
+                                if (atoi(Params[p]) != level) consistent = false;
+                            if (!consistent || !pStat->SetWeaponLevel(level))
+                                MS_ERROR("setstat: invalid unified weapon level/tuple for %s", Params[0].c_str());
+                        }
+                        else
+                        {
 						int NextParm = 1;
 						//Thothie NOV2007a - This doesn't work with spellcasting (no changes, just bitching)
 						//- will eventually need this to function on spellcasting for apostle quests
@@ -1332,6 +1346,7 @@ bool CMSMonster::Script_ExecuteCmd(CScript *Script, SCRIPT_EVENT &Event, scriptc
 								break; //Keep assigning stats until I run out of stats (for loop) or out of parameters (this check)
 							pStat->m_SubStats[i].Value = atoi(Params[NextParm++]);
 						}
+                        }
 					}
 					else
 						MS_ERROR("CMSMonster::Script_ExecuteCmd(): Script: %s, %s: stat %s not found!", Script->m.ScriptFile.c_str(), Cmd.Name().c_str(), Params[0].c_str());
@@ -1345,10 +1360,15 @@ bool CMSMonster::Script_ExecuteCmd(CScript *Script, SCRIPT_EVENT &Event, scriptc
 					{
 						msstring PropName = msInputStatName.substr(parse_stat.len() + 1);
 						int iProp = GetSubSkillByName(PropName);
-						if (iProp > -1)
-						{
-							int value = atoi(Params[1]);
-							pStat->m_SubStats[iProp].Value = V_min(value, MAX_STAT_PROPVALUE);
+						if (iProp >= 0 && iProp < (signed)pStat->m_SubStats.size())
+                        {
+                            int value = atoi(Params[1]);
+                            if (pStat->IsUnifiedWeapon())
+                            {
+                                if (!pStat->SetWeaponLevel(value))
+                                    MS_ERROR("setstat: invalid unified weapon level for %s", parse_stat.c_str());
+                            }
+                            else pStat->m_SubStats[iProp].Value = V_min(value, MAX_STAT_PROPVALUE);
 						}
 					}
 				}

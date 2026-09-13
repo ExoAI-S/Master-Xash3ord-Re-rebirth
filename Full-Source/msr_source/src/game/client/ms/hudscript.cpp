@@ -28,7 +28,6 @@
 #include "clglobal.h"
 #include "scriptedeffects.h"
 #include "hudscript.h"
-#include "mslogger.h"
 
 extern physent_t *MSUTIL_EntityByIndex( int playerindex );
 
@@ -178,11 +177,7 @@ int CHudScript::MsgFunc_ClientScript( const char *pszName, int iSize, void *pbuf
 		msstring ScriptName = READ_STRING( );
 		unsigned int iParameters = READ_BYTE( );
 		for (unsigned int i = 0; i < iParameters; i++) Parameters.add(READ_STRING());
-		if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0 && ScriptName == "effects/sfx_lightning" && Parameters.size() >= 2)
-			MS_INFO("[FX] lightning packet start=%s end=%s", Parameters[0].c_str(), Parameters[1].c_str());
-		if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0) MS_INFO("[FX] receive add script=%s id=%lu params=%u", ScriptName.c_str(), ID, iParameters);
 		CScript *Script = CreateScript( ScriptName, Parameters, true, ID );
-		if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0) MS_INFO("[FX] receive add result=%s", Script ? "created" : "failed");
 	}
 	else if( Action == 1 )	//Send Msg to Script
 	{
@@ -233,13 +228,11 @@ CScript *CHudScript::CreateScript(const char* ScriptName, msstringlist &Paramete
 
 	//Create a new script if not latching onto a prev copy
 	CScript *Script = Script_Add( ScriptName, &player );
-	if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0) MS_INFO("[FX] create script=%s loaded=%d events=%u", ScriptName, Script != nullptr, Script ? (unsigned int)Script->m.Events.size() : 0);
 	if( !Script ) return nullptr;
 
 
 	Script->m.pScriptedInterface = &player;
 	Script->RunScriptEvents( );
-	if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0) MS_INFO("[FX] activate client_activate script=%s params=%u", ScriptName, (unsigned int)Parameters.size());
 	Script->RunScriptEventByName( "client_activate", &Parameters );
 	Script->m.UniqueID = (UniqueID == -1) ? CScript::m_gLastSendID++ : UniqueID;
 	return Script;

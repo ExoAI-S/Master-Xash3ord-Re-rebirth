@@ -1,6 +1,8 @@
 #ifndef STATS_H
 #define STATS_H
 
+#include "unified_weapon.h"
+
 typedef unsigned long ulong;
 
 class CSubStat
@@ -62,6 +64,11 @@ public:
 	bool Changed(); //Has changed since OutDate called
 	void OutDate(); //Makes sure a change is sent next frame
 	void Update();	//Sets status to current - No updates sent
+	bool IsUnifiedWeapon() const;
+	bool NormalizeWeapon();
+	bool SetWeaponLevel(int level); // Explicit setter: base level, fresh XP.
+	bool WeaponProgress(UnifiedWeapon::State& state) const;
+	bool AwardWeaponXP(int amount, int& accepted, int& levels);
 
 	CSubStat* GetSubStat(int index)
 	{

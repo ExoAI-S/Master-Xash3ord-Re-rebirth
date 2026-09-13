@@ -313,7 +313,10 @@ public:
 	{ 
 		if (code == MOUSE_LEFT)
 		{
-			if ( mpDoubleClickDetector->Click(this, code) && m_pItemButton->m_Selected)
+			const bool doubleClick = mpDoubleClickDetector->Click(this, code) && m_pItemButton->m_Selected;
+			if (m_pItemButton->m_CallbackPanel && m_pItemButton->m_CallbackPanel->BeginItemDrag(m_pItemButton, doubleClick))
+				return;
+			if (doubleClick)
 			{
 				mouseDoublePressed(code, panel);
 			}
@@ -329,7 +332,11 @@ public:
 	};
 	void cursorMoved(int x,int y,Panel* panel) {};
 	void mouseReleased(MouseCode code,Panel* panel) {};
-	void mouseDoublePressed( MouseCode code, Panel* panel ) { m_pItemButton->Doubleclicked( ); };
+	void mouseDoublePressed( MouseCode code, Panel* panel )
+	{
+		if (code == MOUSE_LEFT && m_pItemButton->m_CallbackPanel && m_pItemButton->m_CallbackPanel->BeginItemDrag(m_pItemButton, true)) return;
+		m_pItemButton->Doubleclicked();
+	};
 	void mouseWheeled(int delta,Panel* panel) {};
 	void keyPressed(KeyCode code,Panel* panel) {};
 	void keyTyped(KeyCode code,Panel* panel) {};
@@ -352,6 +359,8 @@ VGUI_ItemButton::VGUI_ItemButton( int x, int y, VGUI_ItemCallbackPanel *pCallbac
 	setParent( pParent->getClient() );
 	m_CallbackPanel = pCallbackPanel;
 	m_PanelMaxWidth = pParent->getWide() - pParent->getVerticalScrollBar()->getWide();
+	m_Selected = false;
+	m_Highlighted = false;
 
 	// Get the scheme used for the Titles
 	CSchemeManager *pSchemes = gViewPort->GetSchemeManager();

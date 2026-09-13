@@ -27,7 +27,6 @@
 #include "ms/hudscript.h"
 #include "ms/clglobal.h"
 #include "script.h"
-#include "mslogger.h"
 #include <mathlib.h>
 
 #undef DLLEXPORT //Master Sword
@@ -961,13 +960,6 @@ void CScript::CLScriptedEffect(msstringlist &Params)
 {
 	if (!Params.size())
 		return;
-	static float lastEffectTrace = -1;
-	const float now = gEngfuncs.GetClientTime();
-	if (EngineFunc::CVAR_GetFloat("ms_debug_effects") > 0 && (lastEffectTrace < 0 || now < lastEffectTrace || now - lastEffectTrace >= 1))
-	{
-		MS_INFO("[FX] cleffect script=%s type=%s params=%u (sampled at most once/second)", m.ScriptFile.c_str(), Params[0].c_str(), (unsigned int)Params.size());
-		lastEffectTrace = now;
-	}
 
 	if (Params[0] == "tempent")
 	{
@@ -1190,6 +1182,10 @@ void CScript::CLScriptedEffect(msstringlist &Params)
 
 				if (CurrFrameEnt >= 256)
 					CurrFrameEnt = 0;
+				if (!IsPerm)
+					if (!gEngfuncs.CL_CreateVisibleEntity(ET_NORMAL, &RenderEnt))
+						return; //Exit if can't create the frame entity
+
 				if (IsSprite)
 				{
 					RenderEnt.curstate.rendermode = kRenderTransAdd;
@@ -1207,9 +1203,6 @@ void CScript::CLScriptedEffect(msstringlist &Params)
 				if (Params.size() >= 5)
 					RunScriptEventByName(Params[4]);
 				g_CurrentEnt = NULL;
-				// Xash rejects entities without models and classifies their final render mode.
-				if (!IsPerm && !gEngfuncs.CL_CreateVisibleEntity(ET_NORMAL, &RenderEnt))
-					return;
 			}
 		}
 		else if (Params[1] == "set_current_prop")
@@ -1259,8 +1252,6 @@ void CScript::CLScriptedEffect(msstringlist &Params)
 	else if (Params[0] == "light")
 	{
 		//<origin> <radius> <(r,g,b)> <duration> ["entity"|"dark"]
-		if (Params.size() < 6)
-			return;
 		if (Params[1] == "new" && atoi(EngineFunc::CVAR_GetString("r_dynamic")) == 0)
 			return;
 
@@ -1276,7 +1267,7 @@ void CScript::CLScriptedEffect(msstringlist &Params)
 		NewLight.color.g = Color.y;
 		NewLight.color.b = Color.z;
 		NewLight.die = gEngfuncs.GetClientTime() + atof(Params[NextParm++]);
-		if( NextParm < Params.size())
+		if( NextParm >= Params.size())
 		{
 			msstring &Flags = Params[NextParm++];
 			if (Flags.contains("entity"))

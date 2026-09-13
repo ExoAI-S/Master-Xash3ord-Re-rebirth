@@ -1,41 +1,46 @@
 # Native MSR launcher
 
-`Build-Launcher.cmd` builds the package's `MSR-Launcher.exe` and its PDB using
-the .NET Framework C# compiler supplied with Windows. This is a Debug build.
-The launcher uses .NET Framework, WinForms, WMI and the Windows shortcut COM API.
-Joining a server and creating shortcuts do not invoke PowerShell.
+`Build-Launcher.cmd` builds `MSR-Launcher.exe` and its matching PDB with the
+Windows .NET Framework C# compiler: `/debug:full /optimize-`. The launcher uses
+WinForms, WMI and Windows shortcut COM. Joining and creating shortcuts use no
+PowerShell; local host operations use bundled Python and `Launcher/native_host.py`.
 
-Supported entry points:
+Normal launch has one game and one server selector. It offers Join server, Play
+local, Host controls, Dungeon Master and Desktop shortcuts. The current runtime
+remains at `Portable-Package/game`; this consolidation does not relocate live
+services. An optional previous build at `Stable-Base` is accessed from Recovery.
 
-- No arguments: choose Enhanced/Stable and a public or custom server.
-- `--realm one` / `--realm two`: join the corresponding shared realm.
-- `--address hostname:port --version enhanced|stable`: direct join.
-- `--create-shortcuts`: create five native desktop shortcuts.
-- `--host-action start|stop|status|play --version enhanced|stable`: host window.
-- `--dm`: local Enhanced Dungeon Master controls.
-- `--self-test`: isolated fixture validation; never launch the game or a host.
+Entry points:
 
-The native host window invokes the bundled Python interpreter and
-`Launcher/native_host.py`. DM commands use that helper's `rcon` action and strict
-command allowlist. The helper owns process validation, persistence and version
-switching rules. Start and Play safely switch versions, preserving FN character
-databases with backups. The helper verifies Stable critical files, refuses open
-clients or ambiguous process ownership, and keeps both database copies before
-transferring saves. It has passed an isolated live Enhanced/Stable round trip.
-Stable joining uses original Stable game files, including their known limitations.
+- No arguments / `Play-MSR.cmd`: unified MSR launcher.
+- `--realm one` / `--realm two`: join a shared realm.
+- `--address hostname:port`: join a custom server.
+- `--create-shortcuts`: MSR plus Realm One, Realm Two and Dungeon Master.
+- `--host-action start|stop|status|play`: local host controls for the current game.
+- `--dm`: local Dungeon Master controls.
+- `--self-test`: isolated fixture checks and an offscreen launcher preview.
+- `--validate-only` with ordinary launch arguments: parse and validate only;
+  exit 0 for accepted options, 2 for invalid options. No UI, file writes, network,
+  client launch or host action occurs in this mode.
 
-Normal joining defaults to a 1280x720 window and keeps the existing graphics
-profile. Player identities are generated cryptographically, reused across game
-versions and never overwritten. Conflicting identities cause an explicit error.
-Existing game windows are left running and a second client launch is refused.
+For recovery and backward compatibility, `--version enhanced|stable` remains
+accepted. Enhanced maps to the current runtime and Stable to the optional prior
+runtime. These implementation names are absent from normal UI and shortcuts.
+The host helper permits a package with only the current runtime. If a recovery
+directory exists, it must be complete; it is not silently ignored if corrupt.
 
-Verified without starting the game: relocated paths containing spaces; new and
-existing identities; cross-version identity reuse/conflict rejection; malformed
-addresses rejected before writes; windowed client-only arguments; five shortcut
-files created and read back in an isolated fixture; helper RCON argument contract,
-invalid slots and command chaining refusal. GUI/gameplay checks remain separate.
+Recovery switching preserves identity validation, process ownership checks,
+ordered locks, original-asset validation and FN save backups. A stale active
+record referencing an absent build is refused, preserving saved data. No host
+switch was performed to install or validate this launcher.
 
-The distribution audit reproduced PowerShell's RemoteSigned rejection of an
-unsigned Internet-marked harmless script using the bundled runtime. No execution
-policies or Windows security settings were changed. Native binaries remain
-subject to the user's ordinary Windows application controls.
+The shortcut creator backs up and removes only old edition links targeting this
+installation. Unrelated or retargeted links are left untouched. Existing edition
+CLI options remain compatible even though the root Play-Enhanced/Play-Stable
+helpers have been replaced by Play-MSR and explicit Recovery helpers.
+
+Self-tests validate identity creation/reuse/conflicts, address rejection before
+writes, client-only arguments, the four portable shortcuts, the single selector,
+single-runtime preparation, and Dungeon Master command restrictions. Host helper
+tests use inert temporary fixtures and fake process APIs; no live service action
+is needed. Actual gameplay validation is separate from these launcher checks.
