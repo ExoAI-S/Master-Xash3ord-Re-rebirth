@@ -241,6 +241,16 @@ public:
 		Resize( );
 	}
 
+	void SetAnchor(int x, int bottom)
+	{
+		int oldX, oldY;
+		getPos(oldX, oldY);
+		if (oldX == x && m_StartY == bottom)
+			return;
+		m_StartY = bottom;
+		setPos(x, bottom - getTall());
+	}
+
 	void Layout(int x, int bottom, int width)
 	{
 		m_StartY = bottom;

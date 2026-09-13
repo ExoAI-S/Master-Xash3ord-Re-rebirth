@@ -45,3 +45,10 @@
 /*.zip
 /*.zip.001
 /*.zip.002
+
+# Generated recovery test outputs
+/Verification/Profile-Recovery/tests/fixtures/
+/Verification/Profile-Recovery/**/*.exe
+/Verification/Profile-Recovery/**/*.pdb
+/Verification/Profile-Recovery/tests/*.png
+/Verification/Profile-Recovery/tests/*-results.json

@@ -199,6 +199,17 @@ namespace PrimaryHUD
 			}
 		}
 
+		void GetChatAnchor(int& x, int& top)
+		{
+			int healthX, healthY, manaX, manaY, emblemX, emblemY, panelX, panelY;
+			m_Bar[0]->getPos(healthX, healthY);
+			m_Bar[1]->getPos(manaX, manaY);
+			m_HUDImage.getPos(emblemX, emblemY);
+			getPos(panelX, panelY);
+			x = panelX + V_min(healthX, manaX);
+			top = panelY + V_min(V_min(healthY, manaY), emblemY);
+		}
+
 		void OnResolutionChanged() override
 		{
 			setBounds(0, 0, ScreenWidth(), ScreenHeight());

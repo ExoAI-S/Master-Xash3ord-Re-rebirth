@@ -214,6 +214,16 @@ namespace RetroHUD
 			}
 		}
 
+		void GetChatAnchor(int& x, int& top)
+		{
+			int healthX, healthY, manaX, manaY, panelX, panelY;
+			m_Flask[0]->getPos(healthX, healthY);
+			m_Flask[1]->getPos(manaX, manaY);
+			getPos(panelX, panelY);
+			x = panelX + V_min(healthX, manaX);
+			top = panelY + V_min(healthY, manaY);
+		}
+
 		void OnResolutionChanged() override
 		{
 			setBounds(0, 0, ScreenWidth(), ScreenHeight());

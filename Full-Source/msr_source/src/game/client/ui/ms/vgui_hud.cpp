@@ -116,6 +116,7 @@ public:
 	//virtual void SetActiveInfo( int iInput );
 	virtual void Initialize(void);
 	void OnResolutionChanged();
+	void LayoutChat(bool resize = false);
 
 	void AddInfoWin(const char* Title, const char* Text);
 	void AddHelpWin(const char* Title, const char* Text);
@@ -146,7 +147,6 @@ private:
 	const int EVENTCON_Y = (YRES(480) - YRES(10));
 	const int EVENTCON_SIZE_Y = 0;
 	const int SAYTEXTCON_X = XRES(10);
-	const int SAYTEXTCON_Y = YRES(180);
 	const int SAYTEXTCON_SIZE_X = XRES(300);
 };
 
@@ -167,13 +167,32 @@ void CHUDPanel::OnResolutionChanged()
 		element->OnResolutionChanged();
 	m_ID->setPos(ID_X, ID_Y);
 	m_DebugText->setPos(0, YRES(16));
-	m_StartSayText->setBounds(XRES(100), YRES(300), XRES(540), YRES(16));
+	m_StartSayText->setSize(XRES(540), YRES(16));
 	m_StartSayText->m_Image.setPos(IMG_SPACER, (YRES(16) - IMG_SIZE) / 2);
 	m_StartSayText->m_TextPanel->setBounds(TEXT_START, 0, XRES(300) - TEXT_START - XRES(3), YRES(16));
 	m_Consoles[CON_EVENT]->Layout(XRES(390), ScreenHeight() - YRES(10), XRES(230));
-	m_Consoles[CON_SAYTEXT]->Layout(XRES(10), YRES(180), XRES(300));
+	LayoutChat(true);
 	for (auto window : m_HelpWindows)
 		window->setPos(ScreenWidth() - window->getWide() - XRES(60), YRES(10));
+}
+
+void CHUDPanel::LayoutChat(bool resize)
+{
+	int left, top;
+	if (CVAR_GET_FLOAT("cl_retrohud") > 0)
+		m_RetroHealth->GetChatAnchor(left, top);
+	else
+		m_Health->GetChatAnchor(left, top);
+	const int gap = V_max(1, YRES(4));
+	const int inputY = V_max(0, top - gap - m_StartSayText->getTall());
+	m_StartSayText->setPos(left, inputY);
+	// The console grows upward. Keep its wrapping/history intact while moving
+	// its bottom above the active bars, or above the typing line when open.
+	const int bottom = V_max(0, m_StartSayText->isVisible() ? inputY - gap : top - gap);
+	if (resize)
+		m_Consoles[CON_SAYTEXT]->Layout(left, bottom, XRES(300));
+	else
+		m_Consoles[CON_SAYTEXT]->SetAnchor(left, bottom);
 }
 
 CHUDPanel::CHUDPanel(Panel* pParent) : VGUI_MainPanel(0, 0, 0, ScreenWidth(), ScreenHeight())
@@ -218,16 +237,17 @@ CHUDPanel::CHUDPanel(Panel* pParent) : VGUI_MainPanel(0, 0, 0, ScreenWidth(), Sc
 	Prefs.BGTrans = "ms_txthud_bgtrans";
 	Prefs.Width = "ms_txthud_width";
 
-	m_Consoles.push_back(new VGUI_EventConsole(this, SAYTEXTCON_X, SAYTEXTCON_Y, SAYTEXTCON_SIZE_X, EVENTCON_SIZE_Y, Prefs, true, g_FontID));
+	m_Consoles.push_back(new VGUI_EventConsole(this, SAYTEXTCON_X, 0, SAYTEXTCON_SIZE_X, EVENTCON_SIZE_Y, Prefs, true, g_FontID));
 
 	//Start Say text panel
-	m_StartSayText = new VGUI_SendTextPanel(this, XRES(100), YRES(300), XRES(640) - XRES(100), YRES(16));
+	m_StartSayText = new VGUI_SendTextPanel(this, 0, 0, XRES(540), YRES(16));
 
 	//Debug Text
 	m_DebugText = new MSLabel(this, "", 0, YRES(16));
 
 	//Quick Slot Text
 	m_HUDElements.push_back(m_QuickSlot = new VGUI_QuickSlot(this));
+	LayoutChat(true);
 }
 
 CHUDPanel::~CHUDPanel() 
@@ -381,6 +401,7 @@ void CHUDPanel::Think()
 
 	//Update Start Say Text
 	m_StartSayText->Update();
+	LayoutChat();
 }
 
 void CHUDPanel::UpdateInfoWindows(std::vector<CInfoWindow*>& Windows)

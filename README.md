@@ -6,8 +6,8 @@ Master controls.
 
 ## Download and play
 
-Get the [UI Debug update](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-ui-debug).
-Download **MSR-Unified-Debug-Complete-2026-09-12.zip** and extract it completely
+Get the [Recovery and Chat Debug update](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.13-recovery-debug).
+Download **MSR-Recovery-Debug-Complete-2026-09-13.zip** and extract it completely
 into a writable folder. It is one complete ZIP containing one current game.
 
 Open **MSR-Launcher.exe** or **Play-MSR.cmd** inside the extracted MSR folder.
@@ -28,6 +28,18 @@ region, with zoom, centering and a separate transition view. See
 
 ## This update
 
+A fresh installation reuses one unambiguous profile from your saved backups
+or previous MSR desktop shortcuts. Existing profiles stay in place. For a
+missing character, choose **Recover characters**, select your own old game
+folder/profile, and join the same realm. See [RECOVER-CHARACTERS.md](RECOVER-CHARACTERS.md).
+
+Chat history and its typing line now sit immediately above the health/mana
+HUD, with resolution and retro-mode support.
+
+![Chat above the health and mana bars](Docs/images/chat-above-bars.png)
+
+The earlier UI features remain included:
+
 - New inventory layout, character sheet and fantasy ivy/bronze menu decoration.
 - Authored equipment capacities and guarded armor drag-and-drop.
 - Daragoth artwork with a pulsing current-region marker and map transitions.
@@ -40,13 +52,13 @@ region, with zoom, centering and a separate transition view. See
   dedicated realms.
 
 The client and server are **Debug** builds with matching PDB symbols. See
-[UI-UPDATE-VALIDATION.md](Release/UI-UPDATE-VALIDATION.md) for completed checks
-and their limits. The optional native MScript event prototype is disabled;
+[RECOVERY-VALIDATION.md](RECOVERY-VALIDATION.md) for this update
+and [prior UI validation](Release/UI-UPDATE-VALIDATION.md) for the preceding features. The optional native MScript event prototype is disabled;
 gameplay still uses the MScript interpreter. Broader character-model and
 weapon experiments are separate from these completed replacements.
 
 Keep your old release and private save/profile backups before upgrading.
-[The previous DM Debug release](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-dm-debug)
+[The previous UI Debug release](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-ui-debug)
 remains available for recovery. Restoring only old DLLs does not restore the
 old distribution of weapon subskills after a migrated save has been written.
 See [Recovery/README.md](Recovery/README.md).
@@ -74,7 +86,7 @@ material files alone do not establish that every renderer feature is active.
 
 The source checkout retains Full-Source; the unified ZIP calls this folder
 Source. Compare files using that prefix mapping. Historical baseline manifests
-refer to the earlier release; Release/UI-UPDATE-VALIDATION.md describes this update. Runtime configuration and shaders are retained, but
+refer to the earlier release; RECOVERY-VALIDATION.md describes this update. Runtime configuration and shaders are retained, but
 game binaries, maps, models, sounds, debug outputs and bundled language runtimes
 are in the complete release. Imported third-party source retains its upstream
 documentation; older upstream build instructions may describe a different
@@ -123,7 +135,8 @@ checkout.
 `Launcher/Source/Build-Launcher.cmd` compiles the native Debug launcher using
 Windows' .NET Framework C# compiler. Copy the resulting `MSR-Launcher.exe` and
 PDB into an extracted release to run it with the included runtime files.
-See [the launcher source notes](Launcher/Source/README.md).
+See [the launcher source notes](Launcher/Source/README.md) and
+[reproducible profile recovery checks](Verification/Profile-Recovery/README.md).
 
 FN uses Python's standard library and binds to loopback by default. Its
 [protocol notes](Portable-Package/PROTOCOL.md) explain compatibility and the

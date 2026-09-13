@@ -1,0 +1,58 @@
+{
+  "candidate_id": "candidate-10-chat-profile-recovery",
+  "configuration": "Debug",
+  "files": {
+    "MSR-Launcher.exe": {
+      "bytes": 62976,
+      "sha256": "203a04c388893cc5ec6229789f834c7bca001b77f4fb33f585ece9d82da7918c"
+    },
+    "MSR-Launcher.pdb": {
+      "bytes": 91648,
+      "sha256": "d5f0ac6758cb76e71b30542f04eb43df622a477bdbf958dbe0b593adbe4d3d32"
+    },
+    "Portable-Package/game/msr/cl_dlls/client.dll": {
+      "bytes": 4646912,
+      "sha256": "e0864850ca6480ef777d024d37c0ac97970c965e35446fc9d634a6aa8e34d396"
+    },
+    "Portable-Package/game/msr/cl_dlls/client.pdb": {
+      "bytes": 33026048,
+      "sha256": "8b7e9603c91421278f69639adf6be21e39515c0207603244b14a090081fd6a4b"
+    },
+    "Portable-Package/game/msr/dlls/ms.dll": {
+      "bytes": 5031424,
+      "sha256": "b31598eadaa033eef83127f26bb007477979f9ed0c0dabad58a0a52ef0fd2097"
+    },
+    "Portable-Package/game/msr/dlls/ms.pdb": {
+      "bytes": 32747520,
+      "sha256": "b55f6b306643084cd9ed44e6523aaac4d14d1745d45782904085c6b4a1a18846"
+    },
+    "Portable-Package/game/msr/scripts.pak": {
+      "bytes": 7363058,
+      "sha256": "5168d4d04a6207bf48769f69eca9ddfb26209adbfe4a2366f6be93bcd7079d9b"
+    },
+    "Portable-Package/game/ref_gl.pdb": {
+      "bytes": 11636736,
+      "sha256": "758bf040367a7cd5d2e48ae44c59b95e644a215cc6bb7715d1f25cf944a460fc"
+    },
+    "Portable-Package/game/vgui.pdb": {
+      "bytes": 12660736,
+      "sha256": "919b30ba13be4fecd1511c75eb435ec13be889d7a47fc541f2adecd0f0c71dbb"
+    },
+    "Portable-Package/game/xash.dll": {
+      "bytes": 3492864,
+      "sha256": "e22a5c2cd82b25d8b437f83cd53b02b75cea9d166cc184c60dacd0973ed1f728"
+    },
+    "Portable-Package/game/xash.pdb": {
+      "bytes": 24653824,
+      "sha256": "b949d635d2cd2f79cf6d9e7bdad0aa0a8acd4ef77a2e990bbaba3d00ee00575e"
+    },
+    "Portable-Package/game/xash3d.exe": {
+      "bytes": 768512,
+      "sha256": "4818d1a9432fa980290785003efb3588b6a35d7915985432aee311c5f75aa0c4"
+    },
+    "Portable-Package/game/xash3d.pdb": {
+      "bytes": 10006528,
+      "sha256": "5f5c2ca40fe4e78949ba67e51fb8bb86dfe111a5e7b92c013da11c9d1e92f8b8"
+    }
+  }
+}

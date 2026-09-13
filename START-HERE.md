@@ -21,8 +21,15 @@ Realm One: `schmidt-council.tun.ply.gg:48715`
 Realm Two: `schmidt-once.tun.ply.gg:63800`
 
 These realms share their host's FN character service; the host and tunnels
-must be running. Your local FN has separate saves. The first join generates
-a private Portable-Package/player-profile.json: back it up and never share it.
+must be running. Your local FN has separate saves. A fresh installation first checks
+your saved profile backups and previous MSR shortcuts. One consistent identity
+is reused; otherwise you choose your old profile or create a new one. Existing
+profiles are preserved. **Recover characters** lets you select your own old MSR
+folder/profile before joining. See **RECOVER-CHARACTERS.md**.
+
+Your private Portable-Package/player-profile.json identifies your character slots.
+Normal launcher use backs it up outside the game in Saved Games/MSR/Profiles.
+Keep your profile private and keep your old installation until your character appears.
 Fresh installs contain no player identity, saves, host passwords or tunnel account.
 
 Close your client before starting a new one. Local hosting uses UDP 27025 and

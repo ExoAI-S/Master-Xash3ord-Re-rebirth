@@ -42,20 +42,9 @@ internal static class MSRLauncher
             }
             if (args.Length == 1 && args[0] == "--create-shortcuts")
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                if (!ProfileRecovery.PrepareForUse(root, Versions[0], Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), true)) return 1;
                 CreateShortcuts(root);
                 MessageBox.Show("Created MSR, Join Realm One, Join Realm Two, and Dungeon Master desktop shortcuts.", "MSR shortcuts");
                 return 0;
-            }
-            if ((args.Length == 1 || args.Length == 3) && args[0] == "--prepare-profile")
-            {
-                if (args.Length == 3 && args[1] != "--desktop") throw new ArgumentException("Use --prepare-profile --desktop followed by your shortcut folder.");
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                string desktop = args.Length == 3 ? Path.GetFullPath(args[2]) : Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                return ProfileRecovery.PrepareForUse(root, Versions[0], desktop, true) ? 0 : 1;
             }
             string version = "Portable-Package";
             string realm = null;
@@ -91,16 +80,12 @@ internal static class MSRLauncher
                 throw new ArgumentException("Choose one launcher action at a time.");
             // CLI validation must never write profiles, open a window or touch a host.
             if (validateOnly) return 0;
+            if (realm != null) { Launch(root, version, realm, true); return 0; }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (realm != null) { Launch(root, version, realm, true); return 0; }
             if (dungeonMaster) Application.Run(new DMForm(root));
             else if (hostAction != null) Application.Run(new HostForm(root, version, hostAction));
-            else
-            {
-                if (!ProfileRecovery.PrepareForUse(root, version, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory))) return 0;
-                Application.Run(new LauncherForm(root, version));
-            }
+            else Application.Run(new LauncherForm(root, version));
             return 0;
         }
         catch (Exception error)
@@ -131,22 +116,12 @@ internal static class MSRLauncher
         return address;
     }
 
-    internal static string ReadKey(string path)
-    {
-        if (new FileInfo(path).Length > 65536) throw new InvalidDataException("The player profile is too large. It was not overwritten.");
-        return ReadKeyContent(File.ReadAllBytes(path), path);
-    }
-
-    internal static string ReadKeyContent(byte[] bytes, string path)
+    private static string ReadKey(string path)
     {
         try
         {
-            if (bytes.Length > 65536) throw new SerializationException();
-            string content;
-            using (StreamReader reader = new StreamReader(new MemoryStream(bytes), Encoding.UTF8, true)) content = reader.ReadToEnd();
-            if (!(Json.DeserializeObject(content) is Dictionary<string, object>)) throw new SerializationException();
             Identity data;
-            using (MemoryStream input = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+            using (MemoryStream input = new MemoryStream(Encoding.UTF8.GetBytes(File.ReadAllText(path))))
                 data = (Identity)new DataContractJsonSerializer(typeof(Identity)).ReadObject(input);
             if (data == null || data.Key == null || !Regex.IsMatch(data.Key, "^[0-9a-f]{32}$"))
                 throw new SerializationException();
@@ -161,27 +136,12 @@ internal static class MSRLauncher
 
     internal static string Prepare(string root, string version, string address, bool windowed)
     {
-        return Prepare(root, version, address, windowed, ProfileRecovery.BackupDirectory, false);
-    }
-
-    internal static string Prepare(string root, string version, string address, bool windowed, string backups, bool startNew)
-    {
         if (version != Versions[0] && version != Versions[1]) throw new ArgumentException("Invalid game version.");
         address = ValidateAddress(address);
         string folder = Path.Combine(root, version);
         string game = Path.Combine(folder, "game");
         foreach (string part in Required)
             if (!File.Exists(Path.Combine(game, part))) throw new FileNotFoundException("The extracted game is incomplete: " + version + "\\game\\" + part + ". Extract the entire original game ZIP before adding this launcher.");
-        string key = PrepareIdentity(root, version, backups, startNew);
-        string configuration = "setinfo _fnid \"" + key + "\"\r\npassword \"\"\r\nexec masterpiece.cfg\r\nms_invtype \"1\"\r\nms_alpha_inventory \"1\"\r\nconnect " + address + "\r\n";
-        File.WriteAllText(Path.Combine(game, @"msr\private_join.cfg"), configuration, Encoding.ASCII);
-        return "-game msr -port 27026 -console -log client.log " + (windowed ? "-windowed -width 1280 -height 720 " : "") + "+exec private_join.cfg";
-    }
-
-    internal static string PrepareIdentity(string root, string version, string backups, bool startNew)
-    {
-        ProfileRecovery.Targets(root, version);
-        string folder = Path.Combine(root, version);
         using (FileStream profileGuard = LockProfile(root))
         {
         string profilePath = Path.Combine(folder, "player-profile.json");
@@ -195,9 +155,6 @@ internal static class MSRLauncher
             key = other;
             if (key == null)
             {
-                ProfileDiscovery saved = ProfileRecovery.ListBackups(backups);
-                if (!startNew && (saved.Count != 0 || saved.Warnings.Count != 0))
-                    throw new InvalidOperationException("A saved player profile is available or could not be read. Use Recover characters to choose a valid profile, or explicitly choose Start a new profile.");
                 byte[] bytes = new byte[16];
                 using (RandomNumberGenerator random = RandomNumberGenerator.Create()) random.GetBytes(bytes);
                 key = BitConverter.ToString(bytes).Replace("-", "").ToLowerInvariant();
@@ -207,13 +164,13 @@ internal static class MSRLauncher
             using (StreamWriter writer = new StreamWriter(stream, new UTF8Encoding(false)))
                 writer.Write(Json.Serialize(new Dictionary<string, object> { { "profile_key", key } }));
         }
-        // Keep the identity outside the installation before preparing every join.
-        ProfileRecovery.BackupFile(profilePath, backups, root, version);
-        return key;
+        string configuration = "setinfo _fnid \"" + key + "\"\r\npassword \"\"\r\nexec masterpiece.cfg\r\nms_invtype \"1\"\r\nms_alpha_inventory \"1\"\r\nconnect " + address + "\r\n";
+        File.WriteAllText(Path.Combine(game, @"msr\private_join.cfg"), configuration, Encoding.ASCII);
+        return "-game msr -port 27026 -console -log client.log " + (windowed ? "-windowed -width 1280 -height 720 " : "") + "+exec private_join.cfg";
         }
     }
 
-    internal static FileStream LockProfile(string root)
+    private static FileStream LockProfile(string root)
     {
         for (int attempt = 0; attempt < 20; attempt++)
         {
@@ -228,14 +185,11 @@ internal static class MSRLauncher
         throw new IOException("Another MSR launcher is updating your player identity. Wait briefly and try again; no profile was overwritten.");
     }
 
-    internal static FileStream LockClientLaunch(string root)
+    internal static void Launch(string root, string version, string address, bool windowed)
     {
-        try { return new FileStream(Path.Combine(root, "client-launch.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None); }
-        catch (IOException) { throw new IOException("Another MSR launcher is starting a game or restoring a profile. Wait briefly and try again."); }
-    }
-
-    internal static void AssertNoRunningClient(string root)
-    {
+        // Shared with the native launcher only; it never changes host state or stops processes.
+        using (FileStream guard = new FileStream(Path.Combine(root, "client-launch.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+        {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT ExecutablePath, CommandLine FROM Win32_Process WHERE Name='xash3d.exe'"))
             using (ManagementObjectCollection processes = searcher.Get())
             {
@@ -244,26 +198,12 @@ internal static class MSRLauncher
                 {
                     string path = process["ExecutablePath"] as string;
                     string command = process["CommandLine"] as string;
-                    AssertClientRecord(root, path, command);
+                    foreach (string runtime in Versions)
+                        if (String.Equals(path, Path.Combine(root, runtime, @"game\xash3d.exe"), StringComparison.OrdinalIgnoreCase) &&
+                            !Regex.IsMatch(command ?? "", @"(^|\s)-dedicated(\s|$)", RegexOptions.IgnoreCase))
+                            throw new InvalidOperationException("Close the current MSR game window before joining another server. Your current game was left running.");
                 }
             }
-    }
-
-    internal static void AssertClientRecord(string root, string path, string command)
-    {
-        if (String.IsNullOrEmpty(path)) throw new InvalidOperationException("Windows could not verify an open game process. Close MSR before restoring a profile or joining another server.");
-        foreach (string runtime in Versions)
-            if (String.Equals(path, Path.Combine(root, runtime, @"game\xash3d.exe"), StringComparison.OrdinalIgnoreCase) &&
-                !Regex.IsMatch(command ?? "", @"(^|\s)-dedicated(\s|$)", RegexOptions.IgnoreCase))
-                throw new InvalidOperationException("Close the current MSR game window before restoring a profile or joining another server. Your current game was left running.");
-    }
-
-    internal static bool Launch(string root, string version, string address, bool windowed)
-    {
-        if (!ProfileRecovery.PrepareForUse(root, version, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory))) return false;
-        using (FileStream guard = LockClientLaunch(root))
-        {
-            AssertNoRunningClient(root);
             string arguments = Prepare(root, version, address, windowed);
             string game = Path.Combine(root, version, "game");
             using (Process process = Process.Start(new ProcessStartInfo { FileName = Path.Combine(game, "xash3d.exe"), WorkingDirectory = game, Arguments = arguments, UseShellExecute = false }))
@@ -273,7 +213,6 @@ internal static class MSRLauncher
                     throw new InvalidOperationException("The game exited during startup (code 0x" + unchecked((uint)process.ExitCode).ToString("X8") + "). Check " + version + "\\game\\client.log.");
             }
         }
-        return true;
     }
 
     private static void Property(object item, string name, object value)
@@ -339,7 +278,7 @@ internal static class MSRLauncher
     private static void Assert(bool condition, string message) { if (!condition) throw new Exception("Self-test failed: " + message); }
     private static void SelfTest(string root)
     {
-        string fixture = Path.Combine(Path.GetTempPath(), "MSR Launcher Synthetic Tests", "native launcher " + Guid.NewGuid().ToString("N"), "MSR Fixture");
+        string fixture = Path.Combine(root, ".verification", "native launcher " + Guid.NewGuid().ToString("N"), "MSR Fixture");
         foreach (string version in Versions)
             foreach (string part in Required)
             {
@@ -347,8 +286,7 @@ internal static class MSRLauncher
                 Directory.CreateDirectory(Path.GetDirectoryName(file));
                 File.WriteAllText(file, "test fixture; no executable content");
             }
-        string testBackups = Path.Combine(Path.GetDirectoryName(fixture), "Durable Profiles");
-        string args = Prepare(fixture, Versions[0], RealmOne, true, testBackups, true);
+        string args = Prepare(fixture, Versions[0], RealmOne, true);
         string firstPath = Path.Combine(fixture, Versions[0], "player-profile.json");
         string first = ReadKey(firstPath);
         string original = File.ReadAllText(firstPath);
@@ -361,9 +299,9 @@ internal static class MSRLauncher
         try { ReadKey(duplicatePath); } catch (InvalidDataException) { duplicate = true; }
         Assert(duplicate, "duplicate identity keys rejected");
         Assert(args.Contains("-windowed -width 1280 -height 720") && !args.Contains("-dedicated"), "windowed client arguments");
-        Prepare(fixture, Versions[1], RealmTwo, false, testBackups, true);
+        Prepare(fixture, Versions[1], RealmTwo, false);
         Assert(first == ReadKey(Path.Combine(fixture, Versions[1], "player-profile.json")), "identity reused across versions");
-        Prepare(fixture, Versions[0], "127.0.0.1:27025", true, testBackups, true);
+        Prepare(fixture, Versions[0], "127.0.0.1:27025", true);
         Assert(File.ReadAllText(firstPath) == original, "existing identity preserved");
         string cfgPath = Path.Combine(fixture, Versions[0], @"game\msr\private_join.cfg");
         string cfg = File.ReadAllText(cfgPath);
@@ -373,7 +311,7 @@ internal static class MSRLauncher
         string secondPath = Path.Combine(fixture, Versions[1], "player-profile.json");
         File.WriteAllText(secondPath, "{\"profile_key\":\"" + (first == new string('a', 32) ? new string('b', 32) : new string('a', 32)) + "\"}");
         bool mismatch = false;
-        try { Prepare(fixture, Versions[0], RealmOne, true, testBackups, true); } catch (InvalidDataException) { mismatch = true; }
+        try { Prepare(fixture, Versions[0], RealmOne, true); } catch (InvalidDataException) { mismatch = true; }
         Assert(mismatch && File.ReadAllText(firstPath) == original, "conflicting identities refused");
         string shortcuts = Path.Combine(fixture, "Test Shortcuts");
         CreateShortcuts(fixture, shortcuts);
@@ -448,7 +386,7 @@ internal static class MSRLauncher
             Directory.CreateDirectory(Path.GetDirectoryName(file));
             File.WriteAllText(file, "test fixture; no executable content");
         }
-        Prepare(single, Versions[0], RealmOne, true, testBackups, true);
+        Prepare(single, Versions[0], RealmOne, true);
         Assert(!Directory.Exists(Path.Combine(single, Versions[1])), "single runtime launch preparation needs no recovery build");
         string dmArgs = NativeHost.Arguments(fixture, Versions[0], "rcon", "realm-two", "ms_dm_grant 31");
         Assert(dmArgs.Contains("--version enhanced --action rcon --server-id realm-two --command \"ms_dm_grant 31\""), "native DM helper contract");
@@ -474,7 +412,7 @@ internal sealed class LauncherForm : Form
     {
         this.root = root;
         Text = version == "Stable-Base" ? "MSR - Recovery build" : "MSR";
-        ClientSize = new Size(640, 412);
+        ClientSize = new Size(640, 340);
         Font = new Font("Segoe UI", 10F);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
@@ -494,16 +432,16 @@ internal sealed class LauncherForm : Form
         windowed.SetBounds(168, 146, 450, 28);
         windowed.Checked = true;
         Controls.Add(windowed);
-        AddLabel("Join server uses the address above. Play local starts this PC's realms.\nFN keeps your character saves. Your player profile identifies you.", 22, 187, 596, 48);
+        AddLabel("Join server uses the address above. Play local starts this PC's realms.\nYour player identity stays with the existing character save service.", 22, 187, 596, 48);
         Button shortcuts = new Button { Text = "Desktop shortcuts" };
         shortcuts.SetBounds(428, 292, 190, 32);
-        shortcuts.Click += delegate { try { if (ProfileRecovery.PrepareForUse(root, version, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), true)) { MSRLauncher.CreateShortcuts(root); MessageBox.Show("MSR and three direct-access shortcuts were created on your desktop.", "MSR shortcuts"); } } catch (Exception error) { MSRLauncher.ShowError(root, error); } };
+        shortcuts.Click += delegate { try { MSRLauncher.CreateShortcuts(root); MessageBox.Show("MSR and three direct-access shortcuts were created on your desktop.", "MSR shortcuts"); } catch (Exception error) { MSRLauncher.ShowError(root, error); } };
         Controls.Add(shortcuts);
         Button join = new Button { Text = "Join server" };
         join.SetBounds(22, 242, 290, 36);
         join.Click += delegate
         {
-            try { if (MSRLauncher.Launch(root, version, address.Text, windowed.Checked)) Close(); }
+            try { MSRLauncher.Launch(root, version, address.Text, windowed.Checked); Close(); }
             catch (Exception error) { MSRLauncher.ShowError(root, error); }
         };
         Controls.Add(join);
@@ -519,11 +457,6 @@ internal sealed class LauncherForm : Form
         dm.SetBounds(225, 292, 190, 32);
         dm.Click += delegate { using (DMForm form = new DMForm(root)) form.ShowDialog(this); };
         Controls.Add(dm);
-        Button recover = new Button { Text = "Recover characters" };
-        recover.SetBounds(22, 343, 190, 36);
-        recover.Click += delegate { using (ProfileRecoveryForm form = new ProfileRecoveryForm(root, version, false)) form.ShowDialog(this); };
-        Controls.Add(recover);
-        AddLabel("Reinstalled MSR? Restore your own old player-profile.json.\nProfiles are backed up in Saved Games\\MSR\\Profiles.", 225, 341, 393, 48);
         AcceptButton = join;
     }
 
