@@ -1,0 +1,88 @@
+{
+const LIGHTNING_SPRITE lgtning.spr
+const LIGHTNING_SPRITE_SPARKS 3dmflaora.spr
+const LIGHT_COLOR (1,0.5,2)
+const LIGHTNING_SOUND weather/lightning.wav
+const GAUSS_SOUND magic/shock_noloop.wav
+const GAUSS_CORE_SPRITE env_laser.spr
+const GAUSS_COLOR (100,180,255)
+const GAUSS_CORE_COLOR (230,250,255)
+const SPARK_HORIZONTAL_NOISE 30
+const SHN SPARK_HORIZONTAL_NOISE
+precache LIGHTNING_SPRITE
+precache LIGHTNING_SPRITE_SPARKS
+precache GAUSS_CORE_SPRITE
+}
+{ client_activate
+setvard sfx.start PARAM1
+setvard sfx.end PARAM2
+setvard sfx.duration PARAM3
+setvard sfx.amt PARAM4
+setvard sfx.gauss PARAM5
+setvard sfx.width $get_skill_ratio(sfx.amt,1,25)
+setvard sfx.sparkscale $get_skill_ratio(sfx.amt,0.1,0.2)
+setvard sfx.sparkpos sfx.start
+if ( sfx.gauss == 1 )
+{
+setvard sfx.sparkpos sfx.end
+setvard sfx.sparkscale $get_skill_ratio(sfx.amt,0.2,0.35)
+}
+else
+{
+setvard l.grnd $get_ground_height(sfx.start)
+if( l.grnd isnot 'none' ) vectorset sfx.start z l.grnd
+setvard sfx.sparkpos sfx.start
+}
+callevent effect_start
+callevent effect_die
+}
+{ effect_start
+if ( sfx.gauss == 1 )
+{
+local l.corewidth $get_skill_ratio(sfx.amt,2,5)
+local l.arcwidth $get_skill_ratio(sfx.amt,5,10)
+cleffect beam_points sfx.start sfx.end GAUSS_CORE_SPRITE sfx.duration l.corewidth 0.0 255 50 30 GAUSS_CORE_COLOR
+cleffect beam_points sfx.start sfx.end LIGHTNING_SPRITE sfx.duration l.arcwidth 0.7 255 50 30 GAUSS_COLOR
+cleffect beam_points sfx.start sfx.end LIGHTNING_SPRITE sfx.duration l.corewidth 1.2 255 50 30 GAUSS_CORE_COLOR
+cleffect light new sfx.start 128 GAUSS_COLOR sfx.duration
+cleffect light new sfx.end 160 GAUSS_CORE_COLOR sfx.duration
+cleffect tempent sprite LIGHTNING_SPRITE_SPARKS sfx.start effect_setupimpact_tempent
+cleffect tempent sprite LIGHTNING_SPRITE_SPARKS sfx.end effect_setupimpact_tempent
+sound.play3d GAUSS_SOUND 10 sfx.start
+calleventloop $rand(8,12) effect_createball
+}
+else
+{
+cleffect beam_points sfx.start sfx.end LIGHTNING_SPRITE sfx.duration sfx.width .4 .5 1 30 LIGHT_COLOR
+sound.play3d LIGHTNING_SOUND 7 sfx.start
+calleventloop $rand(6,8) effect_createball
+}
+}
+{ effect_createball
+cleffect tempent sprite LIGHTNING_SPRITE_SPARKS sfx.sparkpos effect_setupball_tempent
+}
+{ effect_setupimpact_tempent
+cleffect tempent set_current_prop death_delay 0.4
+cleffect tempent set_current_prop rendermode add
+cleffect tempent set_current_prop renderamt 255
+cleffect tempent set_current_prop rendercolor GAUSS_CORE_COLOR
+cleffect tempent set_current_prop scale 0.35
+cleffect tempent set_current_prop fadeout lifetime
+}
+{ effect_setupball_tempent
+cleffect tempent set_current_prop death_delay $randf(0.6,1)
+cleffect tempent set_current_prop bouncefactor 2
+local l.x $randf($neg(SHN),SHN)
+local l.y $randf($neg(SHN),SHN)
+local l.z $randf(-300,-30)
+local l.vel $vec(l.x,l.y,l.z)
+cleffect tempent set_current_prop velocity l.vel
+cleffect tempent set_current_prop collide world
+cleffect tempent set_current_prop rendermode add
+cleffect tempent set_current_prop renderamt 255
+cleffect tempent set_current_prop scale sfx.sparkscale
+cleffect tempent set_current_prop fadeout lifetime
+}
+{ effect_die
+removescript
+}

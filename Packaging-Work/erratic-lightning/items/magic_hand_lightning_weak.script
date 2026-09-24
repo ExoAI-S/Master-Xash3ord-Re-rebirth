@@ -1,0 +1,71 @@
+{
+const SOUND_SHOOT magic/cast.wav
+const SOUND_GAUSS magic/shock_noloop.wav
+const MELEE_RANGE 500
+const MELEE_HITCHANCE 100%
+const MELEE_ATK_DURATION 1
+const MELEE_TYPE strike-land
+const MELEE_DMG 25
+const MELEE_DMG_RANGE 15
+const MELEE_NOAUTOAIM 1
+const MELEE_DMG_DELAY 0.4
+setvar SPELL_SKILL_REQUIRED 0
+const SPELL_PREPARE_TIME 2
+const SPELL_DAMAGE_TYPE lightning_effect
+const SPELL_ENERGYDRAIN 10
+const SPELL_MPDRAIN 1
+const SPELL_STAT spellcasting.lightning
+const SCRIPT_SFX_CAST "effects/sfx_lightning"
+const SCRIPT_SFX_PREP "items/magic_hand_lightning_weak_cl"
+const SCRIPT_SFX_DURATION 0.5
+const LIGHT_COLOR (30,30,253)
+}
+{ game_precache
+precachefile SCRIPT_SFX_CAST
+}
+{ fake_precache
+svplaysound 0 0 SOUND_GAUSS
+}
+#include items/magic_hand_base
+{ spell_spawn
+name "Erratic Lightning"
+desc "A highly erratic lightning bolt"
+setvard script.ramp 1
+}
+{ spell_casted
+setvard LAST_CAST game.time
+local l.start $get(ent_owner,eyepos)
+local l.muzzleofs $relpos($get(ent_owner,viewangles),$vec(8,16,-10))
+vectoradd l.start l.muzzleofs
+local l.widthratio $get(ent_owner,skill.spellcasting.lightning.ratio)
+multiply l.widthratio 3
+capvar l.widthratio 0 1
+clientevent new all_in_sight SCRIPT_SFX_CAST l.start PARAM2 SCRIPT_SFX_DURATION l.widthratio 1
+if( PARAM1 equals 'npc' )
+{
+effect glow PARAM3 LIGHT_COLOR 128 1 1
+setvard script.npc PARAM3
+}
+else setvard script.ramp 1
+}
+{ cast_damaged_other
+if $get(script.npc,alive)
+if( script.npc isnot PARAM1 ) setvard script.ramp 1
+local l.dmg PARAM2
+multiply l.dmg script.ramp
+setdmg dmg l.dmg
+local RAMP_LIMIT $get(ent_owner,skill.spellcasting.lightning)
+divide RAMP_LIMIT 2
+if ( RAMP_LIMIT < 3 ) local RAMP_LIMIT 3
+if script.ramp < RAMP_LIMIT
+add script.ramp 0.6
+}
+{
+if IS_NEW_ITEM == 1
+repeatdelay $randf(4.0,8.0)
+if ( LAST_CAST startswith 'LAST' ) setvard LAST_CAST game.time
+local L_LAST_CAST LAST_CAST
+add L_LAST_CAST 5.0
+if game.time > L_LAST_CAST
+splayviewanim ent_me ANIM_IDLE1
+}
