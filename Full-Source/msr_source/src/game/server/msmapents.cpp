@@ -5,7 +5,13 @@
 #include "mscharacter.h"
 #include "filesystem_shared.h"
 #include "mslogger.h"
+#include "msr_regions.h"
+#include "msr_worldstate.h"
+#include "msr_bosses.h"
 #include "ms/angelscript/CAngelScriptManager.h" // For AngelScript map transitions
+
+#include <unordered_set>
+#include <vector>
 
 #ifndef EFFECTS_H
 #include "effects.h"
@@ -669,14 +675,20 @@ public:
 	{
 		if (m_sSong.size() == 0) return;
 
-		MSGlobals::AllMusicMode = MUSIC_AREA; //Point trigger always plays to all
-		MSGlobals::AllMusic = m_sSong;
+		//Merged big-world maps: the trigger plays only to its own region, and is not
+		//replayed to players joining elsewhere
+		const int region = MSRegions::ForEntity(this);
+		if (region == REGION_NONE)
+		{
+			MSGlobals::AllMusicMode = MUSIC_AREA; //Point trigger always plays to all
+			MSGlobals::AllMusic = m_sSong;
+		}
 
 		int i = 1, max = gpGlobals->maxClients;
 		do
 		{
 			CBaseEntity* targ = UTIL_PlayerByIndex(i);
-			if (targ && targ->IsPlayer())
+			if (targ && targ->IsPlayer() && (region == REGION_NONE || MSRegions::ForEntity(targ) == region))
 			{
 				((CBasePlayer*)targ)->SwapMusic(this->entindex(), MUSIC_AREA, m_sSong);
 			}
@@ -723,6 +735,16 @@ struct monster_data_t
 		lTrigPrivData; //For monsters spawned by trigger
 
 	mslist<random_monster_t> random_monsterdata; //NOV2014_20 - Thothie msmonster_random
+
+	//Merged big-world maps: boss respawn timer (msr_bosses.h). Every slot has a world state key:
+	//"boss.<region>.<id>" for a builder-configured boss, else one derived from the template
+	//origin, used only if the monster dies as a flagged boss
+	char bossKey[72];
+	string_t bossOpen;	 //"a;b": fired once, as if it had died, when a hold first keeps it away
+	float bossCooldown;	 //seconds, 0 = ms_boss_cooldown
+	bool bossConfigured,
+		bossHeld,		 //a hold is keeping it away (logged once per hold)
+		bossOpened;		 //its open names fired: held until its region re-creates this spawner
 };
 
 class CAreaMonsterSpawn : public CAreaInvisible
@@ -747,6 +769,14 @@ public:
 	int resetwhen;		//NOV2014_20 Thothie - attempting to allow changes as to when ms_monsterspawn can respawn mobs 0=when all dead, 1=when any mob dead, 2=whenever triggered
 	bool didfirstspawn; //NOV2014_20 Thothie - the above requires us to know whether we've done the initial spawn or not
 	msstring sAddParams; //Thothie OCT2015_28 - pass additional parameters via monsterspawner
+	int m_iRegion = -2;	 //Region of a merged big-world map (msr_regions.h); -2 = not looked up yet
+
+	int Region()
+	{
+		if (m_iRegion == -2)
+			m_iRegion = MSRegions::ForEntity(this);
+		return m_iRegion;
+	}
 
 	void Spawn()
 	{
@@ -1005,6 +1035,74 @@ public:
 			FireTargets(STRING(pMonsterData->perishtarget), this, this, USE_TOGGLE, 0);
 	}
 
+	//Merged big-world maps: a slot's boss respawn timer key (msr_bosses.h). The region is the
+	//template's (the builder matched it there), the spawner's if the template lies outside.
+	void SetupBossSlot(monster_data_t &md, CMSMonster *pTemplate)
+	{
+		int region = MSRegions::At(pTemplate->pev->origin);
+		if (region == REGION_NONE)
+			region = Region();
+		md.bossConfigured = pTemplate->m_BossId.len() && MSBosses::MakeKey(md.bossKey, sizeof(md.bossKey), region, pTemplate->m_BossId.c_str(), NULL);
+		if (pTemplate->m_BossId.len() && !md.bossConfigured)
+			ALERT(at_console, "MSR: boss id '%s' on a template of spawner %s makes no valid key; treated as unconfigured\n", pTemplate->m_BossId.c_str(), STRING(pev->targetname));
+		if (!md.bossConfigured && !MSBosses::MakeKey(md.bossKey, sizeof(md.bossKey), region, NULL, pTemplate->pev->origin))
+			md.bossKey[0] = 0;
+		md.bossCooldown = md.bossConfigured ? pTemplate->m_BossCooldown : 0;
+		md.bossOpen = md.bossConfigured && pTemplate->m_BossOpen.len() ? ALLOC_STRING(pTemplate->m_BossOpen.c_str()) : 0;
+		md.bossHeld = md.bossOpened = false;
+		MSBosses::Seen(md.bossKey, region, md.bossConfigured, md.bossCooldown, md.bossOpen ? STRING(md.bossOpen) : "");
+	}
+
+	//Merged big-world maps: a boss whose respawn timer runs is held instead of spawned. Its slot
+	//keeps its lives, is not counted dead and fires nothing of its own. Its "open" names (exits its
+	//death would have opened) fire once instead; after that it stays away until the region
+	//re-creates this spawner, so a later kill here cannot toggle them shut again.
+	bool BossHeld(monster_data_t &md)
+	{
+		double left;
+		if (md.bossConfigured && (!WorldState::Loaded() || WorldState::Pending()))
+			left = 5; //its timer is not known yet (FN unreachable: held for at most 90 s after map start)
+		else
+		{
+			left = WorldState::TimeLeft(md.bossKey);
+			if (left <= 0 && !md.bossOpened)
+				return false;
+			if (!md.bossHeld)
+			{
+				md.bossHeld = true;
+				if (md.bossOpen && !md.bossOpened)
+				{
+					md.bossOpened = true;
+					msstringlist names;
+					TokenizeString(STRING(md.bossOpen), names);
+					//"-name": what the boss's death would have removed (a trigger that re-closes the exit)
+					for (unsigned int n = 0; n < names.size(); n++)
+						if (names[n].c_str()[0] == '-')
+						{
+							CBaseEntity *pGone = NULL;
+							while ((pGone = UTIL_FindEntityByTargetname(pGone, names[n].c_str() + 1)) != NULL)
+								UTIL_Remove(pGone);
+						}
+					//Opens: a toggling wall is switched off (open) whatever state it is in, so an
+					//exit a player already opened is not shut again; anything else is used as usual
+					for (unsigned int n = 0; n < names.size(); n++)
+						if (names[n].c_str()[0] != '-')
+						{
+							CBaseEntity *pOpen = NULL;
+							while ((pOpen = UTIL_FindEntityByTargetname(pOpen, names[n].c_str())) != NULL)
+								pOpen->Use(this, this, FClassnameIs(pOpen->pev, "func_wall_toggle") ? USE_OFF : USE_TOGGLE, 0);
+						}
+					MSBosses::Held(md.bossKey, left, STRING(pev->targetname), STRING(md.bossOpen));
+				}
+				else
+					MSBosses::Held(md.bossKey, left, STRING(pev->targetname), NULL);
+			}
+		}
+		md.deathtime = gpGlobals->time;
+		md.delayvalue = (left > 0 && left < 30) ? left : 30;
+		return true;
+	}
+
 	//count players and hp were here, moved to utils.cpp
 
 	void Activate()
@@ -1110,6 +1208,7 @@ public:
 		mdSpawnMonster[iMonstersToSpawn].spawnontrigger = pMonster->m_fSpawnOnTrigger;
 		mdSpawnMonster[iMonstersToSpawn].triggered = false;
 		mdSpawnMonster[iMonstersToSpawn].lTrigPrivData = (long)pMonster;
+		SetupBossSlot(mdSpawnMonster[iMonstersToSpawn], pMonster);
 
 		iMonstersToSpawn++;
 
@@ -1125,6 +1224,10 @@ public:
 		{
 			if (mdSpawnMonster[i].lPrivData == (long)pMonster)
 			{
+				//Merged big-world maps: a boss killed by players starts its respawn timer before its
+				//perishtarget (RespawnMonster) and killtarget (after this returns) fire
+				if (mdSpawnMonster[i].bossKey[0])
+					MSBosses::Died(mdSpawnMonster[i].bossKey, mdSpawnMonster[i].bossConfigured, mdSpawnMonster[i].bossCooldown, pMonster);
 				mdSpawnMonster[i].spawned = false;
 				RespawnMonster(&mdSpawnMonster[i]);
 				break;
@@ -1149,10 +1252,19 @@ public:
 				continue;
 			}
 
+			//Merged big-world maps: requirements count only the players in this spawner's region,
+			//and are not judged while nobody is there (every region loads at server start). With
+			//players there, a failed requirement counts the slot as dead like on a stock map (so an
+			//encounter such as Helena's bandit raid still ends); the region's next reload resets it.
+			const int region = Region();
+			const bool bGated = mdSpawnMonster[i].nplayers > 0 || mdSpawnMonster[i].hpreq_min > 0 || mdSpawnMonster[i].hpreq_max > 0;
+			if (bGated && region != REGION_NONE && !MSRegions::Tracked(region)) //judged with the same players the counts see
+				continue;
+
 			bool bNoSpawn = false;	//Lark DEC2017_10 - Changed scope to simplify Random Monster respawn
 			if (mdSpawnMonster[i].nplayers > 0)
 			{
-				if (UTIL_NumActivePlayers() < mdSpawnMonster[i].nplayers)
+				if (UTIL_NumActivePlayers(region) < mdSpawnMonster[i].nplayers)
 				{
 					//Thothie AUG2007a - not enough players to spawn monster
 
@@ -1161,8 +1273,7 @@ public:
 						bNoSpawn = true;
 					else
 					{
-						//count as dead and continue
-						iDeadMonsters++; //count as dead
+						iDeadMonsters++; //count as dead and continue
 						continue;
 					}
 				}
@@ -1174,11 +1285,11 @@ public:
 				float flCheckedTotalHealth;
 				if ( mdSpawnMonster[i].hpreq_useavg )
 				{
-					flCheckedTotalHealth = UTIL_AvgHP(); //Thothie OCT2015_28 - allow use average when calculating HP req, if token 2-3 is "avg";
+					flCheckedTotalHealth = UTIL_AvgHP(region); //Thothie OCT2015_28 - allow use average when calculating HP req, if token 2-3 is "avg";
 				}
 				else
 				{
-					flCheckedTotalHealth = UTIL_TotalHP();
+					flCheckedTotalHealth = UTIL_TotalHP(region);
 				}
 				
 				if ( flCheckedTotalHealth < mdSpawnMonster[i].hpreq_min ) bNoSpawn = true;
@@ -1197,7 +1308,7 @@ public:
 							RespawnMonster( &mdSpawnMonster[i] );
 							
 							bNoSpawn = false;
-							if ( UTIL_NumActivePlayers() < mdSpawnMonster[i].nplayers ) bNoSpawn = true;
+							if ( UTIL_NumActivePlayers(region) < mdSpawnMonster[i].nplayers ) bNoSpawn = true;
 							if ( flCheckedTotalHealth < mdSpawnMonster[i].hpreq_min ) bNoSpawn = true;
 							if ( flCheckedTotalHealth >= mdSpawnMonster[i].hpreq_max && mdSpawnMonster[i].hpreq_max > 0 ) bNoSpawn = true;
 							--retrySpawn;
@@ -1228,6 +1339,16 @@ public:
 				continue;
 
 			if ((gpGlobals->time - mdSpawnMonster[i].deathtime) < mdSpawnMonster[i].delayvalue)
+				continue;
+
+			//Merged big-world maps: a boss on its respawn timer is held (see BossHeld)
+			if (mdSpawnMonster[i].bossKey[0] && BossHeld(mdSpawnMonster[i]))
+				continue;
+
+			//Merged big-world maps: loading a monster's script takes tens of ms, so a region's
+			//spawners create at most one monster per server frame between them (a re-created
+			//region or a big wave fills in over a moment instead of freezing the server)
+			if (region != REGION_NONE && !MSRegions::TakeSpawnSlot())
 				continue;
 
 			if (RANDOM_FLOAT(0, 99) > mdSpawnMonster[i].spawnchance)
@@ -1290,10 +1411,16 @@ public:
 
 			mdSpawnMonster[i].spawned = true;
 			mdSpawnMonster[i].triggered = false;
+			mdSpawnMonster[i].bossHeld = false;
 			if (mdSpawnMonster[i].lives > 0 && mdSpawnMonster[i].livesleft > 0)
 				mdSpawnMonster[i].livesleft--;
 
 			UTIL_SetOrigin(pMonster->pev, pMonster->pev->origin);
+			{
+				//Merged big-world maps: the monster's region is where it appears (its script loads in Spawn)
+				const int spawnRegion = MSRegions::At(pMonster->pev->origin);
+				pMonster->m_iHomeRegion = spawnRegion != REGION_NONE ? spawnRegion : region;
+			}
 			pMonster->Spawn();
 
 			//Log( "Start" );
@@ -1334,6 +1461,83 @@ public:
 
 LINK_ENTITY_TO_CLASS(msarea_monsterspawn, CAreaMonsterSpawn);
 LINK_ENTITY_TO_CLASS(ms_monsterspawn, CAreaMonsterSpawn);
+
+//Merged big-world maps: a region re-created at runtime has no settle time before players see
+//it, so its always-on spawners fill in right away instead of after the usual 3 s
+void MSR_QuickStartSpawner(CBaseEntity *pEntity)
+{
+	if (!pEntity || (!FClassnameIs(pEntity->pev, "msarea_monsterspawn") && !FClassnameIs(pEntity->pev, "ms_monsterspawn")))
+		return;
+	CAreaMonsterSpawn *pSpawn = (CAreaMonsterSpawn *)pEntity;
+	if (pSpawn->m_fActive && !pSpawn->m_fSpawnOnTrigger)
+		pSpawn->pev->nextthink = pSpawn->pev->ltime + 0.1f;
+}
+
+//Every monster spawner in the map (both class names)
+static void MSR_ForEachSpawner(void (*fn)(CAreaMonsterSpawn *pSpawn, void *pData), void *pData)
+{
+	static const char *const kClasses[] = {"msarea_monsterspawn", "ms_monsterspawn"};
+	for (const char *pszClass : kClasses)
+	{
+		CBaseEntity *pEntity = NULL;
+		while ((pEntity = UTIL_FindEntityByClassname(pEntity, pszClass)) != NULL)
+			fn((CAreaMonsterSpawn *)pEntity, pData);
+	}
+}
+
+//msr_bosses.h: the boss slots of every spawner now in the map. A slot's lPrivData can outlive
+//its monster (a script may remove it without a death), so only monsters found alive count.
+void MSR_BossSlots(std::vector<msr_bossslot_t> &out)
+{
+	struct walk_t
+	{
+		std::vector<msr_bossslot_t> *pOut;
+		std::unordered_set<long> alive;
+	} walk;
+	walk.pOut = &out;
+	for (int e = 1; e < gpGlobals->maxEntities; e++)
+	{
+		edict_t *pent = INDEXENT(e);
+		if (!pent || pent->free || !pent->pvPrivateData)
+			continue;
+		CBaseEntity *pEntity = CBaseEntity::Instance(pent);
+		if (pEntity && pEntity->IsMSMonster() && pEntity->IsAlive() && !FNullEnt(pEntity->pev->owner))
+			walk.alive.insert((long)(CMSMonster *)pEntity);
+	}
+	MSR_ForEachSpawner([](CAreaMonsterSpawn *pSpawn, void *pData) {
+		walk_t &w = *(walk_t *)pData;
+		for (unsigned int i = 0; i < pSpawn->iMonstersToSpawn; i++)
+		{
+			monster_data_t &md = pSpawn->mdSpawnMonster[i];
+			if (!md.bossKey[0])
+				continue;
+			msr_bossslot_t slot;
+			slot.key = md.bossKey;
+			slot.spawner = STRING(pSpawn->pev->targetname);
+			slot.region = pSpawn->Region();
+			slot.configured = md.bossConfigured;
+			slot.held = md.bossHeld;
+			slot.opened = md.bossOpened;
+			slot.cooldown = md.bossCooldown;
+			slot.open = md.bossOpen ? STRING(md.bossOpen) : "";
+			slot.pAlive = md.spawned && w.alive.count(md.lPrivData) ? (CMSMonster *)md.lPrivData : NULL;
+			w.pOut->push_back(slot);
+		}
+	}, &walk);
+}
+
+//msr_bosses.h: after a reset, slots held for this key look again on their next think
+void MSR_BossRetry(const char *key)
+{
+	MSR_ForEachSpawner([](CAreaMonsterSpawn *pSpawn, void *pData) {
+		for (unsigned int i = 0; i < pSpawn->iMonstersToSpawn; i++)
+		{
+			monster_data_t &md = pSpawn->mdSpawnMonster[i];
+			if (md.bossHeld && !md.bossOpened && !md.spawned && FStrEq(md.bossKey, (const char *)pData))
+				md.delayvalue = 0;
+		}
+	}, (void *)key);
+}
 
 //This will make a monster spawn area become inactive (monsters stop spawning)
 //Thothie note: this does not seem to function

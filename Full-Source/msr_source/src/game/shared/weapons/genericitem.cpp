@@ -2281,7 +2281,7 @@ void SendGenericItem(CBasePlayer* pPlayer, CGenericItem* pItem, bool fNewMessage
 	}
 	if (FBitSet(Item.Properties, ITEM_SPELL))
 	{
-		WRITE_COORD(Item.Spell_TimePrepare);
+		WRITE_COORD8(Item.Spell_TimePrepare);
 		WRITE_BYTE(Item.Spell_CastSuccess);
 	}
 	if (fNewMessage)
@@ -2386,7 +2386,7 @@ CGenericItem* ReadGenericItem(bool fAllowCreateNew)
 	}
 	if (FBitSet(pItem->MSProperties(), ITEM_SPELL))
 	{
-		pItem->Spell_TimePrepare = READ_COORD();
+		pItem->Spell_TimePrepare = READ_COORD8();
 		pItem->Spell_CastSuccess = READ_BYTE() ? true : false;
 	}
 	/*logfile << "Server Caused Creation of New Item: "

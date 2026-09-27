@@ -34,6 +34,7 @@
 #include "svglobals.h"
 #include "global.h"
 #include "mslogger.h"
+#include "msr_regions.h"
 
 extern CGraph WorldGraph;
 extern CSoundEnt *pSoundEnt;
@@ -405,6 +406,8 @@ extern DLL_GLOBAL BOOL g_fGameOver;
 void CWorld ::Spawn(void)
 {	
 	MS_INFO("World Spawn...");
+
+	MSRegions::Clear(); //info_msr_region entities of this map follow worldspawn
 
 	g_fGameOver = false;
 	CScriptedEnt::Spawn();

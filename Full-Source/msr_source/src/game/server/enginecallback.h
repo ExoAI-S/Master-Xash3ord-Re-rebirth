@@ -190,6 +190,15 @@ inline void WRITE_COORD(float flValue)
 	(*g_engfuncs.pfnWriteCoord)(flValue);
 }
 
+// A non-position float (time, volume, pitch...) in eighths: the exact bytes the
+// engine's WRITE_COORD produces without Big World, but unaffected by it.
+// Read on the client with READ_COORD8.
+inline void WRITE_COORD8(float flValue)
+{
+	if (!CHECK_CAN_WRITE(2)) return;
+	(*g_engfuncs.pfnWriteShort)((int)(flValue * 8.0f));
+}
+
 inline void WRITE_STRING(const char* sz)
 {
 	if (!sz || !CHECK_CAN_WRITE(strlen(sz))) return;

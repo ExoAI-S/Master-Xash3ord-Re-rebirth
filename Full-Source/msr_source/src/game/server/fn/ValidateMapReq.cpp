@@ -24,7 +24,7 @@ void ValidateMapRequest::OnResponse(int iRespCode)
 
 	JSONDocument doc = ParseJSON(m_sResponseBody.c_str());
 
-	if (!doc.HasMember("data") || !doc["data"].IsBool())
+	if (!doc.IsObject() || !doc.HasMember("data") || !doc["data"].IsBool())
 	{
 		FNShared::Print("Malformed map validation response for '%s'!", MSGlobals::MapName.c_str());
 		return;

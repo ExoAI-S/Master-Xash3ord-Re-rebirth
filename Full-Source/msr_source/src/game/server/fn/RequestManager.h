@@ -15,6 +15,14 @@ public:
 	void Think(bool bForceDiscard = false);
 	void Shutdown(void);
 
+	// Longer than REQUEST_TIMEOUT_MS: a transfer on the wire when a drain starts has finished
+	// (or timed out) before the drain gives up, so nothing sent later can overtake it.
+	static constexpr int kDrainTimeoutMs = 10000;
+
+	// Blocks (pumping Think) until every queued request got its reply or the time ran out;
+	// the manager stays usable. Returns true when the queue is empty.
+	bool Drain(int timeoutMs = kDrainTimeoutMs);
+
 	void Clear(void);
 
 	bool QueueRequest(HTTPRequest* req);

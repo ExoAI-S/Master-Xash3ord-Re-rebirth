@@ -22,6 +22,11 @@ set(MSR_CLIENT_SOURCES ${MSR_AUTHORED_CLIENT_SOURCES})
 set(MSR_SERVER_SOURCES ${MSR_AUTHORED_SERVER_SOURCES})
 list(APPEND MSR_CLIENT_SOURCES "${MSR_GAME_ROOT}/client/standalone_profile.cpp")
 list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/encounter_director.cpp")
+list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/msr_bigworld.cpp")
+list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/msr_regions.cpp")
+list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/msr_worldstate.cpp")
+list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/msr_bosses.cpp")
+list(APPEND MSR_SERVER_SOURCES "${MSR_GAME_ROOT}/server/fn/WorldStateReq.cpp")
 # These commented-out entries were incorrectly imported by source discovery.
 list(FILTER MSR_SERVER_SOURCES EXCLUDE REGEX "/(SteamServerHelper|entities)\\.cpp$")
 

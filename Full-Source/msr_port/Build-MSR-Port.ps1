@@ -25,11 +25,9 @@ function Find-Tool([string]$Name, [string[]]$Candidates) {
 }
 
 $cmake = Find-Tool 'cmake.exe' @(
-    (Join-Path $env:ProgramFiles 'CMake\bin\cmake.exe'),
-    (Join-Path $env:USERPROFILE 'Documents\Codex\2026-09-10\https-github-com-msrevive-masterswordrebirth-https\work\toolchain\cmake-4.4.3-windows-x86_64\bin\cmake.exe')
+    (Join-Path $env:ProgramFiles 'CMake\bin\cmake.exe')
 )
 $ninja = Find-Tool 'ninja.exe' @(
-    (Join-Path $env:USERPROFILE 'Documents\Codex\2026-09-10\https-github-com-msrevive-masterswordrebirth-https\work\toolchain\ninja\ninja.exe')
 )
 
 $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'

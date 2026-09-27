@@ -39,7 +39,7 @@ void CreateCharacterRequest::OnResponse(int iRespCode)
 
 	JSONDocument doc = ParseJSON(m_sResponseBody.c_str());
 
-	if (!doc.HasMember("data") || !doc["data"].IsObject())
+	if (!doc.IsObject() || !doc.HasMember("data") || !doc["data"].IsObject())
 	{
 		FNShared::Print("Malformed create response for SteamID %llu!", m_iSteamID64);
 		MarkNotFound();

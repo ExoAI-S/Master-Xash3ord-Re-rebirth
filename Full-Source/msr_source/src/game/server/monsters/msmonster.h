@@ -282,6 +282,11 @@ public:
 
 	bool m_nopush; //Thothie MAR2008a - immune to push
 
+	int m_iHomeRegion = -1; //Region of a merged big-world map I spawned in (msr_regions.h), -1 = none
+	float m_BossCooldown = 0;	//msr_boss_cooldown: seconds the boss stays away after a kill, 0 = ms_boss_cooldown
+	int m_iRegionMaster = 0;			//Cached player index of my master (pet/summon/hireling), 0 = none
+	float m_flRegionMasterCheck = -1;	//When to look the master up again
+
 	float Stamina; //Your strength left in combat
 				   //WorldVolume;   //Sound that other monsters can hear
 
@@ -295,6 +300,8 @@ public:
 		m_iszMonsterSpawnArea, //targetname of my monster spawn ent
 		m_iszKillTarget,	   //Fire upon death
 		m_iszPerishTarget,	   //Fire upon perish (died with 0 lives left)
+		m_BossId,			   //Merged big-world maps: builder-configured boss (msr_boss), handed to my spawner slot (msr_bosses.h)
+		m_BossOpen,			   //msr_boss_open: "a;b" fired instead, once, while that boss is held
 
 		m_TradeCallBackEvent; //Prefix for the trade callbacks
 							  // Skin;			//Name of the skin I become when skinned

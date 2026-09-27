@@ -29,6 +29,9 @@
 #include "svglobals.h"
 #include "global.h"
 #include "angelscript/ASEngineEventManager.h"
+#include "msr_regions.h"
+#include "msr_worldstate.h"
+void MSR_WorldStateDump(const char *prefix); // msr_worldstate.cpp
 #endif
 
 #define ERROR_MISSING_PARMS MS_ERROR("ExecuteScriptCmd: Script: %s, %s - not enough parameters!", m.ScriptFile.c_str(), Cmd.Name().c_str())
@@ -168,6 +171,7 @@ void CScript::Script_Setup()
 		m_GlobalCmdHash["companion"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_Companion);
 		m_GlobalCmdHash["helptip"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_HelpTip);
 		m_GlobalCmdHash["quest"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_Quest);
+		m_GlobalCmdHash["worldstate"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_WorldState); //MSR persistent world state
 		m_GlobalCmdHash["setcallback"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_SetCallBack);
 		m_GlobalCmdHash["drop_to_floor"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_DropToFloor);
 		m_GlobalCmdHash["setwearpos"] = scriptcmdscpp_cmdfunc_t(&CScript::ScriptCmd_SetWearPos);
@@ -948,6 +952,8 @@ const char* CBaseEntity::GetProp(CBaseEntity* pTarget, msstring& FullParams, mss
 #ifdef VALVE_DLL
 	//Client can't use entity.index.  Only player.index (handled later under player)
 	else if (Prop == "index") return RETURN_INT(pTarget->entindex());
+	//Merged big-world maps: original map of the region the entity is in, else the map name
+	else if (Prop == "region") return MSRegions::NameOr(MSRegions::ForEntity(pTarget), MSGlobals::MapName);
 #endif
 	else if (Prop == "exists")			fSuccess = true;
 	else if (Prop == "alive" || Prop == "isalive")			fSuccess = pTarget->IsAlive() ? true : false;
@@ -2311,7 +2317,7 @@ bool CScript::ScriptCmd_CallEvent(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msstrin
 			if (Type == CE_EXTERNAL_ALL)
 				CallScriptEventAll(EventName, Parameters.size() ? &Parameters : NULL);
 			else if (Type == CE_EXTERNAL_PLAYERS) //Thothie JUN2007a
-				CallScriptPlayers(EventName, Parameters.size() ? &Parameters : NULL);
+				CallScriptPlayers(EventName, Parameters.size() ? &Parameters : NULL, m.pScriptedEnt);
 			else if (Type == CE_EXTERNAL)
 			{
 				if (pScripted) pScripted->CallScriptEvent(EventName, Parameters.size() ? &Parameters : NULL);
@@ -3377,10 +3383,12 @@ bool CScript::ScriptCmd_GetPlayers(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msstri
 	//- get all players, store in token string
 #ifdef VALVE_DLL
 	msstring msStorePlayers;
+	const int region = MSRegions::ForScriptOwner(m.pScriptedEnt); //merged maps: monsters see their own region
 	for(int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
 		CBasePlayer *pOtherPlayer = (CBasePlayer *)UTIL_PlayerByIndex( i );
 		if ( !pOtherPlayer ) continue;
+		if ( region != REGION_NONE && MSRegions::ForEntity(pOtherPlayer) != region ) continue;
 
 		msStorePlayers += EntToString(pOtherPlayer);
 		msStorePlayers += ";";
@@ -3403,12 +3411,14 @@ bool CScript::ScriptCmd_GetPlayersArray(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, m
 	msstring ArrName = Params[0];
 	msscriptarray *                     pArray = m.pScriptedEnt->GetScriptedArray( ArrName, true );
 	pArray->clearitems();
+	const int region = MSRegions::ForScriptOwner(m.pScriptedEnt); //merged maps: monsters see their own region
 
 	for(int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
 		CBasePlayer *pOtherPlayer = (CBasePlayer *)UTIL_PlayerByIndex( i );
 		if ( !pOtherPlayer ) continue;
 		if ( !pOtherPlayer->IsActive() ) continue;
+		if ( region != REGION_NONE && MSRegions::ForEntity(pOtherPlayer) != region ) continue;
 		pArray->add( EntToString(pOtherPlayer) );
 	}
 #endif
@@ -3426,10 +3436,11 @@ bool CScript::ScriptCmd_GetPlayersNB(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msst
 	//- saves a step in the bot mess, but for better security, use the script side verifications too (see base_treasurechest)
 #ifdef VALVE_DLL
 	msstring msStorePlayers;
+	const int region = MSRegions::ForScriptOwner(m.pScriptedEnt); //merged maps: monsters see their own region
 	for(int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
 		CBasePlayer *pOtherPlayer = (CBasePlayer *)UTIL_PlayerByIndex( i );
-		if ( !pOtherPlayer )
+		if ( !pOtherPlayer || (region != REGION_NONE && MSRegions::ForEntity(pOtherPlayer) != region) )
 		{
 			//MessageBox(NULL,"NOT OPLAYER", "DEBUG POPUP",MB_OK|MB_ICONEXCLAMATION);
 			continue;
@@ -7341,6 +7352,60 @@ bool CScript::ScriptCmd_WipeSpell(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msstrin
 		}
 	}
 	else ERROR_MISSING_PARMS;
+#endif
+	return true;
+}
+
+//worldstate set <key> <value> [ttl_seconds]
+//worldstate add <key> <n> [ttl_seconds]
+//worldstate unset <key> (alias: del)
+//worldstate dump [prefix]
+//- scope: server
+//- Persistent world state (msr_worldstate.h): kept across map changes and restarts on FN, per
+//  realm and map (in memory for the map when FN is off). No ttl (or <= 0): permanent; else it
+//  expires ttl seconds from now on the wall clock, also while the map is down. add: numeric,
+//  a missing key counts as 0.
+//- Keys: lowercase a-z 0-9 _ . : - (starting with a letter or digit), up to 64, region first
+//  ("thornlands.raid.cooldown"); not boss./logout./sys. (the game's own) nor global./local./game./const.
+//  Values up to 255 bytes; quote values with spaces.
+//- Read with $get_worldstate(key[,default]), $get_worldstate_exists, $get_worldstate_ttl or
+//  game.worldstate.<key>. The keys are known from event game_worldstate_loaded on (PARAM1 fn, or
+//  offline with FN off). If FN was unreachable at map start the event comes twice: "offline" (FN's
+//  keys not in yet: reads miss them, and a set there wins over FN's value) and later "retry" once
+//  they are in; "add" is safe either way. The world script's own game_spawn runs before any of
+//  that and cannot write.
+bool CScript::ScriptCmd_WorldState(SCRIPT_EVENT &Event, scriptcmd_t &Cmd, msstringlist &Params)
+{
+#ifdef VALVE_DLL
+	if (Params.size() >= 1 && Params[0] == "dump")
+	{
+		MSR_WorldStateDump(Params.size() >= 2 ? Params[1].c_str() : "");
+		return true;
+	}
+
+	const bool bSet = Params.size() >= 3 && Params[0] == "set";
+	const bool bAdd = Params.size() >= 3 && Params[0] == "add";
+	const bool bUnset = Params.size() >= 2 && (Params[0] == "unset" || Params[0] == "del");
+	if (!bSet && !bAdd && !bUnset)
+	{
+		MS_ERROR("ExecuteScriptCmd: Script: %s, worldstate - use set <key> <value> [ttl] | add <key> <n> [ttl] | unset <key> | dump [prefix]", m.ScriptFile.c_str());
+		return true;
+	}
+
+	msstring &Key = Params[1];
+	if (!WorldState::ValidKey(Key.c_str(), false))
+	{
+		MS_ERROR("ExecuteScriptCmd: Script: %s, worldstate - bad key '%s' (lowercase a-z 0-9 _ . : -, up to 64; not boss./logout./sys./global./local./game./const.)", m.ScriptFile.c_str(), Key.c_str());
+		return true;
+	}
+
+	const double Ttl = Params.size() >= 4 ? atof(Params[3]) : -1;
+	if (bSet)
+		WorldState::Set(Key.c_str(), Params[2].c_str(), Ttl);
+	else if (bAdd)
+		WorldState::Add(Key.c_str(), atol(Params[2]), Ttl);
+	else
+		WorldState::Unset(Key.c_str());
 #endif
 	return true;
 }

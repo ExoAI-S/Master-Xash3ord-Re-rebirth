@@ -158,7 +158,18 @@ const char* READ_STRING( void )
 	return string;
 }
 
+bool MSCL_LargeCoords(); // cdll_int.cpp: server runs with -bigworld
+
 float READ_COORD( void )
+{
+	// Big World (ENGINE_WRITE_LARGE_COORD): the engine writes whole units
+	if( MSCL_LargeCoords() )
+		return (float)READ_SHORT();
+	return (float)(READ_SHORT() * (1.0/8));
+}
+
+// Non-position values sent with WRITE_COORD8: always eighths
+float READ_COORD8( void )
 {
 	return (float)(READ_SHORT() * (1.0/8));
 }

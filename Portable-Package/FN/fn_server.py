@@ -1,4 +1,4 @@
-"""Private FN v2 character service for Master Sword: Rebirth. Python stdlib only."""
+"""Private FN v2 character and world-state service for Master Sword: Rebirth. Python stdlib only."""
 from __future__ import annotations
 
 import argparse
@@ -15,6 +15,7 @@ import re
 import socket
 import sqlite3
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import uuid
 import zlib
@@ -24,6 +25,16 @@ MAX_BLOB = 50 * 1024
 MAX_BODY = 72 * 1024
 API = '/api/v2/internal'
 LOG = logging.getLogger('FN')
+SCHEMA_VERSION = 2
+WORLD_MAX_OPS = 256
+WORLD_MAX_KEYS = 4096
+WORLD_MAX_VALUE = 255
+WORLD_MAX_TTL = 30 * 24 * 3600
+# A blob is the CHARDATA_HEADER1 chunk id byte followed by savedata_t
+# (shared/ms/mscharacterheader.h, pack(4), 268 bytes). Vector Origin and Angles
+# sit at struct offsets 224..247, i.e. blob bytes 225..248.
+SAVEDATA_END = 1 + 268
+POSITION = slice(1 + 224, 1 + 248)
 
 
 class RequestError(Exception):
@@ -64,13 +75,79 @@ def decode_character(payload):
     return steamid, slot, blob
 
 
+def position_only_change(old, new):
+    """True when two character blobs differ only in savedata_t Origin/Angles."""
+    if len(old) != len(new) or len(new) < SAVEDATA_END or old[0] != 0 or new[0] != 0:
+        return False
+    return old[:POSITION.start] == new[:POSITION.start] and old[POSITION.stop:] == new[POSITION.stop:]
+
+
+def world_id(realm, map_name):
+    if not isinstance(realm, str) or not re.fullmatch(r'[a-z0-9][a-z0-9_-]{0,31}', realm):
+        raise RequestError(400, 'realm must be 1-32 of a-z 0-9 _ - and start with a letter or digit')
+    if not isinstance(map_name, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,32}', map_name):
+        raise RequestError(400, 'map must be 1-32 of A-Z a-z 0-9 _ -')
+    return realm, map_name.lower()
+
+
+WORLD_KEY_NEVER = ('global.', 'local.', 'game.', 'const.')  # the game ignores these (script variable names)
+
+
+def world_key(key):
+    if not isinstance(key, str) or not re.fullmatch(r'[a-z0-9][a-z0-9_.:-]{0,63}', key):
+        raise RequestError(400, 'World keys must be 1-64 of a-z 0-9 _ . : - and start with a letter or digit')
+    if key.startswith(WORLD_KEY_NEVER):
+        raise RequestError(400, 'World keys may not start with ' + ', '.join(WORLD_KEY_NEVER))
+    return key
+
+
+def decode_world_batch(payload):
+    """Validate a whole write batch before touching the database."""
+    if not isinstance(payload, dict) or not payload.keys() <= {'set', 'del'}:
+        raise RequestError(400, 'Expected a JSON object with only "set" and "del"')
+    changes, removals = payload.get('set', {}), payload.get('del', [])
+    if not isinstance(changes, dict) or not isinstance(removals, list):
+        raise RequestError(400, '"set" must be an object and "del" a list')
+    if len(changes) + len(removals) > WORLD_MAX_OPS:
+        raise RequestError(413, f'At most {WORLD_MAX_OPS} world operations per batch')
+    sets = []
+    for key, entry in changes.items():
+        world_key(key)
+        if not isinstance(entry, dict) or 'value' not in entry or not entry.keys() <= {'value', 'ttl'}:
+            raise RequestError(400, 'Each set entry must be {"value": text, "ttl": seconds or null}')
+        value, ttl = entry['value'], entry.get('ttl')
+        if not isinstance(value, str):
+            raise RequestError(400, 'World values must be text')
+        try:
+            size = len(value.encode('utf-8'))
+        except UnicodeError:
+            raise RequestError(400, 'World values must be valid Unicode text') from None
+        if size > WORLD_MAX_VALUE:
+            raise RequestError(400, f'World values are limited to {WORLD_MAX_VALUE} UTF-8 bytes')
+        # type() rather than isinstance() rejects booleans; NaN and infinity fail the range test.
+        if ttl is not None and (type(ttl) not in (int, float) or not 0 < ttl <= WORLD_MAX_TTL):
+            raise RequestError(400, 'ttl must be null or seconds in (0, 30 days]')
+        sets.append((key, value, ttl))
+    dels = list(dict.fromkeys(world_key(key) for key in removals))
+    if changes.keys() & set(dels):
+        raise RequestError(400, 'A key cannot be set and deleted in the same batch')
+    return sets, dels
+
+
 class Store:
     def __init__(self, path):
         self.path = Path(path).resolve()
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.clock = time.time  # World TTL wall clock; tests replace it.
         with self.connect() as db:
             db.execute('PRAGMA journal_mode=WAL')
-            db.executescript('''
+            version = db.execute('PRAGMA user_version').fetchone()[0]
+            if version > SCHEMA_VERSION:
+                raise ValueError(f'FN database schema v{version} is newer than this fn_server.py (v{SCHEMA_VERSION})')
+            # v1 -> v2 only adds world_state, so IF NOT EXISTS migrates in place; one
+            # transaction keeps a half-migrated file from ever being marked v2.
+            db.executescript(f'''
+                BEGIN IMMEDIATE;
                 CREATE TABLE IF NOT EXISTS users (
                     steamid TEXT PRIMARY KEY, flags INTEGER NOT NULL DEFAULT 0);
                 CREATE TABLE IF NOT EXISTS characters (
@@ -84,7 +161,13 @@ class Store:
                     blob BLOB NOT NULL, saved TEXT NOT NULL, reason TEXT NOT NULL);
                 CREATE INDEX IF NOT EXISTS revision_character
                     ON revisions(character_id,seq);
-                PRAGMA user_version=1;
+                CREATE TABLE IF NOT EXISTS world_state (
+                    realm TEXT, map TEXT, key TEXT, value TEXT NOT NULL, expires REAL,
+                    rev INTEGER NOT NULL, updated TEXT NOT NULL,
+                    PRIMARY KEY(realm,map,key)) WITHOUT ROWID;
+                CREATE INDEX IF NOT EXISTS world_expiry ON world_state(expires);
+                PRAGMA user_version={SCHEMA_VERSION};
+                COMMIT;
             ''')
 
     @contextmanager
@@ -156,7 +239,9 @@ class Store:
             if self.flags(db, steamid) & 1:
                 raise RequestError(403, 'Account is banned from this private FN')
             if row['blob'] != blob:
-                self.revision(db, row, 'save')
+                # Position-only autosaves must not push real history out of the 100-revision window.
+                if not position_only_change(row['blob'], blob):
+                    self.revision(db, row, 'save')
                 db.execute('UPDATE characters SET blob=?,updated=? WHERE id=?', (blob, now(), ident))
         return ident
 
@@ -198,6 +283,56 @@ class Store:
                 blob = saved['blob']
             self.revision(db, row, 'before-restore')
             db.execute('UPDATE characters SET blob=?,deleted=0,updated=? WHERE id=?', (blob, now(), ident))
+
+    def world_get(self, realm, map_name):
+        realm, map_name = world_id(realm, map_name)
+        with self.connect() as db:
+            stamp = self.clock()
+            rows = db.execute('''SELECT key,value,expires,rev FROM world_state WHERE realm=? AND map=?
+                              AND (expires IS NULL OR expires>?) ORDER BY key''', (realm, map_name, stamp))
+            keys = {row['key']: dict(value=row['value'],
+                                     expires_in=None if row['expires'] is None else row['expires'] - stamp,
+                                     rev=row['rev']) for row in rows}
+        return dict(now=stamp, keys=keys)
+
+    def world_write(self, realm, map_name, payload):
+        realm, map_name = world_id(realm, map_name)
+        sets, dels = decode_world_batch(payload)
+        with self.connect(write=True) as db:
+            stamp, updated = self.clock(), now()
+            # Expired rows are dead; pruning them first keeps the live-key limit honest.
+            db.execute('DELETE FROM world_state WHERE realm=? AND map=? AND expires<=?', (realm, map_name, stamp))
+            db.executemany('DELETE FROM world_state WHERE realm=? AND map=? AND key=?',
+                           [(realm, map_name, key) for key in dels])
+            db.executemany('''INSERT INTO world_state(realm,map,key,value,expires,rev,updated) VALUES(?,?,?,?,?,1,?)
+                           ON CONFLICT(realm,map,key) DO UPDATE SET value=excluded.value,
+                           expires=excluded.expires, rev=world_state.rev+1, updated=excluded.updated''',
+                           [(realm, map_name, key, value, None if ttl is None else stamp + ttl, updated)
+                            for key, value, ttl in sets])
+            count = db.execute('SELECT COUNT(*) FROM world_state WHERE realm=? AND map=?',
+                               (realm, map_name)).fetchone()[0]
+            if count > WORLD_MAX_KEYS:
+                raise RequestError(413, f'A world holds at most {WORLD_MAX_KEYS} live keys; nothing was applied')
+        return dict(applied=len(sets) + len(dels), now=stamp)
+
+    def world_rows(self, realm, map_name=None):
+        """Live keys of one realm (optionally one map) for the admin CLI."""
+        realm, lowered = world_id(realm, '_' if map_name is None else map_name)
+        if map_name is None:
+            lowered = None
+        with self.connect() as db:
+            stamp = self.clock()
+            rows = db.execute('''SELECT map,key,value,expires,rev,updated FROM world_state WHERE realm=?
+                              AND (? IS NULL OR map=?) AND (expires IS NULL OR expires>?) ORDER BY map,key''',
+                              (realm, lowered, lowered, stamp))
+            return [dict(map=row['map'], key=row['key'], value=row['value'], rev=row['rev'],
+                         expires_in=None if row['expires'] is None else round(row['expires'] - stamp, 1),
+                         updated=row['updated']) for row in rows]
+
+    def world_clear(self, realm, map_name):
+        realm, map_name = world_id(realm, map_name)
+        with self.connect(write=True) as db:
+            return db.execute('DELETE FROM world_state WHERE realm=? AND map=?', (realm, map_name)).rowcount
 
 
 def crc32_file(path):
@@ -344,6 +479,14 @@ class Handler(BaseHTTPRequestHandler):
                 data = store.update(ident, self.read_body()) if self.command == 'PUT' else store.delete(ident)
                 self.reply(200, data)
                 return
+            # Realm/map are matched loosely and validated by the store so bad names get 400, not 404.
+            match = re.fullmatch(API + r'/world/([^/?]+)/([^/?]+)', path)
+            if match and self.command in ('GET', 'POST'):
+                if self.command == 'GET':
+                    self.reply(200, store.world_get(*match.groups()))
+                else:
+                    self.reply(200, store.world_write(*match.groups(), self.read_body()))
+                return
             raise RequestError(404, 'Unknown FN endpoint')
         except RequestError as exc:
             self.reply(exc.status, error=exc.message)
@@ -382,6 +525,23 @@ def main(argv=None):
     exporting = sub.add_parser('export', help='Export one character as a raw .char file')
     exporting.add_argument('id')
     exporting.add_argument('file', type=Path)
+    # A running game server keeps its own copy; it sees CLI edits after a map
+    # change or "msr_worldstate reload".
+    world = sub.add_parser('world', help='List or edit persistent world state keys')
+    world_sub = world.add_subparsers(dest='world_command', required=True)
+    listing = world_sub.add_parser('list', help='Live keys of a realm, or of one map')
+    listing.add_argument('realm')
+    listing.add_argument('map', nargs='?')
+    setting = world_sub.add_parser('set')
+    removing = world_sub.add_parser('del')
+    clearing = world_sub.add_parser('clear', help='Delete every key of one world')
+    for command in (setting, removing, clearing):
+        command.add_argument('realm')
+        command.add_argument('map')
+    for command in (setting, removing):
+        command.add_argument('key')
+    setting.add_argument('value')
+    setting.add_argument('ttl', type=float, nargs='?', help='Seconds; omit for a permanent key')
     args = parser.parse_args(argv)
     cfg = json.loads(args.config.read_text(encoding='utf-8-sig'))
     directory = args.config.resolve().parent
@@ -428,6 +588,18 @@ def main(argv=None):
             with args.file.open('xb') as target:
                 target.write(row['blob'])
         print('Exported:', args.file.resolve())
+    elif args.command == 'world':
+        if args.world_command == 'list':
+            print(json.dumps(store.world_rows(args.realm, args.map), indent=2))
+        elif args.world_command == 'clear':
+            print('Pre-clear backup:', store.backup(backups))
+            print('World keys removed:', store.world_clear(args.realm, args.map))
+        elif args.world_command == 'set':
+            store.world_write(args.realm, args.map, {'set': {args.key: dict(value=args.value, ttl=args.ttl)}})
+            print('World key set')
+        else:
+            store.world_write(args.realm, args.map, {'del': [args.key]})
+            print('World key deleted')
     elif args.command == 'serve':
         logs = directory / 'logs'
         logs.mkdir(exist_ok=True)

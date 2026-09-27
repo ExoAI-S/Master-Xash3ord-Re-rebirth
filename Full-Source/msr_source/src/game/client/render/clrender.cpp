@@ -21,6 +21,7 @@
 #include "r_studioint.h"
 #include "ref_params.h"
 #include "mslogger.h"
+#include "msr_bspnode.h"
 
 //OGL
 void DeleteGLTextures();
@@ -326,7 +327,7 @@ void TraverseAllNodes(mnode_t *pNode, void *Func)
 	}
 
 	for (unsigned int i = 0; i < 2; i++)
-		TraverseAllNodes(Node.children[i], Func);
+		TraverseAllNodes(MSR_NodeChild(&Node, i), Func);
 }
 
 void CEnvMgr::SetLightGamma(float Value)

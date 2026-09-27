@@ -3,6 +3,7 @@
 #include "script.h"
 #include "weapons/genericitem.h"
 #include "store.h"
+#include "msr_regions.h"
 #include "stats/statdefs.h"
 #include "stats/stats.h"
 #include "stats/races.h"
@@ -746,11 +747,20 @@ bool CMSMonster::Script_ExecuteCmd(CScript *Script, SCRIPT_EVENT &Event, scriptc
 		{
 			CStore *NewStore = CStore::GetStoreByName(Params[0]);
 
+			//Merged big-world maps: a vendor re-created with its region (or a second vendor
+			//sharing the store) restocks it; start from empty so it holds one batch, as after a
+			//map load, instead of adding a batch every time a region reloads
+			if (NewStore && MSRegions::Active() && !NewStore->HasCreator(edict()))
+				NewStore->RemoveAllItems();
+
 			if (!NewStore)
 				NewStore = CStore::m_gStores.add(new CStore);
 
 			if (NewStore)
+			{
 				NewStore->SetName(Params[0]);
+				NewStore->AddCreator(edict()); //merged big-world maps: dropped when its region unloads
+			}
 		}
 		else
 			ERROR_MISSING_PARMS;

@@ -25,6 +25,7 @@ void GenerateInverseMatrix4f(const float inMatrix[4][4], float outInverse[4][4])
 #include "clrender.h"
 
 #include "hudmisc.h"
+#include "msr_bspnode.h"
 extern CGameStudioModelRenderer g_StudioRenderer;
 extern float ClFOV;
 
@@ -961,7 +962,7 @@ mleaf_t *FindLeaf(Vector &Origin, mnode_t *pNode)
 
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		mleaf_t *pLeaf = FindLeaf(Origin, Node.children[(i == 0) ? Side : !Side]);
+		mleaf_t *pLeaf = FindLeaf(Origin, MSR_NodeChild(&Node, (i == 0) ? Side : !Side));
 		if (pLeaf)
 			return pLeaf;
 	}
@@ -1041,7 +1042,7 @@ bool IsLeafVisible(cl_entity_t *pEntity, mnode_t *pNode, mleaf_t *pSearchLeaf)
 	//Search child nodes
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		bool Found = IsLeafVisible(pEntity, Node.children[i], pSearchLeaf);
+		bool Found = IsLeafVisible(pEntity, MSR_NodeChild(&Node, i), pSearchLeaf);
 		if (Found)
 			return Found;
 	}

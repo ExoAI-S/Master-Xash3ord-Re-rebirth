@@ -1,0 +1,783 @@
+{
+  "renamed_textures": {
+    "thornlands:black_HIDDEN": "black_HIDDENtl",
+    "thornlands:PictureMS5_drid": "PictureMS5_drtl",
+    "thornlands_north:item_999": "item_999tn",
+    "thornlands_north:metal_13": "metal_13tn",
+    "thornlands_north:black_HIDDEN": "black_HIDDENtn",
+    "thornlands_north:K_gravel4": "K_gravel4tn",
+    "thornlands_north:PictureMS5_drid": "PictureMS5_drtn",
+    "helena:!K_water1": "!K_water1he",
+    "helena:crys_3a": "crys_3ahe",
+    "helena:dirt21blend": "dirt21blendhe"
+  },
+  "renamed_targets": {
+    "thornlands": {
+      "boar2": "tl_boar2",
+      "wave2": "tl_wave2",
+      "wave3": "tl_wave3"
+    },
+    "edanasewers": {
+      "b1": "sw_b1",
+      "boar": "sw_boar",
+      "door1": "sw_door1",
+      "door2": "sw_door2"
+    },
+    "thornlands_north": {},
+    "helena": {
+      "global": "he_global",
+      "smoke2": "he_smoke2"
+    }
+  },
+  "restyled_lights": {
+    "thornlands:tc2spl": 34,
+    "thornlands:tc5sp": 35,
+    "thornlands_north:FyreLight": 40,
+    "thornlands_north:None": 46,
+    "thornlands_north:Vanish4": 41,
+    "thornlands_north:Vanish2": 42,
+    "thornlands_north:Vanish5": 43,
+    "thornlands_north:fire1_light": 44,
+    "thornlands_north:Vanish2Cry": 45,
+    "thornlands_north:Vanish4Cry": 46,
+    "helena:None": 38,
+    "helena:time_tele": 38,
+    "helena:SkyEvening": 39,
+    "helena:LanternSwitchable": 47
+  },
+  "texinfo_adjustments": 728,
+  "links": [
+    {
+      "from": "edana",
+      "trigger": "a3trans",
+      "replaced": {
+        "destmap": "thornlands",
+        "desttrans": "SE-A3",
+        "destname": "The Thornlands"
+      },
+      "arrivals": [
+        "2416 7112 0",
+        "2464 7112 0",
+        "2464 7056 0",
+        "2416 7056 0",
+        "2608 7056 0",
+        "2560 7056 0",
+        "2608 7112 0",
+        "2560 7112 0",
+        "2560 7120 0"
+      ]
+    },
+    {
+      "from": "thornlands",
+      "trigger": "SE-A3",
+      "replaced": {
+        "destmap": "edana",
+        "desttrans": "a3trans",
+        "destname": "The Village of Edana"
+      },
+      "arrivals": [
+        "1612.14 2673.9 -128",
+        "1548.14 2673.9 -128",
+        "1420.14 2673.9 -128",
+        "1484.14 2609.9 -128",
+        "1420.14 2609.9 -128",
+        "1484.14 2673.9 -128",
+        "1612.14 2609.9 -128",
+        "1548.14 2609.9 -128"
+      ]
+    },
+    {
+      "from": "edana",
+      "trigger": "sewer_entrance",
+      "replaced": {
+        "destmap": "edanasewers",
+        "desttrans": "sewer_start",
+        "destname": "The Edana Sewers"
+      },
+      "arrivals": [
+        "-1664 1168 -3120",
+        "-1664 1120 -3120"
+      ]
+    },
+    {
+      "from": "edanasewers",
+      "trigger": "sewer_start",
+      "replaced": {
+        "destmap": "edana",
+        "desttrans": "sewer_entrance",
+        "destname": "Edana"
+      },
+      "arrivals": [
+        "-656 -720 -696",
+        "-624 -760 -696",
+        "-656 -760 -696",
+        "-624 -720 -696",
+        "-688 -760 -696"
+      ]
+    },
+    {
+      "from": "thornlands",
+      "trigger": "from_thorn_north",
+      "replaced": {
+        "destmap": "thornlands_north",
+        "desttrans": "thorn",
+        "destname": "Northern Thornlands"
+      },
+      "arrivals": [
+        "3728 19044 0.1469",
+        "3728 19012 0.1469",
+        "3728 18980 0.1469",
+        "3700 18992 0"
+      ]
+    },
+    {
+      "from": "thornlands_north",
+      "trigger": "from_thorn",
+      "replaced": {
+        "destmap": "thornlands",
+        "desttrans": "from_thorn_north",
+        "destname": "Thornlands"
+      },
+      "arrivals": [
+        "1568 12848 0",
+        "1616 12848 0",
+        "1664 12848 0",
+        "1712 12848 0",
+        "1760 12848 0"
+      ]
+    },
+    {
+      "from": "thornlands_north",
+      "trigger": "thorn_north_secret",
+      "replaced": {
+        "destmap": "thornlands",
+        "desttrans": "from_thorn_north_well",
+        "destname": "Thornlands"
+      },
+      "arrivals": [
+        "968 11948 -416",
+        "1024 11951 -416",
+        "1035 11924 -416",
+        "996 11924 -416"
+      ]
+    },
+    {
+      "from": "thornlands",
+      "trigger": "NE-A3",
+      "replaced": {
+        "destmap": "helena",
+        "desttrans": "helena",
+        "destname": "Helena"
+      },
+      "arrivals": [
+        "9983 9120 135",
+        "10048 9120 128",
+        "9983 9184 135",
+        "10048 9184 128",
+        "10112 9184 128",
+        "10112 9120 128",
+        "10176 9120 128",
+        "10176 9184 128"
+      ]
+    },
+    {
+      "from": "helena",
+      "trigger": "helena",
+      "replaced": {
+        "destmap": "thornlands",
+        "desttrans": "NE-A3",
+        "destname": "the open plains"
+      },
+      "arrivals": [
+        "3200 12624 0",
+        "3136 12624 0",
+        "3128 12680 0",
+        "3064 12680 0",
+        "2944 12640 0",
+        "3008 12640 0",
+        "3016 12584 0",
+        "3080 12584 0"
+      ]
+    }
+  ],
+  "spectator_spot_triggers": {
+    "helena": [
+      {
+        "trigger": "TriggerSky",
+        "target": "SkyToggle"
+      }
+    ]
+  },
+  "entity_edits": [
+    {
+      "edit": {
+        "region": "thornlands",
+        "match": {
+          "classname": "ms_player_begin"
+        },
+        "set": {
+          "classname": "ms_player_spawn"
+        },
+        "why": "only Edana may start new characters"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "edanasewers",
+        "match": {
+          "classname": "ms_player_begin"
+        },
+        "set": {
+          "classname": "ms_player_spawn",
+          "message": "sewer_start"
+        },
+        "why": "only Edana may start new characters"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "edanasewers",
+        "match": {
+          "classname": "ms_player_spawn",
+          "message": null
+        },
+        "set": {
+          "message": "sewer_start"
+        },
+        "why": "the sewers' arrival point for sewer_start was unnamed"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "thornlands_north",
+        "match": {
+          "classname": "ms_player_begin"
+        },
+        "set": {
+          "classname": "ms_player_spawn",
+          "message": "from_thorn"
+        },
+        "why": "only Edana may start new characters"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "thornlands_north",
+        "match": {
+          "classname": "ambient_generic",
+          "message": "monsters/bear/giantbearupsnarl.wav",
+          "spawnflags": "17"
+        },
+        "set": {
+          "spawnflags": "16"
+        },
+        "why": "BearGrowl played everywhere (flag 1); make it positional, medium radius, start silent"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "thornlands_north",
+        "match": {
+          "classname": "ambient_generic",
+          "message": "monsters/bear/giantbearpain.wav",
+          "spawnflags": "17"
+        },
+        "set": {
+          "spawnflags": "16"
+        },
+        "why": "BearSoundPain played everywhere (flag 1); make it positional, medium radius, start silent"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "thornlands_north",
+        "match": {
+          "classname": "ms_player_spawn",
+          "message": "from_blood",
+          "origin": "-62.6473 21138.2 40"
+        },
+        "set": {
+          "origin": "-120 21138.2 40"
+        },
+        "why": "standing box overlapped the from_blood exit brush (x -48..-40); Bloodrose arrivals land here"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "thornlands_north",
+        "match": {
+          "classname": "ms_player_spawn",
+          "message": "from_blood",
+          "origin": "-62.6473 21106.2 40"
+        },
+        "set": {
+          "origin": "-120 21106.2 40"
+        },
+        "why": "standing box overlapped the from_blood exit brush (x -48..-40); Bloodrose arrivals land here"
+      },
+      "matched": 1
+    },
+    {
+      "edit": {
+        "region": "helena",
+        "match": {
+          "classname": "ms_player_begin"
+        },
+        "set": {
+          "classname": "ms_player_spawn",
+          "message": "helena_begin"
+        },
+        "why": "only Edana may start new characters"
+      },
+      "matched": 1
+    }
+  ],
+  "pruned_decor_models": 372,
+  "regions": [
+    {
+      "region": "edana",
+      "index": 0,
+      "keys": {
+        "classname": "info_msr_region",
+        "region": "edana",
+        "index": "0",
+        "offset": "0 0 0",
+        "cell_mins": "-65536 -65536 -2112",
+        "cell_maxs": "5500 5096 65536",
+        "tight_mins": "-3512 -3472 -2080",
+        "tight_maxs": "2816 4064 960",
+        "title": "The Village of Edana",
+        "desc": "This village grew around the temple of Urdual of the southern frontier.",
+        "diff": "(Beginner/Safe Area)",
+        "warnhp": "0",
+        "weather": "clear;clear;clear;clear;rain;clear",
+        "allownight": "1",
+        "skyname": "g_morning",
+        "maxrange": "650000"
+      },
+      "sources": {
+        "title": "script",
+        "desc": "script",
+        "diff": "script",
+        "warnhp": "script",
+        "weather": "script",
+        "allownight": "script",
+        "skyname": "worldspawn",
+        "maxrange": "worldspawn"
+      },
+      "omitted": [],
+      "script": "C:\\Users\\cptki\\Documents\\Codex\\MSR-BigWorld\\reference\\scripts\\edana\\map_startup.script"
+    },
+    {
+      "region": "thornlands",
+      "index": 1,
+      "keys": {
+        "classname": "info_msr_region",
+        "region": "thornlands",
+        "index": "1",
+        "offset": "0 10000 0",
+        "cell_mins": "-65536 5096 -65536",
+        "cell_maxs": "5500 14100 65536",
+        "tight_mins": "-3072 6128 -2144",
+        "tight_maxs": "3464 13456 768",
+        "title": "The Thornlands",
+        "desc": "These untamed plains and mesas form crossroads to many lands",
+        "diff": "Levels 5-10 / 35-150hp",
+        "warnhp": "35",
+        "weather": "clear;clear;clear;storm;clear;rain",
+        "allownight": "1",
+        "skyname": "grnplsnt",
+        "maxrange": "524288",
+        "no_logout_0": "168 8440 -1144 368 8520 -1000"
+      },
+      "sources": {
+        "title": "script",
+        "desc": "script",
+        "diff": "script",
+        "warnhp": "script",
+        "weather": "script",
+        "allownight": "script",
+        "skyname": "worldspawn",
+        "maxrange": "worldspawn"
+      },
+      "omitted": [],
+      "script": "C:\\Users\\cptki\\Documents\\Codex\\MSR-BigWorld\\reference\\scripts\\thornlands\\map_startup.script"
+    },
+    {
+      "region": "edanasewers",
+      "index": 2,
+      "keys": {
+        "classname": "info_msr_region",
+        "region": "edanasewers",
+        "index": "2",
+        "offset": "0 0 -3440",
+        "cell_mins": "-65536 -65536 -65536",
+        "cell_maxs": "5500 5096 -2112",
+        "tight_mins": "-2304 -2560 -3568",
+        "tight_maxs": "2460 2944 -2144",
+        "title": "The Sewers of Edana",
+        "desc": "These sewers predate the town above by hundreds of years and are now the haunted remnants of a once great city.",
+        "warnhp": "0",
+        "weather": "clear;clear;clear",
+        "allownight": "1",
+        "skyname": "LMmnts_1",
+        "maxrange": "9000",
+        "no_logout_0": "-2296 -304 -3268 -1328 384 -3120",
+        "no_logout_1": "-2072 -136 -3140 -1360 208 -2960"
+      },
+      "sources": {
+        "title": "worldspawn",
+        "desc": "worldspawn",
+        "diff": "none",
+        "warnhp": "default",
+        "weather": "default",
+        "allownight": "default",
+        "skyname": "worldspawn",
+        "maxrange": "worldspawn"
+      },
+      "omitted": [
+        "diff"
+      ],
+      "script": null
+    },
+    {
+      "region": "thornlands_north",
+      "index": 3,
+      "keys": {
+        "classname": "info_msr_region",
+        "region": "thornlands_north",
+        "index": "3",
+        "offset": "0 18000 0",
+        "cell_mins": "-65536 14100 -65536",
+        "cell_maxs": "5500 65536 65536",
+        "tight_mins": "-3952 14772 -1312",
+        "tight_maxs": "3856 22008 3216",
+        "title": "Northern Thornlands by Dridje",
+        "desc": "More crossroads that can be dangerous for the inexperienced adventurer.",
+        "warnhp": "0",
+        "weather": "clear;rain",
+        "allownight": "1",
+        "skyname": "grnplsnt",
+        "maxrange": "10000",
+        "no_logout_0": "-3616 18112 -1312 -3264 19048 -1138",
+        "no_logout_1": "-3288 17792 -1312 -2088 18424 -1063",
+        "no_logout_2": "-3288 18976 -1312 -2800 19048 -1144",
+        "no_logout_3": "-3936 19024 -1312 -2752 19856 -1140",
+        "no_logout_4": "-3064 19600 -764 -3032 19656 -652",
+        "no_logout_5": "-2752 16760 -1312 -1792 17784 -1152"
+      },
+      "sources": {
+        "title": "worldspawn",
+        "desc": "worldspawn",
+        "diff": "none",
+        "warnhp": "default",
+        "weather": "worldspawn",
+        "allownight": "default",
+        "skyname": "worldspawn",
+        "maxrange": "worldspawn"
+      },
+      "omitted": [
+        "diff"
+      ],
+      "script": null
+    },
+    {
+      "region": "helena",
+      "index": 4,
+      "keys": {
+        "classname": "info_msr_region",
+        "region": "helena",
+        "index": "4",
+        "offset": "10000 10000 0",
+        "cell_mins": "5500 -65536 -65536",
+        "cell_maxs": "65536 65536 65536",
+        "tight_mins": "6957 6025.6 -1296",
+        "tight_maxs": "12300 13976 1137",
+        "title": "The Town of Helena",
+        "desc": "This provincial village is in constant danger of attack.",
+        "diff": "Levels 10-15 / 100-250hp",
+        "warnhp": "100",
+        "weather": "clear;clear;clear;rain;rain;rain",
+        "allownight": "1",
+        "skyname": "ghetto",
+        "maxrange": "500000",
+        "no_logout_0": "8720 12384 -528 9080 12648 -437",
+        "no_logout_1": "8864 12624 -528 9080 12888 -321",
+        "no_logout_2": "9056 12392 -528 9416 12656 -437",
+        "no_logout_3": "9056 12632 -528 9272 12888 -321",
+        "no_logout_4": "9408 10640 -272 9456 10776 -160"
+      },
+      "sources": {
+        "title": "script",
+        "desc": "script",
+        "diff": "script",
+        "warnhp": "script",
+        "weather": "script",
+        "allownight": "script",
+        "skyname": "worldspawn",
+        "maxrange": "worldspawn"
+      },
+      "omitted": [],
+      "script": "C:\\Users\\cptki\\Documents\\Codex\\MSR-BigWorld\\reference\\scripts\\helena\\map_startup.script"
+    }
+  ],
+  "region_keys": {
+    "tagged": 2953,
+    "kept": 71
+  },
+  "bosses": [
+    {
+      "region": "thornlands",
+      "id": "queen",
+      "key": "boss.thornlands.queen",
+      "classname": "msmonster_giantrat",
+      "origin": "459 8752 -763",
+      "source_origin": "459 -1248 -763",
+      "spawnarea": "wave4",
+      "script": "monsters/thornlandspider",
+      "cooldown": 1800,
+      "open": [
+        "break3"
+      ],
+      "remove": [],
+      "entity": 898
+    },
+    {
+      "region": "thornlands_north",
+      "id": "spiderboss",
+      "key": "boss.thornlands_north.spiderboss",
+      "classname": "msmonster_skeleton",
+      "origin": "-3008 19612 -448",
+      "source_origin": "-3008 1612 -448",
+      "spawnarea": "spiderboss",
+      "script": "monsters/thornlandspider",
+      "cooldown": 1800,
+      "open": [
+        "spiderbossweb"
+      ],
+      "remove": [],
+      "entity": 1781
+    },
+    {
+      "region": "thornlands_north",
+      "id": "vakgar",
+      "key": "boss.thornlands_north.vakgar",
+      "classname": "ms_npc",
+      "origin": "-3520 15344 -252",
+      "source_origin": "-3520 -2656 -252",
+      "spawnarea": "Wave2",
+      "script": "thornlands_north/orcboss",
+      "cooldown": 1800,
+      "open": [
+        "Orcforwall"
+      ],
+      "remove": [
+        "OrkForBack"
+      ],
+      "entity": 1684
+    },
+    {
+      "region": "thornlands_north",
+      "id": "tombguardian",
+      "key": "boss.thornlands_north.tombguardian",
+      "classname": "msmonster_skeleton",
+      "origin": "-2273.09 17242.6 -1238.94",
+      "source_origin": "-2273.09 -757.417 -1238.94",
+      "spawnarea": "ww1event",
+      "script": "thornlands_north/tomb_guardian",
+      "cooldown": 1800,
+      "open": [
+        "ww1transmsg",
+        "telesprite"
+      ],
+      "remove": [],
+      "entity": 1743
+    },
+    {
+      "region": "thornlands_north",
+      "id": "ursus",
+      "key": "boss.thornlands_north.ursus",
+      "classname": "ms_npc",
+      "origin": "2722 17199 0",
+      "source_origin": "2722 -801 0",
+      "spawnarea": "BearGuardianSpawn",
+      "script": "monsters/bear_guard1",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 1950
+    },
+    {
+      "region": "thornlands_north",
+      "id": "stoneguard_w",
+      "key": "boss.thornlands_north.stoneguard_w",
+      "classname": "msmonster_skeleton",
+      "origin": "-2480 17644 -1296",
+      "source_origin": "-2480 -356 -1296",
+      "spawnarea": "TrollBossesSpawn",
+      "script": "monsters/troll",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 1914
+    },
+    {
+      "region": "thornlands_north",
+      "id": "stoneguard_e",
+      "key": "boss.thornlands_north.stoneguard_e",
+      "classname": "msmonster_skeleton",
+      "origin": "-2064 17644 -1296",
+      "source_origin": "-2064 -356 -1296",
+      "spawnarea": "TrollBossesSpawn",
+      "script": "monsters/troll",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 1915
+    },
+    {
+      "region": "helena",
+      "id": "matriarch",
+      "key": "boss.helena.matriarch",
+      "classname": "msmonster_troll",
+      "origin": "9424 11008 -112",
+      "source_origin": "-576 1008 -112",
+      "spawnarea": "spawn_queen",
+      "script": "calruin/spidqueen",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 2575
+    },
+    {
+      "region": "helena",
+      "id": "childre",
+      "key": "boss.helena.childre",
+      "classname": "msmonster_troll",
+      "origin": "8821.96 11912.9 -160",
+      "source_origin": "-1178.04 1912.85 -160",
+      "spawnarea": "spawn_khaz",
+      "script": "monsters/k_childre",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 2567
+    },
+    {
+      "region": "helena",
+      "id": "ogre",
+      "key": "boss.helena.ogre",
+      "classname": "msmonster_orcwarrior",
+      "origin": "10832.5 11020.8 -56",
+      "source_origin": "832.453 1020.79 -56",
+      "spawnarea": "spawn_ogre",
+      "script": "monsters/ogre",
+      "cooldown": 1800,
+      "open": [],
+      "remove": [],
+      "entity": 2602
+    }
+  ],
+  "bsp2": {
+    "rgb_bytes": 10570668,
+    "mono_bytes": 3523556,
+    "file_bytes": 58215328
+  },
+  "verification": {
+    "hull_checks": 215941,
+    "hull_mismatch": 0,
+    "extent_checks": 70410,
+    "extent_mismatch": 0,
+    "vis_checks": 1000,
+    "vis_mismatch": 0,
+    "tree_order_errors": 0,
+    "boundary_samples_skipped": 431,
+    "resampled_faces": 728
+  },
+  "region_check": {
+    "table": "entities[1..5]",
+    "partition": {
+      "random_points": 400,
+      "boundary_points": 912,
+      "gaps": 0,
+      "overlaps": 0,
+      "join_node_mismatch": 0
+    },
+    "bounds_inside_cell": {
+      "edana": true,
+      "thornlands": true,
+      "edanasewers": true,
+      "thornlands_north": true,
+      "helena": true
+    },
+    "entities": {
+      "point": 1751,
+      "brush": 1192,
+      "skipped_no_position": 10,
+      "misplaced": 0,
+      "by_region": {
+        "edana": 521,
+        "thornlands": 686,
+        "edanasewers": 446,
+        "thornlands_north": 618,
+        "helena": 672
+      },
+      "checked": 2943
+    },
+    "errors": []
+  },
+  "counts": {
+    "planes": 79591,
+    "vertexes": 98566,
+    "nodes": 42292,
+    "texinfo": 18347,
+    "faces": 73530,
+    "clipnodes": 121821,
+    "leafs": 34506,
+    "visleafs": 18031,
+    "marksurfaces": 85941,
+    "edges": 177008,
+    "surfedges": 328603,
+    "models": 1193,
+    "textures": 740,
+    "entities": 2959,
+    "lighting_bytes": 10570668,
+    "vis_bytes": 799346,
+    "file_bytes": 58215328
+  },
+  "world_hull_nodes": [
+    32220,
+    23975,
+    20560,
+    26237
+  ],
+  "world_bounds": [
+    [
+      -3952.0,
+      -3472.0,
+      -3568.0
+    ],
+    [
+      12300.0,
+      22008.0,
+      3216.0
+    ]
+  ],
+  "detail_lines": 450,
+  "seconds": 23.4,
+  "format_headroom": {
+    "faces": "73530/262144 (28.0%)",
+    "leafs": "34506/131072 (26.3%)",
+    "nodes": "42292/262144 (16.1%)",
+    "texinfo": "18347/262144 (7.0%)",
+    "models": "1193/2048 (58.3%)"
+  },
+  "entities_outside_delta_range": []
+}

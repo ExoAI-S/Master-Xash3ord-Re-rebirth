@@ -1,0 +1,421 @@
+{
+  "base": "v2026.09.24-erratic-gauss",
+  "files": [
+    {
+      "path": "Full-Source/msr_source/run_server.ps1",
+      "sha256_lf": "0e5c5acf47320ee0b1f02dab66d3a91b4b60528dec946a0918e4095da5f8f412"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/cdll_int.cpp",
+      "sha256_lf": "a0ba6cff6bb39215ababf1f4a33e0e1ea0a72ece580d248df4b4a0ce9fad414e"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/entity.cpp",
+      "sha256_lf": "e738e2e524ac14d7d66004ef7dcf2f8c07d2d27ff5898f6040209e3eca3bffe0"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/hud.cpp",
+      "sha256_lf": "67bc9f18a53b93e68d18e4e9e013808d9d36e5b1531ba0f601d7725ac3a16819"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/parsemsg.cpp",
+      "sha256_lf": "73ea26acb6f6217265f0b72e56ada39e5d9f426d693a2a8223047bdbc0893a64"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/parsemsg.h",
+      "sha256_lf": "87c695927dd802f221696eec9bcef9bc8db49c3dbace23f9366858dd55c7d813"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/standalone_profile.cpp",
+      "sha256_lf": "b92d21189ab5394360d9cb53287d8123c9b47a126be342a762c75cca4ad1a012"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/standalone_profile.h",
+      "sha256_lf": "c6da845ad197a1940a9cc154b964063fd64e9263d67663248b61acbdad4864d2"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/client.cpp",
+      "sha256_lf": "0dec947e2586c379708d6b5c17551f38585cb8da5d3fccd97091d29f538e696e"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/encounter_director.cpp",
+      "sha256_lf": "2d12b82d57f54555760def42d0fadffe86864dd38a3eb2f6b6b807b0f75234b7"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/encounter_director.h",
+      "sha256_lf": "ab58de554a59396ca709720d3e1ba30df1dc298d7d151c5fb2e31a91629b225a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/enginecallback.h",
+      "sha256_lf": "d07da581cc53f4610dbc1e382318faba10fdaba568a91399c25f0b9cc8e20d89"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/game.cpp",
+      "sha256_lf": "46ea3c9125654840985024a7246900930188ffc548718a34536fc56bbb530bb5"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msmapents.cpp",
+      "sha256_lf": "416970367266b093043685e6c30fab5a1f0066a172be709d3809bd4238868fda"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_bigworld.cpp",
+      "sha256_lf": "d9254d7f48222d511fbd29630b5dd93f3e5aeed72b727e1660d4171c92163985"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_bigworld.h",
+      "sha256_lf": "82ac76321acb85071b0a08227714f140f46928017adc277e09f4823b3f5fa41d"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_bosses.cpp",
+      "sha256_lf": "fef4c6a2c67a89301ce4c5657af23d5a32b0188f128e4d1a4e5610cfcac33718"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_bosses.h",
+      "sha256_lf": "5ccd5c0c5f3b9576b97cdd5cbe3a7a14146b6c1cff48294ce7c314f640b2a33b"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_regions.cpp",
+      "sha256_lf": "4c754e9caa26ff2fad24bcffd5d213a69bee818cd752198152b029322f60531b"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_regions.h",
+      "sha256_lf": "511337ab7201cac6905ec0f3cc815448bdc547e904033e7496693950864dc69f"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_worldstate.cpp",
+      "sha256_lf": "ffe461568c2b827303e80053e1c8161cc8d702238ee99863bbc747de19eb95e8"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/msr_worldstate.h",
+      "sha256_lf": "44b5c93e8bf75b6f51b1f7769ca51ba638e171a29d1e8a72822577be8f588f8a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/store.h",
+      "sha256_lf": "7e090f7e9f67dc25d0df7c57d75673ea44e9e8be48b790bd6b8c8d156ff68a18"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/svglobals.cpp",
+      "sha256_lf": "6706f7c0cfd085dd25ea3c563e549d5ec1a87e2198ea2fa466edaae7c0707f70"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/sv_character.cpp",
+      "sha256_lf": "e61acc59b8904ca13d732bd4d6afb5ae9327414b30001c873c4ba5319c2c1bd6"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/triggers.cpp",
+      "sha256_lf": "98afd7d1ea1076c7be073a5eef61a87bfc3a717a71c935428305a0a96a5f7111"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/world.cpp",
+      "sha256_lf": "70d2294b1a514aa66e58450ffd758524b84487829bc466d9f8f3afd030b6ee0c"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/iscript.h",
+      "sha256_lf": "03cad4bc2c0855ace6d7781aa94831d7e2e7a00ee35cc81a0b874147f3bd0c4b"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/mscharacter.cpp",
+      "sha256_lf": "8648cf674ea3bc00021e9f8f45bdae2b48c260d00e7edd4be0c23ea7cfb43b4a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/msmonstershared.cpp",
+      "sha256_lf": "8d02851772632927e5e17bd82790935dafa95f81e132e5f6bedf6d655131b4a7"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/script.cpp",
+      "sha256_lf": "ea0f22c58fd2eaaa327e5f39490721b2cd13b2e77382de380df6f12fc56898ad"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/script.h",
+      "sha256_lf": "b41b385865d73b8fc484e7fd87631224d2ca36de87d57fe164f555362a1a57e4"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/scriptcmds.cpp",
+      "sha256_lf": "b219134faa95ebcad18c150117173f88822d47cf8faea40288cd04ae31d980eb"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/stackstring.h",
+      "sha256_lf": "4513f805f2ec41c4169e3a97c2fa55a96443d129cf4189b2808f5d2f1652ed64"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/stats/stats.cpp",
+      "sha256_lf": "552cfd63215ad0f17afbd3bb47c1690b250dbc3789ec7e8d74c2b16a78c447f3"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/stats/stats.h",
+      "sha256_lf": "51cf2932b72cbedbc2d5bd9b85c074fa34d0f7a658db78ca4e7973327b2ec7ed"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/stats/unified_weapon.h",
+      "sha256_lf": "e740a5b469a08a6d580a162b89901f400e79503ec8dac682dea86b668cb58843"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/weapons/genericitem.cpp",
+      "sha256_lf": "17863e95b7e5cf42db7303dfc60336b2174639bc616e3ee34cacbc2d4d01e00b"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/shared/ms/crc/crchash.cpp",
+      "sha256_lf": "c5aaf2691eb2c4d86058e90933dfb3a74e9aec3ad27681aa0e8c8a2392354041"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/CreateCharacterReq.cpp",
+      "sha256_lf": "e74bffb42e54da344ffcd07f922177f4250715caafa221c941fb5ca687df20b2"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/FNSharedDefs.cpp",
+      "sha256_lf": "39aa9f4635f8c60a52e207ed5ad304b7cd75f873bf542500dca8107db2331388"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/FNSharedDefs.h",
+      "sha256_lf": "40aad36fa98ef2d85ec9854b898e083a4390062ad6e6762bd49096b2cc1cacbf"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/HTTPRequest.cpp",
+      "sha256_lf": "3126473c4787cf15e09b1f39e99009c0006043806164dfc93e505ae75dc2ba59"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/HTTPRequest.h",
+      "sha256_lf": "56d41556748de2f19f8dcc28a60b803705553a996e42c83ec9ce46f24a3cf02c"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/LoadCharacterReq.cpp",
+      "sha256_lf": "16d9f8694396483106c99e907b4b627277c31596e61594de615f68d0013654cb"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/RequestManager.cpp",
+      "sha256_lf": "b292c58d5b7bf2c1a105313e82ec609c6c4e768d2deea6c0e4726c9d58994c3a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/RequestManager.h",
+      "sha256_lf": "cb415b8a6043a68edb2086c7fddd0973e48fe4478b99adb42ed21794da17774f"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/StandaloneIdentity.h",
+      "sha256_lf": "53898481ecb1fd4eddf21b69c0ad591ffe8da21f518a7e202f19ecf22a751544"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/UpdateCharacterReq.cpp",
+      "sha256_lf": "eaad7be0d1f9dd518bcc5d735ca6ec3d4005cad3b482af9557ae8425eabf3a20"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/UpdateCharacterReq.h",
+      "sha256_lf": "cf09da28d14b4c5e8ab12c2799dbc13c78c50ede8f4999054a42340aa2e2038e"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/ValidateMapReq.cpp",
+      "sha256_lf": "d834933fbf4bc74a91969ae027f44190999719aaf6aafd7a44a12433dee8699d"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/ValidateScriptsReq.cpp",
+      "sha256_lf": "a00fac5e5e57dd2d49e8d79deafb793c0c4ee5e0ecc9489da1efb923aff5681a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/WorldStateReq.cpp",
+      "sha256_lf": "d724a3db769e14bf4b62b2bb18345fc26010996a8ca2e7752ef3cc46c36b3ce5"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/fn/WorldStateReq.h",
+      "sha256_lf": "ed382568918a531d570823fdae15090a6435826435cb3d5cc6dc9445c4809e82"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/gamerules/multiplay_gamerules.cpp",
+      "sha256_lf": "849501c33eb75fd9269bfe85736ef8b4cc3aa90b8db4ea1345841a04881947dd"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/hl/cbase.cpp",
+      "sha256_lf": "ab5dacee773c19114465fefe472da1c0034ae4c43292f5c788c352e30f7a3b6a"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/hl/util.cpp",
+      "sha256_lf": "bfdbb66f4d6f715259a629ec13c3ef610d8007a5fc167acbf967b852bbcf645f"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/hl/util.h",
+      "sha256_lf": "fcdf356f062523780eb5746b3bacb02c3573530d45d395643b593728ffe4cf10"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/monsters/msmonster.h",
+      "sha256_lf": "731bca8543644e72988121fb8a6ea672dfd63a330f25869933f946b4558cf6a9"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/monsters/msmonsterserver.cpp",
+      "sha256_lf": "cca3f44807e661ccb629241babaf0c72368943740255081409c78ee0dbd566b9"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/monsters/npcscript.cpp",
+      "sha256_lf": "6c3979c182edd073bcac37a028e41e87519fb2e42d6314db8b350b8b3e8998eb"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/player/player.cpp",
+      "sha256_lf": "121fc826fa438c51be2acedd495070a7415a7770f583f832a15b71d6a65cec4d"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/player/player.h",
+      "sha256_lf": "f110f94c4726c3151b5d0cb1cdbc67523425d9d90acac596ee0d25403281645c"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/player/playershared.cpp",
+      "sha256_lf": "f18c7aac3144cd595296d74fcd5f97c61e698900c16f35512e029e9d383e53f5"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/server/player/playerstats.cpp",
+      "sha256_lf": "362b6e1c73b8ecb36d9f7986ddfa4cc9ee591e42c416b22bbc8cefb6b537d936"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ms/clplayer.cpp",
+      "sha256_lf": "f80ceac487c71679b980bded8241ffdaaa5076304d4966226be9a4edfdcb59b5"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ms/hudscript.cpp",
+      "sha256_lf": "5900cc29cb43b1bce8f51174715782005201011a107fb3c7bf104fe5e8e14e21"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/render/clrender.cpp",
+      "sha256_lf": "456d70e8dbfd8fb9a45e17de48eb0efc864cc18bb523674a1683fd9edd99d804"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/render/clrendermirror.cpp",
+      "sha256_lf": "d192ca68ef1ca069a9c3ef0c7df61b2c23ee2023f24d399ab73cf26601f6ea5b"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/render/msr_bspnode.h",
+      "sha256_lf": "a4386bd02259983318555229ab19acbc9bdc65b3ac174891d1c83693becf9e54"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/vgui_int.cpp",
+      "sha256_lf": "dafd25a351211a10b92b8fefa8b1758698cdb92507666b0e949e21559292aef0"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/vgui_teamfortressviewport.cpp",
+      "sha256_lf": "8f99f670cf56fd8b0938a349d85e2c74a92e5904455c3edfa5c0d5d6a40391eb"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/equipment_drag_state.h",
+      "sha256_lf": "4f55bc1f8da17fc835c84c78a57a0b0147cb63692803dcbd059114385e895ac1"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_characterinventory.cpp",
+      "sha256_lf": "4d4de0e47b8cbfba924238a3701a41416d482d56f048d9c5fb301d32078ac612"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_container.cpp",
+      "sha256_lf": "6a3398195c655e77c54fee7e65e96b614f2e629f21c3b375d248dc61a9cb3f86"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_containerlist.cpp",
+      "sha256_lf": "dde663f3eac2e754d546a94e8a4906492bef6c0da5abf16ac3eba9bd15e424bb"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_containerlist.h",
+      "sha256_lf": "29907e792488d9bc0a29c7ae35dd953fadecab5d2c66cb8917f802d6d58b1cda"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_equipmentdrag.cpp",
+      "sha256_lf": "11a08351bc53f7ee346ed4b173770a2cb2b820ddec32fa27bcea2013ad912c0d"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_fantasyframe.h",
+      "sha256_lf": "cf6acc8284f8afffc08275984b547bbc46b1053b10d5fcbe377c912c5dcaf371"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_mscontrols.cpp",
+      "sha256_lf": "af610eb9ecbfdb190b3b4e6a5713e8541f0d2e70537695dd8a22edc97dd5c5a6"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_mscontrols.h",
+      "sha256_lf": "1405238f0f720caa668d6909a3e9d26f2133a49f346e6eefb9b9164dd6c2fb64"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_stats.cpp",
+      "sha256_lf": "00df02617b6fe405543c40418fbf8870e8852ecef6f78a4500c5b812f319ebc3"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_stats.h",
+      "sha256_lf": "619ffeea75133458db304c7b88cfb33340eb66a52ee21a97eede9087ad83b6c8"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/vgui_weaponprogress.h",
+      "sha256_lf": "0ea8bb76b5bf6f75e01cce101acc3ee394e08b1c7b1435e574c033cbdcdc2cf6"
+    },
+    {
+      "path": "Full-Source/msr_source/src/game/client/ui/ms/worldmap_atlas.h",
+      "sha256_lf": "8ce89b1481a03da9dc6836fce75d9884d1105b61e22eb0a1fe380054f604f7f9"
+    },
+    {
+      "path": "Full-Source/msr_port/build-local.ps1",
+      "sha256_lf": "f867b163c972805e53e7cbb9997ca033e4d2a185c8a784059b8eb88184d42e52"
+    },
+    {
+      "path": "Full-Source/msr_port/Build-MSR-Port.cmd",
+      "sha256_lf": "5998e118bd5ad13fa2ee8f07a365fe7b1e025f41ced0befd829777d6801ef5a0"
+    },
+    {
+      "path": "Full-Source/msr_port/Build-MSR-Port.ps1",
+      "sha256_lf": "a0a494dd91b85775b5787427a04f85acf6b1cdb5050feae8779fbf1a2708e8a1"
+    },
+    {
+      "path": "Full-Source/msr_port/build_pbr_maps.py",
+      "sha256_lf": "38fffe01fbc82a1d4b7c43e2794781517913e2009cdab4a64f095e1f3047e2ae"
+    },
+    {
+      "path": "Full-Source/msr_port/CMakeLists.txt",
+      "sha256_lf": "d4905b1c214194e05e62b3426484dfcd014c5d3b8d369b577275881b47b37ae1"
+    },
+    {
+      "path": "Full-Source/msr_port/extract_studio_texture.py",
+      "sha256_lf": "a18f6402fbe6ebbfbda1a912fb311a4b0b8e4ef0727e4e09aa324f2ffa13167b"
+    },
+    {
+      "path": "Full-Source/msr_port/generate_msr_materials.py",
+      "sha256_lf": "5eca48854200f13760e5710a568e600a786f00151e50e0dac42497b551eaf83f"
+    },
+    {
+      "path": "Full-Source/msr_port/GRAPHICS_ROADMAP.md",
+      "sha256_lf": "dd2c791b79497920bbb3402848e7d74bb83eb524d04445f17251b343082eee75"
+    },
+    {
+      "path": "Full-Source/msr_port/PrimeXTMSRLauncher.cs",
+      "sha256_lf": "ca72aa066c820e25e952b5d901d43c51ef54a5b52997736911f06eb4ae620b34"
+    },
+    {
+      "path": "Full-Source/msr_port/README.md",
+      "sha256_lf": "5506c35ad55dc3f2f9b7a0eb14943d4ee4246b67ebfb51f468d4f0e9b8993fee"
+    },
+    {
+      "path": "Full-Source/msr_port/source_lists.cmake",
+      "sha256_lf": "ab14c1a4d4e134e466e7d78ad365d5dec8b556690057f71674b1ec2aaedbdece"
+    },
+    {
+      "path": "Full-Source/msr_port/Stage-Renderer-Assets.ps1",
+      "sha256_lf": "15b2eb7a2569c4aabafbd9cef96ea1de7ebdff74e257c3877edcb5c00129d350"
+    },
+    {
+      "path": "Full-Source/msr_port/stage_hd_materials.py",
+      "sha256_lf": "99adb42e6702e31b177d2a914aea3d9d1f50c981f44441c3a9e108e30ce8b435"
+    },
+    {
+      "path": "Full-Source/msr_port/verify_scripts_pak.py",
+      "sha256_lf": "7b4d554d33b5a2ce91e88a38da3aaf469a1ce571ddc7461d099c919eb43bb66c"
+    },
+    {
+      "path": "Full-Source/msr_port/native_mscript/native_bridge.h",
+      "sha256_lf": "7319318853799f7f6f55c7741927df71dbf50d6984aa0676a4a508f723beb45b"
+    },
+    {
+      "path": "Full-Source/msr_port/mscript_events/edana/game_master.script",
+      "sha256_lf": "a1005f948558e710c12b97df18b8e1ad3f2f384dd7569a29ca85f082b8eeacfb"
+    },
+    {
+      "path": "Full-Source/msr_port/mscript_events/edana/raid_guard.script",
+      "sha256_lf": "57513834cceef572ea1c00179f63bbbde33ca24b777116ba0eaebd04a45d67b7"
+    },
+    {
+      "path": "Portable-Package/FN/fn_server.py",
+      "sha256_lf": "6579af68a165995ebfca84f12c53369225a954e1eadece69518f40f48b7afce2"
+    },
+    {
+      "path": "Portable-Package/FN/test_fn.py",
+      "sha256_lf": "3b530cd01b702fd9813482a138df0b4e36e2793960f6eae1df2e99f543d69091"
+    }
+  ]
+}

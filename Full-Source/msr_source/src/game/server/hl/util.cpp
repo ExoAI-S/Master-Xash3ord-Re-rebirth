@@ -31,6 +31,7 @@
 #include "player.h"
 #include "weapons.h"
 #include "gamerules.h"
+#include "msr_regions.h"
 
 /*
 =====================
@@ -581,6 +582,24 @@ CBaseEntity *UTIL_FindEntityGeneric(const char *szWhatever, Vector &vecSrc, floa
 	return pEntity;
 }
 
+// A player the engine still has in the game. Xash keeps a departed player's edict and object until
+// the slot is reused (client edicts are never freed, GETPLAYERUSERID keeps the old id).
+// m_fInServer covers normal quits; the engine's userinfo, which it clears on every drop, also
+// catches a client dropped before it was put in the server.
+bool UTIL_IsConnectedPlayer(CBaseEntity *pEntity)
+{
+	if (!pEntity || !pEntity->pev || !pEntity->IsPlayer())
+		return false;
+	edict_t *pEdict = pEntity->edict();
+	const int index = ENTINDEX(pEdict);
+	if (index < 1 || index > gpGlobals->maxClients || pEdict->free || !pEdict->pvPrivateData)
+		return false;
+	if (!((CBasePlayer *)pEntity)->m_fInServer)
+		return false;
+	const char *info = g_engfuncs.pfnGetInfoKeyBuffer(pEdict);
+	return info && info[0];
+}
+
 // returns a CBaseEntity pointer to a player by index.  Only returns if the player is spawned and connected
 // otherwise returns NULL
 // Index is 1 based
@@ -597,7 +616,7 @@ CBaseEntity *UTIL_PlayerByIndex(int playerIndex)
 		}
 	}
 
-	return pPlayer;
+	return UTIL_IsConnectedPlayer(pPlayer) ? pPlayer : NULL;
 }
 
 CBasePlayer* UTIL_PlayerBySteamID(ID64 steamID64)
@@ -842,13 +861,22 @@ void Util_ScriptArray(CBaseEntity *pEntity, const char *array_operation, const c
 }
 
 //[begin] NOV2014_09 Thothie - centralizing afk/bot checking
-int UTIL_NumPlayers()
+//Merged big-world maps: with a region, only players in that region count (msr_regions.h)
+static CBasePlayer *UTIL_PlayerInRegion(int i, int region)
+{
+	CBaseEntity *pEntity = UTIL_PlayerByIndex(i);
+	CBasePlayer *pPlayer = pEntity ? (CBasePlayer *)pEntity : NULL;
+	if (pPlayer && region >= 0 && !(MSRegions::IsPresent(pPlayer) && pPlayer->m_iRegion == region))
+		return NULL;
+	return pPlayer;
+}
+
+int UTIL_NumPlayers(int region)
 {
 	int total_valid_players = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pEntity = UTIL_PlayerByIndex(i);
-		CBasePlayer *pPlayer = pEntity ? (CBasePlayer *)pEntity : NULL;
+		CBasePlayer *pPlayer = UTIL_PlayerInRegion(i, region);
 		if (pPlayer)
 		{
 			++total_valid_players;
@@ -865,14 +893,13 @@ int UTIL_NumPlayers()
 	return total_valid_players;
 }
 
-int UTIL_NumActivePlayers()
+int UTIL_NumActivePlayers(int region)
 {
 	int total_valid_players = 0;
 	bool flagged_invalid = false;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pEntity = UTIL_PlayerByIndex(i);
-		CBasePlayer *pPlayer = pEntity ? (CBasePlayer *)pEntity : NULL;
+		CBasePlayer *pPlayer = UTIL_PlayerInRegion(i, region);
 		if (pPlayer)
 		{
 			if (!pPlayer->IsActive())
@@ -900,15 +927,14 @@ int UTIL_NumActivePlayers()
 	return total_valid_players;
 }
 
-float UTIL_TotalHP()
+float UTIL_TotalHP(int region)
 {
 	int total_valid_players = 0;
 	bool flagged_invalid = false;
 	float total_hp = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pEntity = UTIL_PlayerByIndex(i);
-		CBasePlayer *pPlayer = pEntity ? (CBasePlayer *)pEntity : NULL;
+		CBasePlayer *pPlayer = UTIL_PlayerInRegion(i, region);
 		if (pPlayer)
 		{
 			if (!pPlayer->IsActive())
@@ -937,15 +963,14 @@ float UTIL_TotalHP()
 	return total_hp;
 }
 
-float UTIL_AvgHP()
+float UTIL_AvgHP(int region)
 {
 	int total_valid_players = 0;
 	bool flagged_invalid = false;
 	float total_hp = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pEntity = UTIL_PlayerByIndex(i);
-		CBasePlayer *pPlayer = pEntity ? (CBasePlayer *)pEntity : NULL;
+		CBasePlayer *pPlayer = UTIL_PlayerInRegion(i, region);
 		if (pPlayer)
 		{
 			if (!pPlayer->IsActive())
@@ -970,6 +995,9 @@ float UTIL_AvgHP()
 		if (icvar_getfakeplayers > 0)
 			total_valid_players = icvar_getfakeplayers;
 	}
+	//Nobody active in a region: 0/0 would be NaN, which passes every HP gate
+	if (region >= 0 && total_valid_players <= 0)
+		return flagged_invalid ? 1.0f : 0.0f;
 	float out = (total_hp / total_valid_players);
 	if (out <= 0 && flagged_invalid)
 		out = 1; //in case we flagged all the players invalid, dun wanna screw with mob spawns/chests
@@ -1531,9 +1559,11 @@ void UTIL_BloodStream(const Vector &origin, const Vector &direction, int color, 
 	WRITE_COORD(origin.x);
 	WRITE_COORD(origin.y);
 	WRITE_COORD(origin.z);
-	WRITE_COORD(direction.x);
-	WRITE_COORD(direction.y);
-	WRITE_COORD(direction.z);
+	// the engine normalizes this; scaled so Big World's whole-unit coords keep its precision
+	const Vector dir = direction.Normalize() * 64;
+	WRITE_COORD(dir.x);
+	WRITE_COORD(dir.y);
+	WRITE_COORD(dir.z);
 	WRITE_BYTE(color);
 	WRITE_BYTE(V_min(amount, 255));
 	MESSAGE_END();

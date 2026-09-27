@@ -17,6 +17,7 @@
 #include "angelscript/ASModuleSystem.h"
 #include "groupfile.h"
 #include "mslogger.h"
+#include "msr_worldstate.h"
 #include <angelscript.h>
 
 std::ofstream modelout;
@@ -73,6 +74,7 @@ cvar_t ms_central_enabled = {"ms_central_enabled", "0", FCVAR_SERVER};
 cvar_t ms_fake_hp = {"ms_fake_hp", "0", FCVAR_SERVER};			 //Thothie AUG2011_17 - moving Fakehp to cvar for use with triggers
 cvar_t ms_fake_players = {"ms_fake_players", "0", FCVAR_SERVER}; //Thothie DEC2013_07 - for returning false # of players for some functions during testing
 cvar_t ms_central_addr = {"ms_central_addr", "0", FCVAR_PROTECTED};
+cvar_t ms_realm = {"ms_realm", "", FCVAR_SERVER}; // world state on FN is per (realm, map); empty: "port<hostport>" (msr_worldstate.h)
 cvar_t ms_debug_mem = {"ms_debug_mem", "0", 0};
 //cvar_t ms_crashcfg = {"ms_crashcfg", "crashed", FCVAR_SERVER};
 
@@ -127,6 +129,7 @@ bool MSGlobalInit() //Called upon DLL Initialization
 	CVAR_REGISTER(&ms_ban_to_cfg);
 	CVAR_REGISTER(&ms_central_enabled);
 	CVAR_REGISTER(&ms_central_addr);
+	CVAR_REGISTER(&ms_realm);
 	CVAR_REGISTER(&ms_debug_mem);
 	CVAR_REGISTER(&ms_fake_hp);		 //AUG2011_17 Thothie - moving fakehp functions to cvar
 	CVAR_REGISTER(&ms_fake_players); //DEC2013_07 Thothie - fake players cvar
@@ -352,6 +355,12 @@ void MSWorldSpawn()
 	{
 		SERVER_COMMAND("map edana");
 	}
+	else
+	{
+		// Persistent world state: blocking load from FN (or in memory with FN off) before any
+		// other map entity spawns. An unverified map is left out: it is replaced right away.
+		WorldState::MapStart();
+	}
 
 	WriteCrashCfg();
 
@@ -509,6 +518,8 @@ void MSGameThink()
 	
 	//g_SteamServerHelper->Think();
 	g_FNRequestManager.Think();
+	FNShared::ThinkSaves();
+	WorldState::Frame();
 
 	// AngelScript maintenance - only run when server is fully active
 	// This prevents script execution during level changes when entity references are invalid
@@ -543,11 +554,15 @@ void MSGameEnd()
 		if((pPlayer) && (pPlayer->m_CharacterState == CHARSTATE_LOADED))
 		{
 			pPlayer->SaveChar();
-			if(!MSGlobals::ServerSideChar) 
+			if(!MSGlobals::ServerSideChar)
 				pPlayer->m_TimeCharLastSent = 0;
 		}
 	}
-	
+
+	//Persistent world state: send the saves just queued and every unsaved world change now
+	//(blocking, bounded by the FN request timeouts), while the entities are still valid
+	WorldState::MapEnd();
+
 	//Thothie MAR2012_27 - clear duplicate precaches for next map
 	gSoundPrecacheList.clearitems();
 	gModelPrecacheList.clearitems();

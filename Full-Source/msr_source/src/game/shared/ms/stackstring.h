@@ -94,8 +94,11 @@ public:
 	}
 	void erase(const size_t idx)
 	{
-		if (idx + 1 < m_Items)
-			memmove(&m_First[idx], &m_First[idx + 1], (m_Items - (idx + 1)) * sizeof(itemtype_y));
+		// Shift by assignment and reset the freed slot. A byte copy left the last slot sharing
+		// its lists with the new last item, and the next add() into that slot freed them.
+		for (size_t i = idx; i + 1 < m_Items; i++)
+			m_First[i] = m_First[i + 1];
+		m_First[m_Items - 1] = itemtype_y();
 
 		m_Items--;
 	}
@@ -115,18 +118,16 @@ public:
 	}
 	void reserve()
 	{
-		m_ItemsAllocated++;
-
-		itemtype_y *pNewItems = ::msnew itemtype_y[m_ItemsAllocated];
-		for (unsigned int i = 0; i < m_Items; i++)
-			pNewItems[i] = m_First[i];
-		unalloc();
-		m_First = pNewItems;
+		reallocate(m_ItemsAllocated + 1);
 	}
 	void reserve(size_t Items)
 	{
-		while (m_ItemsAllocated < Items)
-			reserve();
+		//Grow by a quarter at a time. Growing one slot per add deep-copied every earlier item on
+		//every add, which made parsing a script's command lists quadratic (seconds per region).
+		if (m_ItemsAllocated >= Items)
+			return;
+		size_t NewAllocated = m_ItemsAllocated + m_ItemsAllocated / 4;
+		reallocate(NewAllocated > Items ? NewAllocated : Items);
 	}
 	void reserve_once(size_t ReserveItems, size_t Items) //Special case - only use if you know what you're doing
 	{
@@ -140,6 +141,8 @@ public:
 		if (size() != OtherList.size())
 		{
 			clear();
+			if (OtherList.size())
+				reallocate(OtherList.size()); //exact size: copies carry no spare slots
 			for (unsigned int i = 0; i < OtherList.size(); i++)
 				add(OtherList[i]);
 		}
@@ -150,6 +153,16 @@ public:
 		return *this;
 	}
 private:
+	void reallocate(size_t NewAllocated)
+	{
+		m_ItemsAllocated = NewAllocated;
+
+		itemtype_y *pNewItems = ::msnew itemtype_y[m_ItemsAllocated];
+		for (unsigned int i = 0; i < m_Items; i++)
+			pNewItems[i] = m_First[i];
+		unalloc();
+		m_First = pNewItems;
+	}
 	void unalloc()
 	{
 		if (m_First)

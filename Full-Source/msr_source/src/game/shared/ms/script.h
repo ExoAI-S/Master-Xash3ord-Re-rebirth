@@ -126,7 +126,7 @@ public:
 	static void Script_Setup( );
 	static void ScriptGetterHash_Setup( ); // MiB 30NOV_2014 Function for adding functions to the Script.cpp hash
 	static void CallScriptEventAll(const char* EventName, msstringlist *Parameters );
-	static void CallScriptPlayers(const char* EventName, msstringlist *Parameters ); //Thothie - JUN2007a
+	static void CallScriptPlayers(const char* EventName, msstringlist *Parameters, CBaseEntity *pCaller = NULL ); //Thothie - JUN2007a; pCaller: entity whose script called it
 	static void ClCallScriptPlayers(const char* EventName, msstringlist *Parameters ); //Thothie - MAR2012_27
 	static void ClXPlaySoundAll(const char* sSample, const Vector &Origin, int sChannel, float sVolume, float sAttn, int sPitch ); //Thothie - MAR2012_28
 
@@ -269,6 +269,7 @@ public:
 	SCRIPTCMDSCPP_CMDS( Volume );
 	SCRIPTCMDSCPP_CMDS( Weight );
 	SCRIPTCMDSCPP_CMDS( WipeSpell );
+	SCRIPTCMDSCPP_CMDS( WorldState ); //MSR persistent world state (msr_worldstate.h)
 	SCRIPTCMDSCPP_CMDS( WriteLine );
 	SCRIPTCMDSCPP_CMDS( XDoDamage );
 	SCRIPTCMDSCPP_CMDS( DebugEntities ); //MiB MAR2019_28 Internal Script Debug
@@ -332,6 +333,7 @@ public:
 	SCRIPTCPP_GETTER( GetTraceLine );
 	SCRIPTCPP_GETTER( GetTSphereAndBox );
 	SCRIPTCPP_GETTER( GetUnderSky );
+	SCRIPTCPP_GETTER( GetWorldState ); //MSR persistent world state (msr_worldstate.h)
 	SCRIPTCPP_GETTER( Int );
 	SCRIPTCPP_GETTER( indiam ); //Thothie APR2016_15 $indiam/$indiam2D
 	SCRIPTCPP_GETTER( inrange ); //Thothie APR2016_15 $inrange

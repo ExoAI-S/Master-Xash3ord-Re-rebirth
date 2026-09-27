@@ -262,7 +262,8 @@ extern CBaseEntity *UTIL_FindEntityGeneric(const char *szName, Vector &vecSrc, f
 // returns a CBaseEntity pointer to a player by index.  Only returns if the player is spawned and connected
 // otherwise returns NULL
 // Index is 1 based
-extern CBaseEntity *UTIL_PlayerByIndex(int playerIndex);
+extern CBaseEntity *UTIL_PlayerByIndex(int playerIndex); // connected players only (see UTIL_IsConnectedPlayer)
+bool UTIL_IsConnectedPlayer(CBaseEntity *pEntity);		// not a departed player's leftover edict
 
 //#define UTIL_EntitiesInPVS(edict_t * pent) (*g_engfuncs.pfnEntitiesInPVS)(pent)
 
@@ -291,10 +292,11 @@ extern void Util_ScriptArray(CBaseEntity *pEntity, const char *array_operation, 
 extern const char *Util_ScriptArrayGetProps(CBaseEntity *pEntity, const char *array_operation, const char *array_name, int subIdx);	  //NOV2014_16 Thothie - making code side array changes easier
 
 //[begin] NOV2014_09 Thothie - centralizing afk/bot checking
-extern int UTIL_NumPlayers();
-extern int UTIL_NumActivePlayers();
-extern float UTIL_TotalHP();
-extern float UTIL_AvgHP();
+//region: count only players in that region of a merged big-world map (msr_regions.h); -1 = everyone
+extern int UTIL_NumPlayers(int region = -1);
+extern int UTIL_NumActivePlayers(int region = -1);
+extern float UTIL_TotalHP(int region = -1);
+extern float UTIL_AvgHP(int region = -1);
 //[end] NOV2014_09 Thothie - centralizing afk/bot checking
 
 extern void UTIL_SetOrigin(entvars_t *pev, const Vector &vecOrigin);

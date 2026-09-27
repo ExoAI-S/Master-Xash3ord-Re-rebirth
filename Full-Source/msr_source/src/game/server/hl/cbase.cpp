@@ -21,6 +21,7 @@
 #include "movement/pm_shared.h"
 
 #include "mslogger.h"
+#include "msr_bigworld.h"
 
 void EntvarsKeyvalue(entvars_t *pev, KeyValueData *pkvd);
 
@@ -143,8 +144,20 @@ extern "C" {
 }
 
 #include "soundent.h"
+#include "msr_regions.h"
 
+static int DispatchSpawnEntity(edict_t *pent);
+
+// Merged big-world maps record each map entity's key/values as it spawns at map load,
+// so an emptied region can later be removed and re-created fresh (msr_regions.cpp).
 int DispatchSpawn(edict_t *pent)
+{
+	const int result = DispatchSpawnEntity(pent);
+	MSRegions::RecordSpawn(pent, result);
+	return result;
+}
+
+static int DispatchSpawnEntity(edict_t *pent)
 {
 	CBaseEntity *pSound = UTIL_FindEntityByClassname(NULL, "soundent");
 
@@ -208,6 +221,9 @@ int DispatchSpawn(edict_t *pent)
 void DispatchKeyValue(edict_t *pentKeyvalue, KeyValueData *pkvd)
 {
 	if (!pkvd || !pentKeyvalue)
+		return;
+
+	if (MSRegions::RecordKeyValue(pentKeyvalue, pkvd)) //merged big-world maps: region tags are consumed here
 		return;
 
 	EntvarsKeyvalue(VARS(pentKeyvalue), pkvd);
@@ -759,18 +775,19 @@ int CBaseEntity ::IsDormant(void)
 
 BOOL CBaseEntity ::IsInWorld(void)
 {
-	// position
-	if (pev->origin.x >= 4096)
+	// position (+-4096, or +-32767 when the server runs with -bigworld)
+	const float extent = MSR_WorldExtent();
+	if (pev->origin.x >= extent)
 		return false;
-	if (pev->origin.y >= 4096)
+	if (pev->origin.y >= extent)
 		return false;
-	if (pev->origin.z >= 4096)
+	if (pev->origin.z >= extent)
 		return false;
-	if (pev->origin.x <= -4096)
+	if (pev->origin.x <= -extent)
 		return false;
-	if (pev->origin.y <= -4096)
+	if (pev->origin.y <= -extent)
 		return false;
-	if (pev->origin.z <= -4096)
+	if (pev->origin.z <= -extent)
 		return false;
 	// speed
 	if (pev->velocity.x >= 2000)

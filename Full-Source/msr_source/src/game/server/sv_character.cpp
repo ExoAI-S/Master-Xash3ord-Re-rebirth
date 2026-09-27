@@ -10,6 +10,7 @@
 #include "script.h"
 #include "fn/FNSharedDefs.h"
 #include "mslogger.h"
+#include "msr_regions.h"
 
 #ifndef _WIN32
 #include "sys/io.h"
@@ -566,8 +567,14 @@ void MSChar_Interface::SaveChar(CBasePlayer *pPlayer, savedata_t *pData)
 			//pPlayer->iHP = 1.0;
 		}
 
-		//Data.Origin = LastGoodPos;
-		//Data.Angles = LastGoodAng;
+		// Merged big-world maps: where the player last stood safely, so a rejoin can put them
+		// back there (player.cpp). Otherwise the memset zeros stay: no spot, as older DLLs save.
+		Vector SpotOrigin, SpotAngles;
+		if (MSRegions::Active() && pPlayer->LogoutSpotForSave(SpotOrigin, SpotAngles))
+		{
+			Data.Origin = SpotOrigin;
+			Data.Angles = SpotAngles;
+		}
 		//Print( "Save: Data.Origin: %f %f %f\n", Data.Origin.x, Data.Origin.y, Data.Origin.z );
 		//Data.SayType = pPlayer->m_SayType;
 		Data.Gender = pPlayer->m_Gender;

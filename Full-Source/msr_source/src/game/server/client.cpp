@@ -40,6 +40,7 @@
 
 #include "svglobals.h"
 #include "encounter_director.h"
+#include "msr_regions.h"
 #include "mscharacter.h"
 #include "global.h"
 #include "pm_shared.h" // PM_GetHullBounds
@@ -184,6 +185,19 @@ GLOBALS ASSUMED SET:  g_fGameOver
 
 void ClientDisconnect(edict_t *pEntity)
 {
+	//The engine keeps a departed player's edict and object; mark it gone on every way out of here,
+	//after the disconnect save, game_playerleave and removal below (they still need the player)
+	struct MarkDisconnected
+	{
+		edict_t *pEdict;
+		~MarkDisconnected()
+		{
+			CBasePlayer *pPlayer = pEdict ? (CBasePlayer *)GET_PRIVATE(pEdict) : NULL;
+			if (pPlayer)
+				pPlayer->OnDisconnected();
+		}
+	} markDisconnected{pEntity};
+
 	EncounterDirector_Disconnect((CBasePlayer *)GET_PRIVATE(pEntity));
 #ifdef MSR_STANDALONE
 	if (pEntity && ENTINDEX(pEntity) >= 1 && ENTINDEX(pEntity) <= 32)
@@ -288,6 +302,7 @@ void ClientPutInServer(edict_t *pEntity)
 	entvars_t *pev = &pEntity->v;
 
 	pPlayer = GetClassPtr((CBasePlayer *)pev);
+	pPlayer->m_fInServer = true; // before Spawn: its scripts look this player up
 	pPlayer->SetCustomDecalFrames(-1); // Assume none;
 	
 	if (!pPlayer->m_ClientAddress[0]) //Just joined the server, get address
@@ -1927,6 +1942,7 @@ void ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
 
 	// Every call to ServerActivate should be matched by a call to ServerDeactivate
 	g_serveractive = 1;
+	MSRegions::EndLoad(); //map entities are all spawned: stop recording them
 	//g_fInPrecache = false;  //Monsters wont spawn if I set this here instead of the end of CWorld::Spawn
 
 	// Clients have not been initialized yet
@@ -2071,6 +2087,7 @@ void ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
 	CSVGlobals::WriteScriptLog();
     ASScriptContextManager::Instance()->LogContextInfo();
 	EncounterDirector_MapStart();
+	MSRegions::MapStart();
 	MS_INFO("World Activate END");
 }
 
@@ -2137,6 +2154,7 @@ void StartFrame(void)
 	if (g_fGameOver)
 		return;
 	EncounterDirector_Frame();
+	MSRegions::Frame(); //merged big-world maps: unload regions nobody has visited for a while
 
 	//gpGlobals->teamplay = CVAR_GET_FLOAT("teamplay");
 	//g_iSkillLevel = CVAR_GET_FLOAT("skill");
@@ -2422,11 +2440,11 @@ we could also use the pas/ pvs that we set in SetupVisibility, if we wanted to. 
 //Dogg - basically decide whether or not to send an entity
 int AddToFullPack(struct entity_state_s *state, int e, edict_t *ent, edict_t *host, int hostflags, int player, unsigned char *pSet)
 {
-	// Entities with an index greater than this will corrupt the client's heap because 
-	// the index is sent with only 11 bits of precision (2^11 == 2048).
-	// So we don't send them, just like having too many entities would result
-	// in the entity not being sent.
-	if (e >= MAX_EDICTS)
+	// GoldSrc sent entity numbers with 11 bits (2^11 == 2048), so higher indices were
+	// never sent. Xash3D FWGS sends 13 bits (MAX_ENTITY_BITS, 8192 edicts) and sizes the
+	// client's entity list from the server's edict limit (liblist.gam "edicts"), which
+	// big-world maps raise above 2048.
+	if (e >= gpGlobals->maxEntities)
 		return 0;
 
 	//if( FBitSet( ent->v.playerclass, ENT_EFFECT_FOLLOW_ROTATE ) )

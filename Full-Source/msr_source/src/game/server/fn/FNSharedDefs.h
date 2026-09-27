@@ -10,6 +10,7 @@
 #include <memory>
 
 class CBasePlayer;
+class HTTPRequest;
 
 // This has match up with user flags defined in the FN server!
 enum FNPlayerFlags
@@ -36,6 +37,14 @@ namespace FNShared
 	void LoadCharacter(CBasePlayer* pPlayer, int slot);
 	void CreateOrUpdateCharacter(CBasePlayer* pPlayer, int slot, const char* data, size_t size, bool bIsUpdate);
 	void DeleteCharacter(CBasePlayer* pPlayer, int slot);
+
+	// Sends on a worker thread while the game thread waits (bounded by the curl timeouts);
+	// the request's OnResponse has run when this returns. The caller keeps ownership.
+	bool SendBlocking(HTTPRequest* req);
+
+	// Character saves are single-flight per (account, slot); see CreateOrUpdateCharacter.
+	void CharacterSaveFinished(unsigned long long steamID, int slot, bool bAborted); // UpdateCharacterRequest
+	void ThinkSaves(void); // every frame, and before draining: sends saves held behind a dropped one
 }
 
 #endif // FN_SHAREDDEFS_H

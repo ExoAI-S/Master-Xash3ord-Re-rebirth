@@ -1366,7 +1366,7 @@ int __MsgFunc_CLDllFunc(const char* pszName, int iSize, void* pbuf)
 
 	case 9: //Recv time I've been waiting to forget a kill
 	{
-		player.m_TimeWaitedToForgetKill = READ_COORD();
+		player.m_TimeWaitedToForgetKill = READ_COORD8();
 	}
 	break;
 
@@ -1411,7 +1411,7 @@ int __MsgFunc_CLDllFunc(const char* pszName, int iSize, void* pbuf)
 
 	case 13: //Recv time I've been waiting to lose thief status
 	{
-		player.m_TimeWaitedToForgetSteal = READ_COORD();
+		player.m_TimeWaitedToForgetSteal = READ_COORD8();
 	}
 	break;
 
@@ -1557,9 +1557,9 @@ int __MsgFunc_CLXPlay(const char* pszName, int iSize, void* pbuf)
 	clx_origin.y = READ_COORD();
 	clx_origin.z = READ_COORD();
 	int clx_channel = READ_BYTE();
-	float clx_volume = READ_COORD();
-	float clx_attn = READ_COORD();
-	float clx_pitch = READ_COORD();
+	float clx_volume = READ_COORD8();
+	float clx_attn = READ_COORD8();
+	float clx_pitch = READ_COORD8();
 
 	//Print("DEBUG: snd: %s vec:(%f,%f,%f) chan %i vol:%f atn:%f pit:%f",clx_sound.c_str(),clx_origin.x,clx_origin.y,clx_origin.z,clx_channel,clx_volume,clx_attn,clx_pitch);
 

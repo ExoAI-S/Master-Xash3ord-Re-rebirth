@@ -15,6 +15,9 @@
 #include "msdllheaders.h"
 #include "game.h"
 #include "encounter_director.h"
+#include "msr_regions.h"
+#include "msr_worldstate.h"
+#include "msr_bosses.h"
 
 #include "svglobals.h"
 
@@ -87,6 +90,9 @@ void GameDLLInit(void)
 
 	// Register cvars here:
 	EncounterDirector_Init();
+	MSRegions::Init();
+	WorldState::Init();
+	MSBosses::Init();
 	g_psv_gravity = CVAR_GET_POINTER("sv_gravity");
 	g_psv_aim = CVAR_GET_POINTER("sv_aim");
 	g_footsteps = CVAR_GET_POINTER("mp_footsteps");
@@ -134,6 +140,9 @@ void GameDLLInit(void)
 
 void GameDLLShutdown()
 {
+	//Final world state flush, then drain the FN queue: saves queued at quit used to be lost
+	WorldState::Shutdown();
+
 	g_pTempStringLimit[0] = 0;
 	ScriptMgr::GameShutdown();
 	FileSystem_Shutdown();

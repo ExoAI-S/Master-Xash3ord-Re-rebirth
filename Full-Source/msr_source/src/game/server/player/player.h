@@ -527,7 +527,7 @@ public:
 	char m_ClientAddress[128];
 	unsigned int m_SaveFileID;								//Client sets this ID via "savefileid", then sends the save file with
 															//this ID attached so the server knows which client the file belongs to
-	bool RestoreAllServer(void *pData, unsigned long Size); //pData = Save file data
+	bool RestoreAllServer(void *pData, unsigned long Size, charloc_e Location = LOC_CLIENT); //pData = Save file data, Location = where it came from
 
 	mslist<entinfo_t> m_EntInfo; // Info for client-side ID system
 
@@ -570,6 +570,42 @@ public:
 
 	int m_iMusicArea = -1;  //Index of the last music trigger player used / was a part of
 	bool SwapMusic(int musicArea, int mode, std::string track); //Attempts to swap music with a new area trigger. Returns true if successful
+
+	// Region tracking on merged big-world maps (msr_regions.cpp). -1 = not placed yet.
+	int m_iRegion = -1;
+	float m_flNextRegionCheck = 0;
+	int m_iRegionIntroFor = -1;
+	int m_iRegionIntroStage = 0; // 1 = title/description due, 2 = difficulty/warning due
+	float m_flRegionIntroTime = 0;
+	bool m_fRegionResync = false;
+	bool m_fRegionGaveFirstIntro = false;
+	float m_flRegionMusicStopAt = 0; // stop the old region's music unless an area claims the player first
+	msstring m_RegionSky; // sky last sent to this client
+	void UpdateRegion();
+	void OnRegionChange(int oldRegion, int newRegion);
+	void RunRegionIntro();
+	void PrepareRegionPutInWorld();
+
+	// Between ClientPutInServer and the end of ClientDisconnect. Xash keeps a departed player's edict
+	// and this object until the slot is reused or the map changes (pfnRemoveEntity refuses client
+	// slots, GETPLAYERUSERID keeps the old id), so neither tells it from a connected player.
+	bool m_fInServer = false;
+	void OnDisconnected(); // last step of ClientDisconnect (client.cpp)
+
+	// Exact logout spot on merged big-world maps (player.cpp). Saved in the character header's
+	// otherwise unused Origin/Angles: origin, then (view pitch, yaw, region index + 1); zeros = none.
+	struct logoutspot_t
+	{
+		bool valid = false;
+		Vector origin = Vector(0, 0, 0);
+		float pitch = 0, yaw = 0;
+		int region = -1;
+	};
+	logoutspot_t m_LogoutSpot;	  // last good spot, kept up to date by the region tracker
+	logoutspot_t m_LogoutRestore; // loaded with the character; the next Spawn uses it once
+	void UpdateLogoutSpot();
+	bool TryRestoreLogoutSpot();
+	bool LogoutSpotForSave(Vector &origin, Vector &angles);
 
 	float m_TimeSendCharInfo;  //Delay to send info about the next character
 	bool m_LoadedInitialChars; //Whether I've tried to load my characters for display yet

@@ -52,7 +52,7 @@ void LoadCharacterRequest::OnResponse(int iRespCode)
 	}
 
 	JSONDocument doc = ParseJSON(m_sResponseBody.c_str());
-	if (!doc.HasMember("data") || !doc["data"].IsObject())
+	if (!doc.IsObject() || !doc.HasMember("data") || !doc["data"].IsObject())
 	{
 		FNShared::Print("Malformed character payload for SteamID %llu!", m_iSteamID64);
 		MarkNotFound();

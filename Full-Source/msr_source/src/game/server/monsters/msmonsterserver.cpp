@@ -6,6 +6,7 @@
 
 */
 #include <set>
+#include <vector>
 #include <cmath>
 #include "msdllheaders.h"
 #include "hl/monsters.h"
@@ -26,6 +27,8 @@
 #include "ms/angelscript/ASEngineEventManager.h"
 //this can be removed once AS is fully finished, it's for as_enabled check.
 #include "svglobals.h"
+#include "msr_regions.h"
+#include "msr_bigworld.h"
 
 #ifdef VALVE_DLL
 
@@ -211,6 +214,20 @@ void CMSMonster::Spawn()
 		m_SpawnChance = 0.0;
 	SetUse(&CMSMonster::Used);
 
+	//Merged big-world maps: remember the region I spawn in before my script loads,
+	//so game.map.name and player counts answer for this region (msr_regions.h)
+	if (m_iHomeRegion < 0)
+		m_iHomeRegion = MSRegions::At(pev->origin);
+
+	//A re-created region's spawner templates only hand their map settings to their spawner
+	//(see Activate). Their script is loaded just to precache its models and sounds, which
+	//the map load already did, and parsing ~100 of them would stall the server for seconds.
+	if (m_iszMonsterSpawnArea.len() && !m_nRndMobs && MSRegions::Replaying())
+	{
+		SetBits(pev->effects, EF_NODRAW);
+		return; //wait until Activate(), as below
+	}
+
 	//This loads the script file and precaches all models/sounds it uses
 	bool fScriptSpawned = Script_Add(m_ScriptName, this) ? true : false;
 
@@ -230,6 +247,13 @@ void CMSMonster::Spawn()
 	if (m_iszMonsterSpawnArea.len())
 	{
 		SetBits(pev->effects, EF_NODRAW);
+		//A spawner template's script was parsed only so game_precache could run while precaching
+		//is allowed: Activate() hands map settings to the spawner and never reads it (region
+		//replays skip the parse altogether). Holding every template's script (~2 MB each) until
+		//ServerActivate made a ~700 MB peak at each map load that fragmented the heap for good.
+		//Random-mob and spawn-on-trigger templates keep theirs.
+		if (!m_nRndMobs && !m_fSpawnOnTrigger)
+			IScripted::Deactivate();
 		return; //wait until Activate(), when everything is spawned
 	}
 
@@ -310,6 +334,25 @@ void CMSMonster::KeyValue(KeyValueData* pkvd)
 	else if (FStrEq(pkvd->szKeyName, "spawnarea"))
 	{
 		m_iszMonsterSpawnArea = pkvd->szValue;
+		pkvd->fHandled = true;
+	}
+	//Merged big-world maps: boss respawn timer keys the builder writes on a boss's spawner
+	//template (msr_bosses.h). Region records replay them, so a re-created region keeps them.
+	else if (FStrEq(pkvd->szKeyName, "msr_boss"))
+	{
+		m_BossId = pkvd->szValue;
+		pkvd->fHandled = true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "msr_boss_cooldown"))
+	{
+		m_BossCooldown = atof(pkvd->szValue);
+		if (!(m_BossCooldown > 0))
+			m_BossCooldown = 0; //bad or none: ms_boss_cooldown
+		pkvd->fHandled = true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "msr_boss_open"))
+	{
+		m_BossOpen = pkvd->szValue;
 		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "delaylow"))
@@ -1611,9 +1654,15 @@ void CMSMonster::Speak(char* pszSentence, speech_type SpeechType)
 		//ALERT( at_console, "FinalSentence: %s\n", FinalSentence );
 	}
 
-	CBaseEntity* pList[255], * pEnt = NULL;
 	// Fill pList with a all the monsters and players on the level including players that have died.
-	unsigned int count = UTIL_EntitiesInBox(pList, 255, Vector(-6000, -6000, -6000), Vector(6000, 6000, 6000), FL_MONSTER | FL_CLIENT | FL_SPECTATOR);
+	// Big-world maps reach +-32767 and hold more monsters: search the whole world with no
+	// 255-entity cap there (players still come first, being the lowest entity indices).
+	const bool bWideWorld = MSRegions::Active() || MSR_BigWorld();
+	const float flExtent = bWideWorld ? 65536.0f : 6000.0f;
+	std::vector<CBaseEntity*> pList(bWideWorld ? gpGlobals->maxEntities : 255);
+	CBaseEntity* pEnt = NULL;
+	unsigned int count = UTIL_EntitiesInBox(pList.data(), (int)pList.size(), Vector(-flExtent, -flExtent, -flExtent), Vector(flExtent, flExtent, flExtent), FL_MONSTER | FL_CLIENT | FL_SPECTATOR);
+	const int speakerRegion = MSRegions::ForEntity(this); // merged maps: local speech stays in its region
 
 	// Keep track of players that have already received a message;
 	std::set<CBaseEntity*> pTrackAlreadySent = {};
@@ -1673,8 +1722,13 @@ void CMSMonster::Speak(char* pszSentence, speech_type SpeechType)
 		// Local speech
 		//Thothie SEP2007 - removing "|| !FMVisible( pEnt )" condition - causes issues
 		if (SpeechType == SPEECH_LOCAL)
+		{
 			if ((pEnt->Center() - Center()).Length2D() > m_SayTextRange)
 				continue;
+			// Length2D ignores height, and the Edana sewers lie right under Edana
+			if (speakerRegion != REGION_NONE && MSRegions::ForEntity(pEnt) != speakerRegion)
+				continue;
+		}
 
 		// Party speech
 		if ((SpeechType == SPEECH_PARTY && IsPlayer()) && !SameTeam(pEnt, this))

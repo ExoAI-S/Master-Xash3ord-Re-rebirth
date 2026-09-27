@@ -1,10 +1,28 @@
 #include "storeshared.h"
+#include <vector>
 
 class CStore
 {
 	mslist<storeitem_t> Items;
 
 public:
+	// Entities whose scripts created this store (edict index + serial number), so a
+	// merged big-world region that unloads can drop the stores only it was using.
+	struct creator_t { int index, serial; };
+	std::vector<creator_t> m_Creators;
+	bool HasCreator(edict_t *pCreator)
+	{
+		for (const creator_t &c : m_Creators)
+			if (pCreator && c.index == ENTINDEX(pCreator) && c.serial == pCreator->serialnumber)
+				return true;
+		return false;
+	}
+	void AddCreator(edict_t *pCreator)
+	{
+		if (pCreator && !HasCreator(pCreator))
+			m_Creators.push_back({ENTINDEX(pCreator), pCreator->serialnumber});
+	}
+
 	void SetName(const char *pszName);
 	void Offer(edict_t *pePlayer, int iBuyFlags, CBaseMonster *pVendor);
 	bool AddItem(const char *pszItemName, int iQuantity, int CostPercent, float flSellRatio, int iBundleAmt);

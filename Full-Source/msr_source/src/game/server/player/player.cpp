@@ -57,6 +57,7 @@
 #include "magic.h"
 #include "fn/FNSharedDefs.h"
 #include "mslogger.h"
+#include "msr_regions.h"
 
 constexpr unsigned int MAX_ENTITIES_TO_SEARCH = 4096;
 static CBaseEntity* g_pEntitiesInBox[MAX_ENTITIES_TO_SEARCH];
@@ -2665,7 +2666,20 @@ void CBasePlayer::Spawn(void)
 	//If m_MapStatus == OLD_MAP, then the server has recieved
 	//this player's coordinates, or the player has already spawned once.
 
-	if (!MoveToSpawnSpot())
+	// Merged big-world maps: the first spawn after a character loads puts it back where it
+	// logged out; on any doubt, and on every other spawn (death respawns), the spawn spots.
+	bool fRestoredSpot = false;
+	if (SpawnPlayer)
+	{
+		m_LogoutSpot.valid = false; // placed somewhere new: seeded again by a restore, else by the tracker
+		if (m_LogoutRestore.valid && fRespawnPlayer)
+			g_engfuncs.pfnServerPrint(UTIL_VarArgs("MSR: %s logout spot not used: respawning\n", DisplayName()));
+		else if (m_LogoutRestore.valid)
+			fRestoredSpot = TryRestoreLogoutSpot();
+		m_LogoutRestore.valid = false; // one shot
+	}
+
+	if (!fRestoredSpot && !MoveToSpawnSpot())
 	{
 		pev->origin = Vector(0, 0, 0);
 		m_iHideHUD = HIDEHUD_ALL;
@@ -2736,6 +2750,8 @@ void CBasePlayer::Spawn(void)
 	}
 	else
 	{
+		PrepareRegionPutInWorld(); //Merged big-world maps: region intro replaces the map-wide one
+
 		// this needs to be called until AS is finished.
 		CallScriptEvent("game_player_putinworld"); //Thothie MAR2008a
 
@@ -2912,6 +2928,195 @@ bool CBasePlayer::MoveToSpawnSpot()
 
 	//Thothie - need a loop around here, causing every wearable item the character has to execute it's "game_wear" function
 	return pSpawnSpot ? true : false;
+}
+
+// ---------------------------------------------------------------------------
+// Exact logout spot on merged big-world maps. The region tracker (msr_regions.cpp) keeps the
+// last spot the player stood on safely, saves write it into the character header
+// (sv_character.cpp), and the first spawn after the character loads puts the player back
+// there. Death respawns, tospawn and torandomspawn keep using the spawn spots.
+
+namespace
+{
+// Ground a logout spot may rest on: the world, or a solid brush that stays where it is.
+bool IsLogoutGround(edict_t *pGround)
+{
+	if (!pGround || pGround->free)
+		return false;
+	if (ENTINDEX(pGround) == 0)
+		return true;
+	const entvars_t &v = pGround->v;
+	if (v.solid != SOLID_BSP || (v.movetype != MOVETYPE_NONE && v.movetype != MOVETYPE_PUSH) ||
+		v.velocity != g_vecZero || v.avelocity != g_vecZero)
+		return false; // monsters, players, items, anything moving right now
+	// Movers stand still most of the time; a lift or an open door is no floor to come back to
+	const char *pszClass = STRING(v.classname);
+	for (const char *pszMover : {"door", "train", "plat", "rotat", "pendulum", "push", "vehicle", "conveyor", "button", "track", "water"})
+		if (strstr(pszClass, pszMover))
+			return false;
+	return true;
+}
+
+bool NearTransitionArea(const Vector &pos, float range)
+{
+	CBaseEntity *pArea = NULL;
+	while ((pArea = UTIL_FindEntityByClassname(pArea, "msarea_transition")) != NULL)
+	{
+		const Vector &lo = pArea->pev->absmin, &hi = pArea->pev->absmax;
+		if (pos.x > lo.x - range && pos.x < hi.x + range && pos.y > lo.y - range && pos.y < hi.y + range &&
+			pos.z > lo.z - range && pos.z < hi.z + range)
+			return true;
+	}
+	return false;
+}
+
+// Why a player may not stand at Try (a candidate near the saved spot), or NULL with the
+// floor position to put them at in Pos.
+const char *CheckLogoutCandidate(CBasePlayer *pPlayer, const Vector &Try, Vector &Pos)
+{
+	TraceResult tr;
+	UTIL_TraceHull(Try, Try, dont_ignore_monsters, human_hull, pPlayer->edict(), &tr);
+	if (tr.fStartSolid || tr.fAllSolid)
+		return "blocked";
+	// floor within 64 units below, flat enough to stand on, and not a monster's back
+	UTIL_TraceHull(Try, Try - Vector(0, 0, 64), dont_ignore_monsters, human_hull, pPlayer->edict(), &tr);
+	if (tr.fStartSolid || tr.fAllSolid || tr.flFraction >= 1.0f || tr.vecPlaneNormal.z < 0.7f)
+		return "no floor";
+	CBaseEntity *pHit = tr.pHit ? CBaseEntity::Instance(tr.pHit) : NULL;
+	if (pHit && (pHit->IsPlayer() || pHit->IsMSMonster()))
+		return "blocked";
+	Pos = tr.vecEndPos;
+	const int contents = UTIL_PointContents(Pos), feet = UTIL_PointContents(Pos - Vector(0, 0, 30));
+	if (contents == CONTENTS_SOLID || contents == CONTENTS_SKY || contents == CONTENTS_LAVA || contents == CONTENTS_SLIME ||
+		feet == CONTENTS_LAVA || feet == CONTENTS_SLIME)
+		return "bad contents";
+	if (NearTransitionArea(Pos, 96))
+		return "next to a map transition";
+	return NULL;
+}
+} // namespace
+
+// The engine keeps this object and its edict until the slot is reused or the map changes. Runs
+// after the disconnect save, which took its region and spot from m_LogoutSpot/m_LogoutRestore,
+// never from m_iRegion. Makes the leftover inert: no region, no FL_CLIENT (entity searches,
+// monster sight), not solid, not alive.
+void CBasePlayer::OnDisconnected()
+{
+	m_fInServer = false;
+	m_iRegion = REGION_NONE;
+	m_iRegionIntroStage = 0;
+	m_CharacterState = CHARSTATE_UNLOADED; // MSGameEnd's save loop and late FN replies leave it alone
+	pev->flags = 0;
+	pev->takedamage = DAMAGE_NO;
+	pev->solid = SOLID_NOT; // the engine skips SOLID_NOT in traces and moves: no relink needed
+	pev->movetype = MOVETYPE_NONE;
+	pev->deadflag = DEAD_DEAD;
+	pev->health = 0;
+	pev->velocity = g_vecZero;
+	pev->effects |= EF_NODRAW;
+}
+
+// Four times a second from UpdateRegion (loaded, in the world). Only spots the player could
+// stand on again after a restart count; anything else keeps the previous good spot, so a
+// logout mid-fall, mid-swim or on a lift comes back to where the player last stood.
+void CBasePlayer::UpdateLogoutSpot()
+{
+	if (m_CharacterState != CHARSTATE_LOADED || pev->deadflag != DEAD_NO || pev->movetype != MOVETYPE_WALK)
+		return;
+	if (!FBitSet(pev->flags, FL_ONGROUND) || !IsLogoutGround(pev->groundentity))
+		return;
+	if (FBitSet(pev->flags, FL_DUCKING) || pev->bInDuck)
+		return;
+	if (pev->waterlevel >= 2 || (pev->waterlevel > 0 && (pev->watertype == CONTENTS_SLIME || pev->watertype == CONTENTS_LAVA)))
+		return;
+	if (CurrentTransArea) // m_NextMap stays set after leaving the area; this does not
+		return;
+	const int region = MSRegions::At(pev->origin);
+	if (region == REGION_NONE)
+		return;
+	if (MSRegions::NoLogout(pev->origin)) // sealed off in a fresh copy of the region: keep the last spot outside
+		return;
+	if (!MSRegions::IsLoaded(region)) // its doors and walls are not there (the load failed): not a place to come back to
+		return;
+	m_LogoutSpot.valid = true;
+	m_LogoutSpot.origin = pev->origin;
+	m_LogoutSpot.pitch = pev->v_angle.x;
+	m_LogoutSpot.yaw = pev->v_angle.y;
+	m_LogoutSpot.region = region;
+}
+
+bool CBasePlayer::LogoutSpotForSave(Vector &origin, Vector &angles)
+{
+	// A restore still waiting for its spawn keeps the loaded spot
+	const logoutspot_t &Spot = m_LogoutRestore.valid ? m_LogoutRestore : m_LogoutSpot;
+	if (!Spot.valid || Spot.region < 0)
+		return false;
+	origin = Spot.origin;
+	angles = Vector(Spot.pitch, Spot.yaw, (float)(Spot.region + 1));
+	return true;
+}
+
+// From Spawn, first spawn after the character loaded. False: use the spawn spots.
+bool CBasePlayer::TryRestoreLogoutSpot()
+{
+	const logoutspot_t Spot = m_LogoutRestore;
+	const msr_region_t *pRegion = MSRegions::Get(Spot.region);
+	const char *pszRefused = NULL;
+	Vector Final = Spot.origin;
+	if (!pRegion)
+		pszRefused = "unknown region";
+	else if (MSRegions::At(Spot.origin) != Spot.region)
+		pszRefused = "spot is no longer in its region"; // the map was rebuilt with the regions moved
+	else if (MSRegions::NoLogout(Spot.origin))
+		pszRefused = "inside a place a fresh region seals off"; // saved before that place was marked
+	else if (!MSRegions::EnsureLoaded(Spot.region, "player rejoining"))
+		pszRefused = "region could not load now";
+	else
+	{
+		MSRegions::MarkOccupied(Spot.region); // the tracker only sees the player once in the world
+
+		// The spot itself, else a little above it or beside it (a monster or player standing there)
+		const Vector Offsets[] = {Vector(0, 0, 0), Vector(0, 0, 18), Vector(32, 0, 0), Vector(-32, 0, 0), Vector(0, 32, 0), Vector(0, -32, 0)};
+		pszRefused = "no open spot";
+		for (const Vector &Offset : Offsets)
+		{
+			const Vector Try = Spot.origin + Offset;
+			if (Offset != g_vecZero)
+			{
+				// never through a wall: the way from the spot must be open
+				TraceResult tr;
+				UTIL_TraceLine(Spot.origin, Try, ignore_monsters, edict(), &tr);
+				if (tr.fStartSolid || tr.fAllSolid || tr.flFraction < 1.0f || MSRegions::At(Try) != Spot.region)
+					continue;
+			}
+			const char *pszWhy = CheckLogoutCandidate(this, Try, Final);
+			if (!pszWhy)
+			{
+				pszRefused = NULL;
+				break;
+			}
+			if (Offset == g_vecZero)
+				pszRefused = pszWhy; // the spot's own reason is the telling one
+		}
+	}
+
+	if (pszRefused)
+	{
+		g_engfuncs.pfnServerPrint(UTIL_VarArgs("MSR: %s logout spot not used: %s (%s at %.0f %.0f %.0f)\n", DisplayName(), pszRefused,
+			MSRegions::NameOr(Spot.region, "no region"), Spot.origin.x, Spot.origin.y, Spot.origin.z));
+		return false;
+	}
+
+	UTIL_SetOrigin(pev, Final);
+	pev->angles = Vector(0, Spot.yaw, 0);
+	pev->v_angle = Vector(Spot.pitch, Spot.yaw, 0);
+	pev->fixangle = 1;
+	pev->velocity = g_vecZero;
+	pev->punchangle = g_vecZero;
+	m_LogoutSpot = Spot; // saves before the tracker's first look keep this spot
+	m_LogoutSpot.origin = Final;
+	g_engfuncs.pfnServerPrint(UTIL_VarArgs("MSR: %s rejoined at %s (%.0f %.0f %.0f)\n", DisplayName(), pRegion->name.c_str(), Final.x, Final.y, Final.z));
+	return true;
 }
 
 extern int iBeam;
@@ -3663,6 +3868,8 @@ void CBasePlayer::UpdateClientData(void)
 	if (FBitSet(m_iHideHUD, HIDEHUD_ALL))
 		return;
 
+	UpdateRegion(); //Merged big-world maps: per-player region banner, sky, weather (msr_regions.cpp)
+
 	//pev->renderfx = pev->body; //JAN2010 - MiB Aug2008a - body doesn't pass properly, but renderfx does. We now use it for submodel work.
 
 	if (FBitSet(m_MsgFlags, MSGFLAG_SPAWN))
@@ -3976,7 +4183,7 @@ void CBasePlayer::UpdateClientData(void)
 	{
 		MESSAGE_BEGIN(MSG_ONE, g_netmsg[NETMSG_CLDLLFUNC], NULL, pev);
 		WRITE_BYTE(9);
-		WRITE_COORD(m_TimeWaitedToForgetKill);
+		WRITE_COORD8(m_TimeWaitedToForgetKill);
 		MESSAGE_END();
 		m_ClTimeWaitedToForgetKill = m_TimeWaitedToForgetKill;
 		///ALERT( at_console, "%s - Time: %2.f/%i\n", STRING(DisplayName), m_TimeWaitedToForgetKill, m_PlayersKilled * 10 );
@@ -3987,7 +4194,7 @@ void CBasePlayer::UpdateClientData(void)
 	{
 		MESSAGE_BEGIN(MSG_ONE, g_netmsg[NETMSG_CLDLLFUNC], NULL, pev);
 		WRITE_BYTE(13);
-		WRITE_COORD(m_TimeWaitedToForgetSteal);
+		WRITE_COORD8(m_TimeWaitedToForgetSteal);
 		MESSAGE_END();
 		m_ClTimeWaitedToForgetSteal = m_TimeWaitedToForgetSteal;
 		///ALERT( at_console, "%s - Time: %2.f/%i\n", STRING(DisplayName), m_TimeWaitedToForgetKill, m_PlayersKilled * 10 );
@@ -6230,7 +6437,7 @@ void CBasePlayer::SetQuest(bool SetData, const char* Name, const char* Data)
 	}
 }
 
-bool CBasePlayer::RestoreAllServer(void *pData, ulong Size)
+bool CBasePlayer::RestoreAllServer(void *pData, ulong Size, charloc_e Location)
 {
 	MS_INFO("Load Character: %s", DisplayName());
 
@@ -6322,6 +6529,40 @@ bool CBasePlayer::RestoreAllServer(void *pData, ulong Size)
 	//Player saved while dead
 	else
 		pev->deadflag = DEAD_DEAD;
+
+	// Merged big-world maps: the exact logout spot (Origin, Angles = pitch, yaw, region + 1),
+	// used by the Spawn below. Only for the same map, a living character and a save the server
+	// wrote itself (FN or server files; a client-side or uploaded blob could put anyone anywhere).
+	m_LogoutSpot = logoutspot_t(); // the capture starts over: a failed restore saves the new spot
+	m_LogoutRestore = logoutspot_t();
+	if (MSRegions::Active() && Data.Angles.z >= 1)
+	{
+		const char *pszRefused = NULL;
+		if (m_MapStatus != OLD_MAP)
+			pszRefused = "saved on another map";
+		else if (Data.HP <= 0)
+			pszRefused = "saved while dead";
+		else if (Location == LOC_CLIENT)
+			pszRefused = "client-side character";
+		else
+		{
+			for (int i = 0; i < 3 && !pszRefused; i++)
+				if (!std::isfinite(Data.Origin[i]) || !std::isfinite(Data.Angles[i]))
+					pszRefused = "bad values";
+			if (!pszRefused && Data.Angles.z >= MSRegions::Count() + 1.0f)
+				pszRefused = "unknown region";
+		}
+		if (pszRefused)
+			g_engfuncs.pfnServerPrint(UTIL_VarArgs("MSR: %s logout spot not used: %s\n", DisplayName(), pszRefused));
+		else
+		{
+			m_LogoutRestore.valid = true;
+			m_LogoutRestore.origin = Data.Origin;
+			m_LogoutRestore.pitch = Data.Angles.x;
+			m_LogoutRestore.yaw = Data.Angles.y;
+			m_LogoutRestore.region = (int)Data.Angles.z - 1;
+		}
+	}
 
 	strncpy(m_cEnterMap, Data.MapName, sizeof(m_cEnterMap) );
 
@@ -6486,7 +6727,7 @@ bool CBasePlayer::LoadCharacter(int Num)
 	if (Char.Status != CDS_LOADED)
 		return false;
 
-	if (RestoreAllServer(Char.Data, Char.DataLen))
+	if (RestoreAllServer(Char.Data, Char.DataLen, Char.Location))
 	{
 		m_CharacterNum = Num;
 		return true;

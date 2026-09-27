@@ -25,6 +25,8 @@
 #include "vgui_schememanager.h"
 #include "clientlibrary.h"
 #include "movement/pm_shared.h"
+#include "movement/pm_defs.h"
+#include "movement/pm_movevars.h"
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -216,8 +218,22 @@ int DLLEXPORT HUD_ConnectionlessPacket(const struct netadr_s *net_from, const ch
 	return 0;
 }
 
+// The engine's movevars (Xash3D appends "int features" right after the GoldSrc
+// fields, engine common/pmove.h); set before HUD_PlayerMoveInit is called.
+static const movevars_t *g_pEngineMoveVars = nullptr;
+
+bool MSCL_LargeCoords()
+{
+	if (!g_pEngineMoveVars)
+		return false;
+	int features;
+	memcpy(&features, reinterpret_cast<const char *>(g_pEngineMoveVars) + sizeof(movevars_t), sizeof(features));
+	return (features & (1 << 0)) != 0; // ENGINE_WRITE_LARGE_COORD, set by a -bigworld server
+}
+
 void DLLEXPORT HUD_PlayerMoveInit(struct playermove_s *ppmove)
 {
+	g_pEngineMoveVars = ppmove->movevars;
 	PM_Init(ppmove);
 }
 

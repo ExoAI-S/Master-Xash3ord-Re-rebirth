@@ -1,0 +1,663 @@
+{
+  "region_keys": true,
+  "output": "build/edana_bigworld5.bsp",
+  "report": "build/edana_bigworld5-report.json",
+  "detail_output": "build/edana_bigworld5_detail.txt",
+  "split": {
+    "order": [
+      "helena",
+      "thornlands_north",
+      "thornlands",
+      "edana",
+      "edanasewers"
+    ],
+    "planes": [
+      [
+        0,
+        5500
+      ],
+      [
+        1,
+        14100
+      ],
+      [
+        1,
+        5096
+      ],
+      [
+        2,
+        -2112
+      ]
+    ]
+  },
+  "regions": [
+    {
+      "name": "edana",
+      "bsp": "reference/edana.bsp",
+      "detail": "reference/edana_detail.txt",
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rename_prefix": "ed_",
+      "prune_decor": true
+    },
+    {
+      "name": "thornlands",
+      "bsp": "reference/thornlands.bsp",
+      "detail": "reference/thornlands_detail.txt",
+      "offset": [
+        0,
+        10000,
+        0
+      ],
+      "rename_prefix": "tl_",
+      "style_map": {
+        "32": 34,
+        "33": 35
+      },
+      "drop_classes": [
+        "light_environment"
+      ],
+      "prune_decor": true,
+      "no_logout": [
+        {
+          "name": "a3TC6_chest_pit",
+          "mins": [
+            168,
+            -1560,
+            -1144
+          ],
+          "maxs": [
+            368,
+            -1480,
+            -1000
+          ],
+          "why": "pit under the flesh sheet break2 (func_breakable #380, 100000 hp); break2 only falls when the Thornlands Queen dies (her perishtarget sstart5 -> multi_manager #388), so in a fresh instance the pit and chest a3TC6 are sealed"
+        }
+      ]
+    },
+    {
+      "name": "edanasewers",
+      "bsp": "reference/edanasewers.bsp",
+      "detail": "reference/edanasewers_detail.txt",
+      "offset": [
+        0,
+        0,
+        -3440
+      ],
+      "rename_prefix": "sw_",
+      "drop_classes": [
+        "light_environment",
+        "ms_player_spec"
+      ],
+      "prune_decor": true,
+      "no_logout": [
+        {
+          "name": "door2_west_rooms_1",
+          "mins": [
+            -2296,
+            -304,
+            172
+          ],
+          "maxs": [
+            -1328,
+            384,
+            320
+          ],
+          "why": "rooms and pipe network west of door2 (func_door #39, wait -1); its only opener is func_rot_button #38 on the east side (out of use range through the closed door) and nothing inside targets door2"
+        },
+        {
+          "name": "door2_west_rooms_2",
+          "mins": [
+            -2072,
+            -136,
+            300
+          ],
+          "maxs": [
+            -1360,
+            208,
+            480
+          ],
+          "why": "rooms and pipe network west of door2 (func_door #39, wait -1); its only opener is func_rot_button #38 on the east side (out of use range through the closed door) and nothing inside targets door2"
+        }
+      ]
+    },
+    {
+      "name": "thornlands_north",
+      "bsp": "reference/thornlands_north.bsp",
+      "offset": [
+        0,
+        18000,
+        0
+      ],
+      "rename_prefix": "tn_",
+      "style_map": {
+        "32": 40,
+        "33": 41,
+        "34": 42,
+        "35": 43,
+        "36": 44,
+        "37": 45,
+        "38": 46
+      },
+      "drop_classes": [
+        "light_environment",
+        "ms_player_spec"
+      ],
+      "prune_decor": true,
+      "no_logout": [
+        {
+          "name": "spidercaves2_skeleton_area_1",
+          "mins": [
+            -3616,
+            112,
+            -1312
+          ],
+          "maxs": [
+            -3264,
+            1048,
+            -1138
+          ],
+          "why": "Spidercaves2, rock wall #237 area, Spiderchestloot, skeleton area 1 and the web-shaft ladder landing: the only way out is up the ladders through spiderbossweb (func_breakable #152, trigger-only), which is removed only by the north spider boss's killtarget; intact in a fresh instance"
+        },
+        {
+          "name": "spidercaves2_skeleton_area_2",
+          "mins": [
+            -3288,
+            -208,
+            -1312
+          ],
+          "maxs": [
+            -2088,
+            424,
+            -1063
+          ],
+          "why": "Spidercaves2, rock wall #237 area, Spiderchestloot, skeleton area 1 and the web-shaft ladder landing: the only way out is up the ladders through spiderbossweb (func_breakable #152, trigger-only), which is removed only by the north spider boss's killtarget; intact in a fresh instance"
+        },
+        {
+          "name": "spidercaves2_skeleton_area_3",
+          "mins": [
+            -3288,
+            976,
+            -1312
+          ],
+          "maxs": [
+            -2800,
+            1048,
+            -1144
+          ],
+          "why": "Spidercaves2, rock wall #237 area, Spiderchestloot, skeleton area 1 and the web-shaft ladder landing: the only way out is up the ladders through spiderbossweb (func_breakable #152, trigger-only), which is removed only by the north spider boss's killtarget; intact in a fresh instance"
+        },
+        {
+          "name": "spidercaves2_skeleton_area_4",
+          "mins": [
+            -3936,
+            1024,
+            -1312
+          ],
+          "maxs": [
+            -2752,
+            1856,
+            -1140
+          ],
+          "why": "Spidercaves2, rock wall #237 area, Spiderchestloot, skeleton area 1 and the web-shaft ladder landing: the only way out is up the ladders through spiderbossweb (func_breakable #152, trigger-only), which is removed only by the north spider boss's killtarget; intact in a fresh instance"
+        },
+        {
+          "name": "spidercaves2_skeleton_area_5",
+          "mins": [
+            -3064,
+            1600,
+            -764
+          ],
+          "maxs": [
+            -3032,
+            1656,
+            -652
+          ],
+          "why": "Spidercaves2, rock wall #237 area, Spiderchestloot, skeleton area 1 and the web-shaft ladder landing: the only way out is up the ladders through spiderbossweb (func_breakable #152, trigger-only), which is removed only by the north spider boss's killtarget; intact in a fresh instance"
+        },
+        {
+          "name": "troll_arena_tomb_ww1",
+          "mins": [
+            -2752,
+            -1240,
+            -1312
+          ],
+          "maxs": [
+            -1792,
+            -216,
+            -1152
+          ],
+          "why": "Stone Guardian troll arena, tomb complex and the to_ww1 pad behind Doorwallgone/TrollWall, inside the web-sealed cave system; fresh instance: web intact, Doorwallgone/TrollWall/ww1spawnblock solid and the to_ww1 transition covered by ww1transmsg (#118) until the Tomb Guardian dies"
+        }
+      ]
+    },
+    {
+      "name": "helena",
+      "bsp": "reference/helena.bsp",
+      "detail": "reference/helena_detail.txt",
+      "offset": [
+        10000,
+        10000,
+        0
+      ],
+      "rename_prefix": "he_",
+      "style_map": {
+        "32": 47,
+        "34": 38,
+        "35": 39
+      },
+      "drop_classes": [
+        "light_environment",
+        "ms_player_spec"
+      ],
+      "prune_decor": true,
+      "no_logout": [
+        {
+          "name": "larva_pit_floor_1",
+          "mins": [
+            -1280,
+            2384,
+            -528
+          ],
+          "maxs": [
+            -920,
+            2648,
+            -437
+          ],
+          "why": "Kharaztorant larva pit: one-way drop (from about (-932,2360) feet -156); its only exit is the ramp rot_larva_dead (#289), opened by the larva spawn's fireallperish; the larvae only spawn from trigger_once #309 on the landing ledge above, which the pit floor cannot reach, so a fresh-instance rejoin on the floor or in the dr_larva_w/e/n closets is permanent"
+        },
+        {
+          "name": "larva_pit_floor_2",
+          "mins": [
+            -1136,
+            2624,
+            -528
+          ],
+          "maxs": [
+            -920,
+            2888,
+            -321
+          ],
+          "why": "Kharaztorant larva pit: one-way drop (from about (-932,2360) feet -156); its only exit is the ramp rot_larva_dead (#289), opened by the larva spawn's fireallperish; the larvae only spawn from trigger_once #309 on the landing ledge above, which the pit floor cannot reach, so a fresh-instance rejoin on the floor or in the dr_larva_w/e/n closets is permanent"
+        },
+        {
+          "name": "larva_pit_floor_3",
+          "mins": [
+            -944,
+            2392,
+            -528
+          ],
+          "maxs": [
+            -584,
+            2656,
+            -437
+          ],
+          "why": "Kharaztorant larva pit: one-way drop (from about (-932,2360) feet -156); its only exit is the ramp rot_larva_dead (#289), opened by the larva spawn's fireallperish; the larvae only spawn from trigger_once #309 on the landing ledge above, which the pit floor cannot reach, so a fresh-instance rejoin on the floor or in the dr_larva_w/e/n closets is permanent"
+        },
+        {
+          "name": "larva_pit_floor_4",
+          "mins": [
+            -944,
+            2632,
+            -528
+          ],
+          "maxs": [
+            -728,
+            2888,
+            -321
+          ],
+          "why": "Kharaztorant larva pit: one-way drop (from about (-932,2360) feet -156); its only exit is the ramp rot_larva_dead (#289), opened by the larva spawn's fireallperish; the larvae only spawn from trigger_once #309 on the landing ledge above, which the pit floor cannot reach, so a fresh-instance rejoin on the floor or in the dr_larva_w/e/n closets is permanent"
+        },
+        {
+          "name": "matriarch_chest_alcove",
+          "mins": [
+            -592,
+            640,
+            -272
+          ],
+          "maxs": [
+            -544,
+            776,
+            -160
+          ],
+          "why": "chest alcove behind brk_babies_done (#278, trigger-only) south of the Arachnid Matriarch arena; it breaks only when the hatchlings spawned by the matriarch's death all die; intact in a fresh instance"
+        }
+      ]
+    }
+  ],
+  "entity_edits": [
+    {
+      "region": "thornlands",
+      "match": {
+        "classname": "ms_player_begin"
+      },
+      "set": {
+        "classname": "ms_player_spawn"
+      },
+      "why": "only Edana may start new characters"
+    },
+    {
+      "region": "edanasewers",
+      "match": {
+        "classname": "ms_player_begin"
+      },
+      "set": {
+        "classname": "ms_player_spawn",
+        "message": "sewer_start"
+      },
+      "why": "only Edana may start new characters"
+    },
+    {
+      "region": "edanasewers",
+      "match": {
+        "classname": "ms_player_spawn",
+        "message": null
+      },
+      "set": {
+        "message": "sewer_start"
+      },
+      "why": "the sewers' arrival point for sewer_start was unnamed"
+    },
+    {
+      "region": "thornlands_north",
+      "match": {
+        "classname": "ms_player_begin"
+      },
+      "set": {
+        "classname": "ms_player_spawn",
+        "message": "from_thorn"
+      },
+      "why": "only Edana may start new characters"
+    },
+    {
+      "region": "thornlands_north",
+      "match": {
+        "classname": "ambient_generic",
+        "message": "monsters/bear/giantbearupsnarl.wav",
+        "spawnflags": "17"
+      },
+      "set": {
+        "spawnflags": "16"
+      },
+      "why": "BearGrowl played everywhere (flag 1); make it positional, medium radius, start silent"
+    },
+    {
+      "region": "thornlands_north",
+      "match": {
+        "classname": "ambient_generic",
+        "message": "monsters/bear/giantbearpain.wav",
+        "spawnflags": "17"
+      },
+      "set": {
+        "spawnflags": "16"
+      },
+      "why": "BearSoundPain played everywhere (flag 1); make it positional, medium radius, start silent"
+    },
+    {
+      "region": "thornlands_north",
+      "match": {
+        "classname": "ms_player_spawn",
+        "message": "from_blood",
+        "origin": "-62.6473 21138.2 40"
+      },
+      "set": {
+        "origin": "-120 21138.2 40"
+      },
+      "why": "standing box overlapped the from_blood exit brush (x -48..-40); Bloodrose arrivals land here"
+    },
+    {
+      "region": "thornlands_north",
+      "match": {
+        "classname": "ms_player_spawn",
+        "message": "from_blood",
+        "origin": "-62.6473 21106.2 40"
+      },
+      "set": {
+        "origin": "-120 21106.2 40"
+      },
+      "why": "standing box overlapped the from_blood exit brush (x -48..-40); Bloodrose arrivals land here"
+    },
+    {
+      "region": "helena",
+      "match": {
+        "classname": "ms_player_begin"
+      },
+      "set": {
+        "classname": "ms_player_spawn",
+        "message": "helena_begin"
+      },
+      "why": "only Edana may start new characters"
+    }
+  ],
+  "bosses": [
+    {
+      "region": "thornlands",
+      "origin": [
+        459,
+        -1248,
+        -763
+      ],
+      "script": "monsters/thornlandspider",
+      "id": "queen",
+      "cooldown": 1800,
+      "open": [
+        "break3"
+      ],
+      "why": "Timidus Textor; once break1 falls at event start the lair floor is sealed and break3 (fired only by her perishtarget sstart5) is its only exit; break2 (a3TC6 chest lid) stays shut"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        -3008,
+        1612,
+        -448
+      ],
+      "script": "monsters/thornlandspider",
+      "id": "spiderboss",
+      "cooldown": 1800,
+      "open": [
+        "spiderbossweb"
+      ],
+      "why": "north spider boss; its killtarget web is the only way into Spidercaves2, which leads (via rock wall #237) to the troll arena, the Tomb Guardian and the ww1 transition"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        -3520,
+        -2656,
+        -252
+      ],
+      "script": "thornlands_north/orcboss",
+      "id": "vakgar",
+      "cooldown": 1800,
+      "open": [
+        "Orcforwall"
+      ],
+      "remove": [
+        "OrkForBack"
+      ],
+      "why": "Vakgar the Guardian; the 5/5 counter opens Orcforwall to the Orkat Forest transition; the reward chests (rewardchestorcs) stay closed"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        -2273.09,
+        -757.417,
+        -1238.94
+      ],
+      "script": "thornlands_north/tomb_guardian",
+      "id": "tombguardian",
+      "cooldown": 1800,
+      "open": [
+        "ww1transmsg",
+        "telesprite"
+      ],
+      "why": "Guardian of the Tomb; ww1transmsg lowers the plate over the to_ww1 transition (and prints its message), telesprite shows the portal; treasureloot2 stays closed"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        2722,
+        -801,
+        0
+      ],
+      "script": "monsters/bear_guard1",
+      "id": "ursus",
+      "cooldown": 1800,
+      "open": [],
+      "why": "Ursus Guardian in open ground; its death only drops mana_protection and resets music"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        -2480,
+        -356,
+        -1296
+      ],
+      "script": "monsters/troll",
+      "id": "stoneguard_w",
+      "cooldown": 1800,
+      "open": [],
+      "why": "west Stone Guardian; the 2-kill counter only spawns the TreasureSkeletons chest and removes the finite SkeletonArena spawner"
+    },
+    {
+      "region": "thornlands_north",
+      "origin": [
+        -2064,
+        -356,
+        -1296
+      ],
+      "script": "monsters/troll",
+      "id": "stoneguard_e",
+      "cooldown": 1800,
+      "open": [],
+      "why": "east Stone Guardian; same counter as stoneguard_w, no walls depend on it"
+    },
+    {
+      "region": "helena",
+      "origin": [
+        -576,
+        1008,
+        -112
+      ],
+      "script": "calruin/spidqueen",
+      "id": "matriarch",
+      "cooldown": 1800,
+      "open": [],
+      "why": "Arachnid Matriarch; her spawn (template target dr_spid_trap) is what seals the arena, so a held matriarch never closes the trap; hatchlings and spid_chest1 stay locked"
+    },
+    {
+      "region": "helena",
+      "origin": [
+        -1178.04,
+        1912.85,
+        -160
+      ],
+      "script": "monsters/k_childre",
+      "id": "childre",
+      "cooldown": 1800,
+      "open": [],
+      "why": "Kharaztorant Childre (hp 1000, 200 XP); no killtarget or perishtarget, the cave stays two-way"
+    },
+    {
+      "region": "helena",
+      "origin": [
+        832.453,
+        1020.79,
+        -56
+      ],
+      "script": "monsters/ogre",
+      "id": "ogre",
+      "cooldown": 1800,
+      "open": [],
+      "why": "Cave Ogre (swamp_ogre, hp 2000, 400 XP); its killtarget only removes the music_ogre battle-music area"
+    }
+  ],
+  "worldspawn": {
+    "_world_regions": "edana thornlands edanasewers thornlands_north helena",
+    "MaxRange": "650000",
+    "maptitle": "The Village of Edana",
+    "mapdesc": "This village grew around the temple of Urdual of the southern frontier."
+  },
+  "links": [
+    {
+      "from_region": "edana",
+      "transition": "a3trans",
+      "to_region": "thornlands",
+      "arrive": "SE-A3",
+      "destination": "world_to_thornlands"
+    },
+    {
+      "from_region": "thornlands",
+      "transition": "SE-A3",
+      "to_region": "edana",
+      "arrive": "a3trans",
+      "destination": "world_to_edana"
+    },
+    {
+      "from_region": "edana",
+      "transition": "sewer_entrance",
+      "to_region": "edanasewers",
+      "arrive": "sewer_start",
+      "destination": "world_to_sewers"
+    },
+    {
+      "from_region": "edanasewers",
+      "transition": "sewer_start",
+      "to_region": "edana",
+      "arrive": "sewer_entrance",
+      "destination": "world_from_sewers"
+    },
+    {
+      "from_region": "thornlands",
+      "transition": "from_thorn_north",
+      "to_region": "thornlands_north",
+      "arrive": "from_thorn",
+      "destination": "world_to_thornnorth"
+    },
+    {
+      "from_region": "thornlands_north",
+      "transition": "from_thorn",
+      "to_region": "thornlands",
+      "arrive": "from_thorn_north",
+      "destination": "world_from_thornnorth"
+    },
+    {
+      "from_region": "thornlands_north",
+      "transition": "thorn_north_secret",
+      "to_region": "thornlands",
+      "arrive": "from_thorn_north_well",
+      "destination": "world_from_thornwell"
+    },
+    {
+      "from_region": "thornlands",
+      "transition": "NE-A3",
+      "to_region": "helena",
+      "arrive": "helena",
+      "destination": "world_to_helena"
+    },
+    {
+      "from_region": "helena",
+      "transition": "helena",
+      "to_region": "thornlands",
+      "arrive": "NE-A3",
+      "destination": "world_from_helena"
+    }
+  ],
+  "fade": {
+    "duration": "0.5",
+    "holdtime": "0.05"
+  },
+  "world_map_name": "edana",
+  "neighbor_redirects": {
+    "thornlands": "edana",
+    "edanasewers": "edana",
+    "helena": "edana",
+    "thornlands_north": "edana"
+  },
+  "world_extent": 32767,
+  "format": "bsp2"
+}

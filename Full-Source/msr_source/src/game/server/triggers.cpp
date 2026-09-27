@@ -25,6 +25,7 @@
 #include "saverestore.h"
 #include "trains.h" // trigger_camera has train functionality
 #include "gamerules.h"
+#include "msr_regions.h"
 #include "ms/angelscript/CAngelScriptManager.h" // For AngelScript map transitions
 
 #ifndef EFFECTS_H
@@ -1405,7 +1406,7 @@ void CBaseTrigger ::ActivateMultiTrigger(CBaseEntity *pActivator)
 				flMinTriggerHP = 1;
 		}
 
-		float flTotalHP = UTIL_TotalHP();
+		float flTotalHP = UTIL_TotalHP(MSRegions::ForEntity(this));
 		if (flTotalHP < flMinTriggerHP)
 			use_else_target = true;
 		if (flTotalHP > flMaxTriggerHP && flMaxTriggerHP > 0)
@@ -1427,7 +1428,7 @@ void CBaseTrigger ::ActivateMultiTrigger(CBaseEntity *pActivator)
 				flMaxTriggerHP = 0;
 		}
 
-		float flAverageHP = UTIL_AvgHP();
+		float flAverageHP = UTIL_AvgHP(MSRegions::ForEntity(this));
 		if (flAverageHP < flMinTriggerHP)
 			use_else_target = true;
 		if (flAverageHP > flMaxTriggerHP && flMaxTriggerHP > 0)
@@ -1452,7 +1453,7 @@ void CBaseTrigger ::ActivateMultiTrigger(CBaseEntity *pActivator)
 				max_players = 0;
 		}
 
-		int iActivePlayerCount = UTIL_NumActivePlayers();
+		int iActivePlayerCount = UTIL_NumActivePlayers(MSRegions::ForEntity(this));
 
 		/*
 		for( int i = 1; i <= gpGlobals->maxClients; i++ )
@@ -2332,7 +2333,7 @@ void CBaseTrigger ::TeleportTouch(CBaseEntity *pOther)
 				flMinTriggerHealth = 1;
 		}
 
-		float flTotalHealth = UTIL_TotalHP();
+		float flTotalHealth = UTIL_TotalHP(MSRegions::ForEntity(this));
 		if (flTotalHealth < flMinTriggerHealth)
 			use_else_target = true;
 		if (flTotalHealth > flMaxTriggerHealth && flMaxTriggerHealth > 0)
@@ -2354,7 +2355,7 @@ void CBaseTrigger ::TeleportTouch(CBaseEntity *pOther)
 				flMaxTriggerHealth = 0;
 		}
 
-		float flAverageHealth = UTIL_AvgHP();
+		float flAverageHealth = UTIL_AvgHP(MSRegions::ForEntity(this));
 		if (flAverageHealth < flMinTriggerHealth)
 			use_else_target = true;
 		if (flAverageHealth > flMaxTriggerHealth && flMaxTriggerHealth > 0)
@@ -2379,7 +2380,7 @@ void CBaseTrigger ::TeleportTouch(CBaseEntity *pOther)
 				max_players = 0;
 		}
 
-		int iActivePlayerCount = UTIL_NumActivePlayers();
+		int iActivePlayerCount = UTIL_NumActivePlayers(MSRegions::ForEntity(this));
 
 		/*
 		for( int i = 1; i <= gpGlobals->maxClients; i++ )
@@ -2400,6 +2401,20 @@ void CBaseTrigger ::TeleportTouch(CBaseEntity *pOther)
 			use_else_target = true;
 		if (iActivePlayerCount > max_players && max_players > 0)
 			use_else_target = true;
+	}
+
+	//Merged big-world maps: a player heading into an unloaded region brings it back before
+	//arriving (its monsters then fill in over the next moments). If the server has no room
+	//to re-create it, the way stays shut instead of dropping the player into an empty region.
+	if (!use_else_target && pOther->IsPlayer() && !MSRegions::PrepareArrival(STRING(pev->target)))
+	{
+		static float s_flLastBlockedMsg = 0;
+		if (gpGlobals->time < s_flLastBlockedMsg || gpGlobals->time >= s_flLastBlockedMsg + 2.0f)
+		{
+			s_flLastBlockedMsg = gpGlobals->time;
+			ClientPrint(pOther->pev, HUD_PRINTCENTER, "The way ahead is blocked. Try again in a moment.");
+		}
+		return;
 	}
 
 	//AUG2011_17 Thothie - Alternate target if REQ fails

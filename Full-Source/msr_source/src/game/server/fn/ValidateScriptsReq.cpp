@@ -20,7 +20,7 @@ void ValidateScriptsRequest::OnResponse(int iRespCode)
 
 	JSONDocument doc = ParseJSON(m_sResponseBody.c_str());
 
-	if (!doc.HasMember("data") || !doc["data"].IsBool())
+	if (!doc.IsObject() || !doc.HasMember("data") || !doc["data"].IsBool())
 	{
 		FNShared::Print("Malformed script validation response!");
 		return;

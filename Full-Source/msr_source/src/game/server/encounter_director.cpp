@@ -3,6 +3,7 @@
 #include "monsters/msmonster.h"
 #include "script.h"
 #include "svglobals.h"
+#include "msr_regions.h"
 #include <algorithm>
 #include <cmath>
 
@@ -96,12 +97,17 @@ bool Begin(const char *kind, CBasePlayer *requester)
     if (!resourcesReady) { Reply(requester, "Dungeon Master: encounter resources are unavailable on this map.\n"); return false; }
     if (eventDeadline || EdanaRaidActive()) { Reply(requester, "Dungeon Master: finish or clear the current encounter first.\n"); return false; }
     if (gpGlobals->time < nextManual) { Reply(requester, "Dungeon Master: wait a few seconds before starting another encounter.\n"); return false; }
-    const bool edana = FStrEq(STRING(gpGlobals->mapname), "edana");
     CBasePlayer *anchor = Playing(requester) ? requester : nullptr;
+    // Merged big-world maps: the requester's region is the "map"; Edana's courtyard
+    // setup applies only in the Edana region and only that region's party counts.
+    const int region = anchor ? MSRegions::ForEntity(anchor) : REGION_NONE;
+    const bool edana = FStrEq(STRING(gpGlobals->mapname), "edana") &&
+        (region == REGION_NONE || region == MSRegions::Find("edana"));
     int players = 0;
     float partyHP = 0;
     for (int i=1; i<=gpGlobals->maxClients; ++i) {
         auto *p = (CBasePlayer *)UTIL_PlayerByIndex(i);
+        if (region != REGION_NONE && Playing(p) && MSRegions::ForEntity(p) != region) continue;
         if (Playing(p)) { ++players; partyHP += p->pev->max_health; if (!anchor) anchor=p; }
     }
     if (!edana && !anchor) { Reply(requester, "Dungeon Master: enter the map with a loaded character first.\n"); return false; }

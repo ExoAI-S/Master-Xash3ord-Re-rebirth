@@ -26,6 +26,7 @@ int READ_LONG(void);
 float READ_FLOAT(void);
 const char *READ_STRING(void);
 float READ_COORD(void);
+float READ_COORD8(void); // non-position value written with WRITE_COORD8
 float READ_ANGLE(void);
 float READ_HIRESANGLE(void);
 

@@ -152,15 +152,16 @@ void CRequestManager::ProcessMultiCompleted()
 
 extern void wait(unsigned long ms);
 
-void CRequestManager::Shutdown(void)
+bool CRequestManager::Drain(int timeoutMs)
 {
 	if (!m_bLoaded)
-		return;
+		return m_vRequests.empty();
 
-	constexpr int kDrainTimeoutMs = 5000;
 	constexpr int kStepMs = 50;
 
-	for (int waited = 0; !m_vRequests.empty() && (waited < kDrainTimeoutMs); waited += kStepMs)
+	// Replies may queue follow-ups (a held character save goes out when the one before it
+	// is answered); those are sent within the same drain.
+	for (int waited = 0; !m_vRequests.empty() && (waited < timeoutMs); waited += kStepMs)
 	{
 		Think(false);
 
@@ -169,6 +170,16 @@ void CRequestManager::Shutdown(void)
 
 		wait(kStepMs);
 	}
+
+	return m_vRequests.empty();
+}
+
+void CRequestManager::Shutdown(void)
+{
+	if (!m_bLoaded)
+		return;
+
+	Drain(kDrainTimeoutMs);
 
 	// Anything still outstanding is aborted safely (remove-then-cleanup).
 	Think(true);

@@ -12,6 +12,8 @@
 #ifdef VALVE_DLL
 #include "svglobals.h"
 #include "global.h"
+#include "msr_regions.h"
+#include "msr_worldstate.h"
 bool GetModelBounds(CBaseEntity* pEntity, Vector Bounds[2]);
 #else
 #include "ms/clglobal.h"
@@ -32,6 +34,14 @@ bool GetModelBounds(CBaseEntity* pEntity, Vector Bounds[2]);
 #include "findentities.h"
 #include <iterator>
 #include <unordered_set>
+#include <chrono>
+#ifdef VALVE_DLL
+// Script load profiling for region reloads (msr_regions.cpp reads these around each entity)
+double g_MSRScriptLoadMs = 0, g_MSRScriptParseMs = 0, g_MSRScriptPrecacheMs = 0, g_MSRScriptTopMs = 0;
+int g_MSRScriptFiles = 0;
+static int s_MSRScriptDepth = 0;
+static double MSRMsSince(std::chrono::steady_clock::time_point t) { return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t).count(); }
+#endif
 #ifdef MSR_NATIVE_EVENT_PILOT
 #include "native_bridge.h"
 #include "native_events.inc"
@@ -126,6 +136,9 @@ void CScript::ScriptGetterHash_Setup()
 		m_GlobalGetterHash["$cone_dot2D"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_Cone);
 		m_GlobalGetterHash["$get_contents"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_GetContents);
 		m_GlobalGetterHash["$get_quest_data"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_GetQuestData);
+		m_GlobalGetterHash["$get_worldstate"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_GetWorldState); //MSR persistent world state
+		m_GlobalGetterHash["$get_worldstate_exists"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_GetWorldState);
+		m_GlobalGetterHash["$get_worldstate_ttl"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_GetWorldState);
 		m_GlobalGetterHash["$num"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_Num);
 		m_GlobalGetterHash["$insert"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_ReplaceOrInsert);
 		m_GlobalGetterHash["$subst"] = scriptcpp_cmdfunc_t(&CScript::ScriptGetter_ReplaceOrInsert); //Thothie DEC2017_05 - substitute word string processing
@@ -3088,6 +3101,40 @@ msstring CScript::ScriptGetter_GetUnderSky(msstring& FullName, msstring& ParserN
 		return FullName;
 }
 
+//$get_worldstate(<key>[,<default>]) - persistent world state value; <default> ("0") when unset or expired
+//$get_worldstate_exists(<key>) - 1 when set and not expired, else 0
+//$get_worldstate_ttl(<key>) - whole seconds left (rounded up); -1 permanent; 0 unset or expired
+//- See the worldstate command. Same as game.worldstate.<key>.
+//- priority: low, scope: server (client: the default, or 0)
+msstring CScript::ScriptGetter_GetWorldState(msstring& FullName, msstring& ParserName, msstringlist& Params)
+{
+	const bool bExists = ParserName == "$get_worldstate_exists";
+	const bool bTTL = ParserName == "$get_worldstate_ttl";
+#ifdef VALVE_DLL
+	if (Params.size() >= 1)
+	{
+		if (bExists)
+		{
+			std::string Value;
+			return WorldState::Get(Params[0].c_str(), Value) ? "1" : "0";
+		}
+		if (bTTL)
+		{
+			const double Left = WorldState::TimeLeft(Params[0].c_str());
+			if (Left < 0)
+				return "-1";
+			return UTIL_VarArgs("%.0f", ceil(Left));
+		}
+		std::string Value;
+		if (WorldState::Get(Params[0].c_str(), Value))
+			return msstring(Value.c_str());
+	}
+#endif
+	if (!bExists && !bTTL && Params.size() >= 2)
+		return Params[1];
+	return "0";
+}
+
 //$int(<var>)
 //- convert to integer (flattens)
 //- priority: moderate, scope: shared
@@ -4520,6 +4567,13 @@ const char* CScript::GetVar(const char* pszText)
 			{
 				return RETURN_FLOAT(gpGlobals->time);
 			}
+			else if (Name == "time.unix")
+			{
+				//Wall clock, whole seconds since 1970 (game.time restarts every map). Too big for
+				//script float math to stay exact: compare timers with $get_worldstate_ttl instead.
+				Return = UTIL_VarArgs("%lld", (long long)time(NULL));
+				return Return;
+			}
 			else if (Name.starts_with("time."))
 			{
 				// game.time.* functions
@@ -4615,12 +4669,14 @@ const char* CScript::GetVar(const char* pszText)
 			{
 				//Thothie JUN2007a - make sure game.players does not return bots
 				//Thothie NOV2014_09 - using new centralized checking
-				if (Name.contains("totalhp"))		return RETURN_FLOAT(UTIL_TotalHP());
-				else if (Name.contains("avghp"))	return RETURN_FLOAT(UTIL_AvgHP());
-				else if (Name.contains("playersnb") || Name.contains("noafk")) return RETURN_INT(UTIL_NumActivePlayers());
+				//Merged big-world maps: monsters count only the players in their own region (msr_regions.h)
+				const int region = MSRegions::ForScriptOwner(m.pScriptedEnt);
+				if (Name.contains("totalhp"))		return RETURN_FLOAT(UTIL_TotalHP(region));
+				else if (Name.contains("avghp"))	return RETURN_FLOAT(UTIL_AvgHP(region));
+				else if (Name.contains("playersnb") || Name.contains("noafk")) return RETURN_INT(UTIL_NumActivePlayers(region));
 				else
 				{
-					return RETURN_INT(UTIL_NumPlayers());
+					return RETURN_INT(UTIL_NumPlayers(region));
 				}
 			}
 #endif
@@ -4628,7 +4684,25 @@ const char* CScript::GetVar(const char* pszText)
 			{
 				//bool Type[2] = { false };
 				msstring Prop = Name.substr(4);
-				if (Prop == "name") return MSGlobals::MapName;
+				if (Prop == "name")
+				{
+#ifdef VALVE_DLL
+					//Merged big-world maps: a monster's scripts see the original map of its region
+					//(players, items and world scripts keep the real map name)
+					const int region = MSRegions::ForScriptOwner(m.pScriptedEnt);
+					if (region != REGION_NONE) return MSRegions::NameOr(region, MSGlobals::MapName);
+#endif
+					return MSGlobals::MapName;
+				}
+				else if (Prop == "bspname") return MSGlobals::MapName; //always the loaded map
+				else if (Prop == "region") //region of this script's entity on merged maps, else the map name
+				{
+#ifdef VALVE_DLL
+					return MSRegions::NameOr(MSRegions::ForEntity(m.pScriptedEnt), MSGlobals::MapName);
+#else
+					return MSGlobals::MapName;
+#endif
+				}
 				else if (Prop == "skyname") return EngineFunc::CVAR_GetString("sv_skyname");
 				else if (Prop == "addparams") return MSGlobals::map_addparams; //DEC2014_17 Thothie - global addparams
 				else if (Prop == "flags") return MSGlobals::map_flags; //DEC2014_17 Thothie - map flags
@@ -4666,6 +4740,18 @@ const char* CScript::GetVar(const char* pszText)
 					return UTIL_VarArgs("%i", MSGlobals::SpawnLimit);
 				}
 			} //end if map.
+			else if (Name.starts_with("worldstate."))
+			{
+				//game.worldstate.<key>: same as $get_worldstate(<key>), "0" when unset (and on the client).
+				//Before the generic branch below, which would take "worldstate" for an entity name.
+				Return = "0";
+#ifdef VALVE_DLL
+				std::string Value;
+				if (WorldState::Get(Name.substr(11).c_str(), Value))
+					Return = Value.c_str();
+#endif
+				return Return;
+			}
 			else if (Name == "debug") return EngineFunc::CVAR_GetString("developer"); //Thothie MAR2007b - so we can disable client-side debugs from the script level (failed at the .dll level)
 			else if (Name == "developer") return EngineFunc::CVAR_GetString("developer");  //ditto, alias
 			else if (Name == "pvp")
@@ -4865,6 +4951,15 @@ bool CScript::Spawn(msstring Filename, CBaseEntity* pScriptedEnt, IScripted* pSc
 	}
 
 	m_Dependencies.add(Filename);
+#ifdef VALVE_DLL
+	struct MSRSpawnProf
+	{
+		std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
+		MSRSpawnProf() { s_MSRScriptDepth++; g_MSRScriptFiles++; }
+		~MSRSpawnProf() { if (--s_MSRScriptDepth == 0) g_MSRScriptTopMs += MSRMsSince(t0); }
+	} msrSpawnProf;
+	const auto msrLoadStart = std::chrono::steady_clock::now();
+#endif
 
 	//Localize these for later reference
 	//pScriptedEnt->ScriptFName = Filename; //MiB DEC2007a - scriptname prop - phayle
@@ -4963,6 +5058,7 @@ bool CScript::Spawn(msstring Filename, CBaseEntity* pScriptedEnt, IScripted* pSc
 	}
 
 #ifdef VALVE_DLL
+	g_MSRScriptLoadMs += MSRMsSince(msrLoadStart);
 	CSVGlobals::LogScript(ScriptName, m.pScriptedEnt, m_Dependencies.size(), m.PrecacheOnly, true);
 #endif
 
@@ -4971,11 +5067,25 @@ bool CScript::Spawn(msstring Filename, CBaseEntity* pScriptedEnt, IScripted* pSc
 		m.pScriptedInterface->Script_Setup();
 	}
 
+#ifdef VALVE_DLL
+	const double msrPrecacheBefore = g_MSRScriptPrecacheMs, msrLoadBefore = g_MSRScriptLoadMs, msrParseBefore = g_MSRScriptParseMs;
+	const auto msrParseStart = std::chrono::steady_clock::now();
+#endif
 	fReturn = ParseScriptFile(ScriptData);	//Parse events
+#ifdef VALVE_DLL
+	// exclusive: minus the nested #includes' own load, parse and precache
+	g_MSRScriptParseMs += MSRMsSince(msrParseStart) - (g_MSRScriptPrecacheMs - msrPrecacheBefore) - (g_MSRScriptLoadMs - msrLoadBefore) - (g_MSRScriptParseMs - msrParseBefore);
+#endif
 
 	delete[] ScriptData;  //Deallocate script data
 
+#ifdef VALVE_DLL
+	const auto msrPrecacheStart = std::chrono::steady_clock::now();
+#endif
 	RunScriptEventByName("game_precache");	//Run precache event
+#ifdef VALVE_DLL
+	g_MSRScriptPrecacheMs += MSRMsSince(msrPrecacheStart);
+#endif
 
 	// UNCOMMENT FOR TIMING
 	//CallLogged(ScriptName, clock_start);
@@ -5112,31 +5222,30 @@ bool CScript::ParseScriptFile(const char* pszScriptData)
 	std::vector<scriptcmd_list*> ParentCmds;
 
 	size_t lineNum = 1;
-	std::string sData(pszScriptData);
-	std::istringstream ss(sData);
 
-	std::string line;
-	while (getline(ss, line))
+	// One line at a time, straight from the buffer (appending a character at a time made
+	// line splitting a third of all script parsing)
+	std::string result;
+	const char* pLine = pszScriptData;
+	while (*pLine)
 	{
-		line.erase(0, line.find_first_not_of(" \t\v"));
+		const char* pEnd = strchr(pLine, '\n');
+		if (!pEnd)
+			pEnd = pLine + strlen(pLine);
+		const char* pNext = *pEnd ? pEnd + 1 : pEnd;
 
-		std::string result = "";
-		int lineSize = line.length();
-		for (int i = 0; i < lineSize; i++)
-		{
-			const char ch = line[i];
-			const char nextch = line[i + 1]; //get next ch.
+		//skip leading whitespace
+		const char* pStart = pLine;
+		while (pStart < pEnd && (*pStart == ' ' || *pStart == '\t' || *pStart == '\v'))
+			pStart++;
 
-			//remove comments.
-			if (ch == '/' && nextch == '/')
-				break;
+		//stop at a comment or a carriage return
+		const char* pStop = pStart;
+		while (pStop < pEnd && *pStop != '\r' && !(pStop[0] == '/' && pStop + 1 < pEnd && pStop[1] == '/'))
+			pStop++;
 
-			//just remove return carriages here instead of doing erase.
-			if (ch == '\r')
-				break;
-
-			result += ch;
-		}
+		result.assign(pStart, pStop - pStart);
+		pLine = pNext;
 
 		if (result.find_first_not_of(" \r\t") != std::string::npos)
 		{
@@ -5276,6 +5385,7 @@ int CScript::ParseLine(const char* pszCommandLine, int LineNum, SCRIPT_EVENT** p
 			FileName = Line.thru_char(SKIP_STR);
 		}
 
+		const msstring RawFileName = FileName;
 		FileName = GetConst(FileName);
 
 		if ((Scope == EVENTSCOPE_SHARED) || MSGlobals::IsServer == (Scope == EVENTSCOPE_SERVER))
@@ -5286,6 +5396,19 @@ int CScript::ParseLine(const char* pszCommandLine, int LineNum, SCRIPT_EVENT** p
 			bool AllowDupInclude = m.AllowDupInclude;
 			m.AllowDupInclude = AllowDup.find("allowduplicate") != msstring_error;
 			bool fSucces = Spawn(FileName, m.pScriptedEnt, m.pScriptedInterface, m.PrecacheOnly, Casual);
+#ifdef VALVE_DLL
+			//Merged big-world maps: the game master also takes in every other region's own
+			//game_master script (events its NPCs call, e.g. Helena's bandit chest)
+			if (RawFileName == "$currentmap_game_master" && MSRegions::Active() && !MSGlobals::DevModeEnabled)
+				for (int r = 0; r < MSRegions::Count(); r++)
+				{
+					const msr_region_t *pRegion = MSRegions::Get(r);
+					if (!pRegion || !_stricmp(pRegion->name.c_str(), MSGlobals::MapName.c_str()))
+						continue;
+					m.ScriptFile = CurrentScriptFile;
+					Spawn(msstring(pRegion->name.c_str()) + "/game_master", m.pScriptedEnt, m.pScriptedInterface, m.PrecacheOnly, true);
+				}
+#endif
 			m.ScriptFile = CurrentScriptFile;
 			m.AllowDupInclude = AllowDupInclude;
 			if (!fSucces && !Casual)
@@ -5310,7 +5433,13 @@ int CScript::ParseLine(const char* pszCommandLine, int LineNum, SCRIPT_EVENT** p
 
 	if (!CurrentEvent)
 	{
+#ifdef VALVE_DLL
+		if (!MSRegions::Replaying()) // a region reload re-parses scripts the map load already reported
+			ALERT(at_console, "Script: %s, Line: %i Missing {\n", m.ScriptFile.c_str(), LineNum);
+		return 0;
+#else
 		ALERT(at_console, "Script: %s, Line: %i Missing {\n", m.ScriptFile.c_str(), LineNum); return 0;
+#endif
 	}
 
 	bool KeepCmd = false;
@@ -6065,9 +6194,15 @@ void CScript::CallScriptEventAll(const char* EventName, msstringlist* Parameters
 		MSGlobals::GameScript->CallScriptEvent(EventName, Parameters);
 	}
 //Thothie JUN2007a, allows callexternal on all players, via "callexternal players [delay] <event> <params...>"
-void CScript::CallScriptPlayers(const char* EventName, msstringlist* Parameters)
+void CScript::CallScriptPlayers(const char* EventName, msstringlist* Parameters, CBaseEntity* pCaller)
 {
 #ifdef VALVE_DLL
+	//Merged big-world maps: the game master's weather broadcast becomes one weather per region;
+	//any other script's weather broadcast stays in its own region
+	if (!strcmp(EventName, "ext_weather_change") && Parameters && Parameters->size() &&
+		MSRegions::DispatchWeather(pCaller, EventName, (*Parameters)[0].c_str()))
+		return;
+
 	//edict_t		*pEdict = NULL;
 	//CBaseEntity *pEntity = NULL;
 
@@ -6127,9 +6262,9 @@ void CScript::ClXPlaySoundAll(const char* sSample, const Vector& Origin, int sCh
 		WRITE_COORD(Origin.y);
 		WRITE_COORD(Origin.z);
 		WRITE_BYTE(sChannel);
-		WRITE_COORD(sVolume);
-		WRITE_COORD(sAttn);
-		WRITE_COORD(sPitch);
+		WRITE_COORD8(sVolume);
+		WRITE_COORD8(sAttn);
+		WRITE_COORD8(sPitch);
 		MESSAGE_END();
 	}
 #endif
@@ -6185,6 +6320,10 @@ std::istream& getline(std::istream& is, std::string& t) {
 //Thothie JAN2013
 void CScript::conflict_check(msstring testvar, msstring testvar_type, msstring testvar_scope, int linenum)
 {
+#ifdef VALVE_DLL
+	if (MSRegions::Replaying()) // a region reload re-parses scripts the map load already checked
+		return;
+#endif
 	bool cc_found = false;
 	bool cc_check_against_const = false;
 	bool cc_check_against_var = false;

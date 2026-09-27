@@ -31,6 +31,7 @@
 #include	"ms/angelscript/CAngelScriptManager.h"
 #include	"ms/angelscript/ASModuleSystem.h"
 #include	"ms/scriptmgr.h"
+#include	"msr_regions.h"
 #include	"trains.h" // for CFuncVehicle
 #include	<asbind20/asbind.hpp>
 
@@ -53,6 +54,7 @@ bool CheckBanned(const char* SteamID );
 //float g_TimeTryValidate = 0.0f;
 constexpr int VALIDATE_DELAY = (60 * 30);// 30 mins
 float g_ServerResetTimer = 0.0f;
+static bool s_PlayedSinceReset = false; // someone played since the last empty-server reset (or start)
 
 constexpr int ITEM_RESPAWN_TIME	= 30;
 constexpr int WEAPON_RESPAWN_TIME = 20;
@@ -193,24 +195,58 @@ void CHalfLifeMultiplay::Think( void )
 			{ CTeam::Teams.erase( i ); delete pTeam; }
 	}
 
-	//if player joins and timer was started than reset timer.
-	if ((UTIL_NumPlayers() > 0) && (g_ServerResetTimer > 0.0f))
-		g_ServerResetTimer = 0.0f;
-
-	if ((CVAR_GET_FLOAT("ms_reset_time") > 0.0f) && (UTIL_NumPlayers() == 0))
+	//The engine drops some clients without ClientDisconnect (a crashed connection, or a drop before
+	//"begin"); their object stays like any departed player's. Retire it the way a quit would.
+	static float s_NextDropSweep = 0.0f;
+	if (gpGlobals->time >= s_NextDropSweep || gpGlobals->time < s_NextDropSweep - 2.0f) //also after a map change
 	{
-		ALERT(at_console, "Server empty checking for reset.\n");
-		if (!g_ServerResetTimer)
-			g_ServerResetTimer = gpGlobals->time + (CVAR_GET_FLOAT("ms_reset_time")*60);
-
-		//reset server once timer expires
-		if (gpGlobals->time >= g_ServerResetTimer)
+		s_NextDropSweep = gpGlobals->time + 1.0f;
+		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			ALERT(at_console, "Resetting server.\n");
+			edict_t *pEdict = INDEXENT(i);
+			CBasePlayer *pPlayer = (pEdict && !pEdict->free) ? (CBasePlayer *)GET_PRIVATE(pEdict) : NULL;
+			if (pPlayer && pPlayer->m_fInServer && !UTIL_IsConnectedPlayer(pPlayer))
+			{
+				ALERT(at_console, "MSR: slot %d was dropped without a disconnect; retiring its player\n", i);
+				pPlayer->Deactivate();
+				pPlayer->OnDisconnected();
+			}
+		}
+	}
+
+	//if player joins and timer was started than reset timer.
+	//The map resets once per empty spell: a fresh map needs no reset, and reloading it every
+	//ms_reset_time while nobody plays only churns (and on the Big World map, leaks) memory.
+	if (UTIL_NumPlayers() > 0)
+	{
+		g_ServerResetTimer = 0.0f;
+		s_PlayedSinceReset = true;
+	}
+	else if ((CVAR_GET_FLOAT("ms_reset_time") > 0.0f) && s_PlayedSinceReset)
+	{
+		if (!g_ServerResetTimer)
+		{
+			g_ServerResetTimer = gpGlobals->time + (CVAR_GET_FLOAT("ms_reset_time")*60);
+			ALERT(at_console, "Server empty: resetting in %.0f minutes unless someone joins.\n", CVAR_GET_FLOAT("ms_reset_time"));
+		}
+		//reset server once timer expires
+		else if (gpGlobals->time >= g_ServerResetTimer)
+		{
 			g_ServerResetTimer = 0.0f;
+			s_PlayedSinceReset = false;
 			std::string resetMap = CVAR_GET_STRING("ms_reset_map");
-			std::string mapCmd = "map " + resetMap + "\n";
-			SERVER_COMMAND((char*)mapCmd.c_str());
+			if (MSRegions::Active() && (resetMap.empty() || !_stricmp(resetMap.c_str(), STRING(gpGlobals->mapname))))
+			{
+				//A region map's regions reset themselves once empty (ms_region_unload_time), and
+				//reloading the whole merged world costs a 32-bit server address space it never gets back.
+				ALERT(at_console, "MSR: server empty: no map reload on a region map (its regions reset themselves)\n");
+			}
+			else
+			{
+				ALERT(at_console, "Resetting server.\n");
+				std::string mapCmd = "map " + resetMap + "\n";
+				SERVER_COMMAND((char*)mapCmd.c_str());
+			}
 		}
 	}
 

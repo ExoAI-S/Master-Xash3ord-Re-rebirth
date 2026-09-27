@@ -17,6 +17,12 @@
 #define HTTP_CONTENT_TYPE "application/json"
 #define ID64 unsigned long long
 
+// Every request is bounded, so a hung FN can never stall the game thread for long
+// (blocking sends at map start/end wait on these).
+#define REQUEST_CONNECT_TIMEOUT_MS 2000L
+#define REQUEST_TIMEOUT_MS 8000L
+#define REQUEST_MAX_RESPONSE_BYTES (8 * 1024 * 1024)
+
 class HTTPRequest
 {
 public:
@@ -64,6 +70,7 @@ protected:
 	char* m_sRequestBody;
 	size_t m_iRequestBodySize;
 	std::string m_sRequestBuffer;
+	bool m_bRawBody = false; // post m_sRequestBody as-is (JSON), not in the character envelope
 
 	ID64 m_iSteamID64;
 	ID64 m_iSlot;

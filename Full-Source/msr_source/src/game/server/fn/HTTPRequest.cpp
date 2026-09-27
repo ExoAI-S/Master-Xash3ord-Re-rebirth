@@ -101,11 +101,24 @@ void HTTPRequest::SetupRequest()
 	curl_easy_setopt(m_Handle, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(m_Handle, CURLOPT_NOSIGNAL, 1L);
 	curl_easy_setopt(m_Handle, CURLOPT_USERAGENT, "MSR Game Server");
+	// curl's defaults are a 300 s connect and no transfer limit: an FN that accepts but never
+	// answers would hang map loads (blocking sends) and pile up saves forever.
+	curl_easy_setopt(m_Handle, CURLOPT_CONNECTTIMEOUT_MS, REQUEST_CONNECT_TIMEOUT_MS);
+	curl_easy_setopt(m_Handle, CURLOPT_TIMEOUT_MS, REQUEST_TIMEOUT_MS);
 
 	if (m_pShareHandle)
 		curl_easy_setopt(m_Handle, CURLOPT_SHARE, m_pShareHandle);
 
-	if (m_sRequestBody != nullptr)
+	if ((m_sRequestBody != nullptr) && m_bRawBody)
+	{
+		m_pHeaderList = curl_slist_append(m_pHeaderList, "Content-Type: application/json; charset=UTF-8");
+		curl_easy_setopt(m_Handle, CURLOPT_HTTPHEADER, m_pHeaderList);
+
+		m_sRequestBuffer.assign(m_sRequestBody, m_iRequestBodySize);
+		curl_easy_setopt(m_Handle, CURLOPT_POSTFIELDSIZE, static_cast<long>(m_sRequestBuffer.size()));
+		curl_easy_setopt(m_Handle, CURLOPT_POSTFIELDS, m_sRequestBuffer.c_str());
+	}
+	else if (m_sRequestBody != nullptr)
 	{
 		m_pHeaderList = curl_slist_append(m_pHeaderList, "Content-Type: application/json; charset=UTF-8");
 		curl_easy_setopt(m_Handle, CURLOPT_HTTPHEADER, m_pHeaderList);
@@ -289,6 +302,11 @@ size_t HTTPRequest::WriteCallbackDispatcher(void* buf, size_t sz, size_t n, void
 
 size_t HTTPRequest::WriteCallback(void* ptr, size_t size, size_t nmemb)
 {
+	// Returning less than was handed in makes curl fail the transfer (CURLE_WRITE_ERROR),
+	// so a runaway reply cannot eat the server's memory.
+	if (m_sResponseBody.size() + size * nmemb > REQUEST_MAX_RESPONSE_BYTES)
+		return 0;
+
 	m_sResponseBody.append((char*)ptr, size * nmemb);
 	return size * nmemb;
 }
