@@ -15,10 +15,16 @@ install    - refuses while the game, a realm or FN runs from that folder, and re
              edicts 4096 in liblist.gam, bigworld.enable (servers the launcher starts then run in
              Big World mode), the FN service with world state, and the new map's checksum in the
              FN content manifest.
-uninstall  - puts every backed-up file back and removes what the install added.
+install --portable
+           - the same, but keeps the backup inside the MSR folder (<MSR folder>\\BigWorld-Backup,
+             recorded relative to it) instead of next to it: for a complete game shipped with Big
+             World already installed, which then still uninstalls wherever a player extracts or
+             moves it. Refuses if that BigWorld-Backup folder already exists.
+uninstall  - puts every backed-up file back and removes what the install added (after a portable
+             install also the BigWorld-Backup folder, once every file is back).
 status     - says what is installed.
 
-Usage: python bigworld_setup.py install|uninstall|status [--root <MSR folder>] [--force]
+Usage: python bigworld_setup.py install|uninstall|status [--root <MSR folder>] [--force] [--portable]
 """
 from __future__ import annotations
 
@@ -29,6 +35,7 @@ import json
 import os
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -37,6 +44,7 @@ from pathlib import Path
 
 PACKAGE = Path(__file__).resolve().parent.parent  # the unpacked package: installer\, payload\, package.json
 MARKER = "bigworld-install.json"                    # in game\msr\maps, as the 3-region installer wrote it
+PORTABLE_BACKUP = "BigWorld-Backup"                 # install --portable: the backup inside the MSR folder
 
 
 def sha256(path: Path) -> str:
@@ -180,7 +188,25 @@ def patch_liblist(path: Path, edicts: int) -> None:
     path.write_text(new, encoding="latin-1")
 
 
-def install(ins: Install, force: bool) -> None:
+def backup_dir(ins: Install, record: dict) -> Path:
+    """The install's backup; a portable install records it relative to the MSR folder, wherever that now is."""
+    if not record.get("backup_relative"):
+        return Path(record["backup"])
+    name = record["backup"]
+    if name in ("", ".", "..") or Path(name).name != name:
+        raise SetupError(f"The Big World marker names an unexpected backup folder ({name}). Nothing was changed.")
+    return ins.root / name
+
+
+def remove_tree(path: Path) -> None:
+    """shutil.rmtree that also takes read-only files (copy2 keeps the read-only flag of what it backed up)."""
+    for p in path.rglob("*"):
+        if p.is_file() and not os.access(p, os.W_OK):
+            os.chmod(p, stat.S_IREAD | stat.S_IWRITE)
+    shutil.rmtree(path)
+
+
+def install(ins: Install, force: bool, portable: bool = False) -> None:
     meta = load_package()
     if ins.marker.is_file():
         record = json.loads(ins.marker.read_text(encoding="utf-8"))
@@ -191,11 +217,16 @@ def install(ins: Install, force: bool) -> None:
             raise SetupError(f"Another Big World package ({record['package']}) is installed. Uninstall it first "
                              "with that package's Uninstall-BigWorld.cmd.")
     check_release(ins, meta, force)
+    if portable and (ins.root / PORTABLE_BACKUP).exists():
+        raise SetupError(f"{ins.root / PORTABLE_BACKUP} already exists (the backup of an earlier portable install?). "
+                         "Move or delete it first. Nothing was changed.")
     if ins.marker.is_file():
         undo_three_region(ins)
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     backup = ins.root.parent / f"{ins.root.name}-BigWorld5-Backup-{stamp}"
+    if portable:
+        backup = ins.root / PORTABLE_BACKUP  # travels with the MSR folder; the marker records it relative
     backup.mkdir(parents=True)
     say(f"Backup: {backup}")
 
@@ -222,6 +253,8 @@ def install(ins: Install, force: bool) -> None:
                 shutil.copy2(p, backup / "fn-database" / p.name)
     record = {"package": meta["package"], "installed": stamp, "backup": str(backup),
               "existed": existed, "removed": removed, "world_crc32": meta["world_crc32"]}
+    if portable:
+        record["backup"], record["backup_relative"] = PORTABLE_BACKUP, True
     (backup / MARKER).write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     # Marked before anything changes, so an install that stops halfway can still be undone
     ins.marker.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
@@ -259,7 +292,8 @@ def uninstall(ins: Install) -> None:
         undo_three_region(ins)
         say("Removed.")
         return
-    backup = Path(record["backup"])
+    backup = backup_dir(ins, record)
+    portable = bool(record.get("backup_relative"))
     if not (backup / "files").is_dir() and any(record["existed"].values()):
         raise SetupError(f"The backup {backup} is missing; nothing was changed.")
     for rel, was in record["existed"].items():
@@ -269,9 +303,24 @@ def uninstall(ins: Install) -> None:
             shutil.copy2(backup / "files" / rel, path)
         elif path.is_file():
             path.unlink()
+    if portable:
+        # A portable install's backup is deleted below, so every file must really be back first
+        bad = [rel for rel, was in record["existed"].items() if (ins.pkg / rel).is_file() != was
+               or (was and sha256(ins.pkg / rel) != sha256(backup / "files" / rel))]
+        if bad:
+            raise SetupError(f"{', '.join(bad)} did not come back from {backup}. The backup and the install "
+                             "record are kept; run uninstall again.")
     ins.marker.unlink()
     say(f"Big World removed; files restored from {backup}.")
-    say("Your FN saves are kept as they are (a copy from before the install is in that backup).")
+    if not portable:
+        say("Your FN saves are kept as they are (a copy from before the install is in that backup).")
+        return
+    try:
+        remove_tree(backup)
+        say(f"The backup folder {backup} is removed.")
+    except OSError as exc:
+        say(f"Could not remove the backup folder {backup} ({exc}); delete it yourself.")
+    say("Your FN saves are kept as they are.")
 
 
 def status(ins: Install) -> None:
@@ -285,7 +334,11 @@ def status(ins: Install) -> None:
     world = ins.maps / "edana.bsp"
     ok = world.is_file() and crc32(world) == record.get("world_crc32")
     say(f"Big World: {record['package']} installed {record['installed']}; world map {'OK' if ok else 'CHANGED since install'}.")
-    say(f"Backup: {record['backup']}")
+    if record.get("backup_relative"):
+        backup = backup_dir(ins, record)
+        say(f"Backup: {backup} (portable, inside the MSR folder{'' if backup.is_dir() else '; MISSING'})")
+    else:
+        say(f"Backup: {record['backup']}")
 
 
 def main() -> int:
@@ -293,6 +346,9 @@ def main() -> int:
     parser.add_argument("action", choices=["install", "uninstall", "status"])
     parser.add_argument("--root", help="the MSR folder (default: the folder this package is in, or C:\\MSR)")
     parser.add_argument("--force", action="store_true", help="install on a different MSR release anyway")
+    parser.add_argument("--portable", action="store_true",
+                        help="install: keep the backup inside the MSR folder (BigWorld-Backup), so a game shipped "
+                             "with Big World installed still uninstalls after it is extracted or moved anywhere")
     args = parser.parse_args()
     try:
         ins = Install(find_root(args.root))
@@ -302,7 +358,7 @@ def main() -> int:
             if busy:
                 raise SetupError("Close MSR first: the game, a realm or FN is still running from this folder "
                                  f"({len(busy)} processes). Use Stop-Host.cmd for realms. Nothing was changed.")
-        {"install": lambda: install(ins, args.force), "uninstall": lambda: uninstall(ins), "status": lambda: status(ins)}[args.action]()
+        {"install": lambda: install(ins, args.force, args.portable), "uninstall": lambda: uninstall(ins), "status": lambda: status(ins)}[args.action]()
         return 0
     except SetupError as exc:
         say(f"ERROR: {exc}")
