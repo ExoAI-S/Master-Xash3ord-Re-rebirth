@@ -29,6 +29,7 @@ void ShowWeaponDesc(CGenericItem* pItem);
 
 //NOTENOTE: remove this when char corruption bug is fixed - Solokiller 5/10/2017
 #include "game.h"
+#include "ms/mount_policy.h"
 //END NOTE
 
 keysnapshot KeyHistory[MAX_KEYHISTORY];
@@ -970,6 +971,8 @@ bool CBasePlayer::DropItem(CGenericItem* pDropItem, bool ForceDrop, bool Verbose
 
 float CBasePlayer::CurrentSpeed(bool bParseSpeed)
 {
+	if (FBitSet(m_StatusFlags, PLAYER_MOVE_MOUNTED))
+		return MSRMountPolicy::Speed(FBitSet(pbs.ButtonsDown, IN_RUN) && FBitSet(pbs.ButtonsDown, IN_FORWARD) && !FBitSet(m_StatusFlags, PLAYER_MOVE_NORUN));
 	//The speed you're SUPPOSED to be able to go right now
 
 	//	if( RoundTime > gpGlobals->time ) return fSpeed;

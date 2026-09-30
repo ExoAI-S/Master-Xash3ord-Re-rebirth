@@ -210,6 +210,7 @@ set(MS_Headers
 	"store.h"
 	"svglobals.h"
 	"vehicle.cpp"
+	"msr_mounts.cpp"
 	#"SteamServerHelper.h"
 	"../shared/ms/groupfile.h"
 	"../shared/ms/mscharacter.h"

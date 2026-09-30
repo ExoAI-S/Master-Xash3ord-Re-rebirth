@@ -1,0 +1,8 @@
+{
+  "compiler_threads": 1,
+  "repeat_builds": 2,
+  "sha256_identical": true,
+  "bsp_sha256": "bb9ef5a6637f1a731938650771c019687669efd09578d374eb508c5fdac7218e",
+  "bsp_crc32": 3830419947,
+  "scenery_ground_error_units": 0.06006
+}

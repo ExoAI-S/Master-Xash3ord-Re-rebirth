@@ -9,6 +9,7 @@
 #include "store.h"
 #include "msr_regions.h"
 #include "msr_bigworld.h"
+#include "msr_mounts.h"
 
 #include <algorithm>
 #include <chrono>
@@ -292,6 +293,8 @@ int ForEntity(CBaseEntity *pEntity)
 		CBasePlayer *pPlayer = (CBasePlayer *)pEntity;
 		return pPlayer->m_iRegion != REGION_NONE ? pPlayer->m_iRegion : At(pEntity->pev->origin);
 	}
+	if (CBasePlayer *rider = MSRMounts::Rider(pEntity))
+		return ForEntity(rider);
 	if (pEntity->IsMSMonster())
 	{
 		CMSMonster *pMonster = (CMSMonster *)pEntity;
@@ -715,7 +718,7 @@ bool Unload(int region, const char *why)
 		if (!pent || pent->free || !pent->pvPrivateData || IsClientEntity(e))
 			continue;
 		CBaseEntity *pEntity = CBaseEntity::Instance(pent);
-		if (!pEntity || pEntity->IsPlayer() || IsGameMaster(pEntity))
+		if (!pEntity || pEntity->IsPlayer() || IsGameMaster(pEntity) || MSRMounts::HasRider(pEntity))
 			continue;
 		const bool isRecord = recordEdicts.count(pent) > 0;
 		if (pEntity->IsMSItem())

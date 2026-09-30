@@ -197,6 +197,8 @@ bool CGenericItem::CheckKeys(attackdata_t *pAttData)
 
 bool CGenericItem::Attack_CanAttack()
 {
+	if (m_pPlayer && FBitSet(m_pPlayer->m_StatusFlags, PLAYER_MOVE_MOUNTED))
+		return false; // Authoritative check also blocks forced/scripted attack requests.
 	if (!m_Attacks.size())
 		return false; //Must have registered an attack
 	if (!m_pOwner || !m_pPlayer || !m_pOwner->IsAlive())
@@ -213,6 +215,8 @@ bool CGenericItem::Attack_CanAttack()
 //Can be called with a parameter to force an attack
 bool CGenericItem::StartAttack(int ForceAttackNum)
 {
+	if (m_pPlayer && FBitSet(m_pPlayer->m_StatusFlags, PLAYER_MOVE_MOUNTED))
+		return false;
 #ifdef VALVE_DLL
 
 	//Check if I have a command queued from the client

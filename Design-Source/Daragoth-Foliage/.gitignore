@@ -1,0 +1,8 @@
+# Blender backup files and local Python output
+*.blend[0-9]*
+__pycache__/
+*.pyc
+
+# The canonical compiled models are under Portable-Package/game/msr/models/plains/.
+export/*.mdl
+*.log

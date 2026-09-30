@@ -5,6 +5,7 @@
 #include "mscharacter.h"
 #include "filesystem_shared.h"
 #include "mslogger.h"
+#include "animation.h"
 #include "msr_regions.h"
 #include "msr_worldstate.h"
 #include "msr_bosses.h"
@@ -324,6 +325,42 @@ public:
 		{
 			pev->solid = SOLID_SLIDEBOX;
 			UTIL_SetSize(pev, vMins, vMaxs);
+		}
+		else
+		{
+			// Studio SET_MODEL clears mins/maxs. A point-sized prop rooted below
+			// the ground then touches no visible leaf, so it is never networked.
+			// Use the rendered sequence bounds for PVS linking only; stay nonsolid.
+			studiohdr_t *header = (studiohdr_t *)GET_MODEL_PTR(edict());
+			if (header && header->numseq > 0)
+			{
+				int sequence = pev->sequence >= 0 && pev->sequence < header->numseq ? pev->sequence : 0;
+				Vector mins, maxs;
+				if (ExtractBbox(header, sequence, mins, maxs))
+				{
+					Vector forward, right, up, rotatedMins, rotatedMaxs;
+					Vector renderAngles = pev->angles;
+					renderAngles.x = -renderAngles.x; // Match StudioSetUpTransform.
+					UTIL_MakeVectorsPrivate(renderAngles, forward, right, up);
+					float renderScale = scale ? scale : 1.0f;
+					for (int corner = 0; corner < 8; ++corner)
+					{
+						Vector point((corner & 1) ? maxs.x : mins.x,
+							(corner & 2) ? maxs.y : mins.y,
+							(corner & 4) ? maxs.z : mins.z);
+						point = point * renderScale;
+						Vector rotated = forward * point.x - right * point.y + up * point.z;
+						for (int axis = 0; axis < 3; ++axis)
+						{
+							if (corner == 0 || rotated[axis] < rotatedMins[axis])
+								rotatedMins[axis] = rotated[axis];
+							if (corner == 0 || rotated[axis] > rotatedMaxs[axis])
+								rotatedMaxs[axis] = rotated[axis];
+						}
+					}
+					UTIL_SetSize(pev, rotatedMins, rotatedMaxs);
+				}
+			}
 		}
 		pev->body = body; //Thothie (see above)
 		pev->skin = skin; //Thothie (see above)

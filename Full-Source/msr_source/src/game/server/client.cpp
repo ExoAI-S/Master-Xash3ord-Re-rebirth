@@ -41,6 +41,7 @@
 #include "svglobals.h"
 #include "encounter_director.h"
 #include "msr_regions.h"
+#include "msr_mounts.h"
 #include "mscharacter.h"
 #include "global.h"
 #include "pm_shared.h" // PM_GetHullBounds
@@ -1892,6 +1893,7 @@ void ServerDeactivate(void)
 	}
 
 	g_serveractive = 0;
+	MSRMounts::MapEnd();
 
 	// Peform any shutdown operations here...
 	//
@@ -2663,6 +2665,7 @@ int AddToFullPack(struct entity_state_s *state, int e, edict_t *ent, edict_t *ho
 		//         If the speed is different, then play the fps at a ratio of the current speed to this normal speed
 		CBasePlayer *pPlayer = GetClassPtr((CBasePlayer *)&ent->v);
 		state->fuser1 = pPlayer->m_GaitFramerateGauge;
+		state->iuser3 = pPlayer->m_StatusFlags & PLAYER_MOVE_MOUNTED; // Only the new rider bit changes remote rendering.
 	}
 
 	if (pEntity && pEntity->Classify() != CLASS_NONE && pEntity->Classify() != CLASS_MACHINE)
@@ -3104,6 +3107,8 @@ void CmdStart(const edict_t *player, const struct usercmd_s *cmd, unsigned int r
 
 	if (!pPlayer)
 		return;
+
+	MSRMounts::RecordCommand(pPlayer, cmd);
 
 	if (pPlayer->pev->groupinfo != 0)
 	{

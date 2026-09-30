@@ -115,7 +115,8 @@ enum {
 	PLAYER_MOVE_NOATTACK = (1 << 6),
 	PLAYER_MOVE_NOMOVE = (1 << 7),
 	PLAYER_MOVE_SITTING = (1 << 8), //JAN2010_09 Thothie - Attempting to allow inventory access while sittin again
-	PLAYER_MOVE_STOPRUN = (1 << 9)
+	PLAYER_MOVE_STOPRUN = (1 << 9),
+	PLAYER_MOVE_MOUNTED = (1 << 10)
 };
 
 
@@ -538,6 +539,7 @@ public:
 	int m_CharLastSent; //Index of last char uploaded to server
 #endif
 #ifdef VALVE_DLL
+	EHANDLE m_hMount{}; // Transient ride link; never part of an FN character save.
 	// Client caches
 	int m_ClientCurrentHand;
 	int m_iClientHP;	// the health currently known by the client.  If this changes, send a new

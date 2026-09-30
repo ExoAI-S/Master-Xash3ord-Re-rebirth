@@ -1,0 +1,31 @@
+__pycache__/
+
+# Preserve local rollback snapshots without duplicating obsolete assets in Git.
+generated/art-rollback-*/
+generated/msr/*.compiler-disabled
+generated/msr/scripts.pak
+generated/msr/liblist.gam
+
+# Earlier trial builds wrote directly into generated/. The current build is
+# under generated/msr/; retain only that final map and its validation reports.
+generated/*.bsp
+generated/*.map
+generated/*.wad
+generated/*.cfg
+generated/*.json
+generated/*.p?
+generated/*.b?
+generated/*.pln
+generated/*.hsz
+generated/*.log
+generated/*.prt
+generated/*.lin
+
+# Temporary compiler data alongside the current final map.
+generated/msr/maps/*.b?
+generated/msr/maps/*.p?
+generated/msr/maps/*.pln
+generated/msr/maps/*.hsz
+generated/msr/maps/*.log
+generated/msr/maps/*.prt
+generated/msr/maps/*.lin

@@ -1,0 +1,23 @@
+{
+  "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Mounts\\export\\plains_horse.mdl",
+  "sha256": "aa17d0a00e0040b352aa250cead06731485085d35905de0ad847814bcaa7ebd4",
+  "version": 10,
+  "bytes": 373096,
+  "bones": 22,
+  "textures": 1,
+  "bodyparts": [
+    {
+      "name": "horse",
+      "models": [
+        {
+          "name": "horse_reference",
+          "vertices": 1979,
+          "normals": 1882,
+          "meshes": 1,
+          "triangles": 3538,
+          "submitted_vertices": 6138
+        }
+      ]
+    }
+  ]
+}

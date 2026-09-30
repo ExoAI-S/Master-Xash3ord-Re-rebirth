@@ -31,6 +31,7 @@
 #include "pm_movevars.h"
 #include "pm_debug.h"
 #include "player/player.h"
+#include "ms/mount_policy.h"
 #include "filesystem_shared.h"
 #include "mathlib.h"
 #include "com_model.h"
@@ -1258,9 +1259,10 @@ void PM_WalkMove()
 
 	trace = pmove->PM_PlayerTrace(pmove->origin, dest, PM_NORMAL, -1);
 
-	// If we are not on the ground any more then
-	//  use the original movement attempt
-	if (trace.plane.normal[2] < 0.7)
+	// Only an actual steep surface hit rejects the raised movement path.
+	// A clear step-down trace has no plane normal; descending terrain may
+	// leave the floor just below its endpoint until the ground check.
+	if (trace.fraction < 1.0f && trace.plane.normal[2] < 0.7)
 		goto usedown;
 	// If the trace ended up in empty space, copy the end
 	//  over to the origin.
@@ -2943,8 +2945,17 @@ void PM_CheckParamters(void)
 		  (pmove->cmd.upmove * pmove->cmd.upmove);
 	spd = sqrt(spd);
 
-	maxspeed = pmove->clientmaxspeed; //atof( pmove->PM_Info_ValueForKey( pmove->physinfo, "maxspd" ) );
-	if (maxspeed != 0.0)
+	const bool mounted = FBitSet(pmove->iuser3, PLAYER_MOVE_MOUNTED) != 0;
+	if (mounted)
+	{
+		pmove->cmd.buttons &= ~(IN_JUMP | IN_DUCK | IN_ATTACK | IN_ATTACK2);
+		pmove->cmd.upmove = 0;
+		const bool gallop = (pmove->cmd.buttons & IN_RUN) && (pmove->cmd.buttons & IN_FORWARD) && pmove->cmd.forwardmove > 0 && !FBitSet(pmove->iuser3, PLAYER_MOVE_NORUN);
+		pmove->maxspeed = MSRMountPolicy::Speed(gallop, pmove->clientmaxspeed,
+			FBitSet(pmove->iuser3, PLAYER_MOVE_NOMOVE) != 0);
+	}
+	maxspeed = pmove->clientmaxspeed; // MSR stores effect percentages here.
+	if (!mounted && maxspeed != 0.0)
 	{
 		pmove->maxspeed = V_min(maxspeed, pmove->maxspeed);
 	}
@@ -2953,7 +2964,7 @@ void PM_CheckParamters(void)
 	//
 	// JoshA: Moved this to CheckParamters rather than working on the velocity,
 	// as otherwise it affects every integration step incorrectly.
-	if ((pmove->onground != -1) && (pmove->cmd.buttons & IN_USE))
+	if (!mounted && (pmove->onground != -1) && (pmove->cmd.buttons & IN_USE))
 	{
 		pmove->maxspeed *= 1.0f / 3.0f;
 	}
@@ -3051,6 +3062,7 @@ void PM_PlayerMove(qboolean server)
 
 	// Are we running server code?
 	pmove->server = server;
+	const bool mounted = FBitSet(pmove->iuser3, PLAYER_MOVE_MOUNTED) != 0;
 
 	// Adjust speeds etc.
 	PM_CheckParamters();
@@ -3094,6 +3106,14 @@ void PM_PlayerMove(qboolean server)
 	// Now that we are "unstuck", see where we are ( waterlevel and type, pmove->onground ).
 	PM_CatagorizePosition();
 
+	// Stop mount propulsion upon entering swimming depth. The server then
+	// releases the ride at PreThink; the player keeps ordinary swim physics.
+	if (mounted && pmove->waterlevel >= 2)
+	{
+		pmove->cmd.forwardmove = pmove->cmd.sidemove = pmove->cmd.upmove = 0;
+		pmove->velocity[0] = pmove->velocity[1] = 0;
+	}
+
 	// Store off the starting water level
 	pmove->oldwaterlevel = pmove->waterlevel;
 
@@ -3105,7 +3125,7 @@ void PM_PlayerMove(qboolean server)
 
 	g_onladder = 0;
 	// Don't run ladder code if dead or on a train
-	if (!pmove->dead && !(pmove->flags & FL_ONTRAIN))
+	if (!pmove->dead && !(pmove->flags & FL_ONTRAIN) && !mounted)
 	{
 		pLadder = PM_Ladder();
 		if (pLadder)
@@ -3119,7 +3139,7 @@ void PM_PlayerMove(qboolean server)
 	PM_Duck();
 
 	// Don't run ladder code if dead or on a train
-	if (!pmove->dead && !(pmove->flags & FL_ONTRAIN))
+	if (!pmove->dead && !(pmove->flags & FL_ONTRAIN) && !mounted)
 	{
 		if (pLadder)
 		{
@@ -3303,6 +3323,8 @@ void PM_PlayerMove(qboolean server)
 
 		break;
 	}
+	if (mounted)
+		pmove->view_ofs[2] = MSRMountPolicy::ViewHeight;
 }
 
 void PM_CreateStuckTable(void)

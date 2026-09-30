@@ -1,0 +1,6527 @@
+{
+  "map": "daragoth_plains",
+  "prototype": true,
+  "size": [
+    24000,
+    20000
+  ],
+  "bounds": {
+    "mins": [
+      -12000,
+      -10000,
+      -256
+    ],
+    "maxs": [
+      12000,
+      10000,
+      4096
+    ]
+  },
+  "requested_grid_spacing": 768,
+  "grid_cells": [
+    32,
+    31
+  ],
+  "terrain_triangles": 1984,
+  "world_brushes": 2143,
+  "entities": 490,
+  "terrain_height_range": [
+    160,
+    576
+  ],
+  "max_terrain_slope_degrees": 19.832,
+  "bridge_ramp_slope_degrees": 15.642,
+  "spawn_checks": {
+    "checked": 25,
+    "failures": []
+  },
+  "landmarks": {
+    "stable": [
+      -1700,
+      -7900,
+      416
+    ],
+    "river_center_y": 1800,
+    "bridge": [
+      0,
+      1800,
+      512
+    ],
+    "ruins": [
+      6500,
+      6200,
+      480
+    ],
+    "beacon": [
+      -4600,
+      5000,
+      320
+    ]
+  },
+  "horse": {
+    "classname": "ms_horse",
+    "origin": [
+      -1700,
+      -7900,
+      432
+    ],
+    "model": "models/mounts/plains_horse.mdl"
+  },
+  "terrain_materials": {
+    "continuous_field": "DPGRASS",
+    "continuous_road": "DPDIRT",
+    "texture_size": [
+      256,
+      256
+    ]
+  },
+  "scenery": {
+    "counts": {
+      "oak": 50,
+      "birch": 35,
+      "pine": 19,
+      "bush": 125,
+      "rocks": 65,
+      "grass": 165
+    },
+    "entities": 459,
+    "tree_collision_trunks": 104,
+    "road_clear_radius_trees": 1050,
+    "road_clear_radius_groundcover": 620,
+    "spawn_clear_radius": 240,
+    "models_original": true,
+    "wind_idle_framerate": 1,
+    "ground_sampling": "barycentric interpolation of emitted brush triangles",
+    "placements": [
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4287,
+          -7868,
+          337.858
+        ],
+        "terrain_ground_z": 340.858,
+        "base_embed_units": 3,
+        "yaw": 265,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4631,
+          -8963,
+          394.995
+        ],
+        "terrain_ground_z": 397.995,
+        "base_embed_units": 3,
+        "yaw": 148,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -2915,
+          -8398,
+          405.907
+        ],
+        "terrain_ground_z": 408.907,
+        "base_embed_units": 3,
+        "yaw": 54,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -3062,
+          -9019,
+          404.339
+        ],
+        "terrain_ground_z": 407.339,
+        "base_embed_units": 3,
+        "yaw": 319,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -3737,
+          -8746,
+          375.51
+        ],
+        "terrain_ground_z": 378.51,
+        "base_embed_units": 3,
+        "yaw": 15,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -3672,
+          -8570,
+          371.365
+        ],
+        "terrain_ground_z": 374.365,
+        "base_embed_units": 3,
+        "yaw": 218,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4000,
+          -8625,
+          372.25
+        ],
+        "terrain_ground_z": 375.25,
+        "base_embed_units": 3,
+        "yaw": 278,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -3020,
+          -8843,
+          404.787
+        ],
+        "terrain_ground_z": 407.787,
+        "base_embed_units": 3,
+        "yaw": 160,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -3946,
+          -9175,
+          395.458
+        ],
+        "terrain_ground_z": 398.458,
+        "base_embed_units": 3,
+        "yaw": 93,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -3045,
+          -9067,
+          404.52
+        ],
+        "terrain_ground_z": 407.52,
+        "base_embed_units": 3,
+        "yaw": 270,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -4245,
+          -5573,
+          261.368
+        ],
+        "terrain_ground_z": 264.368,
+        "base_embed_units": 3,
+        "yaw": 102,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -5511,
+          -5176,
+          263.579
+        ],
+        "terrain_ground_z": 266.579,
+        "base_embed_units": 3,
+        "yaw": 115,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4465,
+          -5474,
+          260.115
+        ],
+        "terrain_ground_z": 263.115,
+        "base_embed_units": 3,
+        "yaw": 180,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -4755,
+          -4335,
+          247.818
+        ],
+        "terrain_ground_z": 250.818,
+        "base_embed_units": 3,
+        "yaw": 144,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -5796,
+          -4543,
+          255.887
+        ],
+        "terrain_ground_z": 258.887,
+        "base_embed_units": 3,
+        "yaw": 63,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5715,
+          -4810,
+          257.906
+        ],
+        "terrain_ground_z": 260.906,
+        "base_embed_units": 3,
+        "yaw": 218,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -5505,
+          -4677,
+          254.23
+        ],
+        "terrain_ground_z": 257.23,
+        "base_embed_units": 3,
+        "yaw": 15,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -4056,
+          -5520,
+          260.611
+        ],
+        "terrain_ground_z": 263.611,
+        "base_embed_units": 3,
+        "yaw": 71,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5397,
+          -4550,
+          251.707
+        ],
+        "terrain_ground_z": 254.707,
+        "base_embed_units": 3,
+        "yaw": 163,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -3743,
+          -4439,
+          249.015
+        ],
+        "terrain_ground_z": 252.015,
+        "base_embed_units": 3,
+        "yaw": 192,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -6348,
+          -4688,
+          263.341
+        ],
+        "terrain_ground_z": 266.341,
+        "base_embed_units": 3,
+        "yaw": 356,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4766,
+          -4266,
+          247.073
+        ],
+        "terrain_ground_z": 250.073,
+        "base_embed_units": 3,
+        "yaw": 287,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -2855,
+          -5030,
+          256.868
+        ],
+        "terrain_ground_z": 259.868,
+        "base_embed_units": 3,
+        "yaw": 84,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          5545,
+          -5146,
+          393.852
+        ],
+        "terrain_ground_z": 396.852,
+        "base_embed_units": 3,
+        "yaw": 286,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          5990,
+          -5360,
+          389.358
+        ],
+        "terrain_ground_z": 392.358,
+        "base_embed_units": 3,
+        "yaw": 57,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          4619,
+          -3888,
+          440.31
+        ],
+        "terrain_ground_z": 443.31,
+        "base_embed_units": 3,
+        "yaw": 332,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4600,
+          -5564,
+          358.787
+        ],
+        "terrain_ground_z": 361.787,
+        "base_embed_units": 3,
+        "yaw": 359,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          5802,
+          -5959,
+          361.461
+        ],
+        "terrain_ground_z": 364.461,
+        "base_embed_units": 3,
+        "yaw": 300,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4803,
+          -6021,
+          343.356
+        ],
+        "terrain_ground_z": 346.356,
+        "base_embed_units": 3,
+        "yaw": 111,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4216,
+          -4337,
+          411.774
+        ],
+        "terrain_ground_z": 414.774,
+        "base_embed_units": 3,
+        "yaw": 15,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          6585,
+          -6339,
+          353.847
+        ],
+        "terrain_ground_z": 356.847,
+        "base_embed_units": 3,
+        "yaw": 302,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          4308,
+          -5022,
+          383.778
+        ],
+        "terrain_ground_z": 386.778,
+        "base_embed_units": 3,
+        "yaw": 350,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          5861,
+          -4915,
+          407.199
+        ],
+        "terrain_ground_z": 410.199,
+        "base_embed_units": 3,
+        "yaw": 252,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4961,
+          -4429,
+          422.754
+        ],
+        "terrain_ground_z": 425.754,
+        "base_embed_units": 3,
+        "yaw": 243,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          5107,
+          -5414,
+          376.082
+        ],
+        "terrain_ground_z": 379.082,
+        "base_embed_units": 3,
+        "yaw": 206,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          7139,
+          -2432,
+          518.065
+        ],
+        "terrain_ground_z": 521.065,
+        "base_embed_units": 3,
+        "yaw": 112,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          7165,
+          -2321,
+          521.383
+        ],
+        "terrain_ground_z": 524.383,
+        "base_embed_units": 3,
+        "yaw": 159,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          6167,
+          -3091,
+          495.465
+        ],
+        "terrain_ground_z": 498.465,
+        "base_embed_units": 3,
+        "yaw": 176,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          7537,
+          -2974,
+          496.249
+        ],
+        "terrain_ground_z": 499.249,
+        "base_embed_units": 3,
+        "yaw": 70,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          6452,
+          -2720,
+          511.508
+        ],
+        "terrain_ground_z": 514.508,
+        "base_embed_units": 3,
+        "yaw": 94,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          7393,
+          -2940,
+          497.746
+        ],
+        "terrain_ground_z": 500.746,
+        "base_embed_units": 3,
+        "yaw": 186,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          6538,
+          -3035,
+          497.886
+        ],
+        "terrain_ground_z": 500.886,
+        "base_embed_units": 3,
+        "yaw": 215,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          5438,
+          -3189,
+          485.232
+        ],
+        "terrain_ground_z": 488.232,
+        "base_embed_units": 3,
+        "yaw": 300,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          6021,
+          -3763,
+          466.43
+        ],
+        "terrain_ground_z": 469.43,
+        "base_embed_units": 3,
+        "yaw": 132,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -6569,
+          228,
+          249.605
+        ],
+        "terrain_ground_z": 252.605,
+        "base_embed_units": 3,
+        "yaw": 213,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6727,
+          46,
+          255.508
+        ],
+        "terrain_ground_z": 258.508,
+        "base_embed_units": 3,
+        "yaw": 124,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6035,
+          -323,
+          260.357
+        ],
+        "terrain_ground_z": 263.357,
+        "base_embed_units": 3,
+        "yaw": 93,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5875,
+          -1203,
+          253.0
+        ],
+        "terrain_ground_z": 256.0,
+        "base_embed_units": 3,
+        "yaw": 226,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -4834,
+          531,
+          237.194
+        ],
+        "terrain_ground_z": 240.194,
+        "base_embed_units": 3,
+        "yaw": 299,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6844,
+          454,
+          242.933
+        ],
+        "terrain_ground_z": 245.933,
+        "base_embed_units": 3,
+        "yaw": 215,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -6365,
+          -1171,
+          260.139
+        ],
+        "terrain_ground_z": 263.139,
+        "base_embed_units": 3,
+        "yaw": 288,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5267,
+          278,
+          246.176
+        ],
+        "terrain_ground_z": 249.176,
+        "base_embed_units": 3,
+        "yaw": 236,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -5753,
+          -367,
+          258.333
+        ],
+        "terrain_ground_z": 261.333,
+        "base_embed_units": 3,
+        "yaw": 171,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4896,
+          -121,
+          251.392
+        ],
+        "terrain_ground_z": 254.392,
+        "base_embed_units": 3,
+        "yaw": 237,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5235,
+          -111,
+          250.2
+        ],
+        "terrain_ground_z": 253.2,
+        "base_embed_units": 3,
+        "yaw": 275,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -6255,
+          357,
+          245.422
+        ],
+        "terrain_ground_z": 248.422,
+        "base_embed_units": 3,
+        "yaw": 61,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4703,
+          3134,
+          435.91
+        ],
+        "terrain_ground_z": 438.91,
+        "base_embed_units": 3,
+        "yaw": 261,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          4063,
+          3634,
+          470.838
+        ],
+        "terrain_ground_z": 473.838,
+        "base_embed_units": 3,
+        "yaw": 275,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          4814,
+          3109,
+          431.753
+        ],
+        "terrain_ground_z": 434.753,
+        "base_embed_units": 3,
+        "yaw": 345,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          4224,
+          3099,
+          427.146
+        ],
+        "terrain_ground_z": 430.146,
+        "base_embed_units": 3,
+        "yaw": 90,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          4867,
+          3634,
+          475.499
+        ],
+        "terrain_ground_z": 478.499,
+        "base_embed_units": 3,
+        "yaw": 67,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          4288,
+          3614,
+          472.806
+        ],
+        "terrain_ground_z": 475.806,
+        "base_embed_units": 3,
+        "yaw": 353,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          3917,
+          2604,
+          313.821
+        ],
+        "terrain_ground_z": 316.821,
+        "base_embed_units": 3,
+        "yaw": 89,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          3734,
+          3016,
+          408.118
+        ],
+        "terrain_ground_z": 411.118,
+        "base_embed_units": 3,
+        "yaw": 81,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          5418,
+          2629,
+          319.328
+        ],
+        "terrain_ground_z": 322.328,
+        "base_embed_units": 3,
+        "yaw": 263,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          4729,
+          3526,
+          473.167
+        ],
+        "terrain_ground_z": 476.167,
+        "base_embed_units": 3,
+        "yaw": 353,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          4375,
+          3203,
+          446.05
+        ],
+        "terrain_ground_z": 449.05,
+        "base_embed_units": 3,
+        "yaw": 61,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          4550,
+          3522,
+          473.081
+        ],
+        "terrain_ground_z": 476.081,
+        "base_embed_units": 3,
+        "yaw": 245,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -7334,
+          7164,
+          348.255
+        ],
+        "terrain_ground_z": 351.255,
+        "base_embed_units": 3,
+        "yaw": 46,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -6866,
+          7286,
+          358.516
+        ],
+        "terrain_ground_z": 361.516,
+        "base_embed_units": 3,
+        "yaw": 167,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -7337,
+          6028,
+          312.944
+        ],
+        "terrain_ground_z": 315.944,
+        "base_embed_units": 3,
+        "yaw": 7,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6811,
+          7186,
+          354.784
+        ],
+        "terrain_ground_z": 357.784,
+        "base_embed_units": 3,
+        "yaw": 245,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6845,
+          6049,
+          318.646
+        ],
+        "terrain_ground_z": 321.646,
+        "base_embed_units": 3,
+        "yaw": 120,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6639,
+          6521,
+          334.655
+        ],
+        "terrain_ground_z": 337.655,
+        "base_embed_units": 3,
+        "yaw": 111,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -7087,
+          7038,
+          345.449
+        ],
+        "terrain_ground_z": 348.449,
+        "base_embed_units": 3,
+        "yaw": 91,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -8047,
+          6455,
+          316.315
+        ],
+        "terrain_ground_z": 319.315,
+        "base_embed_units": 3,
+        "yaw": 157,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6120,
+          7225,
+          370.559
+        ],
+        "terrain_ground_z": 373.559,
+        "base_embed_units": 3,
+        "yaw": 241,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -8042,
+          6713,
+          324.725
+        ],
+        "terrain_ground_z": 327.725,
+        "base_embed_units": 3,
+        "yaw": 320,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -8154,
+          7679,
+          354.818
+        ],
+        "terrain_ground_z": 357.818,
+        "base_embed_units": 3,
+        "yaw": 75,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -7981,
+          7936,
+          366.693
+        ],
+        "terrain_ground_z": 369.693,
+        "base_embed_units": 3,
+        "yaw": 297,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          7927,
+          7542,
+          387.904
+        ],
+        "terrain_ground_z": 390.904,
+        "base_embed_units": 3,
+        "yaw": 36,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          8113,
+          7777,
+          346.986
+        ],
+        "terrain_ground_z": 349.986,
+        "base_embed_units": 3,
+        "yaw": 54,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          8730,
+          8175,
+          321.354
+        ],
+        "terrain_ground_z": 324.354,
+        "base_embed_units": 3,
+        "yaw": 312,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          8238,
+          7607,
+          346.612
+        ],
+        "terrain_ground_z": 349.612,
+        "base_embed_units": 3,
+        "yaw": 272,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          8357,
+          8480,
+          310.684
+        ],
+        "terrain_ground_z": 313.684,
+        "base_embed_units": 3,
+        "yaw": 325,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          7058,
+          7797,
+          376.279
+        ],
+        "terrain_ground_z": 379.279,
+        "base_embed_units": 3,
+        "yaw": 125,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          7993,
+          7581,
+          379.614
+        ],
+        "terrain_ground_z": 382.614,
+        "base_embed_units": 3,
+        "yaw": 32,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          7776,
+          8236,
+          335.443
+        ],
+        "terrain_ground_z": 338.443,
+        "base_embed_units": 3,
+        "yaw": 342,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          7190,
+          7853,
+          370.639
+        ],
+        "terrain_ground_z": 373.639,
+        "base_embed_units": 3,
+        "yaw": 68,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -5612,
+          5133,
+          307.438
+        ],
+        "terrain_ground_z": 310.438,
+        "base_embed_units": 3,
+        "yaw": 35,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -5916,
+          5179,
+          302.652
+        ],
+        "terrain_ground_z": 305.652,
+        "base_embed_units": 3,
+        "yaw": 256,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6292,
+          5984,
+          322.881
+        ],
+        "terrain_ground_z": 325.881,
+        "base_embed_units": 3,
+        "yaw": 351,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6186,
+          4683,
+          290.15
+        ],
+        "terrain_ground_z": 293.15,
+        "base_embed_units": 3,
+        "yaw": 178,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -4047,
+          5321,
+          332.758
+        ],
+        "terrain_ground_z": 335.758,
+        "base_embed_units": 3,
+        "yaw": 103,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -6035,
+          5113,
+          299.435
+        ],
+        "terrain_ground_z": 302.435,
+        "base_embed_units": 3,
+        "yaw": 19,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -5541,
+          5429,
+          316.05
+        ],
+        "terrain_ground_z": 319.05,
+        "base_embed_units": 3,
+        "yaw": 236,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -5588,
+          6041,
+          329.124
+        ],
+        "terrain_ground_z": 332.124,
+        "base_embed_units": 3,
+        "yaw": 233,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -9065,
+          -1303,
+          327.773
+        ],
+        "terrain_ground_z": 330.773,
+        "base_embed_units": 3,
+        "yaw": 234,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -9441,
+          -3472,
+          337.611
+        ],
+        "terrain_ground_z": 340.611,
+        "base_embed_units": 3,
+        "yaw": 292,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "pine",
+        "model": "models/plains/plains_pine.mdl",
+        "origin": [
+          -8733,
+          -1629,
+          316.456
+        ],
+        "terrain_ground_z": 319.456,
+        "base_embed_units": 3,
+        "yaw": 64,
+        "radius": 169,
+        "height": 520
+      },
+      {
+        "kind": "birch",
+        "model": "models/plains/plains_birch.mdl",
+        "origin": [
+          -8870,
+          -2769,
+          320.84
+        ],
+        "terrain_ground_z": 323.84,
+        "base_embed_units": 3,
+        "yaw": 86,
+        "radius": 112,
+        "height": 430
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -8506,
+          -1631,
+          309.192
+        ],
+        "terrain_ground_z": 312.192,
+        "base_embed_units": 3,
+        "yaw": 80,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -8910,
+          -2351,
+          322.12
+        ],
+        "terrain_ground_z": 325.12,
+        "base_embed_units": 3,
+        "yaw": 225,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "oak",
+        "model": "models/plains/plains_oak.mdl",
+        "origin": [
+          -8298,
+          -2052,
+          302.536
+        ],
+        "terrain_ground_z": 305.536,
+        "base_embed_units": 3,
+        "yaw": 83,
+        "radius": 277,
+        "height": 480
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8144,
+          -7574,
+          367.262
+        ],
+        "terrain_ground_z": 368.262,
+        "base_embed_units": 1,
+        "yaw": 274,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4349,
+          2771,
+          362.88
+        ],
+        "terrain_ground_z": 363.88,
+        "base_embed_units": 1,
+        "yaw": 163,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5727,
+          -5239,
+          269.243
+        ],
+        "terrain_ground_z": 270.243,
+        "base_embed_units": 1,
+        "yaw": 45,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5092,
+          -2975,
+          496.666
+        ],
+        "terrain_ground_z": 497.666,
+        "base_embed_units": 1,
+        "yaw": 238,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -10518,
+          -6039,
+          367.192
+        ],
+        "terrain_ground_z": 368.192,
+        "base_embed_units": 1,
+        "yaw": 111,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          1484,
+          -8954,
+          280.004
+        ],
+        "terrain_ground_z": 281.004,
+        "base_embed_units": 1,
+        "yaw": 0,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8329,
+          8003,
+          364.602
+        ],
+        "terrain_ground_z": 365.602,
+        "base_embed_units": 1,
+        "yaw": 298,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4366,
+          -5761,
+          267.432
+        ],
+        "terrain_ground_z": 268.432,
+        "base_embed_units": 1,
+        "yaw": 174,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6973,
+          7263,
+          358.381
+        ],
+        "terrain_ground_z": 359.381,
+        "base_embed_units": 1,
+        "yaw": 198,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6857,
+          353,
+          249.65
+        ],
+        "terrain_ground_z": 250.65,
+        "base_embed_units": 1,
+        "yaw": 254,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6719,
+          415,
+          244.488
+        ],
+        "terrain_ground_z": 245.488,
+        "base_embed_units": 1,
+        "yaw": 32,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -941,
+          4416,
+          383.73
+        ],
+        "terrain_ground_z": 384.73,
+        "base_embed_units": 1,
+        "yaw": 272,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4427,
+          -5440,
+          364.483
+        ],
+        "terrain_ground_z": 365.483,
+        "base_embed_units": 1,
+        "yaw": 155,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          3734,
+          4543,
+          471.639
+        ],
+        "terrain_ground_z": 472.639,
+        "base_embed_units": 1,
+        "yaw": 299,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8617,
+          -1994,
+          314.744
+        ],
+        "terrain_ground_z": 315.744,
+        "base_embed_units": 1,
+        "yaw": 328,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5277,
+          -5323,
+          266.257
+        ],
+        "terrain_ground_z": 267.257,
+        "base_embed_units": 1,
+        "yaw": 135,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5694,
+          -4660,
+          258.063
+        ],
+        "terrain_ground_z": 259.063,
+        "base_embed_units": 1,
+        "yaw": 323,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4383,
+          -4219,
+          248.565
+        ],
+        "terrain_ground_z": 249.565,
+        "base_embed_units": 1,
+        "yaw": 177,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8586,
+          -2445,
+          313.752
+        ],
+        "terrain_ground_z": 314.752,
+        "base_embed_units": 1,
+        "yaw": 221,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6918,
+          400,
+          249.129
+        ],
+        "terrain_ground_z": 250.129,
+        "base_embed_units": 1,
+        "yaw": 194,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7546,
+          -8880,
+          316.079
+        ],
+        "terrain_ground_z": 317.079,
+        "base_embed_units": 1,
+        "yaw": 82,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -7689,
+          6098,
+          312.703
+        ],
+        "terrain_ground_z": 313.703,
+        "base_embed_units": 1,
+        "yaw": 113,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -10868,
+          -3538,
+          384.563
+        ],
+        "terrain_ground_z": 385.563,
+        "base_embed_units": 1,
+        "yaw": 56,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6253,
+          -3413,
+          257.699
+        ],
+        "terrain_ground_z": 258.699,
+        "base_embed_units": 1,
+        "yaw": 289,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5662,
+          -241,
+          258.0
+        ],
+        "terrain_ground_z": 259.0,
+        "base_embed_units": 1,
+        "yaw": 63,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          1774,
+          4299,
+          447.987
+        ],
+        "terrain_ground_z": 448.987,
+        "base_embed_units": 1,
+        "yaw": 23,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4526,
+          -4474,
+          251.318
+        ],
+        "terrain_ground_z": 252.318,
+        "base_embed_units": 1,
+        "yaw": 201,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6590,
+          7196,
+          361.28
+        ],
+        "terrain_ground_z": 362.28,
+        "base_embed_units": 1,
+        "yaw": 267,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7580,
+          8237,
+          339.458
+        ],
+        "terrain_ground_z": 340.458,
+        "base_embed_units": 1,
+        "yaw": 45,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4438,
+          -4366,
+          250.152
+        ],
+        "terrain_ground_z": 251.152,
+        "base_embed_units": 1,
+        "yaw": 142,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5964,
+          -5943,
+          365.881
+        ],
+        "terrain_ground_z": 366.881,
+        "base_embed_units": 1,
+        "yaw": 113,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -7762,
+          5038,
+          291.815
+        ],
+        "terrain_ground_z": 292.815,
+        "base_embed_units": 1,
+        "yaw": 302,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4105,
+          -5637,
+          264.751
+        ],
+        "terrain_ground_z": 265.751,
+        "base_embed_units": 1,
+        "yaw": 70,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8422,
+          -7294,
+          361.159
+        ],
+        "terrain_ground_z": 362.159,
+        "base_embed_units": 1,
+        "yaw": 266,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          6552,
+          -8627,
+          297.608
+        ],
+        "terrain_ground_z": 298.608,
+        "base_embed_units": 1,
+        "yaw": 253,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5586,
+          -3411,
+          479.216
+        ],
+        "terrain_ground_z": 480.216,
+        "base_embed_units": 1,
+        "yaw": 91,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4153,
+          -4838,
+          390.604
+        ],
+        "terrain_ground_z": 391.604,
+        "base_embed_units": 1,
+        "yaw": 188,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5320,
+          6361,
+          345.06
+        ],
+        "terrain_ground_z": 346.06,
+        "base_embed_units": 1,
+        "yaw": 208,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4265,
+          -5197,
+          375.873
+        ],
+        "terrain_ground_z": 376.873,
+        "base_embed_units": 1,
+        "yaw": 249,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5405,
+          5638,
+          325.466
+        ],
+        "terrain_ground_z": 326.466,
+        "base_embed_units": 1,
+        "yaw": 243,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9316,
+          -3986,
+          330.062
+        ],
+        "terrain_ground_z": 331.062,
+        "base_embed_units": 1,
+        "yaw": 205,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          10811,
+          -7420,
+          390.182
+        ],
+        "terrain_ground_z": 391.182,
+        "base_embed_units": 1,
+        "yaw": 169,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          6271,
+          -6413,
+          350.101
+        ],
+        "terrain_ground_z": 351.101,
+        "base_embed_units": 1,
+        "yaw": 89,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          844,
+          175,
+          409.878
+        ],
+        "terrain_ground_z": 410.878,
+        "base_embed_units": 1,
+        "yaw": 92,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          447,
+          -8220,
+          337.802
+        ],
+        "terrain_ground_z": 338.802,
+        "base_embed_units": 1,
+        "yaw": 252,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5721,
+          2756,
+          353.656
+        ],
+        "terrain_ground_z": 354.656,
+        "base_embed_units": 1,
+        "yaw": 110,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4022,
+          -2618,
+          491.722
+        ],
+        "terrain_ground_z": 492.722,
+        "base_embed_units": 1,
+        "yaw": 105,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          3906,
+          3478,
+          467.795
+        ],
+        "terrain_ground_z": 468.795,
+        "base_embed_units": 1,
+        "yaw": 345,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4863,
+          3222,
+          452.543
+        ],
+        "terrain_ground_z": 453.543,
+        "base_embed_units": 1,
+        "yaw": 171,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -7868,
+          6112,
+          311.096
+        ],
+        "terrain_ground_z": 312.096,
+        "base_embed_units": 1,
+        "yaw": 49,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3373,
+          -9021,
+          403.021
+        ],
+        "terrain_ground_z": 404.021,
+        "base_embed_units": 1,
+        "yaw": 312,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4122,
+          3198,
+          444.52
+        ],
+        "terrain_ground_z": 445.52,
+        "base_embed_units": 1,
+        "yaw": 290,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5578,
+          3036,
+          418.116
+        ],
+        "terrain_ground_z": 419.116,
+        "base_embed_units": 1,
+        "yaw": 105,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          10285,
+          -2823,
+          449.1
+        ],
+        "terrain_ground_z": 450.1,
+        "base_embed_units": 1,
+        "yaw": 210,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -2704,
+          -8430,
+          410.157
+        ],
+        "terrain_ground_z": 411.157,
+        "base_embed_units": 1,
+        "yaw": 340,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9003,
+          -1201,
+          327.128
+        ],
+        "terrain_ground_z": 328.128,
+        "base_embed_units": 1,
+        "yaw": 23,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4810,
+          28,
+          251.088
+        ],
+        "terrain_ground_z": 252.088,
+        "base_embed_units": 1,
+        "yaw": 256,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4609,
+          -5523,
+          263.806
+        ],
+        "terrain_ground_z": 264.806,
+        "base_embed_units": 1,
+        "yaw": 319,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9984,
+          5885,
+          298.557
+        ],
+        "terrain_ground_z": 299.557,
+        "base_embed_units": 1,
+        "yaw": 312,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          9494,
+          33,
+          460.338
+        ],
+        "terrain_ground_z": 461.338,
+        "base_embed_units": 1,
+        "yaw": 54,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4278,
+          4012,
+          484.992
+        ],
+        "terrain_ground_z": 485.992,
+        "base_embed_units": 1,
+        "yaw": 20,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5371,
+          163,
+          523.141
+        ],
+        "terrain_ground_z": 524.141,
+        "base_embed_units": 1,
+        "yaw": 358,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9103,
+          -827,
+          331.395
+        ],
+        "terrain_ground_z": 332.395,
+        "base_embed_units": 1,
+        "yaw": 86,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          6695,
+          -2900,
+          505.724
+        ],
+        "terrain_ground_z": 506.724,
+        "base_embed_units": 1,
+        "yaw": 258,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5986,
+          -40,
+          255.865
+        ],
+        "terrain_ground_z": 256.865,
+        "base_embed_units": 1,
+        "yaw": 180,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9291,
+          -8858,
+          414.891
+        ],
+        "terrain_ground_z": 415.891,
+        "base_embed_units": 1,
+        "yaw": 301,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9398,
+          -8662,
+          407.393
+        ],
+        "terrain_ground_z": 408.393,
+        "base_embed_units": 1,
+        "yaw": 48,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          6573,
+          -3212,
+          492.232
+        ],
+        "terrain_ground_z": 493.232,
+        "base_embed_units": 1,
+        "yaw": 304,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3521,
+          -4659,
+          255.0
+        ],
+        "terrain_ground_z": 256.0,
+        "base_embed_units": 1,
+        "yaw": 267,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6032,
+          4583,
+          292.154
+        ],
+        "terrain_ground_z": 293.154,
+        "base_embed_units": 1,
+        "yaw": 236,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          2612,
+          5174,
+          439.248
+        ],
+        "terrain_ground_z": 440.248,
+        "base_embed_units": 1,
+        "yaw": 161,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3605,
+          -2906,
+          254.71
+        ],
+        "terrain_ground_z": 255.71,
+        "base_embed_units": 1,
+        "yaw": 358,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8533,
+          -2296,
+          312.056
+        ],
+        "terrain_ground_z": 313.056,
+        "base_embed_units": 1,
+        "yaw": 140,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7910,
+          7785,
+          357.204
+        ],
+        "terrain_ground_z": 358.204,
+        "base_embed_units": 1,
+        "yaw": 69,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9865,
+          -7293,
+          372.528
+        ],
+        "terrain_ground_z": 373.528,
+        "base_embed_units": 1,
+        "yaw": 333,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          3958,
+          -4554,
+          399.308
+        ],
+        "terrain_ground_z": 400.308,
+        "base_embed_units": 1,
+        "yaw": 303,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          8206,
+          7628,
+          353.279
+        ],
+        "terrain_ground_z": 354.279,
+        "base_embed_units": 1,
+        "yaw": 356,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3380,
+          -8640,
+          391.966
+        ],
+        "terrain_ground_z": 392.966,
+        "base_embed_units": 1,
+        "yaw": 176,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6117,
+          -4412,
+          259.897
+        ],
+        "terrain_ground_z": 260.897,
+        "base_embed_units": 1,
+        "yaw": 229,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4817,
+          -4739,
+          406.484
+        ],
+        "terrain_ground_z": 407.484,
+        "base_embed_units": 1,
+        "yaw": 166,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6867,
+          6928,
+          346.222
+        ],
+        "terrain_ground_z": 347.222,
+        "base_embed_units": 1,
+        "yaw": 169,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          8271,
+          7536,
+          347.553
+        ],
+        "terrain_ground_z": 348.553,
+        "base_embed_units": 1,
+        "yaw": 206,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5395,
+          -199,
+          254.698
+        ],
+        "terrain_ground_z": 255.698,
+        "base_embed_units": 1,
+        "yaw": 266,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          2153,
+          -8622,
+          272.035
+        ],
+        "terrain_ground_z": 273.035,
+        "base_embed_units": 1,
+        "yaw": 156,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8637,
+          -1770,
+          315.384
+        ],
+        "terrain_ground_z": 316.384,
+        "base_embed_units": 1,
+        "yaw": 317,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4943,
+          3207,
+          450.048
+        ],
+        "terrain_ground_z": 451.048,
+        "base_embed_units": 1,
+        "yaw": 231,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -679,
+          5745,
+          397.303
+        ],
+        "terrain_ground_z": 398.303,
+        "base_embed_units": 1,
+        "yaw": 207,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -2727,
+          -9047,
+          409.292
+        ],
+        "terrain_ground_z": 410.292,
+        "base_embed_units": 1,
+        "yaw": 326,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          2983,
+          4984,
+          449.345
+        ],
+        "terrain_ground_z": 450.345,
+        "base_embed_units": 1,
+        "yaw": 290,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          10946,
+          2911,
+          302.501
+        ],
+        "terrain_ground_z": 303.501,
+        "base_embed_units": 1,
+        "yaw": 212,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4965,
+          -372,
+          258.04
+        ],
+        "terrain_ground_z": 259.04,
+        "base_embed_units": 1,
+        "yaw": 125,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4564,
+          3389,
+          472.209
+        ],
+        "terrain_ground_z": 473.209,
+        "base_embed_units": 1,
+        "yaw": 95,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4243,
+          3434,
+          470.44
+        ],
+        "terrain_ground_z": 471.44,
+        "base_embed_units": 1,
+        "yaw": 300,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4473,
+          -302,
+          560.543
+        ],
+        "terrain_ground_z": 561.543,
+        "base_embed_units": 1,
+        "yaw": 56,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4648,
+          2906,
+          399.998
+        ],
+        "terrain_ground_z": 400.998,
+        "base_embed_units": 1,
+        "yaw": 163,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4200,
+          -5721,
+          266.568
+        ],
+        "terrain_ground_z": 267.568,
+        "base_embed_units": 1,
+        "yaw": 330,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3905,
+          -8962,
+          387.81
+        ],
+        "terrain_ground_z": 388.81,
+        "base_embed_units": 1,
+        "yaw": 277,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -422,
+          5262,
+          400.101
+        ],
+        "terrain_ground_z": 401.101,
+        "base_embed_units": 1,
+        "yaw": 199,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5907,
+          4708,
+          294.837
+        ],
+        "terrain_ground_z": 295.837,
+        "base_embed_units": 1,
+        "yaw": 269,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4954,
+          -8806,
+          395.356
+        ],
+        "terrain_ground_z": 396.356,
+        "base_embed_units": 1,
+        "yaw": 90,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9967,
+          -2615,
+          360.021
+        ],
+        "terrain_ground_z": 361.021,
+        "base_embed_units": 1,
+        "yaw": 92,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9578,
+          -3771,
+          340.767
+        ],
+        "terrain_ground_z": 341.767,
+        "base_embed_units": 1,
+        "yaw": 288,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5076,
+          -5528,
+          372.497
+        ],
+        "terrain_ground_z": 373.497,
+        "base_embed_units": 1,
+        "yaw": 48,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4629,
+          -4070,
+          433.925
+        ],
+        "terrain_ground_z": 434.925,
+        "base_embed_units": 1,
+        "yaw": 81,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -8484,
+          -1459,
+          310.488
+        ],
+        "terrain_ground_z": 311.488,
+        "base_embed_units": 1,
+        "yaw": 223,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4010,
+          3429,
+          467.846
+        ],
+        "terrain_ground_z": 468.846,
+        "base_embed_units": 1,
+        "yaw": 211,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5232,
+          -4236,
+          248.749
+        ],
+        "terrain_ground_z": 249.749,
+        "base_embed_units": 1,
+        "yaw": 327,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          3671,
+          -6274,
+          319.109
+        ],
+        "terrain_ground_z": 320.109,
+        "base_embed_units": 1,
+        "yaw": 257,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5099,
+          -4410,
+          250.628
+        ],
+        "terrain_ground_z": 251.628,
+        "base_embed_units": 1,
+        "yaw": 179,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -9934,
+          -3530,
+          354.761
+        ],
+        "terrain_ground_z": 355.761,
+        "base_embed_units": 1,
+        "yaw": 121,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -4276,
+          -8302,
+          363.24
+        ],
+        "terrain_ground_z": 364.24,
+        "base_embed_units": 1,
+        "yaw": 322,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3008,
+          -9199,
+          406.915
+        ],
+        "terrain_ground_z": 407.915,
+        "base_embed_units": 1,
+        "yaw": 154,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7513,
+          7927,
+          363.601
+        ],
+        "terrain_ground_z": 364.601,
+        "base_embed_units": 1,
+        "yaw": 110,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -5419,
+          5543,
+          323.114
+        ],
+        "terrain_ground_z": 324.114,
+        "base_embed_units": 1,
+        "yaw": 99,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4183,
+          -4178,
+          422.005
+        ],
+        "terrain_ground_z": 423.005,
+        "base_embed_units": 1,
+        "yaw": 189,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7189,
+          7687,
+          390.107
+        ],
+        "terrain_ground_z": 391.107,
+        "base_embed_units": 1,
+        "yaw": 137,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          2663,
+          -3563,
+          418.283
+        ],
+        "terrain_ground_z": 419.283,
+        "base_embed_units": 1,
+        "yaw": 250,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          5715,
+          -3818,
+          463.015
+        ],
+        "terrain_ground_z": 464.015,
+        "base_embed_units": 1,
+        "yaw": 228,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          8833,
+          7941,
+          322.584
+        ],
+        "terrain_ground_z": 323.584,
+        "base_embed_units": 1,
+        "yaw": 329,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -3515,
+          -9017,
+          401.068
+        ],
+        "terrain_ground_z": 402.068,
+        "base_embed_units": 1,
+        "yaw": 164,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -7189,
+          15,
+          264.041
+        ],
+        "terrain_ground_z": 265.041,
+        "base_embed_units": 1,
+        "yaw": 29,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          7903,
+          7978,
+          349.168
+        ],
+        "terrain_ground_z": 350.168,
+        "base_embed_units": 1,
+        "yaw": 237,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          4433,
+          3397,
+          471.667
+        ],
+        "terrain_ground_z": 472.667,
+        "base_embed_units": 1,
+        "yaw": 233,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          2491,
+          -3733,
+          405.438
+        ],
+        "terrain_ground_z": 406.438,
+        "base_embed_units": 1,
+        "yaw": 336,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "bush",
+        "model": "models/plains/plains_bush.mdl",
+        "origin": [
+          -6902,
+          3566,
+          268.031
+        ],
+        "terrain_ground_z": 269.031,
+        "base_embed_units": 1,
+        "yaw": 217,
+        "radius": 56,
+        "height": 64
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4142,
+          -6247,
+          281.229
+        ],
+        "terrain_ground_z": 282.229,
+        "base_embed_units": 1,
+        "yaw": 316,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7100,
+          7938,
+          367.175
+        ],
+        "terrain_ground_z": 368.175,
+        "base_embed_units": 1,
+        "yaw": 119,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7859,
+          5865,
+          305.852
+        ],
+        "terrain_ground_z": 306.852,
+        "base_embed_units": 1,
+        "yaw": 116,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6439,
+          -6310,
+          355.229
+        ],
+        "terrain_ground_z": 356.229,
+        "base_embed_units": 1,
+        "yaw": 107,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6103,
+          -5915,
+          368.574
+        ],
+        "terrain_ground_z": 369.574,
+        "base_embed_units": 1,
+        "yaw": 350,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6297,
+          4794,
+          294.547
+        ],
+        "terrain_ground_z": 295.547,
+        "base_embed_units": 1,
+        "yaw": 145,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4358,
+          3330,
+          468.986
+        ],
+        "terrain_ground_z": 469.986,
+        "base_embed_units": 1,
+        "yaw": 22,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6699,
+          6867,
+          346.582
+        ],
+        "terrain_ground_z": 347.582,
+        "base_embed_units": 1,
+        "yaw": 37,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -9114,
+          -2004,
+          330.648
+        ],
+        "terrain_ground_z": 331.648,
+        "base_embed_units": 1,
+        "yaw": 295,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8702,
+          7304,
+          336.832
+        ],
+        "terrain_ground_z": 337.832,
+        "base_embed_units": 1,
+        "yaw": 201,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6377,
+          -757,
+          266.865
+        ],
+        "terrain_ground_z": 267.865,
+        "base_embed_units": 1,
+        "yaw": 140,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4348,
+          -4484,
+          410.052
+        ],
+        "terrain_ground_z": 411.052,
+        "base_embed_units": 1,
+        "yaw": 99,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4367,
+          -8826,
+          386.857
+        ],
+        "terrain_ground_z": 387.857,
+        "base_embed_units": 1,
+        "yaw": 260,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8354,
+          6313,
+          310.441
+        ],
+        "terrain_ground_z": 311.441,
+        "base_embed_units": 1,
+        "yaw": 11,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7892,
+          7386,
+          408.744
+        ],
+        "terrain_ground_z": 409.744,
+        "base_embed_units": 1,
+        "yaw": 326,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5220,
+          -5379,
+          267.178
+        ],
+        "terrain_ground_z": 268.178,
+        "base_embed_units": 1,
+        "yaw": 351,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          3813,
+          2752,
+          353.192
+        ],
+        "terrain_ground_z": 354.192,
+        "base_embed_units": 1,
+        "yaw": 255,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5449,
+          5546,
+          322.539
+        ],
+        "terrain_ground_z": 323.539,
+        "base_embed_units": 1,
+        "yaw": 107,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7839,
+          8361,
+          327.325
+        ],
+        "terrain_ground_z": 328.325,
+        "base_embed_units": 1,
+        "yaw": 8,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4732,
+          3558,
+          475.858
+        ],
+        "terrain_ground_z": 476.858,
+        "base_embed_units": 1,
+        "yaw": 2,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6031,
+          -6346,
+          349.711
+        ],
+        "terrain_ground_z": 350.711,
+        "base_embed_units": 1,
+        "yaw": 336,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8659,
+          8521,
+          311.0
+        ],
+        "terrain_ground_z": 312.0,
+        "base_embed_units": 1,
+        "yaw": 3,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          3731,
+          3096,
+          423.389
+        ],
+        "terrain_ground_z": 424.389,
+        "base_embed_units": 1,
+        "yaw": 344,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6179,
+          -4161,
+          257.849
+        ],
+        "terrain_ground_z": 258.849,
+        "base_embed_units": 1,
+        "yaw": 315,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          2072,
+          -3010,
+          423.272
+        ],
+        "terrain_ground_z": 424.272,
+        "base_embed_units": 1,
+        "yaw": 246,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6565,
+          -4574,
+          266.425
+        ],
+        "terrain_ground_z": 267.425,
+        "base_embed_units": 1,
+        "yaw": 94,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4053,
+          -5477,
+          262.147
+        ],
+        "terrain_ground_z": 263.147,
+        "base_embed_units": 1,
+        "yaw": 149,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -10652,
+          8462,
+          322.527
+        ],
+        "terrain_ground_z": 323.527,
+        "base_embed_units": 1,
+        "yaw": 158,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7134,
+          8387,
+          330.401
+        ],
+        "terrain_ground_z": 331.401,
+        "base_embed_units": 1,
+        "yaw": 2,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6635,
+          -258,
+          267.352
+        ],
+        "terrain_ground_z": 268.352,
+        "base_embed_units": 1,
+        "yaw": 32,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5353,
+          -3549,
+          470.771
+        ],
+        "terrain_ground_z": 471.771,
+        "base_embed_units": 1,
+        "yaw": 215,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -9777,
+          -8793,
+          407.598
+        ],
+        "terrain_ground_z": 408.598,
+        "base_embed_units": 1,
+        "yaw": 280,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6973,
+          6768,
+          339.909
+        ],
+        "terrain_ground_z": 340.909,
+        "base_embed_units": 1,
+        "yaw": 139,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7132,
+          -2166,
+          528.755
+        ],
+        "terrain_ground_z": 529.755,
+        "base_embed_units": 1,
+        "yaw": 18,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7993,
+          -3206,
+          485.86
+        ],
+        "terrain_ground_z": 486.86,
+        "base_embed_units": 1,
+        "yaw": 206,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8319,
+          8385,
+          377.188
+        ],
+        "terrain_ground_z": 378.188,
+        "base_embed_units": 1,
+        "yaw": 130,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6492,
+          287,
+          249.692
+        ],
+        "terrain_ground_z": 250.692,
+        "base_embed_units": 1,
+        "yaw": 58,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7714,
+          -2591,
+          508.761
+        ],
+        "terrain_ground_z": 509.761,
+        "base_embed_units": 1,
+        "yaw": 221,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7244,
+          -1602,
+          543.129
+        ],
+        "terrain_ground_z": 544.129,
+        "base_embed_units": 1,
+        "yaw": 238,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6758,
+          -5287,
+          402.617
+        ],
+        "terrain_ground_z": 403.617,
+        "base_embed_units": 1,
+        "yaw": 66,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4571,
+          7465,
+          400.726
+        ],
+        "terrain_ground_z": 401.726,
+        "base_embed_units": 1,
+        "yaw": 190,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5266,
+          -357,
+          255.03
+        ],
+        "terrain_ground_z": 256.03,
+        "base_embed_units": 1,
+        "yaw": 159,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5390,
+          -4203,
+          249.886
+        ],
+        "terrain_ground_z": 250.886,
+        "base_embed_units": 1,
+        "yaw": 267,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5460,
+          -303,
+          256.516
+        ],
+        "terrain_ground_z": 257.516,
+        "base_embed_units": 1,
+        "yaw": 54,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          10549,
+          900,
+          298.477
+        ],
+        "terrain_ground_z": 299.477,
+        "base_embed_units": 1,
+        "yaw": 14,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5366,
+          -5015,
+          399.6
+        ],
+        "terrain_ground_z": 400.6,
+        "base_embed_units": 1,
+        "yaw": 260,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -434,
+          7051,
+          407.0
+        ],
+        "terrain_ground_z": 408.0,
+        "base_embed_units": 1,
+        "yaw": 301,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4199,
+          3511,
+          471.633
+        ],
+        "terrain_ground_z": 472.633,
+        "base_embed_units": 1,
+        "yaw": 209,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          3369,
+          3341,
+          459.195
+        ],
+        "terrain_ground_z": 460.195,
+        "base_embed_units": 1,
+        "yaw": 204,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3177,
+          -8898,
+          405.112
+        ],
+        "terrain_ground_z": 406.112,
+        "base_embed_units": 1,
+        "yaw": 332,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -1900,
+          -8958,
+          409.775
+        ],
+        "terrain_ground_z": 410.775,
+        "base_embed_units": 1,
+        "yaw": 206,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3494,
+          -5746,
+          269.162
+        ],
+        "terrain_ground_z": 270.162,
+        "base_embed_units": 1,
+        "yaw": 132,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6564,
+          -2666,
+          515.843
+        ],
+        "terrain_ground_z": 516.843,
+        "base_embed_units": 1,
+        "yaw": 209,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -1414,
+          -1583,
+          333.083
+        ],
+        "terrain_ground_z": 334.083,
+        "base_embed_units": 1,
+        "yaw": 210,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4245,
+          -3751,
+          247.0
+        ],
+        "terrain_ground_z": 248.0,
+        "base_embed_units": 1,
+        "yaw": 136,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8321,
+          8020,
+          332.549
+        ],
+        "terrain_ground_z": 333.549,
+        "base_embed_units": 1,
+        "yaw": 281,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6833,
+          -3400,
+          484.107
+        ],
+        "terrain_ground_z": 485.107,
+        "base_embed_units": 1,
+        "yaw": 222,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5239,
+          -6019,
+          354.744
+        ],
+        "terrain_ground_z": 355.744,
+        "base_embed_units": 1,
+        "yaw": 34,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4908,
+          3689,
+          478.687
+        ],
+        "terrain_ground_z": 479.687,
+        "base_embed_units": 1,
+        "yaw": 207,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3710,
+          -8449,
+          367.817
+        ],
+        "terrain_ground_z": 368.817,
+        "base_embed_units": 1,
+        "yaw": 324,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3541,
+          -8406,
+          378.147
+        ],
+        "terrain_ground_z": 379.147,
+        "base_embed_units": 1,
+        "yaw": 123,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7445,
+          -2168,
+          525.352
+        ],
+        "terrain_ground_z": 526.352,
+        "base_embed_units": 1,
+        "yaw": 11,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3501,
+          -8760,
+          390.702
+        ],
+        "terrain_ground_z": 391.702,
+        "base_embed_units": 1,
+        "yaw": 153,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -9346,
+          5742,
+          297.011
+        ],
+        "terrain_ground_z": 298.011,
+        "base_embed_units": 1,
+        "yaw": 287,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          2287,
+          -462,
+          503.585
+        ],
+        "terrain_ground_z": 504.585,
+        "base_embed_units": 1,
+        "yaw": 311,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4959,
+          68,
+          250.265
+        ],
+        "terrain_ground_z": 251.265,
+        "base_embed_units": 1,
+        "yaw": 253,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7173,
+          8020,
+          360.199
+        ],
+        "terrain_ground_z": 361.199,
+        "base_embed_units": 1,
+        "yaw": 60,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6131,
+          -5282,
+          396.23
+        ],
+        "terrain_ground_z": 397.23,
+        "base_embed_units": 1,
+        "yaw": 50,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5440,
+          -22,
+          253.265
+        ],
+        "terrain_ground_z": 254.265,
+        "base_embed_units": 1,
+        "yaw": 13,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4388,
+          -4796,
+          254.795
+        ],
+        "terrain_ground_z": 255.795,
+        "base_embed_units": 1,
+        "yaw": 355,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6200,
+          6972,
+          360.628
+        ],
+        "terrain_ground_z": 361.628,
+        "base_embed_units": 1,
+        "yaw": 8,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5077,
+          -5324,
+          381.328
+        ],
+        "terrain_ground_z": 382.328,
+        "base_embed_units": 1,
+        "yaw": 201,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          9150,
+          3642,
+          399.136
+        ],
+        "terrain_ground_z": 400.136,
+        "base_embed_units": 1,
+        "yaw": 247,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7040,
+          -2692,
+          269.187
+        ],
+        "terrain_ground_z": 270.187,
+        "base_embed_units": 1,
+        "yaw": 212,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8370,
+          -1576,
+          306.84
+        ],
+        "terrain_ground_z": 307.84,
+        "base_embed_units": 1,
+        "yaw": 51,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4194,
+          2590,
+          312.2
+        ],
+        "terrain_ground_z": 313.2,
+        "base_embed_units": 1,
+        "yaw": 170,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7962,
+          6228,
+          312.602
+        ],
+        "terrain_ground_z": 313.602,
+        "base_embed_units": 1,
+        "yaw": 266,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -9174,
+          -7731,
+          381.478
+        ],
+        "terrain_ground_z": 382.478,
+        "base_embed_units": 1,
+        "yaw": 310,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4664,
+          -4426,
+          419.298
+        ],
+        "terrain_ground_z": 420.298,
+        "base_embed_units": 1,
+        "yaw": 208,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          9550,
+          -26,
+          463.649
+        ],
+        "terrain_ground_z": 464.649,
+        "base_embed_units": 1,
+        "yaw": 2,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6692,
+          7851,
+          387.39
+        ],
+        "terrain_ground_z": 388.39,
+        "base_embed_units": 1,
+        "yaw": 191,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          10697,
+          -4102,
+          418.193
+        ],
+        "terrain_ground_z": 419.193,
+        "base_embed_units": 1,
+        "yaw": 55,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5282,
+          131,
+          249.925
+        ],
+        "terrain_ground_z": 250.925,
+        "base_embed_units": 1,
+        "yaw": 204,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8232,
+          -2556,
+          302.424
+        ],
+        "terrain_ground_z": 303.424,
+        "base_embed_units": 1,
+        "yaw": 9,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6292,
+          -2814,
+          509.443
+        ],
+        "terrain_ground_z": 510.443,
+        "base_embed_units": 1,
+        "yaw": 307,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6337,
+          6298,
+          331.492
+        ],
+        "terrain_ground_z": 332.492,
+        "base_embed_units": 1,
+        "yaw": 178,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          9561,
+          5817,
+          349.389
+        ],
+        "terrain_ground_z": 350.389,
+        "base_embed_units": 1,
+        "yaw": 26,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5570,
+          -4448,
+          254.451
+        ],
+        "terrain_ground_z": 255.451,
+        "base_embed_units": 1,
+        "yaw": 199,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7047,
+          -1532,
+          546.742
+        ],
+        "terrain_ground_z": 547.742,
+        "base_embed_units": 1,
+        "yaw": 74,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5869,
+          -4774,
+          261.16
+        ],
+        "terrain_ground_z": 262.16,
+        "base_embed_units": 1,
+        "yaw": 92,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8846,
+          -2929,
+          322.072
+        ],
+        "terrain_ground_z": 323.072,
+        "base_embed_units": 1,
+        "yaw": 142,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4295,
+          -5691,
+          265.919
+        ],
+        "terrain_ground_z": 266.919,
+        "base_embed_units": 1,
+        "yaw": 141,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7832,
+          5729,
+          303.199
+        ],
+        "terrain_ground_z": 304.199,
+        "base_embed_units": 1,
+        "yaw": 87,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6622,
+          -343,
+          269.051
+        ],
+        "terrain_ground_z": 270.051,
+        "base_embed_units": 1,
+        "yaw": 274,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5702,
+          6061,
+          330.557
+        ],
+        "terrain_ground_z": 331.557,
+        "base_embed_units": 1,
+        "yaw": 104,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4927,
+          -4660,
+          411.922
+        ],
+        "terrain_ground_z": 412.922,
+        "base_embed_units": 1,
+        "yaw": 223,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5437,
+          -4435,
+          252.892
+        ],
+        "terrain_ground_z": 253.892,
+        "base_embed_units": 1,
+        "yaw": 292,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5051,
+          -5143,
+          388.59
+        ],
+        "terrain_ground_z": 389.59,
+        "base_embed_units": 1,
+        "yaw": 283,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6881,
+          6371,
+          328.032
+        ],
+        "terrain_ground_z": 329.032,
+        "base_embed_units": 1,
+        "yaw": 200,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -834,
+          9186,
+          435.461
+        ],
+        "terrain_ground_z": 436.461,
+        "base_embed_units": 1,
+        "yaw": 298,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5586,
+          6643,
+          354.401
+        ],
+        "terrain_ground_z": 355.401,
+        "base_embed_units": 1,
+        "yaw": 284,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6657,
+          6433,
+          333.421
+        ],
+        "terrain_ground_z": 334.421,
+        "base_embed_units": 1,
+        "yaw": 335,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4669,
+          2645,
+          327.6
+        ],
+        "terrain_ground_z": 328.6,
+        "base_embed_units": 1,
+        "yaw": 149,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5904,
+          -5455,
+          386.338
+        ],
+        "terrain_ground_z": 387.338,
+        "base_embed_units": 1,
+        "yaw": 299,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5824,
+          -4114,
+          253.555
+        ],
+        "terrain_ground_z": 254.555,
+        "base_embed_units": 1,
+        "yaw": 21,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4840,
+          -5526,
+          266.303
+        ],
+        "terrain_ground_z": 267.303,
+        "base_embed_units": 1,
+        "yaw": 107,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8894,
+          -2107,
+          499.755
+        ],
+        "terrain_ground_z": 500.755,
+        "base_embed_units": 1,
+        "yaw": 105,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6810,
+          6786,
+          342.23
+        ],
+        "terrain_ground_z": 343.23,
+        "base_embed_units": 1,
+        "yaw": 16,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8365,
+          3836,
+          283.088
+        ],
+        "terrain_ground_z": 284.088,
+        "base_embed_units": 1,
+        "yaw": 303,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4177,
+          -9327,
+          407.225
+        ],
+        "terrain_ground_z": 408.225,
+        "base_embed_units": 1,
+        "yaw": 159,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7740,
+          -1365,
+          291.938
+        ],
+        "terrain_ground_z": 292.938,
+        "base_embed_units": 1,
+        "yaw": 311,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4480,
+          2922,
+          402.445
+        ],
+        "terrain_ground_z": 403.445,
+        "base_embed_units": 1,
+        "yaw": 353,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          9981,
+          -6747,
+          380.595
+        ],
+        "terrain_ground_z": 381.595,
+        "base_embed_units": 1,
+        "yaw": 276,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6357,
+          -2159,
+          258.808
+        ],
+        "terrain_ground_z": 259.808,
+        "base_embed_units": 1,
+        "yaw": 114,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8744,
+          7768,
+          348.137
+        ],
+        "terrain_ground_z": 349.137,
+        "base_embed_units": 1,
+        "yaw": 212,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8302,
+          -826,
+          304.664
+        ],
+        "terrain_ground_z": 305.664,
+        "base_embed_units": 1,
+        "yaw": 352,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8029,
+          -5710,
+          391.648
+        ],
+        "terrain_ground_z": 392.648,
+        "base_embed_units": 1,
+        "yaw": 89,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -1886,
+          6852,
+          398.888
+        ],
+        "terrain_ground_z": 399.888,
+        "base_embed_units": 1,
+        "yaw": 51,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6260,
+          -1432,
+          257.773
+        ],
+        "terrain_ground_z": 258.773,
+        "base_embed_units": 1,
+        "yaw": 333,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5112,
+          5705,
+          457.112
+        ],
+        "terrain_ground_z": 458.112,
+        "base_embed_units": 1,
+        "yaw": 29,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7028,
+          -2110,
+          531.678
+        ],
+        "terrain_ground_z": 532.678,
+        "base_embed_units": 1,
+        "yaw": 244,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -2297,
+          -9330,
+          407.236
+        ],
+        "terrain_ground_z": 408.236,
+        "base_embed_units": 1,
+        "yaw": 54,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6505,
+          -5738,
+          380.516
+        ],
+        "terrain_ground_z": 381.516,
+        "base_embed_units": 1,
+        "yaw": 303,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6264,
+          -8057,
+          373.865
+        ],
+        "terrain_ground_z": 374.865,
+        "base_embed_units": 1,
+        "yaw": 101,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -6129,
+          5749,
+          317.259
+        ],
+        "terrain_ground_z": 318.259,
+        "base_embed_units": 1,
+        "yaw": 165,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5705,
+          7422,
+          386.773
+        ],
+        "terrain_ground_z": 387.773,
+        "base_embed_units": 1,
+        "yaw": 131,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3611,
+          3418,
+          293.636
+        ],
+        "terrain_ground_z": 294.636,
+        "base_embed_units": 1,
+        "yaw": 176,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5585,
+          4525,
+          296.296
+        ],
+        "terrain_ground_z": 297.296,
+        "base_embed_units": 1,
+        "yaw": 278,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6761,
+          -3310,
+          487.877
+        ],
+        "terrain_ground_z": 488.877,
+        "base_embed_units": 1,
+        "yaw": 330,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7154,
+          -6117,
+          369.115
+        ],
+        "terrain_ground_z": 370.115,
+        "base_embed_units": 1,
+        "yaw": 43,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -10994,
+          543,
+          333.644
+        ],
+        "terrain_ground_z": 334.644,
+        "base_embed_units": 1,
+        "yaw": 186,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7323,
+          -2650,
+          510.423
+        ],
+        "terrain_ground_z": 511.423,
+        "base_embed_units": 1,
+        "yaw": 256,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8642,
+          -5143,
+          412.377
+        ],
+        "terrain_ground_z": 413.377,
+        "base_embed_units": 1,
+        "yaw": 342,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7989,
+          8483,
+          316.505
+        ],
+        "terrain_ground_z": 317.505,
+        "base_embed_units": 1,
+        "yaw": 309,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6050,
+          -2189,
+          535.913
+        ],
+        "terrain_ground_z": 536.913,
+        "base_embed_units": 1,
+        "yaw": 319,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5185,
+          -4378,
+          429.896
+        ],
+        "terrain_ground_z": 430.896,
+        "base_embed_units": 1,
+        "yaw": 56,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5336,
+          8197,
+          358.417
+        ],
+        "terrain_ground_z": 359.417,
+        "base_embed_units": 1,
+        "yaw": 21,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          3772,
+          3164,
+          435.133
+        ],
+        "terrain_ground_z": 436.133,
+        "base_embed_units": 1,
+        "yaw": 333,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7667,
+          7622,
+          389.769
+        ],
+        "terrain_ground_z": 390.769,
+        "base_embed_units": 1,
+        "yaw": 282,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -1232,
+          803,
+          280.123
+        ],
+        "terrain_ground_z": 281.123,
+        "base_embed_units": 1,
+        "yaw": 311,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6787,
+          -6459,
+          354.115
+        ],
+        "terrain_ground_z": 355.115,
+        "base_embed_units": 1,
+        "yaw": 95,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          10682,
+          8243,
+          316.02
+        ],
+        "terrain_ground_z": 317.02,
+        "base_embed_units": 1,
+        "yaw": 22,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5284,
+          -3498,
+          247.363
+        ],
+        "terrain_ground_z": 248.363,
+        "base_embed_units": 1,
+        "yaw": 159,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -4796,
+          -4738,
+          254.169
+        ],
+        "terrain_ground_z": 255.169,
+        "base_embed_units": 1,
+        "yaw": 244,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5723,
+          5666,
+          319.288
+        ],
+        "terrain_ground_z": 320.288,
+        "base_embed_units": 1,
+        "yaw": 87,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -2532,
+          5796,
+          369.181
+        ],
+        "terrain_ground_z": 370.181,
+        "base_embed_units": 1,
+        "yaw": 91,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          6466,
+          -4996,
+          412.154
+        ],
+        "terrain_ground_z": 413.154,
+        "base_embed_units": 1,
+        "yaw": 24,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8846,
+          2977,
+          356.244
+        ],
+        "terrain_ground_z": 357.244,
+        "base_embed_units": 1,
+        "yaw": 27,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4061,
+          -3586,
+          450.709
+        ],
+        "terrain_ground_z": 451.709,
+        "base_embed_units": 1,
+        "yaw": 304,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -7271,
+          6307,
+          321.799
+        ],
+        "terrain_ground_z": 322.799,
+        "base_embed_units": 1,
+        "yaw": 163,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3361,
+          4705,
+          332.923
+        ],
+        "terrain_ground_z": 333.923,
+        "base_embed_units": 1,
+        "yaw": 300,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3661,
+          4677,
+          325.919
+        ],
+        "terrain_ground_z": 326.919,
+        "base_embed_units": 1,
+        "yaw": 14,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          4584,
+          2651,
+          329.28
+        ],
+        "terrain_ground_z": 330.28,
+        "base_embed_units": 1,
+        "yaw": 15,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -5462,
+          5692,
+          325.418
+        ],
+        "terrain_ground_z": 326.418,
+        "base_embed_units": 1,
+        "yaw": 11,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          1201,
+          19,
+          431.143
+        ],
+        "terrain_ground_z": 432.143,
+        "base_embed_units": 1,
+        "yaw": 196,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5043,
+          -5244,
+          384.058
+        ],
+        "terrain_ground_z": 385.058,
+        "base_embed_units": 1,
+        "yaw": 256,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8137,
+          7920,
+          341.689
+        ],
+        "terrain_ground_z": 342.689,
+        "base_embed_units": 1,
+        "yaw": 68,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          7508,
+          -2852,
+          502.515
+        ],
+        "terrain_ground_z": 503.515,
+        "base_embed_units": 1,
+        "yaw": 315,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8681,
+          -1792,
+          316.792
+        ],
+        "terrain_ground_z": 317.792,
+        "base_embed_units": 1,
+        "yaw": 338,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -2942,
+          -1158,
+          288.349
+        ],
+        "terrain_ground_z": 289.349,
+        "base_embed_units": 1,
+        "yaw": 127,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          5777,
+          2756,
+          353.56
+        ],
+        "terrain_ground_z": 354.56,
+        "base_embed_units": 1,
+        "yaw": 121,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          8451,
+          7498,
+          342.614
+        ],
+        "terrain_ground_z": 343.614,
+        "base_embed_units": 1,
+        "yaw": 34,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -3075,
+          -8399,
+          403.0
+        ],
+        "terrain_ground_z": 404.0,
+        "base_embed_units": 1,
+        "yaw": 172,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          3943,
+          -3477,
+          452.899
+        ],
+        "terrain_ground_z": 453.899,
+        "base_embed_units": 1,
+        "yaw": 253,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "grass",
+        "model": "models/plains/plains_grass.mdl",
+        "origin": [
+          -8268,
+          -1739,
+          303.576
+        ],
+        "terrain_ground_z": 304.576,
+        "base_embed_units": 1,
+        "yaw": 163,
+        "radius": 25,
+        "height": 30
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5261,
+          -6189,
+          345.744
+        ],
+        "terrain_ground_z": 348.744,
+        "base_embed_units": 3,
+        "yaw": 334,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -3011,
+          -9167,
+          404.883
+        ],
+        "terrain_ground_z": 407.883,
+        "base_embed_units": 3,
+        "yaw": 197,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5886,
+          -1129,
+          253.0
+        ],
+        "terrain_ground_z": 256.0,
+        "base_embed_units": 3,
+        "yaw": 76,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -7576,
+          8884,
+          411.162
+        ],
+        "terrain_ground_z": 414.162,
+        "base_embed_units": 3,
+        "yaw": 62,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5237,
+          8489,
+          334.713
+        ],
+        "terrain_ground_z": 337.713,
+        "base_embed_units": 3,
+        "yaw": 91,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -8755,
+          -1241,
+          317.16
+        ],
+        "terrain_ground_z": 320.16,
+        "base_embed_units": 3,
+        "yaw": 81,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -3248,
+          -8858,
+          402.355
+        ],
+        "terrain_ground_z": 405.355,
+        "base_embed_units": 3,
+        "yaw": 252,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5245,
+          8913,
+          458.297
+        ],
+        "terrain_ground_z": 461.297,
+        "base_embed_units": 3,
+        "yaw": 260,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -6239,
+          5911,
+          320.514
+        ],
+        "terrain_ground_z": 323.514,
+        "base_embed_units": 3,
+        "yaw": 58,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4087,
+          -624,
+          269.811
+        ],
+        "terrain_ground_z": 272.811,
+        "base_embed_units": 3,
+        "yaw": 293,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4576,
+          -8381,
+          366.361
+        ],
+        "terrain_ground_z": 369.361,
+        "base_embed_units": 3,
+        "yaw": 139,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          8333,
+          7782,
+          338.301
+        ],
+        "terrain_ground_z": 341.301,
+        "base_embed_units": 3,
+        "yaw": 7,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5296,
+          -5589,
+          270.204
+        ],
+        "terrain_ground_z": 273.204,
+        "base_embed_units": 3,
+        "yaw": 225,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5469,
+          168,
+          249.368
+        ],
+        "terrain_ground_z": 252.368,
+        "base_embed_units": 3,
+        "yaw": 188,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5407,
+          5032,
+          306.354
+        ],
+        "terrain_ground_z": 309.354,
+        "base_embed_units": 3,
+        "yaw": 95,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          2540,
+          -5341,
+          337.378
+        ],
+        "terrain_ground_z": 340.378,
+        "base_embed_units": 3,
+        "yaw": 35,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5040,
+          -6044,
+          347.417
+        ],
+        "terrain_ground_z": 350.417,
+        "base_embed_units": 3,
+        "yaw": 276,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4230,
+          -6789,
+          300.765
+        ],
+        "terrain_ground_z": 303.765,
+        "base_embed_units": 3,
+        "yaw": 306,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5161,
+          -4041,
+          245.0
+        ],
+        "terrain_ground_z": 248.0,
+        "base_embed_units": 3,
+        "yaw": 194,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5975,
+          -4312,
+          439.886
+        ],
+        "terrain_ground_z": 442.886,
+        "base_embed_units": 3,
+        "yaw": 286,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          6220,
+          -5117,
+          402.305
+        ],
+        "terrain_ground_z": 405.305,
+        "base_embed_units": 3,
+        "yaw": 62,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5540,
+          -4718,
+          413.33
+        ],
+        "terrain_ground_z": 416.33,
+        "base_embed_units": 3,
+        "yaw": 130,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -6443,
+          -15,
+          257.486
+        ],
+        "terrain_ground_z": 260.486,
+        "base_embed_units": 3,
+        "yaw": 306,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          9521,
+          7415,
+          319.443
+        ],
+        "terrain_ground_z": 322.443,
+        "base_embed_units": 3,
+        "yaw": 148,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          3182,
+          3196,
+          432.161
+        ],
+        "terrain_ground_z": 435.161,
+        "base_embed_units": 3,
+        "yaw": 249,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -3536,
+          -9022,
+          398.165
+        ],
+        "terrain_ground_z": 401.165,
+        "base_embed_units": 3,
+        "yaw": 339,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4500,
+          -1385,
+          258.042
+        ],
+        "terrain_ground_z": 261.042,
+        "base_embed_units": 3,
+        "yaw": 248,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -3980,
+          -4317,
+          247.623
+        ],
+        "terrain_ground_z": 250.623,
+        "base_embed_units": 3,
+        "yaw": 190,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          7614,
+          -2675,
+          505.125
+        ],
+        "terrain_ground_z": 508.125,
+        "base_embed_units": 3,
+        "yaw": 235,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5991,
+          -5115,
+          267.382
+        ],
+        "terrain_ground_z": 270.382,
+        "base_embed_units": 3,
+        "yaw": 157,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -2468,
+          -9090,
+          406.827
+        ],
+        "terrain_ground_z": 409.827,
+        "base_embed_units": 3,
+        "yaw": 261,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4773,
+          201,
+          246.827
+        ],
+        "terrain_ground_z": 249.827,
+        "base_embed_units": 3,
+        "yaw": 279,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          9983,
+          -3201,
+          449.456
+        ],
+        "terrain_ground_z": 452.456,
+        "base_embed_units": 3,
+        "yaw": 346,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -7793,
+          7647,
+          357.632
+        ],
+        "terrain_ground_z": 360.632,
+        "base_embed_units": 3,
+        "yaw": 105,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5079,
+          -6229,
+          340.249
+        ],
+        "terrain_ground_z": 343.249,
+        "base_embed_units": 3,
+        "yaw": 108,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -6853,
+          419,
+          244.822
+        ],
+        "terrain_ground_z": 247.822,
+        "base_embed_units": 3,
+        "yaw": 116,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5391,
+          -5614,
+          271.758
+        ],
+        "terrain_ground_z": 274.758,
+        "base_embed_units": 3,
+        "yaw": 208,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          6225,
+          -4211,
+          445.605
+        ],
+        "terrain_ground_z": 448.605,
+        "base_embed_units": 3,
+        "yaw": 102,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          9182,
+          3735,
+          397.457
+        ],
+        "terrain_ground_z": 400.457,
+        "base_embed_units": 3,
+        "yaw": 123,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5112,
+          -7988,
+          355.125
+        ],
+        "terrain_ground_z": 358.125,
+        "base_embed_units": 3,
+        "yaw": 7,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -9081,
+          -2880,
+          327.592
+        ],
+        "terrain_ground_z": 330.592,
+        "base_embed_units": 3,
+        "yaw": 224,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          3373,
+          -7047,
+          288.871
+        ],
+        "terrain_ground_z": 291.871,
+        "base_embed_units": 3,
+        "yaw": 342,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -5152,
+          -5032,
+          257.686
+        ],
+        "terrain_ground_z": 260.686,
+        "base_embed_units": 3,
+        "yaw": 77,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -8291,
+          4752,
+          285.437
+        ],
+        "terrain_ground_z": 288.437,
+        "base_embed_units": 3,
+        "yaw": 44,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -2702,
+          7178,
+          401.567
+        ],
+        "terrain_ground_z": 404.567,
+        "base_embed_units": 3,
+        "yaw": 290,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          1114,
+          -4432,
+          351.87
+        ],
+        "terrain_ground_z": 354.87,
+        "base_embed_units": 3,
+        "yaw": 64,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5486,
+          -5015,
+          398.88
+        ],
+        "terrain_ground_z": 401.88,
+        "base_embed_units": 3,
+        "yaw": 346,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -6170,
+          -4705,
+          261.626
+        ],
+        "terrain_ground_z": 264.626,
+        "base_embed_units": 3,
+        "yaw": 73,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -2315,
+          -8995,
+          407.854
+        ],
+        "terrain_ground_z": 410.854,
+        "base_embed_units": 3,
+        "yaw": 221,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          4359,
+          3737,
+          476.219
+        ],
+        "terrain_ground_z": 479.219,
+        "base_embed_units": 3,
+        "yaw": 198,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4986,
+          419,
+          242.624
+        ],
+        "terrain_ground_z": 245.624,
+        "base_embed_units": 3,
+        "yaw": 31,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4639,
+          3381,
+          269.59
+        ],
+        "terrain_ground_z": 272.59,
+        "base_embed_units": 3,
+        "yaw": 189,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          1340,
+          -1820,
+          436.835
+        ],
+        "terrain_ground_z": 439.835,
+        "base_embed_units": 3,
+        "yaw": 105,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          4777,
+          3440,
+          471.31
+        ],
+        "terrain_ground_z": 474.31,
+        "base_embed_units": 3,
+        "yaw": 166,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          756,
+          -8370,
+          318.365
+        ],
+        "terrain_ground_z": 321.365,
+        "base_embed_units": 3,
+        "yaw": 293,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          4503,
+          -4987,
+          387.747
+        ],
+        "terrain_ground_z": 390.747,
+        "base_embed_units": 3,
+        "yaw": 17,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          5145,
+          7037,
+          442.92
+        ],
+        "terrain_ground_z": 445.92,
+        "base_embed_units": 3,
+        "yaw": 14,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          8817,
+          -9107,
+          343.144
+        ],
+        "terrain_ground_z": 346.144,
+        "base_embed_units": 3,
+        "yaw": 283,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          6401,
+          -3495,
+          478.004
+        ],
+        "terrain_ground_z": 481.004,
+        "base_embed_units": 3,
+        "yaw": 255,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -7689,
+          5523,
+          298.628
+        ],
+        "terrain_ground_z": 301.628,
+        "base_embed_units": 3,
+        "yaw": 57,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          6119,
+          -5276,
+          394.361
+        ],
+        "terrain_ground_z": 397.361,
+        "base_embed_units": 3,
+        "yaw": 125,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -8023,
+          -4089,
+          293.736
+        ],
+        "terrain_ground_z": 296.736,
+        "base_embed_units": 3,
+        "yaw": 25,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -6414,
+          4517,
+          286.565
+        ],
+        "terrain_ground_z": 289.565,
+        "base_embed_units": 3,
+        "yaw": 7,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          6031,
+          -3613,
+          472.908
+        ],
+        "terrain_ground_z": 475.908,
+        "base_embed_units": 3,
+        "yaw": 221,
+        "radius": 57,
+        "height": 54
+      },
+      {
+        "kind": "rocks",
+        "model": "models/plains/plains_rocks.mdl",
+        "origin": [
+          -4634,
+          -10,
+          251.787
+        ],
+        "terrain_ground_z": 254.787,
+        "base_embed_units": 3,
+        "yaw": 151,
+        "radius": 57,
+        "height": 54
+      }
+    ]
+  },
+  "textures_original": true,
+  "source_sha256": "563a7d3b3d79383693ac63fb24a7d350121647204478f2cf9cf06615dfcfef56",
+  "wad_sha256": "72aeef6d6df3df45a1ba4bdb11e92213106657951fa336c55643906e5d734980"
+}

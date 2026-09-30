@@ -1,0 +1,11 @@
+// Original metadata for the standalone riding prototype.
+{ [shared]
+const MAP_NAME 'daragoth_plains'
+const MAP_WEATHER clear;clear;clear;clear;clear;clear
+const MAP_ALLOWNIGHT 1
+setvarg G_MAP_NAME "The Expanded Plains of Daragoth"
+setvarg G_MAP_DESC "Rolling fields, a riverside road, and the southern riding stable."
+setvarg G_MAP_DIFF "(Riding Prototype / Safe Area)"
+setvarg G_WARN_HP 0
+}
+#include worlditems/map_startup

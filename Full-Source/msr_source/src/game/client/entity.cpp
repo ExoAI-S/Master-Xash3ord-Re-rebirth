@@ -209,6 +209,7 @@ void DLLEXPORT HUD_ProcessPlayerState(struct entity_state_s *dst, const struct e
 	dst->team = src->team;
 	dst->colormap = src->colormap;
 	dst->fuser1 = src->fuser1;
+	dst->iuser3 = src->iuser3; // Remote mount state; origin remains a physics origin.
 
 	// Save off some data so other areas of the Client DLL can get to it
 	cl_entity_t *player = gEngfuncs.GetLocalPlayer(); // Get the local player's index

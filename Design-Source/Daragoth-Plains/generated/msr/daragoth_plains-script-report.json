@@ -1,0 +1,12 @@
+{
+  "base_library_sha256": "81a46e4f97cbaa0067d30b72279c7771abb50db184cc4734a03784ec27d9b47c",
+  "output_library_sha256": "2a5fbd228cdf72d318558dbccfb63082215f352a0c441828d4eda32cc112c082",
+  "original_entries": 2923,
+  "original_entries_preserved": true,
+  "added_scripts": {
+    "daragoth_plains/game_master.script": "6412dc02096d6a77ac6c9231be60fa981a7f2106c2e6fb031b4401c6c6c2d5a4",
+    "daragoth_plains/map_startup.script": "de6b8f4c5cf5e0971b0be2d26863ee66f63a3dc8e8b83027ab78c9c99a0afc4d"
+  },
+  "output_entries": 2925,
+  "output_bytes": 7365310
+}

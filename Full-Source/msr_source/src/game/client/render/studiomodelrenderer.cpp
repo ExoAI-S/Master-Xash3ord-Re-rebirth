@@ -9,6 +9,8 @@
 // routines for setting up to draw 3DStudio models
 
 #include "inc_weapondefs.h"
+#include "ms/mount_policy.h"
+#include "mounted_rider_pose.h"
 #include "hud.h"
 #include "cl_util.h"
 #include "const.h"
@@ -633,6 +635,27 @@ void CStudioModelRenderer::StudioSetUpTransform(int trivial_accept)
 		VectorCopy( Ent.angles, angles );
 	}*/
 
+	// Mount alignment is a draw transform only. Network/interpolation origins
+	// remain standing-player origins for prediction, hits and other clients.
+	if (Ent.player && FBitSet(Ent.curstate.iuser3, PLAYER_MOVE_MOUNTED))
+	{
+		const float yaw = angles[YAW] * (3.14159265358979323846f / 180.0f);
+		modelpos.x += cosf(yaw) * MSRMountPolicy::RiderForward;
+		modelpos.y += sinf(yaw) * MSRMountPolicy::RiderForward;
+		modelpos.z += MSRMountPolicy::RiderLift;
+	}
+	else if (Ent.model && !strcmp(Ent.model->name, "models/mounts/plains_horse.mdl") && Ent.curstate.owner > 0)
+	{
+		cl_entity_t *rider = gEngfuncs.GetEntityByIndex(Ent.curstate.owner);
+		if (rider && rider->player && FBitSet(rider->curstate.iuser3, PLAYER_MOVE_MOUNTED))
+		{
+			// The local rider is predicted ahead of networked horse updates. Use
+			// the same rendered rider position for the horse on every client.
+			modelpos = rider->origin + Vector(0, 0, VEC_HULL_MIN.z);
+			angles = Vector(0, rider->angles[YAW], 0);
+		}
+	}
+
 	angles[PITCH] = -angles[PITCH];
 	AngleMatrix(angles, (*m_protationmatrix));
 
@@ -1045,6 +1068,39 @@ void CStudioModelRenderer::StudioSetupBones(void)
 				break;
 			memcpy(pos[i], pos2[i], sizeof(pos[i]));
 			memcpy(q[i], q2[i], sizeof(q[i]));
+		}
+	}
+
+	// Apply after sequence/gait interpolation so the floor-sitting sequence's
+	// crossed legs and root turn cannot leak into a mounted rider's saddle pose.
+	// Other skeletons retain their original animation rather than partial edits.
+	if (Ent.player && FBitSet(Ent.curstate.iuser3, PLAYER_MOVE_MOUNTED))
+	{
+		int indices[MSRMountedRiderPose::BoneCount];
+		bool complete = true;
+		for (int n = 0; n < MSRMountedRiderPose::BoneCount; ++n)
+		{
+			indices[n] = -1;
+			for (i = 0; i < m_pStudioHeader->numbones; ++i)
+				if (!strcmp(pbones[i].name, MSRMountedRiderPose::Bones[n].name))
+					indices[n] = i;
+			if (indices[n] < 0) complete = false;
+		}
+		if (complete)
+		{
+			for (int n = 0; n < MSRMountedRiderPose::BoneCount; ++n)
+			{
+				i = indices[n];
+				float angles[3];
+				memcpy(angles, MSRMountedRiderPose::Bones[n].angle, sizeof(angles));
+				AngleQuaternion(angles, q[i]);
+				memcpy(pos[i], pbones[i].value, sizeof(pos[i]));
+			}
+			// Standing origin remains 36 units above feet. The draw transform
+			// adds 56; lowering only the root by 28 seats the pelvis at z=64.
+			pos[indices[0]][0] = -MSRMountPolicy::RiderForward;
+			pos[indices[0]][1] = 0.0f;
+			pos[indices[0]][2] = -28.0f;
 		}
 	}
 

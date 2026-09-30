@@ -1,0 +1,50 @@
+[
+  {
+    "tool": "pxcsg",
+    "arguments": [
+      "-threads",
+      "1",
+      "-nowadtextures",
+      "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\\msr\\maps\\daragoth_plains.map"
+    ],
+    "exit_code": 0,
+    "output": "\nPrimeXT Tools v.0.90 (Sep 29 2026, commit notset, arch i386, platform win32)\n\nCurrent pxcsg settings\nName                 |  Setting  |  Default\n---------------------|-----------|-------------------------\ndeveloper             [       2 ] [       2 ]\nwadtextures           [     off ] [      on ]\nnullify trigger       [      on ] [      on ]\nnoclip                [     off ] [     off ]\nonlyents              [     off ] [     off ]\nCSG chop epsilon      [ 0.040000] [ 0.040000]\ncompatibility mode    [ PrimeXT ] [ PrimeXT ]\n\nrootdir C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\nsource: daragoth_plains.map\n\nLoadMapFile: Valve Hammer 3.4\n\n 2149 brushes\n  490 entities\nCreateBrush:         (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.06 secs)\n\nWorld Size: (24128 20128 4480)\n\nCSGBrush:            (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.50 secs)\n\n 2452 used faces\ntotal texture data 772.18 Kb\n0 seconds elapsed\n"
+  },
+  {
+    "tool": "pxbsp",
+    "arguments": [
+      "-threads",
+      "1",
+      "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\\msr\\maps\\daragoth_plains.bsp"
+    ],
+    "exit_code": 0,
+    "output": "\nPrimeXT Tools v.0.90 (Sep 29 2026, commit notset, arch i386, platform win32)\n\nCurrent pxbsp settings\nName                 |  Setting  |  Default\n---------------------|-----------|-------------------------\ndeveloper             [       2 ] [       2 ]\nmax node size         [    Auto ] [    Auto ]\nmerge faces depth     [       1 ] [       1 ]\nnotjunc               [     off ] [     off ]\nnoclip                [     off ] [     off ]\nnofill                [     off ] [     off ]\nportal chop epsilon   [ 0.040000] [ 0.040000]\nforce vis             [      on ] [      on ]\ncompatibility mode    [ PrimeXT ] [ PrimeXT ]\n\nCreateHull: 0\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.06 secs)\n1899 nodes (1852 after merging)\nBSP generation successful, writing portal file: daragoth_plains.prt\nt-junction: 0 seconds elapsed\nCreateHull: 1\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.11 secs)\n3710 nodes (3560 after merging)\nCreateHull: 2\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.10 secs)\n3739 nodes (3586 after merging)\nCreateHull: 3\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.11 secs)\n3714 nodes (3576 after merging)\n0 seconds elapsed\n"
+  },
+  {
+    "tool": "pxvis",
+    "arguments": [
+      "-fast",
+      "-threads",
+      "1",
+      "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\\msr\\maps\\daragoth_plains.bsp"
+    ],
+    "exit_code": 0,
+    "output": "\nPrimeXT Tools v.0.90 (Sep 29 2026, commit notset, arch i386, platform win32)\n\nCurrent pxvis settings\nName                 |  Setting  |  Default\n---------------------|-----------|-------------------------\ndeveloper             [       2 ] [       2 ]\nfast vis              [      on ] [     off ]\nno sort portals       [     off ] [     off ]\nmaxdistance           [       0 ] [       0 ]\ncompatibility mode    [ PrimeXT ] [ PrimeXT ]\n\n 945 portalleafs\n3549 numportals\n53 peak portals on a leaf\nBasePortalVis:       (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.35 secs)\noptimized: 32004 visible leafs 689388 (4.64%)\naverage leafs visible: 729\nvisdatasize: 95.81 Kb compressed from 109.82 Kb\nCalcAmbientSounds:   (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.01 secs)\n0 seconds elapsed\n"
+  },
+  {
+    "tool": "pxrad",
+    "arguments": [
+      "-threads",
+      "1",
+      "-bounce",
+      "0",
+      "-fastsky",
+      "-nomodelshadow",
+      "-chop",
+      "256",
+      "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\\msr\\maps\\daragoth_plains.bsp"
+    ],
+    "exit_code": 0,
+    "output": "\nPrimeXT Tools v.0.90 (Sep 29 2026, commit notset, arch i386, platform win32)\n\nCurrent pxrad settings\nName                 |  Setting  |  Default\n---------------------|-----------|-------------------------\ndeveloper             [       2 ] [       2 ]\nfast rad              [     off ] [     off ]\nextra rad             [     off ] [     off ]\nbounces               [       0 ] [       8 ]\nsmoothing threshold   [  50.000 ] [  50.000 ]\nblur size             [   1.000 ] [   1.000 ]\ndirect light scale    [   1.000 ] [   1.000 ]\nglobal light scale    [   1.000 ] [   1.000 ]\ngamma factor          [   0.455 ] [   0.455 ]\nchop value            [ 128.000 ] [ 128.000 ]\ntexchop value         [  32.000 ] [  32.000 ]\nglobal sky diffusion  [   1.000 ] [   1.000 ]\ndirtmapping           [     off ] [     off ]\ncompatibility mode    [ PrimeXT ] [ PrimeXT ]\n\nrootdir C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\generated\nsource: daragoth_plains.map\n\nReadLightFile: failed to parse texlights from 'C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Plains\\lights.rad'\n13643 base patches, required 6.66 Mb\n1 direct lights\nBuild BVH-Trees:\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.00 secs)\nFindFacePositions:   (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.04 secs)\nposition maps: 1.97 Mb\ntotal studiolight data: 0 bytes\n\nVertexIndirectLighting Prepass\n\nBuildFaceLights:     (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (3.70 secs)\ntotal facelight data: 12.01 Mb\n98412 luxels affected by direct light\n76505 luxels reached by direct light\nFacePatchLights:     (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.26 secs)\nFinalLightFace:      (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.02 secs)\n\nVertexIndirectLighting Pass 1/4\n\nVertexIndirectLighting Pass 2/4\n\nVertexIndirectLighting Pass 3/4\n\nVertexIndirectLighting Pass 4/4\n\n\nLeafAmbientLighting: (single-threaded)\n0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100% (0.50 secs)\nReduce lightmap from 1.27 Mb to 1.27 Mb\ntotal modellight data: 12 bytes\n\nObject names  Objects/Maxobjs  Memory / Maxmem  Fullness\n------------  ---------------  ---------------  --------\nmodels              2/8192         128/524288   ( 0.0%)\nplanes           5687/524288    113740/10485760 ( 1.1%)\nvertexes         2138/65535      25656/786420   ( 3.3%)\nnodes            1858/32767      44592/786408   ( 5.7%)\ntexinfos           24/262144       960/10485760 ( 0.0%)\nfaces            2106/65535      42120/1310700  ( 3.2%)\nclipnodes       10740/32767      85920/262136   (32.8%)\nleaves            953/32768      26684/917504   ( 2.9%)\nmarksurfaces     2723/65535       5446/131070   ( 4.2%)\nsurfedges        8428/2097152    33712/8388608  ( 0.4%)\nedges            4363/1048576    17452/4194304  ( 0.4%)\ntexdata          [variable]     790708/33554432 ( 2.4%)\nlightdata        [variable]     568734/128000000 ( 0.4%)\nvisdata          [variable]      98112/33554432 ( 0.3%)\nentdata          [variable]     108875/2097152  ( 5.2%)\nnormals          [variable]      17632/128000000 ( 0.0%)\ndeluxdata        [variable]     568734/128000000 ( 0.4%)\ncubemaps            0/1024           0/8192     ( 0.0%)\nfaceinfo            1/8192          22/180224   ( 0.0%)\ndirect lights       1/65535         60/3932100  ( 0.0%)\nambient cubes    1563/262144     40638/6815744  ( 0.6%)\nocclusion        [variable]          0/42666666 ( 0.0%)\nvertexlight      [variable]          0/128000000 ( 0.0%)\nvislightdata     [variable]       2106/67108864 ( 0.0%)\n=== Total BSP file data space used: 2.47 Mb ===\n4 seconds elapsed\n"
+  }
+]

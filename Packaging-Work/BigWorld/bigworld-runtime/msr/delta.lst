@@ -190,6 +190,7 @@ entity_state_player_t gamedll Player_Encode
 	DEFINE_DELTA( vuser3[1], DT_SIGNED | DT_FLOAT, 19, 1.0 ),
 	DEFINE_DELTA( vuser3[2], DT_SIGNED | DT_FLOAT, 19, 1.0 ),
 	
+	DEFINE_DELTA( iuser3, DT_INTEGER, 16, 1.0 ), // Movement status, including mounted riders
 	DEFINE_DELTA( fuser1, DT_SIGNED | DT_FLOAT, 22, 128.0 )			//MS - Used for gait framerate
 }
 

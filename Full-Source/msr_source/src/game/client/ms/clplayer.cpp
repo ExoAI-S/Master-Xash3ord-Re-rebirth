@@ -13,6 +13,7 @@
 *
 ****/
 #include "inc_weapondefs.h"
+#include "ms/mount_policy.h"
 
 #include "usercmd.h"
 #include "entity_state.h"
@@ -197,6 +198,11 @@ void CBasePlayer::Think(void)
 
 void CBasePlayer::DoSprint()
 {
+	if (FBitSet(m_StatusFlags, PLAYER_MOVE_MOUNTED))
+	{
+		ClearBits(m_StatusFlags, PLAYER_MOVE_RUNNING);
+		return; // Mount gallop uses the input button directly, without player stamina.
+	}
 	//she's dead jim
 	if (pev->deadflag != DEAD_NO)
 		return;
@@ -303,7 +309,10 @@ void CBasePlayer::CheckSpeed()
 	fSpeed = player.CurrentSpeed();
 
 	//Server maxspeed == % of normal speed that player should go
-	if (player.pev->maxspeed)
+	if (FBitSet(m_StatusFlags, PLAYER_MOVE_MOUNTED))
+		fSpeed = MSRMountPolicy::Speed(FBitSet(pbs.ButtonsDown, IN_RUN) && FBitSet(pbs.ButtonsDown, IN_FORWARD) && !FBitSet(m_StatusFlags, PLAYER_MOVE_NORUN),
+			player.pev->maxspeed, FBitSet(m_StatusFlags, PLAYER_MOVE_NOMOVE));
+	else if (player.pev->maxspeed)
 		fSpeed *= (player.pev->maxspeed / 100.0f);
 
 	m_MaxSpeed = V_max(fSpeed, 0.001);

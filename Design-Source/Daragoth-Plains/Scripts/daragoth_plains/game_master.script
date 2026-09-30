@@ -1,0 +1,5 @@
+// Extend the ordinary game_master; retain its character, weather and travel events.
+#scope server
+{ [server] game_spawn
+servercmd "echo Daragoth Plains riding prototype ready"
+}

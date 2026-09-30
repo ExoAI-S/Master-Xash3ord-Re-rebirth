@@ -1,0 +1,327 @@
+{
+  "passed": true,
+  "models": [
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_oak.mdl",
+      "sha256": "0aba578a5a90c7d47c4b4404b6d7ab156fc20e320ee378daee9104bc875d7616",
+      "version": 10,
+      "bytes": 524724,
+      "bones": 2,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_oak_reference",
+              "vertices": 3416,
+              "normals": 1611,
+              "meshes": 2,
+              "triangles": 4128,
+              "submitted_vertices": 7460
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "oak_bark.bmp",
+          "flags": 0,
+          "masked": false,
+          "width": 256,
+          "height": 512,
+          "transparent_index": null,
+          "alpha_holes": 0,
+          "palette_preserved": true
+        },
+        {
+          "name": "oak_leaves.bmp",
+          "flags": 64,
+          "masked": true,
+          "width": 512,
+          "height": 512,
+          "transparent_index": 255,
+          "alpha_holes": 214528,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -248.21543884277344,
+          -261.44921875,
+          0.0
+        ],
+        [
+          250.7908477783203,
+          262.49676513671875,
+          480.0
+        ]
+      ],
+      "idle_sequence": 0
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_birch.mdl",
+      "sha256": "c5cc465781bbb71e1643bee04e5d519b8f9415183433856b404dc939402fbe14",
+      "version": 10,
+      "bytes": 455804,
+      "bones": 2,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_birch_reference",
+              "vertices": 1570,
+              "normals": 823,
+              "meshes": 2,
+              "triangles": 1836,
+              "submitted_vertices": 3352
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "birch_bark.bmp",
+          "flags": 0,
+          "masked": false,
+          "width": 256,
+          "height": 512,
+          "transparent_index": null,
+          "alpha_holes": 0,
+          "palette_preserved": true
+        },
+        {
+          "name": "birch_leaves.bmp",
+          "flags": 64,
+          "masked": true,
+          "width": 512,
+          "height": 512,
+          "transparent_index": 255,
+          "alpha_holes": 227211,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -100.6092529296875,
+          -97.39910125732422,
+          0.0
+        ],
+        [
+          102.4657974243164,
+          97.44841003417969,
+          430.0
+        ]
+      ],
+      "idle_sequence": 0
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_pine.mdl",
+      "sha256": "365cf0845c00f21a7f54707615ee595d00f77f92873db02810b1467508a75c42",
+      "version": 10,
+      "bytes": 511368,
+      "bones": 2,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_pine_reference",
+              "vertices": 2961,
+              "normals": 1655,
+              "meshes": 2,
+              "triangles": 3810,
+              "submitted_vertices": 6534
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "pine_bark.bmp",
+          "flags": 0,
+          "masked": false,
+          "width": 256,
+          "height": 512,
+          "transparent_index": null,
+          "alpha_holes": 0,
+          "palette_preserved": true
+        },
+        {
+          "name": "pine_needles.bmp",
+          "flags": 64,
+          "masked": true,
+          "width": 512,
+          "height": 512,
+          "transparent_index": 255,
+          "alpha_holes": 214349,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -157.00660705566406,
+          -156.5360870361328,
+          0.0
+        ],
+        [
+          157.20697021484375,
+          164.3977508544922,
+          520.0
+        ]
+      ],
+      "idle_sequence": 0
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_bush.mdl",
+      "sha256": "7cff5815e393bb97e102e93db901b902762599b3c57898dfaa51a9f675820173",
+      "version": 10,
+      "bytes": 415764,
+      "bones": 2,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_bush_reference",
+              "vertices": 495,
+              "normals": 308,
+              "meshes": 2,
+              "triangles": 594,
+              "submitted_vertices": 1062
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "oak_bark.bmp",
+          "flags": 0,
+          "masked": false,
+          "width": 256,
+          "height": 512,
+          "transparent_index": null,
+          "alpha_holes": 0,
+          "palette_preserved": true
+        },
+        {
+          "name": "bush_leaves.bmp",
+          "flags": 64,
+          "masked": true,
+          "width": 512,
+          "height": 512,
+          "transparent_index": 255,
+          "alpha_holes": 226172,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -47.09015655517578,
+          -55.72614288330078,
+          0.0
+        ],
+        [
+          52.36971664428711,
+          50.263526916503906,
+          64.0
+        ]
+      ],
+      "idle_sequence": 0
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_rocks.mdl",
+      "sha256": "1efcbac6674150b2e94eb41d462c3efe136401f5c3a3df5c5a9cf3f6346a89fd",
+      "version": 10,
+      "bytes": 146216,
+      "bones": 1,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_rocks_reference",
+              "vertices": 168,
+              "normals": 263,
+              "meshes": 1,
+              "triangles": 320,
+              "submitted_vertices": 876
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "plains_stone.bmp",
+          "flags": 0,
+          "masked": false,
+          "width": 256,
+          "height": 512,
+          "transparent_index": null,
+          "alpha_holes": 0,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -54.44292068481445,
+          -45.09272766113281,
+          0.0
+        ],
+        [
+          51.351680755615234,
+          30.687969207763672,
+          54.0
+        ]
+      ],
+      "idle_sequence": 0
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Design-Source\\Daragoth-Foliage\\export\\plains_grass.mdl",
+      "sha256": "a75c5d576659b4ceb6d0d2021806ba67766f42bda7c29599bf7435280439de54",
+      "version": 10,
+      "bytes": 265872,
+      "bones": 1,
+      "bodyparts": [
+        {
+          "name": "prop",
+          "models": [
+            {
+              "name": "plains_grass_reference",
+              "vertices": 48,
+              "normals": 24,
+              "meshes": 1,
+              "triangles": 48,
+              "submitted_vertices": 96
+            }
+          ]
+        }
+      ],
+      "textures": [
+        {
+          "name": "plains_grass_blades.bmp",
+          "flags": 64,
+          "masked": true,
+          "width": 512,
+          "height": 512,
+          "transparent_index": 255,
+          "alpha_holes": 215388,
+          "palette_preserved": true
+        }
+      ],
+      "placement_bounds": [
+        [
+          -23.5804500579834,
+          -23.35718536376953,
+          0.0
+        ],
+        [
+          22.472536087036133,
+          21.02825355529785,
+          30.0
+        ]
+      ],
+      "idle_sequence": 0
+    }
+  ]
+}

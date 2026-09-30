@@ -1,0 +1,30 @@
+{
+  "asset": "Original Daragoth chestnut horse prototype",
+  "triangle_count": 3538,
+  "bones": 22,
+  "texture": "512x512 indexed BMP, 256 colors",
+  "sequences": {
+    "idle": {
+      "frames": 41,
+      "fps": 20
+    },
+    "walk": {
+      "frames": 25,
+      "fps": 24
+    },
+    "gallop": {
+      "frames": 21,
+      "fps": 30
+    }
+  },
+  "coordinate_system": "+X forward, +Z up, feet Z=0",
+  "saddle_attachment": 0,
+  "saddle_anchor": [
+    -1.8,
+    0,
+    64.6
+  ],
+  "stage": "mount development prototype; rider pose and gameplay collision are separate",
+  "source_assets": "None; procedural geometry, palette, and animation generated here",
+  "license": "CC0-1.0 for generated model, texture and animation; MIT for generating script"
+}

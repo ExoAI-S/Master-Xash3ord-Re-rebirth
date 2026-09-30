@@ -1,0 +1,145 @@
+{
+  "origin": "ground center; +Z up; feet Z=0",
+  "idle_sequence": 0,
+  "source": "all geometry, textures and wind authored procedurally; no external assets",
+  "asset_license": "CC0-1.0",
+  "script_license": "MIT",
+  "models": [
+    {
+      "name": "plains_oak",
+      "height": 480,
+      "bounds": [
+        [
+          -248.21543884277344,
+          -261.44921875,
+          0.0
+        ],
+        [
+          250.7908477783203,
+          262.49676513671875,
+          480.0
+        ]
+      ],
+      "textures": [
+        "oak_bark",
+        "oak_leaves"
+      ],
+      "triangles": 4128,
+      "bones": 2,
+      "radius": 276.02839843255526
+    },
+    {
+      "name": "plains_birch",
+      "height": 430,
+      "bounds": [
+        [
+          -100.6092529296875,
+          -97.39910125732422,
+          0.0
+        ],
+        [
+          102.4657974243164,
+          97.44841003417969,
+          430.0
+        ]
+      ],
+      "textures": [
+        "birch_bark",
+        "birch_leaves"
+      ],
+      "triangles": 1836,
+      "bones": 2,
+      "radius": 111.68986925236231
+    },
+    {
+      "name": "plains_pine",
+      "height": 520,
+      "bounds": [
+        [
+          -157.00660705566406,
+          -156.5360870361328,
+          0.0
+        ],
+        [
+          157.20697021484375,
+          164.3977508544922,
+          520.0
+        ]
+      ],
+      "textures": [
+        "pine_bark",
+        "pine_needles"
+      ],
+      "triangles": 3810,
+      "bones": 2,
+      "radius": 168.23097222589848
+    },
+    {
+      "name": "plains_bush",
+      "height": 64,
+      "bounds": [
+        [
+          -47.09015655517578,
+          -55.72614288330078,
+          0.0
+        ],
+        [
+          52.36971664428711,
+          50.263526916503906,
+          64.0
+        ]
+      ],
+      "textures": [
+        "bush_leaves",
+        "oak_bark"
+      ],
+      "triangles": 594,
+      "bones": 2,
+      "radius": 55.99176917575898
+    },
+    {
+      "name": "plains_rocks",
+      "height": 54,
+      "bounds": [
+        [
+          -54.44292068481445,
+          -45.09272766113281,
+          0.0
+        ],
+        [
+          51.351680755615234,
+          30.687969207763672,
+          54.0
+        ]
+      ],
+      "textures": [
+        "plains_stone"
+      ],
+      "triangles": 320,
+      "bones": 1,
+      "radius": 56.34841100040743
+    },
+    {
+      "name": "plains_grass",
+      "height": 30,
+      "bounds": [
+        [
+          -23.5804500579834,
+          -23.35718536376953,
+          0.0
+        ],
+        [
+          22.472536087036133,
+          21.02825355529785,
+          30.0
+        ]
+      ],
+      "textures": [
+        "plains_grass_blades"
+      ],
+      "triangles": 48,
+      "bones": 1,
+      "radius": 24.27921204473088
+    }
+  ]
+}

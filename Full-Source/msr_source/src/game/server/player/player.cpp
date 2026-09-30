@@ -58,6 +58,7 @@
 #include "fn/FNSharedDefs.h"
 #include "mslogger.h"
 #include "msr_regions.h"
+#include "msr_mounts.h"
 
 constexpr unsigned int MAX_ENTITIES_TO_SEARCH = 4096;
 static CBaseEntity* g_pEntitiesInBox[MAX_ENTITIES_TO_SEARCH];
@@ -564,6 +565,7 @@ entvars_t *g_pevLastInflictor; // Set in combat.cpp.  Used to pass the damage in
 
 void CBasePlayer::Killed(entvars_t *pevAttacker, int iGib)
 {
+	MSRMounts::Release(this, "death");
 	UTIL_ClientPrintAll(HUD_PRINTCENTER, UTIL_VarArgs("%s has fallen!", DisplayName()));
 
 	//	if( AwardFrags )
@@ -1090,6 +1092,8 @@ void CBasePlayer::CinematicCamera(BOOL OnorOff, Vector vecPosition, Vector vecVi
 
 void CBasePlayer::PlayerUse(void)
 {
+	if (MSRMounts::PlayerUse(this))
+		return;
 	// Was use pressed or released?
 	if (!((pev->button | m_afButtonPressed | m_afButtonReleased) & IN_USE))
 		return;
@@ -1496,6 +1500,7 @@ void CBasePlayer::PreThink(void)
 	m_afButtonReleased = buttonsChanged & (~pev->button); // The ones not down are "released"
 
 	SetKeys();
+	MSRMounts::PlayerPreThink(this);
 
 	if (g_pGameRules)
 		g_pGameRules->PlayerThink(this);
@@ -2179,6 +2184,7 @@ void CBasePlayer::PostThink()
 	UpdatePlayerSound();
 
 	SetSpeed();
+	MSRMounts::PlayerPostThink(this);
 
 	// Track button info so we can detect 'pressed' and 'released' buttons next frame
 	m_afButtonLast = pev->button;
@@ -2548,6 +2554,7 @@ LINK_ENTITY_TO_CLASS(ms_player_begin, CSpawnPointBegin);
 
 void CBasePlayer::Spawn(void)
 {
+	MSRMounts::Release(this, "spawn");
 	//Master Sword spawn code
 	//Note: The player will sometimes have items/packs when this is called
 	Precache();
@@ -3002,6 +3009,7 @@ const char *CheckLogoutCandidate(CBasePlayer *pPlayer, const Vector &Try, Vector
 // monster sight), not solid, not alive.
 void CBasePlayer::OnDisconnected()
 {
+	MSRMounts::Release(this, "disconnect");
 	m_fInServer = false;
 	m_iRegion = REGION_NONE;
 	m_iRegionIntroStage = 0;
@@ -3122,6 +3130,8 @@ bool CBasePlayer::TryRestoreLogoutSpot()
 extern int iBeam;
 void PlayerPrecache()
 {
+	if (CVAR_GET_FLOAT("ms_mounts") != 0.0f)
+		MSRMounts::Precache();
 	//remove?
 	//iBeam = PRECACHE_MODEL( "sprites/smoke.spr" );
 
@@ -4271,6 +4281,8 @@ void CBasePlayer::UpdateClientData(void)
 		// Clear off non-time-based damage indicators
 		m_bitsDamageType &= DMG_TIMEBASED;
 	}*/
+
+	MSRMounts::ApplyRestrictions(this);
 
 	if (m_iTrain & TRAIN_NEW)
 	{

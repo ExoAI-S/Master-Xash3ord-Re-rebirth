@@ -1,0 +1,146 @@
+{
+  "scope": "Isolated daragoth_plains development preview; no main installation or public realm changes.",
+  "baseline_commit": "85fc2db63c59aa2e57a7f36736088c294f5e4c11",
+  "build": "MSVC Win32 Debug engine and matching MSR client/server DLLs",
+  "files": {
+    "engine_debug_dll": {
+      "bytes": 3918336,
+      "sha256": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e"
+    },
+    "server_debug_dll": {
+      "bytes": 5455360,
+      "sha256": "b9c879eda07cb4ada767e174b8bfb5dbbfab95e054775eef2201bc0096d4b138"
+    },
+    "client_debug_dll": {
+      "bytes": 4841472,
+      "sha256": "cc88bdcea332cbdced7595b2a9d0284f65fd9aa66a9e17b40461219f4614d32c"
+    },
+    "map": {
+      "bytes": 2592284,
+      "sha256": "bb9ef5a6637f1a731938650771c019687669efd09578d374eb508c5fdac7218e"
+    },
+    "horse": {
+      "bytes": 373096,
+      "sha256": "aa17d0a00e0040b352aa250cead06731485085d35905de0ad847814bcaa7ebd4"
+    },
+    "plains_oak": {
+      "bytes": 524724,
+      "sha256": "0aba578a5a90c7d47c4b4404b6d7ab156fc20e320ee378daee9104bc875d7616"
+    },
+    "plains_birch": {
+      "bytes": 455804,
+      "sha256": "c5cc465781bbb71e1643bee04e5d519b8f9415183433856b404dc939402fbe14"
+    },
+    "plains_pine": {
+      "bytes": 511368,
+      "sha256": "365cf0845c00f21a7f54707615ee595d00f77f92873db02810b1467508a75c42"
+    },
+    "plains_bush": {
+      "bytes": 415764,
+      "sha256": "7cff5815e393bb97e102e93db901b902762599b3c57898dfaa51a9f675820173"
+    },
+    "plains_rocks": {
+      "bytes": 146216,
+      "sha256": "1efcbac6674150b2e94eb41d462c3efe136401f5c3a3df5c5a9cf3f6346a89fd"
+    },
+    "plains_grass": {
+      "bytes": 265872,
+      "sha256": "a75c5d576659b4ceb6d0d2021806ba67766f42bda7c29599bf7435280439de54"
+    }
+  },
+  "map_validation": {
+    "bsp": "daragoth_plains.bsp",
+    "bytes": 2592284,
+    "sha256": "bb9ef5a6637f1a731938650771c019687669efd09578d374eb508c5fdac7218e",
+    "crc32": 3830419947,
+    "world_mins": [
+      -12064.0,
+      -10064.0,
+      -320.0
+    ],
+    "world_maxs": [
+      12064.0,
+      10064.0,
+      4160.0
+    ],
+    "counts": {
+      "planes": 5687,
+      "vertices": 2138,
+      "nodes": 1858,
+      "faces": 2106,
+      "clipnodes": 10740,
+      "models": 2,
+      "entities": 490
+    },
+    "standing_hull_spawn_checks": 25,
+    "spawn_safe_space_hull_checks": 200,
+    "riding_corridor_hull_checks": 285,
+    "compiled_ground_probes": 1833,
+    "scenery_surface_checks": 459,
+    "max_scenery_ground_error_units": 0.06006,
+    "gameplay_setup": {
+      "character_creation": true,
+      "spectator_spawn": true,
+      "generic_spawns": 3,
+      "game_master": 1
+    },
+    "failures": []
+  },
+  "native_hull_trace": {
+    "pass": true,
+    "floor_probes": 83104,
+    "horizontal_sweeps": 82965,
+    "false_ceiling_counts": {
+      "baseline": 9,
+      "interval": 0
+    },
+    "synthetic_fixtures_passed": 23,
+    "world_scene_regressions_passed": 16,
+    "caller_contracts": {
+      "player": "PM_PlayerTraceExt clamps fraction to 0 whenever startsolid is true, so the player stays blocked.",
+      "walking_npc": "SV_movestep retries/rejects startsolid traces independently of allsolid.",
+      "server_fly_toss": "SV_FlyMove/PhysicsToss may now allow non-player entities to leave initial solid volume when the actual segment reaches clear space; old biased traversal could falsely mark entire segment allsolid.",
+      "flag_correction": "Stable z440 to 500 and z440 to 468 preserve startsolid/fraction/endpos but correctly set allsolid False and inopen True after finding clear tail."
+    },
+    "profile": {
+      "baseline": {
+        "traces": 82965,
+        "total_seconds": 0.0113139,
+        "mean_microseconds": 0.13636955342614354,
+        "mean_node_visits": 18.622792743928162,
+        "max_node_visits": 42,
+        "mean_recursive_calls": 1.4869161694690531,
+        "max_recursive_calls": 7,
+        "mean_point_queries": 0.919339480503827
+      },
+      "interval": {
+        "traces": 82965,
+        "total_seconds": 0.0186203,
+        "mean_microseconds": 0.22443560537576085,
+        "mean_node_visits": 18.169252094256613,
+        "max_node_visits": 40,
+        "mean_recursive_calls": 1.4721147471825469,
+        "max_recursive_calls": 4,
+        "mean_point_queries": 0.45135900681010066
+      }
+    }
+  },
+  "two_client_mount_checks": {
+    "walk_speed_320": true,
+    "gallop_speed_520": true,
+    "lifecycle_ownership_and_cleanup": true,
+    "final_dismount_cleared": true,
+    "both_clients_quit_normally": true
+  },
+  "visual_review": {
+    "scenery": "Oak, birch, pine, bushes, rocks and grass visible; masked leaf cards reviewed in native renderer.",
+    "remote_rider": "Second independent client sees the seated rider; occupied horse refuses a second rider.",
+    "captured": "Local screenshots and allowlisted native game transcript retained in private development workspace."
+  },
+  "limitations": [
+    "Transient mount ownership; no FN horse possession persistence.",
+    "Rider uses standing player collision hull.",
+    "Travel links and quests not yet integrated.",
+    "First art pass; full visibility/profile and further dressing precede public release."
+  ]
+}

@@ -4,3 +4,8 @@
 *.pyc
 *.log
 equipment/source-checks.json
+mount-build/
+
+# Authored regression fixtures are source, not downloaded test assets.
+!Fixtures/
+!Fixtures/*.c

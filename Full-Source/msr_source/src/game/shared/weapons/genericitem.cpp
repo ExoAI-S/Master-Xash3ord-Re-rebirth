@@ -2217,6 +2217,8 @@ CGenericItem* FindParryWeapon(CMSMonster* pMonster, /*out*/ int& iPlayerHand, /*
 //Moved here because it's shared between client and server
 bool CGenericItem::Spell_CanAttack()
 {
+	if (m_pPlayer && FBitSet(m_pPlayer->m_StatusFlags, PLAYER_MOVE_MOUNTED))
+		return false;
 	//Can I attack with this spell right now?
 	//If this item is not a spell then return yes
 	if (!FBitSet(MSProperties(), ITEM_SPELL))

@@ -1,0 +1,38 @@
+{
+  "bsp": "daragoth_plains.bsp",
+  "bytes": 2592284,
+  "sha256": "bb9ef5a6637f1a731938650771c019687669efd09578d374eb508c5fdac7218e",
+  "crc32": 3830419947,
+  "world_mins": [
+    -12064.0,
+    -10064.0,
+    -320.0
+  ],
+  "world_maxs": [
+    12064.0,
+    10064.0,
+    4160.0
+  ],
+  "counts": {
+    "planes": 5687,
+    "vertices": 2138,
+    "nodes": 1858,
+    "faces": 2106,
+    "clipnodes": 10740,
+    "models": 2,
+    "entities": 490
+  },
+  "standing_hull_spawn_checks": 25,
+  "spawn_safe_space_hull_checks": 200,
+  "riding_corridor_hull_checks": 285,
+  "compiled_ground_probes": 1833,
+  "scenery_surface_checks": 459,
+  "max_scenery_ground_error_units": 0.06006,
+  "gameplay_setup": {
+    "character_creation": true,
+    "spectator_spawn": true,
+    "generic_spawns": 3,
+    "game_master": 1
+  },
+  "failures": []
+}

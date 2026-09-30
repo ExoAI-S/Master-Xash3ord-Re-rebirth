@@ -13,6 +13,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
 
+#include <float.h>
+
 #include "common.h"
 #include "xash3d_mathlib.h"
 #include "mod_local.h"
@@ -191,132 +193,213 @@ static hull_t *PM_HullForStudio( physent_t *pe, playermove_t *pmove, int *numhit
 PM_RecursiveHullCheck
 ==================
 */
+// Split the physical segment without an epsilon bias. Applying the contact
+// epsilon to a BSP split can put the far traversal outside that child's space
+// and report an internal terrain plane as a ceiling in otherwise empty space.
+typedef struct pm_hullinterval_s
+{
+	hull_t *hull;
+	pmtrace_t *trace;
+	double start[3], delta[3];
+	double entry;
+	const mplane_t *impactplane;
+	int impactside;
+	size_t remaining;
+} pm_hullinterval_t;
+
+static qboolean PM_TraceHullInterval( pm_hullinterval_t *ctx, int num,
+	double begin, double end, const mplane_t *enterplane, int enterside, int depth )
+{
+	while( num >= 0 )
+	{
+		int children[2], side;
+		const mplane_t *plane;
+		double d1, d2, split, dotstart, dotdelta;
+
+		if( depth > 1024 || ctx->remaining-- == 0 )
+			Host_Error( "%s: invalid or cyclic clipping hull\n", __func__ );
+		if( num < ctx->hull->firstclipnode || num > ctx->hull->lastclipnode )
+			Host_Error( "%s: bad node number %i\n", __func__, num );
+
+		if( world.version == QBSP2_VERSION )
+		{
+			children[0] = ctx->hull->clipnodes32[num].children[0];
+			children[1] = ctx->hull->clipnodes32[num].children[1];
+			plane = ctx->hull->planes + ctx->hull->clipnodes32[num].planenum;
+		}
+		else
+		{
+			children[0] = ctx->hull->clipnodes16[num].children[0];
+			children[1] = ctx->hull->clipnodes16[num].children[1];
+			plane = ctx->hull->planes + ctx->hull->clipnodes16[num].planenum;
+		}
+
+		if( plane->type < 3 )
+		{
+			dotstart = ctx->start[plane->type];
+			dotdelta = ctx->delta[plane->type];
+		}
+		else
+		{
+			dotstart = ctx->start[0] * plane->normal[0]
+				+ ctx->start[1] * plane->normal[1] + ctx->start[2] * plane->normal[2];
+			dotdelta = ctx->delta[0] * plane->normal[0]
+				+ ctx->delta[1] * plane->normal[1] + ctx->delta[2] * plane->normal[2];
+		}
+		d1 = dotstart + begin * dotdelta - plane->dist;
+		d2 = dotstart + end * dotdelta - plane->dist;
+
+		// Inverted tests reject a malformed non-finite plane as well as NaN.
+		if( !( d1 >= -DBL_MAX && d1 <= DBL_MAX && d2 >= -DBL_MAX && d2 <= DBL_MAX ))
+			Host_Error( "%s: non-finite clipping plane\n", __func__ );
+
+		if( d1 >= 0.0 && d2 >= 0.0 )
+		{
+			num = children[0];
+			continue;
+		}
+		if( d1 < 0.0 && d2 < 0.0 )
+		{
+			num = children[1];
+			continue;
+		}
+
+		side = d1 < 0.0;
+		split = begin + ( end - begin ) * ( d1 / ( d1 - d2 ));
+		if( split < begin ) split = begin;
+		if( split > end ) split = end;
+
+		if( !PM_TraceHullInterval( ctx, children[side], begin, split, enterplane, enterside, depth + 1 ))
+			return false;
+		// Use the actual crosspoint for the far interval too. A biased near
+		// point must never be reused as an initial point in the far child.
+		begin = split;
+		num = children[side ^ 1];
+		enterplane = plane;
+		enterside = side;
+	}
+
+	if( num != CONTENTS_SOLID )
+	{
+		ctx->trace->allsolid = false;
+		if( num == CONTENTS_EMPTY ) ctx->trace->inopen = true;
+		else ctx->trace->inwater = true;
+		return true;
+	}
+	if( ctx->trace->allsolid )
+	{
+		// Preserve the native start-solid contract: continue until there is
+		// empty/water space, leaving fraction/endpos alone if no impact follows.
+		ctx->trace->startsolid = true;
+		return true;
+	}
+	ctx->entry = begin;
+	ctx->impactplane = enterplane;
+	ctx->impactside = enterside;
+	return false;
+}
+
 qboolean PM_RecursiveHullCheck( hull_t *hull, int num, float p1f, float p2f, vec3_t p1, vec3_t p2, pmtrace_t *trace )
 {
-	int children[2];
-	mplane_t		*plane;
-	float		t1, t2;
-	float		frac, midf;
-	int		side;
-	vec3_t		mid;
-loc0:
-	// check for empty
+	pm_hullinterval_t ctx;
+	double safe, approach;
+	vec3_t mid;
+
+	// Terminal contents need no hull or plane data, including null hulls.
 	if( num < 0 )
 	{
 		if( num != CONTENTS_SOLID )
 		{
 			trace->allsolid = false;
-			if( num == CONTENTS_EMPTY )
-				trace->inopen = true;
+			if( num == CONTENTS_EMPTY ) trace->inopen = true;
 			else trace->inwater = true;
 		}
 		else trace->startsolid = true;
-		return true; // empty
+		return true;
 	}
 
+	// Invalid game-DLL vectors must not create NaN splits or an infinite loop.
+	for( int i = 0; i < 3; i++ )
+	{
+		if( !( p1[i] >= -FLT_MAX && p1[i] <= FLT_MAX && p2[i] >= -FLT_MAX && p2[i] <= FLT_MAX ))
+		{
+			trace->allsolid = trace->startsolid = true;
+			trace->fraction = 0.0f;
+			VectorCopy( p1, trace->endpos );
+			return false;
+		}
+	}
+	if( !( p1f >= -FLT_MAX && p1f <= FLT_MAX && p2f >= -FLT_MAX && p2f <= FLT_MAX ) || !hull )
+	{
+		trace->allsolid = trace->startsolid = true;
+		trace->fraction = 0.0f;
+		VectorCopy( p1, trace->endpos );
+		return false;
+	}
 	if( hull->firstclipnode >= hull->lastclipnode )
 	{
-		// empty hull?
 		trace->allsolid = false;
 		trace->inopen = true;
 		return true;
 	}
 
-	if( num < hull->firstclipnode || num > hull->lastclipnode )
-		Host_Error( "%s: bad node number %i\n", __func__, num );
-
-	// find the point distances
-	if( world.version == QBSP2_VERSION )
+	if( !hull->planes || !hull->clipnodes16 )
 	{
-		children[0] = hull->clipnodes32[num].children[0];
-		children[1] = hull->clipnodes32[num].children[1];
-		plane = hull->planes + hull->clipnodes32[num].planenum;
+		trace->allsolid = trace->startsolid = true;
+		trace->fraction = 0.0f;
+		VectorCopy( p1, trace->endpos );
+		return false;
+	}
+
+	memset( &ctx, 0, sizeof( ctx ));
+	ctx.hull = hull;
+	ctx.trace = trace;
+	ctx.remaining = ((size_t)hull->lastclipnode - hull->firstclipnode + 1 ) * 16 + 64;
+	for( int i = 0; i < 3; i++ )
+	{
+		ctx.start[i] = p1[i];
+		ctx.delta[i] = (double)p2[i] - p1[i];
+	}
+	if( PM_TraceHullInterval( &ctx, num, 0.0, 1.0, NULL, 0, 0 ))
+		return true;
+
+	if( !ctx.impactplane )
+	{
+		trace->fraction = p1f;
+		VectorCopy( p1, trace->endpos );
+		return false;
+	}
+	if( ctx.impactside )
+	{
+		VectorNegate( ctx.impactplane->normal, trace->plane.normal );
+		trace->plane.dist = -ctx.impactplane->dist;
 	}
 	else
 	{
-		children[0] = hull->clipnodes16[num].children[0];
-		children[1] = hull->clipnodes16[num].children[1];
-		plane = hull->planes + hull->clipnodes16[num].planenum;
+		VectorCopy( ctx.impactplane->normal, trace->plane.normal );
+		trace->plane.dist = ctx.impactplane->dist;
 	}
 
-	t1 = PlaneDiff( p1, plane );
-	t2 = PlaneDiff( p2, plane );
+	// Back off from a genuine first solid entry, retaining the existing normal
+	// contact epsilon without moving a traversal point across a BSP partition.
+	approach = -( ctx.delta[0] * trace->plane.normal[0]
+		+ ctx.delta[1] * trace->plane.normal[1] + ctx.delta[2] * trace->plane.normal[2] );
+	safe = ctx.entry;
+	if( approach > 0.0 ) safe -= DIST_EPSILON / approach;
+	if( safe < 0.0 ) safe = 0.0;
+	for( int i = 0; i < 3; i++ ) mid[i] = (float)( ctx.start[i] + safe * ctx.delta[i] );
 
-	if( t1 >= 0.0f && t2 >= 0.0f )
+	// Quantizing the safe point back to float can put it just inside a nearby
+	// plane. Retreat only; never advance past the first solid interval.
+	for( int attempt = 0; attempt < 32 && PM_HullPointContents( hull, hull->firstclipnode, mid ) == CONTENTS_SOLID; attempt++ )
 	{
-		num = children[0];
-		goto loc0;
+		if( safe == 0.0 ) break;
+		safe -= approach > 0.0 ? DIST_EPSILON / approach : 0.1;
+		if( safe < 0.0 ) safe = 0.0;
+		for( int i = 0; i < 3; i++ ) mid[i] = (float)( ctx.start[i] + safe * ctx.delta[i] );
 	}
-
-	if( t1 < 0.0f && t2 < 0.0f )
-	{
-		num = children[1];
-		goto loc0;
-	}
-
-	// put the crosspoint DIST_EPSILON pixels on the near side
-	side = (t1 < 0.0f);
-
-	if( side ) frac = ( t1 + DIST_EPSILON ) / ( t1 - t2 );
-	else frac = ( t1 - DIST_EPSILON ) / ( t1 - t2 );
-
-	// inverted comparison also catches NaN (e.g. from a non-finite trace passed
-	// in by the game dll), which otherwise slips through both clamps and turns
-	// the backing-up loop below into an infinite loop, hanging the host
-	if( !( frac >= 0.0f )) frac = 0.0f;
-	if( frac > 1.0f ) frac = 1.0f;
-
-	midf = p1f + ( p2f - p1f ) * frac;
-	VectorLerp( p1, frac, p2, mid );
-
-	// move up to the node
-	if( !PM_RecursiveHullCheck( hull, children[side], p1f, midf, p1, mid, trace ))
-		return false;
-
-	// this recursion can not be optimized because mid would need to be duplicated on a stack
-	if( PM_HullPointContents( hull, children[side^1], mid ) != CONTENTS_SOLID )
-	{
-		// go past the node
-		return PM_RecursiveHullCheck( hull, children[side^1], midf, p2f, mid, p2, trace );
-	}
-
-	// never got out of the solid area
-	if( trace->allsolid )
-		return false;
-
-	// the other side of the node is solid, this is the impact point
-	if( !side )
-	{
-		VectorCopy( plane->normal, trace->plane.normal );
-		trace->plane.dist = plane->dist;
-	}
-	else
-	{
-		VectorNegate( plane->normal, trace->plane.normal );
-		trace->plane.dist = -plane->dist;
-	}
-
-	while( PM_HullPointContents( hull, hull->firstclipnode, mid ) == CONTENTS_SOLID )
-	{
-		// shouldn't really happen, but does occasionally
-		frac -= 0.1f;
-
-		// inverted comparison also catches NaN, see above
-		if( !( frac >= 0.0f ))
-		{
-			trace->fraction = midf;
-			VectorCopy( mid, trace->endpos );
-			Con_Reportf( S_WARN "trace backed up past 0.0\n" );
-			return false;
-		}
-
-		midf = p1f + ( p2f - p1f ) * frac;
-		VectorLerp( p1, frac, p2, mid );
-	}
-
-	trace->fraction = midf;
+	trace->fraction = (float)( p1f + ((double)p2f - p1f ) * safe );
 	VectorCopy( mid, trace->endpos );
-
 	return false;
 }
 

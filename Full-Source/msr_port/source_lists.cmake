@@ -256,6 +256,7 @@ set(MSR_AUTHORED_SERVER_SOURCES
     "${MSR_GAME_ROOT}/server/../shared/stats/races.cpp"
     "${MSR_GAME_ROOT}/server/../shared/syntax/syntax.cpp"
     "${MSR_GAME_ROOT}/server/vehicle.cpp"
+    "${MSR_GAME_ROOT}/server/msr_mounts.cpp"
     "${MSR_GAME_ROOT}/server/fn/CreateCharacterReq.cpp"
     "${MSR_GAME_ROOT}/server/fn/DeleteCharacterReq.cpp"
     "${MSR_GAME_ROOT}/server/fn/FNSharedDefs.cpp"
