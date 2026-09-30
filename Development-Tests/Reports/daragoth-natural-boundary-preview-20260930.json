@@ -1,0 +1,335 @@
+{
+  "date": "2026-09-30",
+  "status": "Local development preview; no public release",
+  "map": {
+    "bytes": 23317880,
+    "sha256": "3c55d11e5121d40ee43f4369d2fbb4dd35fde34cfe3835faf0ddd946095334c3",
+    "crc32": 3264622046,
+    "entities": 1647
+  },
+  "static_audits": {
+    "node_budgets": {
+      "pass": true,
+      "disk_clipnodes": 58519,
+      "models": 164,
+      "largest_native_16bit_hull": 18232
+    },
+    "render": {
+      "caps": 377,
+      "lit_rock_caps": 131,
+      "sky_closure_faces": 246,
+      "new_region_pvs_rows": 2844,
+      "cross_pvs_pairs": 10067760,
+      "plains_player_spawns": 0,
+      "original_spawn_pool_preserved": true,
+      "original_spawn_count": 21,
+      "pass": true
+    },
+    "original_preservation_and_seam": {
+      "seam_y": 3216,
+      "pass": true
+    },
+    "field": {
+      "pass": true,
+      "floor_probes": 9047,
+      "valid_floors": 8986,
+      "movement_and_up_probes": 53916,
+      "clear": 32388,
+      "physical_hits": 21528,
+      "ceiling_hits": 3,
+      "false_ceiling_count": 0,
+      "real_uphill_contacts": 21489,
+      "raised_step_probes": 64467,
+      "valid_raised_steps": 21475
+    },
+    "placements": {
+      "pass": true,
+      "props": 1152,
+      "minimum_road_clearance_above_required": 42.04809567338316,
+      "unique_grass_base_vertices": 144,
+      "transformed_grass_root_probes": 109440
+    },
+    "landmarks": {
+      "pass": true,
+      "floor_checks": 3126,
+      "two_direction_step_paths": 6252,
+      "actual_C_step_traces": 18756
+    },
+    "village": {
+      "pass": true,
+      "enterable_buildings": 6,
+      "residents": 4,
+      "floor_probes": 1786,
+      "headroom_probes": 1786,
+      "actual_C_step_traces": 7074,
+      "route_segments": 16
+    },
+    "natural_boundaries": {
+      "pass": true,
+      "walkable_normal_z": 0.7,
+      "floor_samples_per_hull": 1612
+    }
+  },
+  "grass": {
+    "patches": 760,
+    "clumps_per_patch": 36,
+    "triangles_per_patch": 288,
+    "model_sha256": "2011e465bab456afe0222ba1948f7fd63fb9be1803108fe35509b11a1e9d81de"
+  },
+  "native": {
+    "client_log_sha256": "95b13127d7c2139390e665a43728cea610aaa36b8b27fd57d9e5a035bad9a41d",
+    "runtime": "Existing Debug Win32 client/server and ref_gl renderer",
+    "foot_boundaries": {
+      "protocol": "900 frames forward at each of four starts, then 240 frames backward",
+      "observations": {
+        "east": {
+          "begin_camera_origin": [
+            11646.3,
+            7016.21,
+            3667.84
+          ],
+          "end_camera_origin": [
+            13111.8,
+            5984.61,
+            4411.88
+          ],
+          "retreat_camera_origin": [
+            12250.5,
+            6138.34,
+            3743.36
+          ]
+        },
+        "west": {
+          "begin_camera_origin": [
+            -8342.88,
+            9614.3,
+            3485.29
+          ],
+          "end_camera_origin": [
+            -9277.81,
+            7011.79,
+            3698.8
+          ],
+          "retreat_camera_origin": [
+            -8844.74,
+            6318.87,
+            3509.08
+          ]
+        },
+        "north": {
+          "begin_camera_origin": [
+            5948.85,
+            21912.6,
+            3329.56
+          ],
+          "end_camera_origin": [
+            5386.89,
+            22818.8,
+            3481.82
+          ],
+          "retreat_camera_origin": [
+            5231.87,
+            22472.5,
+            3355.53
+          ]
+        },
+        "bank": {
+          "begin_camera_origin": [
+            -6350.22,
+            4377.07,
+            3314.22
+          ],
+          "end_camera_origin": [
+            -7040.11,
+            3646.29,
+            3552.86
+          ],
+          "retreat_camera_origin": [
+            -7026.42,
+            4127.58,
+            3326.89
+          ]
+        }
+      },
+      "interpretation": "Each tested approach stopped below the ridge and allowed retreat. Camera origins are viewpos output, not authoritative player origins. This does not exhaust every boundary angle."
+    },
+    "mounted_east_boundary": {
+      "protocol": "Actual rider, downhill spawn, turn east, hold forward and gallop for 600 frames at 20 FPS, then retreat",
+      "observations": {
+        "begin": {
+          "rider_present": true,
+          "rider_origin": [
+            11081.7412,
+            7016.1899,
+            3558.741
+          ],
+          "rider_velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "server_view_yaw": 180.0,
+          "base_speed_cap": 320.0,
+          "usercmd_msec": 24,
+          "usercmd_forward": 0.0
+        },
+        "heading": {
+          "rider_present": true,
+          "rider_origin": [
+            11081.7412,
+            7016.1899,
+            3558.741
+          ],
+          "rider_velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "server_view_yaw": -3.3838,
+          "base_speed_cap": 320.0,
+          "usercmd_msec": 50,
+          "usercmd_forward": 0.0
+        },
+        "end": {
+          "rider_present": true,
+          "rider_origin": [
+            13041.0947,
+            6138.0039,
+            4273.1592
+          ],
+          "rider_velocity": [
+            -19.5327,
+            22.7941,
+            -47.9571
+          ],
+          "server_view_yaw": -3.3838,
+          "base_speed_cap": 520.0,
+          "usercmd_msec": 50,
+          "usercmd_forward": 520.0
+        },
+        "retreat": {
+          "rider_present": true,
+          "rider_origin": [
+            11140.1816,
+            6236.9355,
+            3569.0132
+          ],
+          "rider_velocity": [
+            -159.721,
+            9.4438,
+            0.0
+          ],
+          "server_view_yaw": -3.3838,
+          "base_speed_cap": 320.0,
+          "usercmd_msec": 50,
+          "usercmd_forward": -160.0
+        }
+      },
+      "interpretation": "Authoritative rider retained attachment, slowed/slid on steep upper ground under forward=520, and returned downhill under backward input. The 20 FPS cap is a test control, not performance evidence."
+    },
+    "normal_client_quit": "10:32:31 local; server still responded with daragoth and no clients at 10:38:55",
+    "launcher": "Private launcher now redirects server output into private files. One preceding server disappearance was not diagnosed; a supervised retry and the final normal-launcher run survived. No engine crash fix is claimed."
+  },
+  "visual_review": {
+    "verdict": "Improved coherent development prototype; not final landscape art. New silhouettes are visibly wavier and the former checker material is less apparent. No obvious HOM, sky holes or floating grass/tree roots in the inspected frames.",
+    "npc_motion": "Resident positions and walking pose visibly change between two16-second-separated fixed-camera pictures; no individual path/behavior completeness claim.",
+    "captures": [
+      {
+        "name": "meadow_hill_panorama.png",
+        "mtime_local": "2026-09-30T10:28:31.372799",
+        "sha256": "4378a6dfc4647450406bd2391d1d41d61eac519d2cae1d6e42a96d10f3c20472",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 33,
+        "notes": "Wide loaded gameplay view. Rolling grassy ground, trees and improved wavy distant crests. Left plateau and large planar cliff faces remain visible."
+      },
+      {
+        "name": "meadow_rolling_fields.png",
+        "mtime_local": "2026-09-30T10:28:37.300553",
+        "sha256": "fe4a381bb38eb0e2b63f66c40cd2f484fc83e11b129fc408207b25bf49646e91",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 60,
+        "notes": "Loaded road/field view. Low rolling foreground, dense tufts and visible variable ridge profile behind. Road and terrain appear joined."
+      },
+      {
+        "name": "meadow_grass_close.png",
+        "mtime_local": "2026-09-30T10:28:42.894067",
+        "sha256": "c8414e02489eb6fa4b3506043c31a4951837e386646a05364d6c175265e86eb5",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 53,
+        "notes": "Loaded close grove view. Grass tufts, visible tree trunks and bushes appear rooted to sloped ground; no obvious floating roots."
+      },
+      {
+        "name": "meadow_east_foothill.png",
+        "mtime_local": "2026-09-30T10:29:01.725570",
+        "sha256": "b069916ae80b1b20618dc38347daba89daacbf496422959c3d79a4c1d211a270",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 60,
+        "notes": "Loaded close cliff view. Closed rock face with grain replacing previous prominent checker pattern. Face fills most of view; not wide landscape/performance proof."
+      },
+      {
+        "name": "meadow_north_foothill.png",
+        "mtime_local": "2026-09-30T10:29:07.390832",
+        "sha256": "d9ff7c8c97228646dca6ed21289206ebc089c05b1cdae8ea8ee66562e7bc9d5d",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 60,
+        "notes": "Loaded close dark rock slope and rock prop. No obvious seam hole or stale-frame patches; limited skyline exposure."
+      },
+      {
+        "name": "meadow_entrance_bank.png",
+        "mtime_local": "2026-09-30T10:29:12.567767",
+        "sha256": "d348f061b23b7a515e12ffcd5aa7e90a94573a1db8dd7b34f932ad164c13b682",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 60,
+        "notes": "Loaded sunny bank view. Grounded dense grass against continuous rock bank. Still a tall broad planar rock wall at this location."
+      },
+      {
+        "name": "meadow_village_distant.png",
+        "mtime_local": "2026-09-30T10:28:48.179386",
+        "sha256": "6c09b854e9459ad9d01650043079fd22884700fc5658465f298ef1b70416b82f",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 60,
+        "notes": "Loaded village view. Buildings/porch/foundations and small resident figures appear grounded. Basic repeated building forms remain."
+      },
+      {
+        "name": "meadow_village_square.png",
+        "mtime_local": "2026-09-30T10:32:03.329879",
+        "sha256": "fc6d5c21a41ec1ab8eb6ed0103fbd76b1c88eccea64077ffb5f592c4d75cc7e0",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 37,
+        "notes": "Final 10:32:03 fixed village-camera frame with resident near left side of well; scene geometry and HUD loaded."
+      },
+      {
+        "name": "meadow_original_valley.png",
+        "mtime_local": "2026-09-30T10:32:30.460304",
+        "sha256": "4ff792de4233bc58200691c0192b4d4c2e03fe6501453459af0afc02aa332036",
+        "valid_current_art_frame": false,
+        "snapshot_fps": null,
+        "notes": "Final 10:32:30 recapture is entirely Half-Life LOADING screen, so no gameplay scenery, FPS, or original placement proof is accepted from it."
+      },
+      {
+        "name": "meadow_north_road.png",
+        "mtime_local": "2026-09-30T10:32:27.319162",
+        "sha256": "6fccc3f149104679e083d116ff77dea23b75ab5edef52f3c47ca4455a319fa7f",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 31,
+        "notes": "Final 10:32:27 image still depicts the new stable/plains road. Its remote placement message reports old-valley coordinates but the visible scene does not match; exclude it from original north-guard/location proof."
+      },
+      {
+        "name": "meadow_village_walk_later.png",
+        "mtime_local": "2026-09-30T10:32:19.672307",
+        "sha256": "cd5942ee706ec1481f10a12ab487d3bef7845fabf3b377e34a5b77c622c67dba",
+        "valid_current_art_frame": true,
+        "snapshot_fps": 37,
+        "notes": "Final 10:32:19 same village camera shows residents in visibly different positions, including a near-right walking figure and another right of well. Visible pose/position change supports resident movement; individual path completion/count is not established by two pictures."
+      }
+    ],
+    "exclusions": "Final original-valley image was a loading screen; final north-road image showed plains rather than its requested old-road location. Neither verifies the original area. Static preservation/seam audits passed separately.",
+    "performance_scope": "Individual frame counters only; no benchmark claim."
+  },
+  "limits": [
+    "Broad planar rock faces, rectangular footprint, repeated grass arrangements and basic village forms still need art work.",
+    "No modern PrimeXT PBR or grass shader claim; this test uses the existing Debug renderer.",
+    "Horse ownership is temporary; the new CC0 textured horse remains a separate rig/animation conversion candidate.",
+    "Private synthetic player/FN identities, logs, screenshots, stock assets and compiled combined maps are excluded from this source checkpoint."
+  ]
+}

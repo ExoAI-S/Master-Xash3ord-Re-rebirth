@@ -8,6 +8,7 @@ sys.path.insert(0,str(REPO/'Development-Tests'))
 sys.path.insert(0,str(REPO/'Packaging-Work/BigWorld/tools'))
 import test_daragoth_expanded_collision as qa
 import test_daragoth_cap_visibility as visual
+import test_daragoth_natural_boundary as boundary
 
 
 def scope_and_height():
@@ -253,11 +254,14 @@ def main():
         report['landmarks']=landmark_checks(m,exe,folder,offset,scope,height)
         print('Checking village doors and resident routes',flush=True)
         report['village']=village_checks(m,exe,folder,offset,source['scenery']['village'])
-    report['pass']=all(report[k]['pass']for k in('node_budgets','render','original_preservation_and_seam','field','placements','landmarks','village'))
+        print('Checking compiled natural boundary foothills and steep barriers',flush=True)
+        report['natural_boundaries']=boundary.audit(m,exe,folder,offset,source)
+    sections=('node_budgets','render','original_preservation_and_seam','field','placements','landmarks','village','natural_boundaries')
+    report['pass']=all(report[k]['pass']for k in sections)
     report['scope']='Read-only frozen private meadow map; actual x86 Debug C hull probes, full original preservation and seam replay, render topology/PVS, emitted scenery and compiled MDL roots. Renderer frame rate, dynamic entity interaction and FN state require native tests.'
     assert m.sha256==hashlib.sha256(args.bsp.read_bytes()).hexdigest(),'Candidate changed during QA'
     args.report.write_text(json.dumps(report,indent=2)+'\n')
-    print(json.dumps({'pass':report['pass'],'map':m.summary(),'section_verdicts':{k:report[k]['pass']for k in('node_budgets','render','original_preservation_and_seam','field','placements','landmarks','village')},'report':str(args.report)},indent=2))
+    print(json.dumps({'pass':report['pass'],'map':m.summary(),'section_verdicts':{k:report[k]['pass']for k in sections},'report':str(args.report)},indent=2))
     if not report['pass']:raise SystemExit(1)
 
 

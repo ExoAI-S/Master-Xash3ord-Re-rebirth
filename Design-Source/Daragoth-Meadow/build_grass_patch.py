@@ -1,4 +1,4 @@
-"""Group twelve original CC0 grass tufts into a slope-placeable studio prop.
+"""Group 36 compact CC0 grass tufts into a slope-placeable studio prop.
 
 Inputs are our Daragoth-Foliage export, not any original game mesh/bitmap.
 The private output contains editable SMD/QC/BMP and a native GoldSrc MDL.
@@ -20,18 +20,21 @@ def build(source,out,compiler):
     lines=(source/'plains_grass_reference.smd').read_text().splitlines()
     start=lines.index('triangles')+1;body=lines[start:lines.index('end',start)]
     if len(body)%4:raise ValueError('Invalid original grass SMD triangles')
+    # One crossed, two-sided spray is enough per tuft in a dense patch.
+    # Retain the original card geometry/UVs but avoid drawing all six sprays.
+    body=body[:32]
+    if len(body)!=32:raise ValueError('Expected eight triangles for one crossed spray')
     rng=random.Random(403930);output=lines[:start];vertices=[]
-    centers=[(0,0)]
-    for i in range(11):
-        angle=i*math.tau/11+rng.uniform(-.2,.2);radius=rng.uniform(64,115)
-        centers.append((math.cos(angle)*radius,math.sin(angle)*radius))
+    centers=[((x-2.5)*34+rng.uniform(-5,5),(y-2.5)*34+rng.uniform(-5,5))
+        for y in range(6) for x in range(6)]
     for ox,oy in centers:
-        angle=rng.random()*math.tau;scale=rng.uniform(.85,1.35);c=math.cos(angle);s=math.sin(angle)
+        angle=rng.random()*math.tau;scale=rng.uniform(.90,1.20);c=math.cos(angle);s=math.sin(angle)
         for j in range(0,len(body),4):
             output.append('meadow_grass_blades.bmp')
             for line in body[j+1:j+4]:
                 values=line.split();x,y,z,nx,ny,nz,u,v=map(float,values[1:9])
-                p=(ox+scale*(x*c-y*s),oy+scale*(x*s+y*c),z*scale)
+                x-=10
+                p=(ox+scale*1.4*(x*c-y*s),oy+scale*1.4*(x*s+y*c),z*scale)
                 n=(nx*c-ny*s,nx*s+ny*c,nz);vertices.append(p)
                 output.append('0 '+' '.join(f'{value:.6f}' for value in (*p,*n,u,v)))
     output.append('end')
@@ -47,7 +50,7 @@ def build(source,out,compiler):
     (out/'meadow_grass_blades.bmp').write_bytes(bitmap)
     lo=[min(p[k]for p in vertices)for k in range(3)];hi=[max(p[k]for p in vertices)for k in range(3)]
     bounds=' '.join(f'{v:.6f}'for v in (*lo,*hi))
-    qc=f'''// Twelve original CC0 tufts; ground-center origin, native masked alpha.
+    qc=f'''// 36 compact original CC0 tufts; masked, two-sided crossed cards.
 $modelname "meadow_grass_patch.mdl"
 $cd "."
 $cdtexture "."
@@ -79,7 +82,7 @@ $texrendermode "meadow_grass_blades.bmp" masked
     struct.pack_into('<i',mdl,texture_offset+64,flags)
     (out/'meadow_grass_patch.mdl').write_bytes(mdl)
     report={'asset_license':'CC0-1.0','source':'Original Daragoth-Foliage grass, grouped procedurally',
-        'tufts':12,'triangles':len(vertices)//3,'bounds':[lo,hi],
+        'tufts':len(centers),'triangles':len(vertices)//3,'triangles_per_tuft':len(body)//4,'bounds':[lo,hi],
         'radius':max(math.hypot(p[0],p[1])for p in vertices),'texture_size':[width,height],
         'masked_alpha_preserved':True,'scene_lit_flatshade':bool(flags&1),'studio_version':10,'bytes':len(mdl),
         'sha256':hashlib.sha256(mdl).hexdigest()}

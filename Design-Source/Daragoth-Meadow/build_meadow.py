@@ -18,6 +18,8 @@ ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT))
 from village import add_village,window_texture,TOWN
 from grass_texture import grass_texture
+from rock_texture import rock_texture
+from natural_boundary import boundary_height,boundary_row_x,integration_notes
 REPO=ROOT.parents[1]
 spec=importlib.util.spec_from_file_location('continuous_join',ROOT.parent/'Daragoth-Expanded/build_expanded.py')
 join=importlib.util.module_from_spec(spec);spec.loader.exec_module(join)
@@ -46,11 +48,16 @@ def meadow_height(scope,x,y):
         weight=1-scope['smoothstep']((abs(x)-450)/500)
         weight*=scope['smoothstep']((abs(y-scope['RIVER_Y'])-650)/250)
         z=scope['mix'](z,400,weight)
-    if y<=-9400:return 384
-    if y<-8200:
+    if y<=-9400:z=384
+    elif y<-8200:
         weight=scope['smoothstep']((y+9400)/1200)
         z=scope['mix'](384,z,weight)
-    return round(z/4)*4
+    return round(boundary_height(x,y,round(z/4)*4)/4)*4
+
+
+def boundary_triangle(triangle):
+    """Only the intended ridge strips may exceed the playable slope limit."""
+    return any(abs(x)>=8400 or y>=7040 or y<=-8200 for x,y,_ in triangle)
 
 
 def meadow_scenery(scope,entities,world,triangles,spawns):
@@ -59,7 +66,7 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
     village=add_village(scope,entities,world)
     models={'oak':('plains_oak.mdl',277,480),'birch':('plains_birch.mdl',112,430),
         'pine':('plains_pine.mdl',169,520),'bush':('plains_bush.mdl',56,64),
-        'rocks':('plains_rocks.mdl',57,54),'grass':('meadow_grass_patch.mdl',150,42)}
+        'rocks':('plains_rocks.mdl',57,54),'grass':('meadow_grass_patch.mdl',170,42)}
     ground=lambda x,y:scope['ground_at'](x,y,triangles)
     def allowed(x,y,radius,kind):
         if not(-11350+radius<x<11350-radius and -9340+radius<y<9340-radius):return False
@@ -74,7 +81,11 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
         if any(max(abs(x-cx),abs(y-cy))<490+radius for cx,cy in [(-3500,-7700),(-3500,-6800)]):return False
         if any(math.hypot(x-s['origin'][0],y-s['origin'][1])<240+radius for s in spawns):return False
         if ground(x,y)<240:return False
-        return all(math.hypot(x-p['origin'][0],y-p['origin'][1])>(radius+p['radius'])*.65
+        dx=(ground(x+64,y)-ground(x-64,y))/128
+        dy=(ground(x,y+64)-ground(x,y-64))/128
+        if math.hypot(dx,dy)>.6:return False
+        spacing=.42 if kind=='grass' else .65
+        return all(math.hypot(x-p['origin'][0],y-p['origin'][1])>(radius+p['radius'])*spacing
             for p in placed if (p['kind']==kind or kind in ('oak','birch','pine') and p['kind'] in ('oak','birch','pine')))
     def place(kind,x,y):
         model,radius,height=models[kind];x=round(x);y=round(y)
@@ -87,7 +98,7 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
             dy=(ground(x,y+64)-ground(x,y-64))/128
             error=max(abs(ground(x+ox,y+oy)-(gz+dx*ox+dy*oy))
                 for ox,oy in [(radius,0),(-radius,0),(0,radius),(0,-radius),
-                    (106,106),(-106,106),(106,-106),(-106,-106)])
+                    (120,120),(-120,120),(120,-120),(-120,-120)])
             if error>8:return False
             yaw=0;pitch=math.degrees(math.atan(dx));roll=math.degrees(math.atan(dy*math.cos(math.radians(pitch))))
         embed=2 if kind in ('grass','bush') else 3
@@ -112,13 +123,13 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
             if made>=count:break
             kind=rng.choices(('oak','birch','pine'),(6,3,1))[0]
             made+=int(place(kind,cx+rng.gauss(0,720),cy+rng.gauss(0,680)))
-    for kind,goal,spread in [('bush',165,700),('rocks',65,1100),('grass',340,1600)]:
+    for kind,goal,spread in [('bush',165,700),('rocks',65,1100),('grass',760,1150)]:
         made=0
         for _ in range(goal*60):
             if made>=goal:break
-            if kind=='grass' and rng.random()<.5:
+            if kind=='grass' and rng.random()<.60:
                 y=rng.uniform(-9200,9200)
-                x=scope['road_x'](y)+rng.choice((-1,1))*rng.uniform(760,3200)
+                x=scope['road_x'](y)+rng.choice((-1,1))*rng.uniform(720,2400)
             elif trees and rng.random()<.75:
                 cx,cy=rng.choice(trees);angle=rng.random()*math.tau;dist=rng.uniform(160,spread)
                 x=cx+math.cos(angle)*dist;y=cy+math.sin(angle)*dist
@@ -126,10 +137,11 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
             made+=int(place(kind,x,y))
         if made!=goal:raise RuntimeError(f'Groundcover budget not fulfilled: {kind} {made}/{goal}')
     counts={kind:sum(p['kind']==kind for p in placed) for kind in models}
-    if len(placed)>770:raise RuntimeError('Meadow scenery exceeds the preview entity budget')
+    if len(placed)>1220:raise RuntimeError('Meadow scenery exceeds the preview entity budget')
     return {'counts':counts,'entities':len(placed),'tree_collision_trunks':len(trees),
         'road_clear_radius_trees':1050,'road_clear_radius_groundcover':'road half-width +120 + prop radius',
-        'spawn_clear_radius':240,'models_original':True,'grass_clumps_per_patch':12,
+        'spawn_clear_radius':240,'models_original':True,'grass_clumps_per_patch':36,
+        'grass_minimum_patch_separation_units':142.8,'grass_triangles_per_patch':288,
         'grass_patch_slope_aligned':True,'grass_patch_max_surface_deviation':8,
         'wind_idle_framerate':1,'ground_sampling':'barycentric emitted-triangle surface', 'placements':placed,'village':village}
 
@@ -138,8 +150,9 @@ def variant(maps):
     source=REPO/'Design-Source/Daragoth-Plains/build_daragoth_plains.py'
     scope={'__file__':str(source),'__name__':'daragoth_meadow_variant'}
     code=source.read_text(encoding='utf8').replace('WIDTH, LENGTH = 24000, 20000','WIDTH, LENGTH = 24000, 21280')
-    code=code.replace('+[700,1100,1400,1800,2200,2500,2900]',
-        '+[-10000,-9400,-8200,700,1100,1400,1800,2200,2500,2900]')
+    pinned_rows=[-10000,-9600,-9400,-9000,-8200,700,1100,1400,1800,2200,2500,2900,7040,9560,10000,10640]
+    code=code.replace('+[700,1100,1400,1800,2200,2500,2900]',f'+{pinned_rows}')
+    code=code.replace('for value in (700,1100,1400,1800,2200,2500,2900):',f'for value in {pinned_rows}:')
     # Recolor our own procedural palette; retain independently generated pixels.
     code=code.replace('"grass":((83,105,43),(123,115,62))','"grass":((19,62,0),(104,87,8))')
     code=code.replace('"rock":((111,117,114),(128,121,107))','"rock":((57,58,35),(100,91,57))')
@@ -152,11 +165,22 @@ def variant(maps):
         "road=road or (-4400<(x1+x2+X1+X2)/4<-3360 and -8360<(ys[j]+ys[j+1])/2<-6320) or (-3360<(x1+x2+X1+X2)/4<-650 and -7700<(ys[j]+ys[j+1])/2<-7150)\n            top='DPDIRT' if road else 'DPGRASS'")
     code=code.replace('"DPLEAF":"leaf","SKY":"sky"','"DPLEAF":"leaf","DPWINDOW":"window","SKY":"sky"')
     code=code.replace('sheet_w,sheet_h=1280,512','sheet_w,sheet_h=1280,768')
+    code=code.replace('world.append(prism(*t,top=top));triangles.append(t)',
+        "world.append(prism(*t,top='DPROCK' if boundary_triangle(t) and triangle_slope(t)>40 else top));triangles.append(t)")
+    code=code.replace('if maxslope>30 or bad_spawns:',
+        'interior_slopes=[s for t,s in zip(triangles,slopes) if not boundary_triangle(t)]\n    if maxslope>80 or max(interior_slopes)>30 or bad_spawns:')
+    code=code.replace("'max_terrain_slope_degrees':round(maxslope,3),",
+        "'max_terrain_slope_degrees':round(maxslope,3),'max_playable_interior_slope_degrees':round(max(interior_slopes),3),'intentional_steep_boundary_triangles':sum(s>30 for t,s in zip(triangles,slopes) if boundary_triangle(t)),")
+    code=code.replace("'bounds':{'mins':[-12000,-10000,BOTTOM],'maxs':[12000,10000,SKY_TOP]}",
+        "'bounds':{'mins':[-12000,-10640,BOTTOM],'maxs':[12000,10640,SKY_TOP]}")
     if "'_light':'255 255 128 50'" not in code or '"grass":((19,62,0),(104,87,8))' not in code:
         raise ValueError('Base generator layout changed; explicit palette/light adaptation requires review')
     exec(compile(code,str(source),'exec'),scope)
+    scope['boundary_triangle']=boundary_triangle
+    original_row_x=scope['row_x']
+    scope['row_x']=lambda x,y,inner=600:boundary_row_x(x,y,original_row_x(x,y,inner),inner)
     original_texture=scope['texture_data']
-    scope['texture_data']=lambda name,kind:window_texture() if kind=='window' else grass_texture() if kind=='grass' else original_texture(name,kind)
+    scope['texture_data']=lambda name,kind:window_texture() if kind=='window' else grass_texture() if kind=='grass' else rock_texture() if kind=='rock' else original_texture(name,kind)
     # Fine, irregular grain avoids the former large repeating diagonal bands.
     original_prism=scope['prism']
     def meadow_prism(a,b,c,bottom=scope['BOTTOM'],texture='DPROCK',top='DPGRASS'):
@@ -181,6 +205,7 @@ def variant(maps):
     return {'frozen_generator_sha256':join.sha(source),'meadow_generator_sha256':join.sha(Path(__file__)),
         'flat_entry_height':384,'flat_entry_y_max':-9400,'blend_y_max':-8200,'shell_south_y':-10640,
         'far_deralia_gate_local':[x,y,z],'terrain_spacing':600,'original_numeric_color_reference':[60.9,73.2,4.0],
+        'natural_boundary_module_sha256':join.sha(ROOT/'natural_boundary.py'),'natural_boundaries':integration_notes(),
         'original_bitmap_pixels_copied':False,'meadow_grass_palette_endpoints':[[19,62,0],[104,87,8]],
         'environment_matches_original':{'angles':'210 60 0','_light':'255 255 128 50'}}
 

@@ -15,8 +15,21 @@ decoration; the prior builder's default and the original game stay unchanged.
 The meadow palette follows the original grass's measured color and the
 original sun settings. Its bitmap pixels come from an independent procedural
 noise texture. Fine global UVs reduce the large repeating diagonal pattern.
-The new grass patch is twelve of our own CC0 tufts; masked alpha and scene-lit
-flat shading prevent dark card backs. It does not use fullbright lighting.
+The denser grass pass uses 760 patches, each with 36 small crossed sprays of our
+own CC0 grass. Each patch has 288 triangles, half the preceding patch's count.
+Minimum patch separation is 142.8 units. Masked alpha and scene-lit flat shading
+prevent dark card backs; fullbright is disabled.
+
+Natural boundary terrain raises grassy lower foothills into steeper rocky upper
+faces along the west/east/north perimeter and beside the original entrance.
+Multiple bounded waves break up ridge crests into unequal peaks and saddles.
+An independently generated, tileable stone bitmap reduces the former broad
+checker pattern on the slopes.
+The entrance road stays flat across the surveyed opening, with no fade or map
+load. The river bridge, village routes, stable door and far Deralia road remain
+usable. Analytic protected pads retain their base height, though interpolation
+between coarse terrain vertices can change nearby ground. The old seam caps,
+SKY shell and PVS coverage remain for closure beneath the feathered banks.
 
 Greenhollow has six enterable buildings, a well, garden beds, timber framing,
 chimneys, and generated leaded windows. Four harmless residents follow actual
@@ -60,14 +73,25 @@ Sanitized results belong in `Development-Tests/Reports`; raw game logs, original
 textures, screenshots, compiled combined BSPs, FN data, and identities stay in
 the private lab.
 
-The frozen September 30 candidate is SHA-256
-`67b57adc312a950635afcbdb9cd9fda1c8cc237cd811af926080cff478b2c43b`,
-CRC32 `1159297584`. The seven static audit sections pass. Native captures
-confirm that the interfering skyline is gone, camera positions match the
-server placements, horses ride at 320/520 units per second, and all four
-residents move. Final Debug 1280x720 snapshot counters range from 29 to 60 FPS;
-these are individual frames, not a benchmark. The sanitized record is
+The earlier meadow checkpoint is SHA-256
+`67b57adc312a950635afcbdb9cd9fda1c8cc237cd811af926080cff478b2c43b`.
+Its original validation record remains in
 `Development-Tests/Reports/daragoth-meadow-preview-20260930.json`.
+
+The denser grass/natural boundary candidate is SHA-256
+`3c55d11e5121d40ee43f4369d2fbb4dd35fde34cfe3835faf0ddd946095334c3`,
+CRC32 `3264622046`. Playable interior mesh slopes remain below 24 degrees;
+intentionally steep boundary faces reach 75.424 degrees. Terrain peaks at
+3220 local units beneath the 4096-unit SKY ceiling. All eight static audit
+sections pass. The focused boundary audit requires consecutive sampled real
+steep hull0/hull1 contacts and rejected 18-unit steps across at least 256 units,
+plus production movement and compiled contact-connectivity checks. The
+[sanitized checkpoint](../../Development-Tests/Reports/daragoth-natural-boundary-preview-20260930.json)
+records these audits, four native walking approaches and retreats, a real
+mounted gallop/retreat at the eastern boundary, and visible village resident
+movement. The final old-valley and north-road recaptures did not verify their
+requested locations and are explicitly excluded as placement evidence.
+Snapshot frame rates are individual frames, not a benchmark.
 
 `Development-Tests/test_daragoth_meadow.py` reproduces the static audit with
 explicit `--bsp`, `--expected-sha`, `--previous-bsp`, `--original`,
@@ -75,7 +99,20 @@ explicit `--bsp`, `--expected-sha`, `--previous-bsp`, `--original`,
 Run in an x86 Visual Studio environment with `cl.exe` available. It rejects a
 changed candidate before probing and checks its hash again after completion.
 
-This is a local development preview, not a published update. Natural cliff
-relief, detailed village interiors, quests, full neighboring-map travel, and
+The independent segment-contents oracle partitions exact BSP half-spaces and
+uses the harness's float32 endpoints. The former 33-point sample check missed
+real 0.005649-unit terrain solids, mislabeling them as empty-space collisions.
+Six synthetic regressions cover thin solids, reverse travel, empty paths,
+stationary points, endpoint ownership and water. Existing true-empty collision
+regressions remain detected. The engine and original geometry are unchanged.
+
+This is a local development preview, not a published update. Broad planar rock
+faces, the rectangular footprint, repeated grass placement and basic building
+forms still need art work. Detailed village
+interiors, quests, full neighboring-map travel, and
 performance on other PCs still need work. It runs the existing Debug Win32
 Xash renderer and does not claim PrimeXT PBR or modern grass shaders.
+
+The textured replacement horse is still a separate conversion candidate. See
+`Design-Source/Mounts/Free-Horse-Research.md` for verified sources, licenses and
+the remaining rig/animation work; this terrain pass retains the existing mount.

@@ -7,6 +7,7 @@ is invoked. --offset translates the original section into the candidate.
 """
 from __future__ import annotations
 import argparse
+from fractions import Fraction
 import hashlib
 import json
 import math
@@ -126,8 +127,54 @@ def sample_floors(m:MapCollision,seam:float):
     return samples
 
 
+def segment_content_intervals(m,hull,a,b):
+    """Partition a segment by exact BSP half-spaces, including endpoint ownership.
+
+    This independent oracle treats each stored binary float as an exact rational.
+    Endpoints first take the same float32 conversion as the actual C harness.
+    It clips parameter ranges against leaf half-spaces instead of sampling points
+    or reproducing the engine's contact/backoff traversal. A thin nonempty leaf
+    must remain an obstruction even when all 33 former sample points miss it.
+    """
+    native_a=struct.unpack('<3f',struct.pack('<3f',*a))
+    native_b=struct.unpack('<3f',struct.pack('<3f',*b))
+    start=tuple(Fraction(v) for v in native_a)
+    delta=tuple(Fraction(native_b[i])-start[i] for i in range(3))
+    head,clips=m.hulls[hull]
+    pending=[(head,Fraction(0),Fraction(1),True,True)]
+    result=[]
+    while pending:
+        node,lo,hi,closed_lo,closed_hi=pending.pop()
+        if lo>hi or (lo==hi and not(closed_lo and closed_hi)):
+            continue
+        if node<0:
+            result.append((lo,hi,node))
+            continue
+        plane_id,front,back=clips[node]
+        plane=m.planes[plane_id]
+        normal=tuple(Fraction(v) for v in plane[:3])
+        origin=sum(start[i]*normal[i] for i in range(3))-Fraction(plane[3])
+        slope=sum(delta[i]*normal[i] for i in range(3))
+        if not slope:
+            pending.append((front if origin>=0 else back,lo,hi,closed_lo,closed_hi))
+            continue
+        cross=-origin/slope
+        # Front owns the exact plane; back is strictly behind it. Keep bound
+        # closure so a zero-length segment or an endpoint has the same owner.
+        for child,lower,inclusive in ((front,slope>0,True),(back,slope<0,False)):
+            low,high,cl,ch=lo,hi,closed_lo,closed_hi
+            if lower:
+                if cross>low:low,cl=cross,inclusive
+                elif cross==low:cl=cl and inclusive
+            else:
+                if cross<high:high,ch=cross,inclusive
+                elif cross==high:ch=ch and inclusive
+            pending.append((child,low,high,cl,ch))
+    return sorted(result)
+
+
 def point_clear_segment(m,hull,a,b):
-    return all(m.point(hull,tuple(a[i]+(b[i]-a[i])*k/32 for i in range(3)))==-1 for k in range(33))
+    return all(contents==-1 for _,_,contents in segment_content_intervals(m,hull,a,b))
 
 
 def audit_north_corridor(m,exe,folder,seam):
