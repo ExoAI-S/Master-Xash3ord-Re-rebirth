@@ -1,0 +1,771 @@
+{
+  "schema_version": 2,
+  "scope": "Isolated continuous Daragoth development preview; no public release, live FN or main installation changes.",
+  "candidate_kind": "stonefaced",
+  "baseline_commit": "85fc2db63c59aa2e57a7f36736088c294f5e4c11",
+  "build": "MSVC Win32 Debug engine and matching client/server DLLs",
+  "runtime_map_alias": "daragoth",
+  "runtime_alias_matches_candidate": true,
+  "candidate": {
+    "bytes": 15850424,
+    "sha256": "75920f034913b7d816f481a100d53c8c72264d691d62a3f5a43c9d426652e9f3",
+    "crc32": 3926669937
+  },
+  "files": {
+    "runtime_world_bsp": {
+      "bytes": 15850424,
+      "sha256": "75920f034913b7d816f481a100d53c8c72264d691d62a3f5a43c9d426652e9f3"
+    },
+    "engine_debug_dll": {
+      "bytes": 3918336,
+      "sha256": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e"
+    },
+    "server_debug_dll": {
+      "bytes": 5455360,
+      "sha256": "b9c879eda07cb4ada767e174b8bfb5dbbfab95e054775eef2201bc0096d4b138"
+    },
+    "client_debug_dll": {
+      "bytes": 4841472,
+      "sha256": "cc88bdcea332cbdced7595b2a9d0284f65fd9aa66a9e17b40461219f4614d32c"
+    },
+    "scripts": {
+      "bytes": 7365310,
+      "sha256": "2a5fbd228cdf72d318558dbccfb63082215f352a0c441828d4eda32cc112c082",
+      "crc32": 2935031504
+    }
+  },
+  "engine": {
+    "base_engine_commit": "21aab6ca1e4e780f91c1e6d43095a41b4541588c",
+    "base_engine_build_number": 4179,
+    "source_trace_sha256": "0803d22234a67ddee565610526a5646c97754e4dbf4f3ee31202bd8a50b5421b",
+    "architecture": "x86",
+    "pointer_size": 4,
+    "build_type": "debug",
+    "exports_match": true,
+    "engine_header_interfaces_changed": false
+  },
+  "geometry": {
+    "seam_y": 3216.0,
+    "plains_offset": [
+      1650.0473022166188,
+      13216.0,
+      2688.0
+    ],
+    "original_bsp_sha256": "88c34a065388e89d9f41a3f0f5f2ba0ddfe3a6c6ca1e02fc0ee0e3c167dfc9f6",
+    "original_ent_sha256": "a93169fd13279314ab96973f1364e05bd0e4b0e4b13aa4b7ac7851b6d6b8a057",
+    "terrain_generator_sha256": "7ead6692d5ccf0c7d83c22974c88734b1c2b7f04722c79b004d3064e2e51180f",
+    "original_start_pool_only": true,
+    "global_game_master_count": 1,
+    "join_faces": 377,
+    "lit_rock_caps": 131,
+    "sky_closure_faces": 246,
+    "cap_material": "DPROCK",
+    "stock_brush_winding_corrected": true,
+    "cap_material_original_procedural": true,
+    "deralia_destination": {
+      "destmap": "deralia",
+      "desttrans": null,
+      "destname": "The City of Deralia"
+    },
+    "counts": {
+      "planes": 22128,
+      "vertexes": 21592,
+      "nodes": 10728,
+      "clipnodes": 42175,
+      "faces": 16409,
+      "leafs": 6245,
+      "models": 164,
+      "entities": 945
+    }
+  },
+  "collision": {
+    "pass": true,
+    "all_four_hull_semantics_unchanged": true,
+    "fingerprints": [
+      "732afc680ebfdcfe6f89d8cca5524a4cdd4ead8b33ea3b47b23a6c5ef6f0bb23",
+      "6e7f1c6aa1e4751e167fe3bd9ffaef7d35bdac8cb6434daf594b21934c2adfae",
+      "9a1bcf032388f570e75633dd55fcc9d0dd4128bdcd25965782e4a34c62c3e687",
+      "f43d287047094a8d5126a9cc2285812336b91cb780c5979dcc0dbf43b4493672"
+    ],
+    "seam_floor_checks": 3860,
+    "seam_movement_checks": 23160,
+    "actual_walk_move_frames": 840,
+    "actual_walk_move_speeds": [
+      320,
+      520
+    ],
+    "actual_walk_move_pass": true,
+    "original_point_checks": 24000,
+    "incremental_original_contact_checks": 300
+  },
+  "cap_visibility": {
+    "pass": true,
+    "caps": 377,
+    "new_region_rows": 875,
+    "cross_pvs_pairs_checked": 3097500,
+    "all_caps_have_valid_bounded_front_holder": true,
+    "all_caps_match_stock_clockwise_winding": true,
+    "new_region_player_spawns": 0,
+    "failure_count": 0
+  },
+  "stock_brush_winding": {
+    "original_world_clockwise_faces": 11501,
+    "join_clockwise_faces": 377,
+    "join_counterclockwise_faces": 0,
+    "join_degenerate_faces": 0,
+    "pass": true,
+    "material_ray_samples_pass": true
+  },
+  "sky_coverage": {
+    "required": true,
+    "samples": 22302,
+    "hole_count": 0,
+    "rock_sky_overlap_count": 0,
+    "protected_road_occlusion_count": 0,
+    "road_band_min_sky_z": 3584
+  },
+  "native": {
+    "review_candidate_matches": true,
+    "fresh_character_start": {
+      "original_valley_visible": true,
+      "original_region": true,
+      "status": "pass",
+      "origin": [
+        -864.0,
+        -3856.0,
+        3188.0
+      ],
+      "origin_recorded": true,
+      "independent_new_profile": true,
+      "expected_original_begin_origin": [
+        -864,
+        -3856,
+        3200
+      ],
+      "region": "daragoth",
+      "region_entry_observed": true
+    },
+    "on_foot": {
+      "north": true,
+      "south": true,
+      "ordinary_movement": true,
+      "no_map_load": true,
+      "no_fade": true,
+      "status": "pass",
+      "loaded_character_both_region_telemetry": true
+    },
+    "mounted": {
+      "north": true,
+      "south": true,
+      "ordinary_movement": true,
+      "no_map_load": true,
+      "no_fade": true,
+      "remote_seated_rider": true,
+      "walk_320": true,
+      "gallop_520": true,
+      "dismount_cleared": true,
+      "status": "pass",
+      "loaded_rider_both_sides_and_regions": true,
+      "owner_link_observed": true,
+      "dismount_clear_observed": true,
+      "final_candidate_walk_320_observed": true,
+      "final_candidate_gallop_520_observed": true,
+      "speed_limit_scope": "Final candidate native ride telemetry."
+    },
+    "visual": {
+      "cap_cliffs_visible": true,
+      "road_aperture_clear": true,
+      "original_guards_visible": true,
+      "scenery_visible": true,
+      "status": "pass",
+      "no_stale_frame_sky": true
+    },
+    "shutdown": {
+      "both_clients_quit_normally": true,
+      "status": "pass"
+    }
+  },
+  "earlier_native_speed_evidence": {
+    "scope": "Earlier capped-map native ride test with matching frozen DLLs/scripts; separate from final-map crossing evidence.",
+    "source_candidate_sha256": "858bc81b01d4d9167c28b180cc8b695993977e0b6889c8717c27c08165455353",
+    "archive_digest": {
+      "bytes": 11826,
+      "sha256": "beeb16c206169f57498e4b21121456583e5253fde3b08f08ca4c7d0d7085710c"
+    },
+    "same_frozen_artifacts": true,
+    "rider_speed_samples": [
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 320.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 520.0
+      }
+    ],
+    "walk_320_observed": true,
+    "gallop_520_observed": true,
+    "dismount_clear_samples": 1
+  },
+  "native_log_evidence": {
+    "archive_count": 5,
+    "region_transitions": [
+      {
+        "slot": 1,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 2,
+        "from_region": "none",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth_plains",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth_plains",
+        "to_region": "daragoth",
+        "mode": "on_foot"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "mounted"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth_plains",
+        "to_region": "daragoth",
+        "mode": "mounted"
+      },
+      {
+        "slot": 1,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "mounted"
+      },
+      {
+        "slot": 1,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "mounted"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "mounted"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth_plains",
+        "to_region": "daragoth",
+        "mode": "on_foot"
+      }
+    ],
+    "player_positions": [
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          3100.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3356.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          3157.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3496.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          2918.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3360.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          -864.0,
+          -3856.0,
+          3188.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          -864.0,
+          -3856.0,
+          3188.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          3100.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3356.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          3157.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          205.0,
+          5510.0,
+          3156.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3496.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          2918.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3360.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          -864.0,
+          -3856.0,
+          3188.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          -864.0,
+          -3856.0,
+          3188.0
+        ]
+      }
+    ],
+    "rider_speed_samples": [
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 12.4
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 320.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 520.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 12.4
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 320.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 520.0
+      }
+    ],
+    "rider_positions": [
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          3496.0,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          2918.332,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          3360.2036,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          7217.356,
+          3027.8149
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          10313.0273,
+          3023.7529
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          3496.0,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          2918.332,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          1528.0,
+          3360.2036,
+          3108.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          7217.356,
+          3027.8149
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          10313.0273,
+          3023.7529
+        ]
+      }
+    ],
+    "markers": {
+      "DC_MOUNTED_NORTH": 1,
+      "DC_MOUNTED_SOUTH": 1,
+      "DC_MOUNTED_RETURN": 1,
+      "DC_CLIFF_LEFT": 1,
+      "DC_CLIFF_RIGHT": 1,
+      "DC_END": 1
+    },
+    "diagnostic_placements": 26
+  },
+  "limitations": [
+    "All regions stay loaded via ms_region_unload_time 0; adjacency-aware preloading is deferred.",
+    "Transient horse ownership; FN horse possession persistence is not implemented.",
+    "Standing-player collision hull while mounted.",
+    "The original low sky ceiling and remote Deralia entrance scene need further visual work.",
+    "Broad flat gray cliff facings and jagged cut silhouettes need authored relief and transition landscaping.",
+    "Regional quests, external map travel and performance on other PCs have not been tested.",
+    "Public installation and release remain outside this private-preview report."
+  ],
+  "privacy": "Only allowlisted telemetry and review booleans are stored; raw logs, names, profiles, credentials, screenshots and private paths are excluded."
+}

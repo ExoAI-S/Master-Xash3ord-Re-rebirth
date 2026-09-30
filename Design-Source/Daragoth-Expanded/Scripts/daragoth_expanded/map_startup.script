@@ -1,0 +1,11 @@
+// Continuous development world; original Daragoth is the ordinary start region.
+{ [shared]
+const MAP_NAME 'daragoth_expanded'
+const MAP_WEATHER clear;clear;clear;clear;clear;clear
+const MAP_ALLOWNIGHT 1
+setvarg G_MAP_NAME "The Plains of Daragoth"
+setvarg G_MAP_DESC "The familiar plains continue into a broad northern riding country."
+setvarg G_MAP_DIFF "Levels 15-20 / 150-250hp"
+setvarg G_WARN_HP 100
+}
+#include worlditems/map_startup

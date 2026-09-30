@@ -1,0 +1,5 @@
+// Ordinary global game_master includes this map extension once.
+#scope server
+{ [server] game_spawn
+servercmd "echo Daragoth continuous plains development preview ready"
+}

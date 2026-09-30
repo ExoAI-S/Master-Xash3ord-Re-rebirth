@@ -1,0 +1,342 @@
+{
+  "schema_version": 2,
+  "scope": "Isolated continuous Daragoth development preview; no public release, live FN or main installation changes.",
+  "candidate_kind": "capped",
+  "baseline_commit": "85fc2db63c59aa2e57a7f36736088c294f5e4c11",
+  "build": "MSVC Win32 Debug engine and matching client/server DLLs",
+  "runtime_map_alias": "daragoth",
+  "candidate": {
+    "bytes": 15824800,
+    "sha256": "858bc81b01d4d9167c28b180cc8b695993977e0b6889c8717c27c08165455353",
+    "crc32": 2976391842
+  },
+  "files": {
+    "engine_debug_dll": {
+      "bytes": 3918336,
+      "sha256": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e"
+    },
+    "server_debug_dll": {
+      "bytes": 5455360,
+      "sha256": "b9c879eda07cb4ada767e174b8bfb5dbbfab95e054775eef2201bc0096d4b138"
+    },
+    "client_debug_dll": {
+      "bytes": 4841472,
+      "sha256": "cc88bdcea332cbdced7595b2a9d0284f65fd9aa66a9e17b40461219f4614d32c"
+    },
+    "scripts": {
+      "bytes": 7365310,
+      "sha256": "2a5fbd228cdf72d318558dbccfb63082215f352a0c441828d4eda32cc112c082",
+      "crc32": 2935031504
+    }
+  },
+  "engine": {
+    "base_engine_commit": "21aab6ca1e4e780f91c1e6d43095a41b4541588c",
+    "base_engine_build_number": 4179,
+    "source_trace_sha256": "0803d22234a67ddee565610526a5646c97754e4dbf4f3ee31202bd8a50b5421b",
+    "architecture": "x86",
+    "pointer_size": 4,
+    "build_type": "debug",
+    "exports_match": true,
+    "engine_header_interfaces_changed": false
+  },
+  "geometry": {
+    "seam_y": 3216.0,
+    "plains_offset": [
+      1650.0473022166188,
+      13216.0,
+      2688.0
+    ],
+    "original_bsp_sha256": "88c34a065388e89d9f41a3f0f5f2ba0ddfe3a6c6ca1e02fc0ee0e3c167dfc9f6",
+    "original_ent_sha256": "a93169fd13279314ab96973f1364e05bd0e4b0e4b13aa4b7ac7851b6d6b8a057",
+    "terrain_generator_sha256": "7ead6692d5ccf0c7d83c22974c88734b1c2b7f04722c79b004d3064e2e51180f",
+    "original_start_pool_only": true,
+    "global_game_master_count": 1,
+    "join_faces": 131,
+    "lit_rock_caps": 131,
+    "sky_closure_faces": 0,
+    "cap_material": "DPROCK",
+    "cap_material_original_procedural": true,
+    "deralia_destination": {
+      "destmap": "deralia",
+      "desttrans": null,
+      "destname": "The City of Deralia"
+    },
+    "counts": {
+      "planes": 22128,
+      "vertexes": 20608,
+      "nodes": 10728,
+      "clipnodes": 42175,
+      "faces": 16163,
+      "leafs": 6245,
+      "models": 164,
+      "entities": 945
+    }
+  },
+  "collision": {
+    "pass": true,
+    "all_four_hull_semantics_unchanged": true,
+    "fingerprints": [
+      "732afc680ebfdcfe6f89d8cca5524a4cdd4ead8b33ea3b47b23a6c5ef6f0bb23",
+      "6e7f1c6aa1e4751e167fe3bd9ffaef7d35bdac8cb6434daf594b21934c2adfae",
+      "9a1bcf032388f570e75633dd55fcc9d0dd4128bdcd25965782e4a34c62c3e687",
+      "f43d287047094a8d5126a9cc2285812336b91cb780c5979dcc0dbf43b4493672"
+    ],
+    "seam_floor_checks": 3860,
+    "seam_movement_checks": 23160,
+    "actual_walk_move_frames": 840,
+    "actual_walk_move_speeds": [
+      320,
+      520
+    ],
+    "actual_walk_move_pass": true,
+    "original_point_checks": 24000,
+    "incremental_original_contact_checks": 300
+  },
+  "cap_visibility": {
+    "pass": true,
+    "caps": 131,
+    "new_region_rows": 875,
+    "cross_pvs_pairs_checked": 3097500,
+    "all_caps_have_valid_bounded_front_holder": true,
+    "new_region_player_spawns": 0,
+    "failure_count": 0
+  },
+  "sky_coverage": {
+    "required": false,
+    "samples": 0,
+    "hole_count": null,
+    "protected_road_occlusion_count": 0,
+    "road_band_min_sky_z": null
+  },
+  "native": {
+    "review_candidate_matches": true,
+    "fresh_character_start": {
+      "original_valley_visible": true,
+      "original_region": true,
+      "status": "pass",
+      "origin": null,
+      "origin_recorded": false,
+      "expected_original_begin_origin": [
+        -864,
+        -3856,
+        3200
+      ],
+      "region": "daragoth",
+      "region_entry_observed": true
+    },
+    "on_foot": {
+      "north": true,
+      "south": true,
+      "ordinary_movement": true,
+      "no_map_load": true,
+      "no_fade": true,
+      "status": "pass",
+      "loaded_character_both_region_telemetry": true
+    },
+    "mounted": {
+      "north": null,
+      "south": null,
+      "ordinary_movement": null,
+      "no_map_load": null,
+      "no_fade": null,
+      "remote_seated_rider": null,
+      "walk_320": true,
+      "gallop_520": true,
+      "dismount_cleared": true,
+      "status": "pending",
+      "loaded_rider_both_sides_and_regions": false,
+      "owner_link_observed": true,
+      "dismount_clear_observed": true
+    },
+    "visual": {
+      "cap_cliffs_visible": false,
+      "road_aperture_clear": true,
+      "original_guards_visible": true,
+      "scenery_visible": true,
+      "status": "fail"
+    },
+    "shutdown": {
+      "both_clients_quit_normally": null,
+      "status": "pending"
+    }
+  },
+  "native_log_evidence": {
+    "archive_count": 2,
+    "region_transitions": [
+      {
+        "slot": 1,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 2,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 2,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth_plains",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "none",
+        "to_region": "daragoth",
+        "mode": "unclassified"
+      },
+      {
+        "slot": 1,
+        "from_region": "daragoth",
+        "to_region": "daragoth_plains",
+        "mode": "unclassified"
+      }
+    ],
+    "player_positions": [
+      {
+        "slot": 1,
+        "region": "daragoth_plains",
+        "origin": [
+          1528.0,
+          3305.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 1,
+        "region": "daragoth",
+        "origin": [
+          1528.0,
+          3215.0,
+          3108.0
+        ]
+      },
+      {
+        "slot": 2,
+        "region": "daragoth_plains",
+        "origin": [
+          1460.0,
+          3410.0,
+          3108.0
+        ]
+      }
+    ],
+    "rider_speed_samples": [
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 320.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 520.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 0.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 320.0
+      },
+      {
+        "slot": 1,
+        "view_height": 64.0,
+        "horizontal_speed": 520.0
+      }
+    ],
+    "rider_positions": [
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          7218.0967,
+          3027.7021
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          10322.6074,
+          3023.9473
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          5316.0,
+          3156.0312
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          7218.0967,
+          3027.7021
+        ]
+      },
+      {
+        "slot": 1,
+        "origin": [
+          -49.9527,
+          10322.6074,
+          3023.9473
+        ]
+      }
+    ],
+    "markers": {
+      "mount_lifecycle_pass": 2
+    },
+    "diagnostic_placements": 5
+  },
+  "limitations": [
+    "All regions stay loaded via ms_region_unload_time 0; adjacency-aware preloading is deferred.",
+    "Transient horse ownership; FN horse possession persistence is not implemented.",
+    "Standing-player collision hull while mounted.",
+    "The original low sky ceiling and remote Deralia entrance scene need further visual work.",
+    "Public installation and release remain outside this private-preview report."
+  ],
+  "privacy": "Only allowlisted telemetry and review booleans are stored; raw logs, names, profiles, credentials, screenshots and private paths are excluded."
+}
