@@ -403,7 +403,7 @@ def validate(world,original):
     if len(world.nodes)>=32767 or len(world.vertexes)>=65536 or len(world.faces)>=65536:failures.append({'disk_index_limits':True})
     return {'hull_content_checks':checks,'tree_order_errors':order,'failures':failures}
 
-def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,stone_facing=False):
+def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,stone_facing=False,variant_builder=None,output_suffix=None,omit_legacy_skyline=False):
     # The surgical edits below use original entity indices. Reject a changed
     # map or sidecar before writing anything rather than dropping unknown NPCs.
     if sha(original_path)!=ORIGINAL_BSP_SHA256 or sha(ent_path)!=ORIGINAL_ENT_SHA256:
@@ -412,7 +412,7 @@ def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,ston
     report={'prototype':True,'public_release':False,'seam_world_y':SEAM,'plains_offset':OFFSET,
         'original_bsp_sha256':sha(original_path),'original_ent_sha256':sha(ent_path),
         'lifecycle_limitation':'All regions remain loaded via ms_region_unload_time 0; adjacency-aware streaming deferred.'}
-    report['variant']=variant(maps)
+    report['variant']=(variant_builder or variant)(maps)
     if not reuse:compile_variant(maps,tools)
     cfg={'regions':[{'name':'daragoth','bsp':str(original_path),'offset':[0,0,0],
            'meta':{'title':'The Plains of Daragoth','desc':'These expansive plains are contested by orcish hordes.',
@@ -427,11 +427,14 @@ def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,ston
     original=copy.deepcopy(regs[0].bsp)
     removed=[];kept=[]
     for i,e in enumerate(regs[0].bsp.entities):
-        drop=i in [303,304,376,409,410,470,471,472,473,474,475,476,477]
+        skyline=omit_legacy_skyline and i==468
+        if skyline and (e.classname!='env_model' or e.get('model')!='models/terrain/Deralia_3dskybox.mdl'):
+            raise ValueError('Legacy skyline exclusion no longer matches the surveyed decoration')
+        drop=skyline or i in [303,304,376,409,410,470,471,472,473,474,475,476,477]
         if drop:
             detail={'index':i,'class':e.classname,'target':e.get('targetname'),
                     'model':e.get('model'),'origin':e.get('origin'),
-                    'reason':'North gateway decoration opens the continuous road' if i!=376 else 'Deralia exit moved to the far northern plains'}
+                    'reason':'Legacy decorative skyline overlaps the traversable expanded fields' if skyline else 'North gateway decoration opens the continuous road' if i!=376 else 'Deralia exit moved to the far northern plains'}
             if (e.get('model') or '').startswith('*'):
                 model=regs[0].bsp.models[int(e.get('model')[1:])]
                 detail.update(mins=model.mins,maxs=model.maxs)
@@ -474,7 +477,9 @@ def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,ston
     report['deralia_destination_absent_keys']=[key for key in destination_keys if original_gate.get(key) is None]
     report['global_game_master_count']=len(masters)
     report['intended_runtime_map_alias']='daragoth'
-    suffix='_stonefaced' if stone_facing else '_skyclosed' if sky_close else '_capped' if caps else ''
+    suffix=output_suffix if output_suffix is not None else '_stonefaced' if stone_facing else '_skyclosed' if sky_close else '_capped' if caps else ''
+    if suffix and (not suffix.startswith('_') or any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789_' for c in suffix)):
+        raise ValueError('Invalid candidate output suffix')
     path=out/('daragoth_expanded'+suffix+'.bsp');world.save(path,bsp30ext=True)
     written=BSP.load(path)
     report['verification']=validate(written,original)
@@ -482,7 +487,7 @@ def build(original_path,ent_path,out,tools,reuse,caps=False,sky_close=False,ston
         'counts':{key:len(getattr(written,key)) for key in ['planes','vertexes','nodes','clipnodes','faces','leafs','models','entities']}}
     report['merge']=builder.report
     report['original_start_region_only']=caps
-    report_suffix='-stonefaced' if stone_facing else '-skyclosed' if sky_close else '-capped' if caps else ''
+    report_suffix=suffix.replace('_','-')
     dump(out/('continuous-join'+report_suffix+'-report.json'),report)
     dump(out/('daragoth-expanded'+report_suffix+'-config.json'),cfg)
     if report['verification']['failures']:raise RuntimeError(json.dumps(report['verification'],indent=2))

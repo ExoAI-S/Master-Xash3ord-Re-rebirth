@@ -1,0 +1,131 @@
+{
+  "date": "2026-09-30",
+  "status": "validated_private_development_preview",
+  "public_release": false,
+  "map": {
+    "bytes": 23636820,
+    "sha256": "67b57adc312a950635afcbdb9cd9fda1c8cc237cd811af926080cff478b2c43b",
+    "crc32": 1159297584,
+    "version": 30,
+    "entities": 1227
+  },
+  "grass_patch": {
+    "asset_license": "CC0-1.0",
+    "source": "Original Daragoth-Foliage grass, grouped procedurally",
+    "tufts": 12,
+    "triangles": 576,
+    "bounds": [
+      [
+        -127.93326240056531,
+        -105.36223621775214,
+        0.0
+      ],
+      [
+        134.02292964800955,
+        111.90310603501428,
+        35.1793347684164
+      ]
+    ],
+    "radius": 134.02463346339783,
+    "texture_size": [
+      512,
+      512
+    ],
+    "masked_alpha_preserved": true,
+    "scene_lit_flatshade": true,
+    "studio_version": 10,
+    "bytes": 284860,
+    "sha256": "6103cae7cdf8ed3eee5ce3bad7c6b602d301a8418f9668430ce0b4c0b3bc57a4"
+  },
+  "palette": {
+    "original_mean_rgb": [
+      60.913,
+      73.205,
+      3.967
+    ],
+    "new_mean_rgb": [
+      61.294,
+      73.511,
+      4.024
+    ],
+    "original_pixels_copied": false,
+    "uv_scale": 0.5
+  },
+  "scene": {
+    "terrain_grid_units": 600,
+    "terrain_height_units": [
+      160,
+      1136
+    ],
+    "maximum_slope_degrees": 24.073,
+    "scenery_counts": {
+      "oak": 84,
+      "birch": 61,
+      "pine": 17,
+      "bush": 165,
+      "rocks": 65,
+      "grass": 340
+    },
+    "village": {
+      "name": "Greenhollow",
+      "enterable_buildings": 6,
+      "walking_residents": 4,
+      "merchant_inventories_implemented": false
+    }
+  },
+  "checks": {
+    "node_budgets": true,
+    "render": true,
+    "original_preservation_and_seam": true,
+    "field": true,
+    "placements": true,
+    "landmarks": true,
+    "village": true
+  },
+  "collision_evidence": {
+    "original_contents_probes": 24000,
+    "original_contact_probes": 104516,
+    "seam_movement_probes": 23160,
+    "actual_PM_WalkMove_frames": 840,
+    "field_contact_probes": 53916,
+    "false_ceiling_hits": 0,
+    "grass_root_probes": 65280,
+    "village_step_traces": 7074,
+    "largest_native_16bit_hull": 16646
+  },
+  "skyline_removal": {
+    "removed_entity_count": 1,
+    "model": "models/terrain/Deralia_3dskybox.mdl",
+    "original_ent_index": 468,
+    "reason": "Decorative geometry extends through traversable fields.",
+    "collision_geometry_lighting_PVS_unchanged": true,
+    "native_windmill_and_masonry_overlap_gone": true
+  },
+  "native": {
+    "client_camera_positions_verified": true,
+    "normal_test_exit": true,
+    "horse_walk_speed": 320,
+    "horse_gallop_speed": 520,
+    "distinct_walking_positions": {
+      "innkeeper": 23,
+      "smith": 23,
+      "farmer": 23,
+      "traveler": 23
+    },
+    "appearance_manually_reviewed": true,
+    "sampled_snapshot_fps": {
+      "hill_panorama": 29,
+      "rolling_fields": 56,
+      "grass_close": 44,
+      "village_distant": 60,
+      "village_square": 38
+    },
+    "fps_scope": "Debug Win32 native 1280x720 snapshots capped at60; not a benchmark or a performance guarantee."
+  },
+  "limits": [
+    "Private preview only; broader gameplay and neighboring-map travel remain untested.",
+    "All regions remain loaded; long-view performance and natural cliff relief need more work.",
+    "Village shops/inn services and persistent horse ownership are not implemented."
+  ],
+  "privacy": "No raw logs, profiles, character identities, credentials, original textures or screenshots included."
+}

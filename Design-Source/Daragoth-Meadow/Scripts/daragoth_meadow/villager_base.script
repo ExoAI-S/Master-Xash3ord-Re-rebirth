@@ -1,0 +1,54 @@
+// Original harmless residents; bounded routes keep them in their village.
+#scope server
+{
+const NO_RUMOR 1
+const NO_JOB 1
+const CAN_CHAT 1
+}
+#include monsters/base_npc
+#include monsters/base_chat
+{ npc_spawn
+hp 100
+width 32
+height 72
+race human
+name MEADOW_NAME
+roam 0
+setmodel npc/human1.mdl
+setmodelbody 0 MEADOW_HEAD
+setmodelbody 1 MEADOW_BODY
+setmoveanim walk
+invincible 1
+setvard MEADOW_INDEX 0
+setvard MEADOW_TICKS 0
+callevent 2.0 meadow_tick
+catchspeech say_hi hi hello hail
+}
+{ meadow_tick
+local MEADOW_DEST $get_token(MEADOW_ROUTE,MEADOW_INDEX)
+if ( $dist(game.monster.origin,MEADOW_DEST) < 48 )
+{
+add MEADOW_INDEX 1
+if ( MEADOW_INDEX > 3 ) setvard MEADOW_INDEX 0
+setvard MEADOW_DEST $get_token(MEADOW_ROUTE,MEADOW_INDEX)
+}
+setmoveanim walk
+setmovedest MEADOW_DEST 28
+add MEADOW_TICKS 1
+if ( MEADOW_TICKS >= 15 )
+{
+setvard MEADOW_TICKS 0
+if ( $get_cvar(developer) > 0 )
+{
+local MEADOW_DIAG "echo MEADOW_NPC "
+stradd MEADOW_DIAG MEADOW_ROLE
+stradd MEADOW_DIAG " "
+stradd MEADOW_DIAG game.monster.origin
+servercmd MEADOW_DIAG
+}
+}
+callevent 1.0 meadow_tick
+}
+{ say_hi
+saytext MEADOW_GREETING
+}
