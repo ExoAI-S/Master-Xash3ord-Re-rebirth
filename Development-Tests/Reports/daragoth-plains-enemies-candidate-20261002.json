@@ -1,0 +1,51 @@
+{
+  "schema": "daragoth-plains-enemies-candidate-checkpoint-v1",
+  "pass": true,
+  "stage_eligible": false,
+  "installed": false,
+  "candidate_sha256": "baadf57a4b7cbbe89ae22ef27aae3e306807a5b477dedeba052f73ac09453c08",
+  "build_report_sha256": "20eea064c3358504067726ce899e4cb4c159af09614df602de042caef8593ab6",
+  "builder_sha256": "c7f0011bd0c210596d950d4521929018b7cbc9132df7d685ef7975c17a1254c8",
+  "house_native_component_acceptance_sha256": "a69daef6d036e846c6b0fa3671657ea74861c772732590eda156b1ee12a50f7f",
+  "independent_static_sha256": "6a808e0f0ba70f5704752205925d4644e662f736e90ca9c3332c7b16c5dae66b",
+  "new_enemy_templates": 8,
+  "new_invisible_controllers": 4,
+  "species": [
+    "orc_warrior",
+    "orc_archer",
+    "troll",
+    "goblin",
+    "skeleton"
+  ],
+  "group_counts": {
+    "east_orcs": 3,
+    "north_troll": 1,
+    "west_goblins": 2,
+    "ruins_skeletons": 2
+  },
+  "maximum_simultaneous_new_enemies": 8,
+  "respawn_seconds": [
+    90,
+    180
+  ],
+  "original_ordered_entities_preserved": 1138,
+  "nonentity_lumps_and_descriptors_preserved": 14,
+  "brush_model_count": 166,
+  "furnishings_preserved": 85,
+  "script_library_sha256": "6af5761670d1d71cf395c224c68d3ae01fadef00b3928295306977a1d39a5ca9",
+  "existing_model_files_each_runtime": 27,
+  "initial_static_pad_tests": {
+    "script_box_points": 216,
+    "rendered_support_points": 72,
+    "standing_hull1_queries": 8,
+    "selected_production_hull_queries": 8,
+    "all_empty_dry": true
+  },
+  "native_acceptance": "pending",
+  "limits": [
+    "Only static candidate acceptance; no enemy spawn, behavior, damage, respawn or region runtime claim yet.",
+    "Initial dry off-route placement and no-roam suppress wandering; hostile pursuit is not leashed.",
+    "No human data, active playtest, controls, game DLL or public release changed."
+  ],
+  "evidence_lab": "Sibling daragoth-development/house-interiors-plains-enemies; original full receipts and candidate remain frozen."
+}
