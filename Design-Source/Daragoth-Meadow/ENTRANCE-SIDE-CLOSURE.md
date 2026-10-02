@@ -29,11 +29,17 @@ The shared house-door model remains *165; its first face shifts from 21065 to
 The independent checker is `Development-Tests/test_entrance_side_closure.py`.
 Its private static receipt SHA-256 is
 `147331cc63e9e0cf2d68ab29cae585170a5d291478f5040d7556c2726e029b2a`.
-This finite survey identifies and closes the two diagnosed surfaces. The small
-dark speckles in the supplied image still require native visual classification.
-Fresh native views and the combined server regression remain required before
-installation. The accepted live map remains unchanged while the human playtest
-is running.
+Fresh native side, top and road views confirm the two repaired surfaces. All
+eight recorded camera positions and view angles matched their bounded requests.
+The raw combined run remains diagnostic because its first horse fixture faced
+an uphill spawn obstruction; this does not turn that run into a whole-suite
+pass.
+
+The small dark speckles were reproduced separately and traced to an original
+bush protruding through the wall. `ENTRANCE-BUSH-CLEARANCE.md` describes its
+origin-only successor. The combined server regression and fresh successor views
+remain required before installation. The accepted live map remains unchanged
+while the human playtest is running.
 
 The builder and checker require fresh output paths and refuse to overwrite
 existing evidence. Neither launches a game nor changes a runtime directory.
