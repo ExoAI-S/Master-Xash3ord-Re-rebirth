@@ -33,7 +33,22 @@ world collision, visibility, doors, water, terrain and grass geometry are byte
 identical. The builder preserves the original entity formatting and appends
 the new entity lump; only its header descriptor changes in the old file prefix.
 
-Fresh native after-views remain required before this candidate is accepted for
-installation. The builder refuses to overwrite frozen maps or reports and does
-not launch a game or modify a runtime directory. The accepted live map remains
-unchanged while the human playtest runs.
+Root reviewed six fresh native after-views at original resolution, including
+close, far and oblique wall views, the repaired side and entrance context. The
+former black leaf intrusions are gone. All six camera positions and yaw angles
+matched; five pitches matched strictly. The top context view used an actual
+10.5-degree pitch instead of the requested 20 degrees. Its context was accepted
+with that explicit exception, retaining the raw strict failure. The cap geometry
+is byte identical to the previously accepted entrance candidate's top proof.
+
+The root combined native review SHA-256 is
+`ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4`.
+It links the frozen door base, final horse and logical input checks, independent
+preservation reviews and 72 verified support files. The scope is finite; it
+does not claim native traversal of every point in the map or physical keyboard
+and mouse verification. The full original controls preset and final transaction
+review are separate work.
+
+The builder refuses to overwrite frozen maps or reports and does not launch a
+game or modify a runtime directory. Native acceptance is complete; installation
+remains pending while the human playtest runs.

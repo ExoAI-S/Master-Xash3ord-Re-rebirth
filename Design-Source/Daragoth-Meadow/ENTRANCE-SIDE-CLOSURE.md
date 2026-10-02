@@ -38,8 +38,10 @@ pass.
 The small dark speckles were reproduced separately and traced to an original
 bush protruding through the wall. `ENTRANCE-BUSH-CLEARANCE.md` describes its
 origin-only successor. The combined server regression and fresh successor views
-remain required before installation. The accepted live map remains unchanged
-while the human playtest is running.
+are now accepted in the root native review
+`ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4`.
+The original diagnostic failure remains preserved. Installation is pending;
+the accepted live map remains unchanged while the human playtest is running.
 
 The builder and checker require fresh output paths and refuse to overwrite
 existing evidence. Neither launches a game nor changes a runtime directory.

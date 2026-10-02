@@ -65,9 +65,16 @@ zero; the closed leaf and frame remained clearly visible. This exception is
 recorded without changing the original strict camera failure.
 
 This accepts the frozen six-door map and door-use server as base evidence. The
-successor map also closes two entrance post surfaces; its combined regression
-with the forthcoming horse water recovery server remains required before live
-installation. No door candidate has replaced the accepted live map yet.
+successor closes two entrance post surfaces and moves one nonsolid bush clear
+of the rock. Door and world collision geometry remain unchanged. Its combined
+regression with server `306fb70f432d8f155e1b5faca06b25e7aa9e127f3ebd3670564f9439fa7db8a0`
+is now accepted: a fresh inn Use/passage check, three ordinary mount cycles,
+natural creek release, same-horse bank remount and logical Q/3 controls passed.
+The root native review SHA-256 is
+`ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4`.
+This retains the separate historical failures and camera exceptions. Physical
+keyboard and mouse interaction are not claimed. Final transaction review and
+installation remain pending; the accepted live map is still unchanged.
 
 Example from the repository root, using a fresh isolated output:
 

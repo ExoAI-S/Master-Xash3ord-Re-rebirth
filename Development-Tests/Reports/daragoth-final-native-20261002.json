@@ -1,0 +1,43 @@
+{
+  "schema": "sanitized-daragoth-final-native-v1",
+  "native_accepted": true,
+  "installed": false,
+  "final_map_sha256": "0f8d0e4c429985eda72c8ce17f0480014a687d088f902e50ada1ea9b8c644754",
+  "functional_map_sha256": "77611d302aa1cf309550a517bed2c169388986341ff3bd02f06b5e1e8acdb4d7",
+  "server_sha256": "306fb70f432d8f155e1b5faca06b25e7aa9e127f3ebd3670564f9439fa7db8a0",
+  "client_sha256": "7331b73f5920572645912ff223e4de4009aaf2dc4fe2d307ff1ee125acb6b316",
+  "engine_sha256": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e",
+  "root_review_sha256": "ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4",
+  "root_review_support_files_verified": 72,
+  "water_input_receipt_sha256": "bdb0fae1948cf9794a987ef87fd7e18158dfde08d08891ad8af0feda8dd94cc7",
+  "independent_outcome_review_sha256": "10326f53dd09b675ac200f7d4670cc9015a6a2e4d724fe29faeed4e3ddb57879",
+  "independent_inheritance_review_sha256": "4dcfc17612cb1e4c42e416b86dadfc2a1cbe9015332d2c385e5d5468d63b1202",
+  "checks": {
+    "six_house_door_base_with_unchanged_successor_geometry": true,
+    "fresh_inn_use_and_passage_regression": true,
+    "three_ordinary_mount_dismount_cycles": true,
+    "natural_creek_release_keeps_same_horse_on_last_dry_bank": true,
+    "ordinary_same_horse_bank_remount_and_dismount": true,
+    "q_stores_same_held_item_with_client_server_agreement": true,
+    "three_opens_inventory_then_escape_closes_it": true,
+    "final_game_input_buffers_and_key_bits_cleared": true,
+    "six_fresh_entrance_views_root_reviewed": true,
+    "former_bush_leaf_intrusions_gone": true,
+    "world_water_collision_visibility_and_grass_preserved": true,
+    "owned_test_processes_stopped": true
+  },
+  "camera_exception": {
+    "view": "gateway_top",
+    "requested_pitch": 20,
+    "actual_pitch": 10.5,
+    "accepted_as_context": true,
+    "raw_strict_failure_preserved": true,
+    "previous_exact_top_proof_reused_with_identical_geometry": true
+  },
+  "input_method": "engine-event-integration",
+  "physical_os_key_verification": "pending",
+  "mouse_inventory_interaction_verification": "pending",
+  "rendered_inventory_pixels_verified": false,
+  "scope": "Finite linked native and static evidence; no claim of exhaustive native traversal of every map point.",
+  "remaining": "Review the full original controls preset and final stopped-session transaction, then install without interrupting an active playtest."
+}
