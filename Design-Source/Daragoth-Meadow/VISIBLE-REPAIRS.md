@@ -70,5 +70,24 @@ points. These are finite compiled surveys, not a claim of exhaustive walking.
 The bed construction candidate SHA-256 is
 `8388e76d2653f4acc09abc633b25c8ce94b816a9e99fb10743e8838edb37fdc3`.
 
-Independent checks and fresh native visual acceptance are required before
-map-only staging. Building these files does not modify either running preview.
+The final bed candidate passed independent static checks, 405 native collision
+traces, 23 isolated native placements and review of 28 fresh screenshots. Native
+checks covered swimming, wading, three creek seams, the dry mounted bridge,
+reload and the entrance road. Five entrance views were included. Root visual
+review accepted the repaired bed, animated water and original rock boundaries.
+The rejected 676 candidate and its original evidence remain preserved.
+
+On 2026-10-02, the accepted 8388 candidate was installed in both private previews
+through the reviewed map-only staging helper. All 242 protected files, including
+controls, character profiles, DLLs, scripts and 84 meadow grass models per game,
+remained unchanged. The first staging attempt failed before either map changed
+because PowerShell coerced a null File.Replace backup argument to an empty path.
+The versioned V2 helper uses [NullString]::Value; independent installation and
+rollback primitive checks passed before the successful retry.
+
+The private FN manifest changed only Daragoth's CRC. The restarted preview loaded
+Daragoth with zero players and passed FN health checks. Both installed map hashes,
+mouse-look controls, core binaries, profiles and FN character rows were verified.
+Normal game files were preserved. Sanitized acceptance details are recorded in
+`../../Development-Tests/Reports/daragoth-creek-join-repairs-20261002.json`.
+Subsequent house-door work starts from this accepted map as a separate candidate.

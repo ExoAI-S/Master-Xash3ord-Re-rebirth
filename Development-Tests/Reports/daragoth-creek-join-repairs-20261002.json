@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-02",
+  "scope": "Private Daragoth previews: creek water and bed, original entrance boundary, meadow joins",
+  "passed": true,
+  "installed_in_both_previews": true,
+  "base_sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+  "accepted_sha256": "8388e76d2653f4acc09abc633b25c8ce94b816a9e99fb10743e8838edb37fdc3",
+  "construction": {
+    "animated_water": "Bake the common vertical origin into a complete brush-model clone; retain world positions, UVs and all fluid hulls.",
+    "low_boundary": "Restore low original SKY surfaces and exact missing solid interfaces using embedded original rock and ordinary lighting.",
+    "original_caps": "Replace 131 remaining placeholder rock materials without changing face geometry.",
+    "creek_bed": "Insert one exact 49047-square-unit missing upward surface at node8808, plane4474; retain terrain and all collision trees."
+  },
+  "independent_validation": {
+    "native_collision_traces": 405,
+    "creek_bed_fine_grid_wet_points": 3116,
+    "missing_wet_bed_before": 753,
+    "missing_wet_bed_after": 0,
+    "coverage_limit": "Finite compiled surveys and targeted native views, not exhaustive walking of every map location.",
+    "static_report_sha256": "014ab1a60390d7c6d5e07f1feccaac9536ce4fa6f3963b03b33e1e2777b644cd",
+    "collision_report_sha256": "d96d6593dcea89b4f7fd7cb66379a78a12099cdcfefaa69a70899be850b56ee5"
+  },
+  "native_acceptance": {
+    "placements_passed": 23,
+    "placements_total": 23,
+    "fresh_screenshots": 28,
+    "entrance_views": 5,
+    "checks": ["swimming", "wading", "three creek seams", "dry mounted bridge", "reload", "entrance road", "bed visible through animated water"],
+    "root_visual_accepted": true,
+    "verification_sha256": "9eb68080bebbec1eafe1226e97bb8d743db0764bc2f65981c42a07e4d49f6ce3",
+    "view_audit_sha256": "f9d64f2f84a8a2a18036633beda8f9f7e700f941fadbfdd819876d3aa1c5ad39",
+    "rejected_intermediate_evidence_preserved": true
+  },
+  "installation": {
+    "helper": "Stage-Meadow-Bed-V2.ps1",
+    "helper_sha256": "6871e4b46bada31647a8a01afe5248cb096df7a57ac0c763a83bdc72da7074b2",
+    "validation_receipts": 53,
+    "protected_files": 242,
+    "protected_files_unchanged": true,
+    "grass_models_per_preview": 84,
+    "backup_directory_name": "meadow-bed-20261002T1239282672916Z",
+    "receipt_sha256": "28b88d2e2302449e7179368e841eabb92481a81f977c47bd5ec5fcf5a7a2e9e3",
+    "first_attempt": "File.Replace null backup argument was coerced to an empty path; it failed before any map replacement. Corrected V2 installation and rollback primitives were independently tested before retry."
+  },
+  "postflight": {
+    "passed": true,
+    "both_map_hashes_match": true,
+    "loaded_map": "daragoth",
+    "players": 0,
+    "fn_http_status": 200,
+    "fn_api": 2,
+    "fn_maps": 94,
+    "manifest_changed_only_daragoth_crc": true,
+    "daragoth_crc32": 3884707727,
+    "controls_profiles_character_rows_preserved": true,
+    "normal_game_preserved": true,
+    "client_sha256": "7331b73f5920572645912ff223e4de4009aaf2dc4fe2d307ff1ee125acb6b316",
+    "server_sha256": "99c28cd33b9dad427e499edbfcb4e92fb4dc9015c3ee33e5204b3c2304999211"
+  },
+  "follow_on": "House doors are a separate candidate built from the accepted map. Hourly followups remain active until the human pauses or stops them."
+}
