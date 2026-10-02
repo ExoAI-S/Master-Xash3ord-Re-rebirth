@@ -74,3 +74,17 @@ records the later mount integration separately.
 
 These are private development assets. The inherited Edana tree's upstream
 license remains unverified; this pass does not authorize public distribution.
+
+## Subsequent continuous-map cleanup
+
+The later creek, entrance and house-door work preserves these 920 patches and
+84 spatial models. The accepted private map is now
+`0f8d0e4c429985eda72c8ce17f0480014a687d088f902e50ada1ea9b8c644754`;
+the installed map/server/original-controls checkpoint and its bounded native
+evidence are recorded in
+`Development-Tests/Reports/daragoth-final-native-20261002.json`.
+
+The hourly followup is fitting one additional original bush clear of the north
+entrance bank. `NORTH-BANK-BUSH-CLEARANCE.md` records the separate e942 candidate,
+compiled placement and preservation checks, and accepted five-pair visual review.
+It does not replace the accepted map during the open human playtest.

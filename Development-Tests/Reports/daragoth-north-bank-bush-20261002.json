@@ -1,0 +1,23 @@
+{
+  "schema": "daragoth-north-bank-bush-checkpoint-v1",
+  "pass": true,
+  "candidate_sha256": "e942e42c6112a11858148ce279c8ffbe39e769059d60cb332c396b9c1020e927",
+  "installed": false,
+  "stage_eligible": false,
+  "installed_baseline_sha256": "0f8d0e4c429985eda72c8ce17f0480014a687d088f902e50ada1ea9b8c644754",
+  "change": {"entity": 304, "old_origin": "93.5564 3183.91 3432", "new_origin": "113 3136 3432", "displacement_units": 51.70514172652451},
+  "preservation": {"other_ordered_entities": 1052, "nonentity_lumps_and_descriptors": 14, "models": 166, "doors": 14, "water_entities": 5, "grass_sectors": 84},
+  "static_checks": {"above_floor_mesh_samples": 40596, "independent_nondegenerate_samples": 23664, "independent_opaque_samples": 12012, "nonempty_contacts": 0, "original_root_embedding_units": 13.700517158819821},
+  "native_checks": {"matched_camera_pairs": 5, "fresh_original_pngs_reviewed": 10, "network_errors": 0, "diagnostic_noclip_only": true, "visual_accepted": true, "observation": "The elevated matched view removes the old high leaf cards against the bank. Neighboring lower foliage remains and the road control retains its appearance."},
+  "receipts": {
+    "build": "957e19c59844e4e39c077767d1288a81bd8b5d7d3f5a2372e27a936cb9c866d5",
+    "independent_placement": "33ca2718a5f4e902607f5a5f716ecfda24acee1b315607f347fdfade7a16d0ce",
+    "independent_preservation": "4764c1d653873efb831dcf88014501d92b1f7262599ea529aa3e758fd841adf1",
+    "four_camera_comparison": "7ef10cf978a26982e8f2309119bde3e2e02b81f511f17dd73371c98033f717ee",
+    "elevated_comparison": "05039ecd5d7caa63273add63dbed4e511d0ae7a0b463761ccf8dbe726d954127",
+    "root_review": "a3d6baebcb501d897c25af61a0299d20307c61c40bebb5065db6b89c670a6ca7"
+  },
+  "retained_diagnostics": ["Coarse X112 destination missed36 low above-floor contacts; final X113 passes denser replay.", "Initial own-fixture cleanup refused a UTC formatting mismatch; corrected guard compares exact normalized UTC ticks with other ownership checks unchanged.", "Elevated eye hull1 is SOLID; body hull0/hull1 and actual eye hull0 are EMPTY.", "Own-clone FN CRC corrected from hex string to schema integer before the candidate launch; original preflight artifacts retained."],
+  "limits": "Finite static and isolated visual checks. No exhaustive continuous-map traversal, ordinary movement, riding, physical input, new functional regressions or live installation claim.",
+  "scope": "Private local checkpoint. Open human playtest remains on accepted0f8 map and original57 controls. Player data and runtime settings were not modified. Separate reviewed staging is required after the play session. No public release."
+}
