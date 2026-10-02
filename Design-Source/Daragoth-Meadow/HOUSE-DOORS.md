@@ -40,6 +40,35 @@ traces: 36 closed-door blocks, 72 clear passages with doors at ±90 degrees and
 36 unchanged world passages. These are finite compiled checks; native Use,
 movement and fresh screenshot acceptance are required before installation.
 
+The first native run with the previously accepted server exposed an existing
+rotating-door interaction defect. The first opening worked, but later Use presses
+could miss the door because the selection code combined rotation-expanded
+absolute bounds with the unrotated model size. Some doors could not be reopened
+from inside. That run is explicitly rejected and preserved under the private
+`house-doors/diagnostic-server99-run01` folder; its screenshot labels are not
+proof of successful door states.
+
+A localized server Use-target correction now selects the nearest point on the
+rotated door's actual local bounds. With that server, all six doors passed native
+outside opening, inside closing and reopening, closed-door blocking, normal
+entry and exit, blocked-motion reversal and no-injury checks. A full six-house
+run and a bounded two-house supplement are explicitly linked; their original
+diagnostic failures remain preserved. Reload restored the closed doors.
+
+The accepted base door server SHA-256 is
+`9e3dea1e96e365d45a4fcced005b5d06893a48b4459a72daaf9955cd07b9ba1b`.
+The private combined native receipt SHA-256 is
+`a9c10e804b63c6dceb2492bfcf3f961603dce0bd49bfb70973c35332afadbec3`.
+Visual review covered all six houses, the wide inn view and reload. One farmhouse
+inside view had an actual 9.6-degree downward pitch instead of the requested
+zero; the closed leaf and frame remained clearly visible. This exception is
+recorded without changing the original strict camera failure.
+
+This accepts the frozen six-door map and door-use server as base evidence. The
+successor map also closes two entrance post surfaces; its combined regression
+with the forthcoming horse water recovery server remains required before live
+installation. No door candidate has replaced the accepted live map yet.
+
 Example from the repository root, using a fresh isolated output:
 
 ```powershell
