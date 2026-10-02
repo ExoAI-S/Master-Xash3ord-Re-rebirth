@@ -1,6 +1,7 @@
 """Original small timber village and harmless walking-resident routes."""
 import math
 import random
+from house_doors import DOOR_IDS, door_brushes, door_values
 
 TOWN=(-3900,-7300)
 BUILDINGS=[('inn',-4820,-7900,480,336,'east'),('workshop',-4820,-6820,384,320,'east'),
@@ -15,7 +16,7 @@ ROUTES={
 
 def add_village(scope,entities,world):
     box=scope['box'];brush=scope['brush'];height=scope['height'];buildings=[]
-    for role,cx,cy,hx,hy,facing in BUILDINGS:
+    for building_index,(role,cx,cy,hx,hy,facing) in enumerate(BUILDINGS):
         # Human models are about70 units tall, with a72-unit standing hull.
         # Keep the plots/routes fixed while bringing buildings to human scale.
         hx=round(hx*.6/8)*8;hy=round(hy*.6/8)*8
@@ -57,12 +58,22 @@ def add_village(scope,entities,world):
                 world.append(box((wx-2,ya,floor+40),(wx+10,ya+4,floor+88),'DPWOOD',1))
             for zz in (floor+40,floor+84):
                 world.append(box((wx-2,wy-36,zz),(wx+10,wy+36,zz+4),'DPWOOD',1))
-        # Interior has headroom, benches and warm point light; doors stay open.
+        # The 72x90 leaf leaves four units at each side and one above/below
+        # within the 80x92 doorway. The ORIGIN
+        # brush places its vertical hinge at the south jamb; Use opens/closes
+        # it and the native two-way door chooses a swing away from the player.
+        hinge=(front+12,cy-door_half+4,floor+46)
+        door_id=DOOR_IDS[building_index]
+        entities.append(scope['entity'](door_values(door_id,hinge,scope['origin']),
+            door_brushes(box,hinge)))
+        # Interior has headroom, benches and warm point light.
         world.append(box((cx-88,cy+hy-64,floor),(cx+88,cy+hy-40,floor+24),'DPWOOD',1))
         entities.append(scope['entity']({'classname':'light','origin':scope['origin'](cx,cy,floor+88),
             '_light':'255 189 100 140'}))
         buildings.append({'role':role,'center':[cx,cy],'half_size':[hx,hy],'floor_z':floor,
             'door_facing':facing,'door_clear_width':2*door_half,'door_clear_height':door_height,
+            'door_targetname':'greenhollow_door_'+door_id,'door_hinge':list(hinge),
+            'door_leaf_size':[6,72,90],'door_use_toggle':True,
             'wall_height':112,'roof_rise':roof_rise,'roof_top_z':walltop+roof_rise})
     # Well in the square; a low solid ring and roof, with clear pedestrian lanes.
     cx,cy=TOWN;z=432
