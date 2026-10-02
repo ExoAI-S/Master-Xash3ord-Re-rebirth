@@ -1,9 +1,8 @@
 """Original greener meadow art pass for the private continuous Daragoth map.
 
 Retains the audited join, original spawn pool, bridge and riding stable.
-The original Daragoth textures are not copied: only a numeric color reference
-informs our own procedural grass palette. The first plains generator and all
-previous compiled candidates remain available unchanged.
+Grass remains independently generated from a numeric palette reference. The
+road and orchard reuse the user's installed assets in private generated output.
 """
 from __future__ import annotations
 import argparse
@@ -19,6 +18,7 @@ sys.path.insert(0,str(ROOT))
 from village import add_village,window_texture,TOWN
 from grass_texture import grass_texture
 from rock_texture import rock_texture
+from path_texture import entry_road_width,installed_path_texture,split_road_triangle
 from natural_boundary import boundary_height,boundary_row_x,integration_notes
 REPO=ROOT.parents[1]
 spec=importlib.util.spec_from_file_location('continuous_join',ROOT.parent/'Daragoth-Expanded/build_expanded.py')
@@ -67,13 +67,14 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
     models={'oak':('plains_oak.mdl',277,480),'birch':('plains_birch.mdl',112,430),
         'pine':('plains_pine.mdl',169,520),'bush':('plains_bush.mdl',56,64),
         'rocks':('plains_rocks.mdl',57,54),'grass':('meadow_grass_patch.mdl',170,42)}
+    tree_kinds=('oak','birch','pine','apple')
     ground=lambda x,y:scope['ground_at'](x,y,triangles)
     def allowed(x,y,radius,kind):
         if not(-11350+radius<x<11350-radius and -9340+radius<y<9340-radius):return False
-        lane=1050 if kind in ('oak','birch','pine') else scope['road_width'](y)+120+radius
+        lane=1050 if kind in tree_kinds else scope['road_width'](y)+120+radius
         if abs(x-scope['road_x'](y))<lane:return False
         if abs(y-scope['RIVER_Y'])<550+radius:return False
-        stable_clear=1100 if kind in ('oak','birch','pine') else 780
+        stable_clear=1100 if kind in tree_kinds else 780
         if max(abs(x-scope['STABLE'][0]),abs(y-scope['STABLE'][1]))<stable_clear+radius:return False
         if max(abs(x-scope['RUINS'][0]),abs(y-scope['RUINS'][1]))<1020+radius:return False
         if -5550-radius<x<-2600+radius and -9070-radius<y<-5630+radius:return False
@@ -86,7 +87,7 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
         if math.hypot(dx,dy)>.6:return False
         spacing=.42 if kind=='grass' else .65
         return all(math.hypot(x-p['origin'][0],y-p['origin'][1])>(radius+p['radius'])*spacing
-            for p in placed if (p['kind']==kind or kind in ('oak','birch','pine') and p['kind'] in ('oak','birch','pine')))
+            for p in placed if (p['kind']==kind or kind in tree_kinds and p['kind'] in tree_kinds))
     def place(kind,x,y):
         model,radius,height=models[kind];x=round(x);y=round(y)
         if not allowed(x,y,radius,kind):return False
@@ -110,9 +111,18 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
             'angles':f'{pitch:.5f} {yaw} {roll:.5f}','model':record['model'],'sequence':'0',
             'framerate':'0' if kind in ('rocks','grass') else '1','dmg':'0','rendermode':'0',
             'renderamt':'255','scale':'1','skin':'0','body':'0'}))
-        if kind in ('oak','birch','pine'):
-            trees.append((x,y));trunk=12 if kind=='birch' else 16
-            world.append(scope['box']((x-trunk,y-trunk,gz-11),(x+trunk,y+trunk,gz+207),'CLIP'))
+        if kind in tree_kinds:
+            trees.append((x,y));trunk=5 if kind=='apple' else 12 if kind=='birch' else 16
+            world.append(scope['box']((x-trunk,y-trunk,gz-11),(x+trunk,y+trunk,gz+(150 if kind=='apple' else 207)),'CLIP'))
+        if kind=='apple':
+            # Preserve the original tree/apple alignment while rotating each grove tree.
+            for ax,ay,az in [(37,-38,102),(-45,-43,116),(-1,-74,152),(38,38,105),(-52,50,120)]:
+                angle=math.radians(yaw)
+                px=x+ax*math.cos(angle)-ay*math.sin(angle)
+                py=y+ax*math.sin(angle)+ay*math.cos(angle)
+                entities.append(scope['entity']({'classname':'env_model','origin':scope['origin'](px,py,gz-embed+az),
+                    'angles':f'0 {yaw} 0','model':'models/misc/p_misc.mdl','sequence':'0','framerate':'1',
+                    'dmg':'0','rendermode':'4','renderamt':'255','scale':'1','skin':'0','body':'2'}))
         return True
     anchors=[(-3200,-8650,14),(-4950,-5100,20),(5200,-5300,17),(6650,-2700,15),
         (-5700,300,15),(4500,3100,18),(-7350,6750,17),(7800,8200,14),
@@ -136,17 +146,31 @@ def meadow_scenery(scope,entities,world,triangles,spawns):
             else:x=rng.uniform(-11000,11000);y=rng.uniform(-9200,9200)
             made+=int(place(kind,x,y))
         if made!=goal:raise RuntimeError(f'Groundcover budget not fulfilled: {kind} {made}/{goal}')
+    # Add orchards after the frozen meadow pass so existing scenery never shifts.
+    models['apple']=('edana_apple_tree.mdl',100,257)
+    rng=random.Random(20261001)
+    for cx,cy in [(-6100,-8000),(-6000,-6200),(-2600,-5100)]:
+        made=0
+        for _ in range(500):
+            if made==4:break
+            made+=int(place('apple',cx+rng.gauss(0,320),cy+rng.gauss(0,320)))
+        if made!=4:raise RuntimeError('Could not place the requested orchard safely')
+    stablemaster=[-2150,-8100,432]
+    entities.append(scope['entity']({'classname':'ms_stablemaster','origin':scope['origin'](*stablemaster),
+        'angles':'0 90 0','targetname':'plains_stablemaster'}))
     counts={kind:sum(p['kind']==kind for p in placed) for kind in models}
     if len(placed)>1220:raise RuntimeError('Meadow scenery exceeds the preview entity budget')
     return {'counts':counts,'entities':len(placed),'tree_collision_trunks':len(trees),
         'road_clear_radius_trees':1050,'road_clear_radius_groundcover':'road half-width +120 + prop radius',
-        'spawn_clear_radius':240,'models_original':True,'grass_clumps_per_patch':36,
+        'spawn_clear_radius':240,'models_original':False,'original_authored_models_except':['apple'],
+        'apple_tree_source':'installed Edana trunk *151 and its associated crown from *152',
+        'apple_fruit_decorative_only':True,'apple_fruit_entities':60,'stablemaster':stablemaster,'grass_clumps_per_patch':36,
         'grass_minimum_patch_separation_units':142.8,'grass_triangles_per_patch':288,
         'grass_patch_slope_aligned':True,'grass_patch_max_surface_deviation':8,
         'wind_idle_framerate':1,'ground_sampling':'barycentric emitted-triangle surface', 'placements':placed,'village':village}
 
 
-def variant(maps):
+def variant(maps,original):
     source=REPO/'Design-Source/Daragoth-Plains/build_daragoth_plains.py'
     scope={'__file__':str(source),'__name__':'daragoth_meadow_variant'}
     code=source.read_text(encoding='utf8').replace('WIDTH, LENGTH = 24000, 20000','WIDTH, LENGTH = 24000, 21280')
@@ -162,11 +186,12 @@ def variant(maps):
     code=code.replace('for cx,cy in ((-3500,-7700),(-3500,-6800)):', 'for cx,cy in ():')
     code=code.replace('p=[x,-7450,464]','p=[x,-7450,height(x,-7450)+48]')
     code=code.replace('top=\'DPDIRT\' if road else \'DPGRASS\'',
-        "road=road or (-4400<(x1+x2+X1+X2)/4<-3360 and -8360<(ys[j]+ys[j+1])/2<-6320) or (-3360<(x1+x2+X1+X2)/4<-650 and -7700<(ys[j]+ys[j+1])/2<-7150)\n            top='DPDIRT' if road else 'DPGRASS'")
-    code=code.replace('"DPLEAF":"leaf","SKY":"sky"','"DPLEAF":"leaf","DPWINDOW":"window","SKY":"sky"')
+        "main_road=road\n            road=road or (-4400<(x1+x2+X1+X2)/4<-3360 and -8360<(ys[j]+ys[j+1])/2<-6320) or (-3360<(x1+x2+X1+X2)/4<-650 and -7700<(ys[j]+ys[j+1])/2<-7150)\n            top='DPDIRT' if road else 'DPGRASS'")
+    code=code.replace('"DPLEAF":"leaf","SKY":"sky"','"DPLEAF":"leaf","DPWINDOW":"window","DPPATH":"path","SKY":"sky"')
+    code=code.replace("'textures_original':True", "'textures_original':False")
     code=code.replace('sheet_w,sheet_h=1280,512','sheet_w,sheet_h=1280,768')
     code=code.replace('world.append(prism(*t,top=top));triangles.append(t)',
-        "world.append(prism(*t,top='DPROCK' if boundary_triangle(t) and triangle_slope(t)>40 else top));triangles.append(t)")
+        "world.append(prism(*t,top='DPROCK' if boundary_triangle(t) and triangle_slope(t)>40 else top,road_path=main_road));triangles.append(t)")
     code=code.replace('if maxslope>30 or bad_spawns:',
         'interior_slopes=[s for t,s in zip(triangles,slopes) if not boundary_triangle(t)]\n    if maxslope>80 or max(interior_slopes)>30 or bad_spawns:')
     code=code.replace("'max_terrain_slope_degrees':round(maxslope,3),",
@@ -180,10 +205,22 @@ def variant(maps):
     original_row_x=scope['row_x']
     scope['row_x']=lambda x,y,inner=600:boundary_row_x(x,y,original_row_x(x,y,inner),inner)
     original_texture=scope['texture_data']
-    scope['texture_data']=lambda name,kind:window_texture() if kind=='window' else grass_texture() if kind=='grass' else rock_texture() if kind=='rock' else original_texture(name,kind)
+    road_texture,road_provenance=installed_path_texture(join.BSP.load(original))
+    scope['texture_data']=lambda name,kind:window_texture() if kind=='window' else road_texture if kind=='path' else grass_texture() if kind=='grass' else rock_texture() if kind=='rock' else original_texture(name,kind)
     # Fine, irregular grain avoids the former large repeating diagonal bands.
     original_prism=scope['prism']
-    def meadow_prism(a,b,c,bottom=scope['BOTTOM'],texture='DPROCK',top='DPGRASS'):
+    def meadow_prism(a,b,c,bottom=scope['BOTTOM'],texture='DPROCK',top='DPGRASS',road_path=False):
+        if road_path:
+            center,outer,axes=split_road_triangle((a,b,c),scope['road_x'],lambda y:entry_road_width(y,0))
+            sx,sy,shift=axes;brushes=[]
+            for triangle in center:
+                lines=original_prism(*triangle,bottom,texture,'DPPATH').splitlines(keepends=True)
+                coordinates=lines[1].split('DPPATH')[0]
+                # After the merge's y translation this is the original [0 -1 0 200].
+                lines[1]=f'{coordinates}DPPATH [ {sx:.9f} {sy:.9f} 0 {shift:.9f} ] [ 0 -1 0 -13016 ] 0 1 1\n'
+                brushes.append(''.join(lines))
+            brushes.extend(meadow_prism(*triangle,bottom,texture,'DPGRASS') for triangle in outer)
+            return ''.join(brushes)
         if top!='DPGRASS':return original_prism(a,b,c,bottom,texture,top)
         vertices=[a,b,c,(a[0],a[1],bottom),(b[0],b[1],bottom),(c[0],c[1],bottom)]
         return scope['brush'](vertices,[(0,1,2),(3,5,4),(0,3,4),(1,4,5),(2,5,3)],texture,top,scale=.5)
@@ -206,7 +243,11 @@ def variant(maps):
         'flat_entry_height':384,'flat_entry_y_max':-9400,'blend_y_max':-8200,'shell_south_y':-10640,
         'far_deralia_gate_local':[x,y,z],'terrain_spacing':600,'original_numeric_color_reference':[60.9,73.2,4.0],
         'natural_boundary_module_sha256':join.sha(ROOT/'natural_boundary.py'),'natural_boundaries':integration_notes(),
-        'original_bitmap_pixels_copied':False,'meadow_grass_palette_endpoints':[[19,62,0],[104,87,8]],
+        'original_bitmap_pixels_copied':True,'meadow_grass_palette_endpoints':[[19,62,0],[104,87,8]],
+        'entry_path':{'original_exit_world_x':[1400,1656],'width_at_join':256,
+            'width_throughout':256,'material':'DPPATH','grass_fringes':True,
+            'authored_pixels':False,'installed_asset_private_use':True,
+            'original_texture':road_provenance,'final_world_v_axis':[0,-1,0,200]},
         'environment_matches_original':{'angles':'210 60 0','_light':'255 255 128 50'}}
 
 
@@ -217,7 +258,28 @@ def main():
     parser.add_argument('--reuse-compiled',action='store_true');args=parser.parse_args()
     if args.out.resolve().is_relative_to(Path('C:/MSR').resolve()):parser.error('Use a private scratch output')
     join.build(args.original.resolve(),args.ent.resolve(),args.out.resolve(),args.tools.resolve(),args.reuse_compiled,
-        caps=True,sky_close=True,stone_facing=True,variant_builder=variant,output_suffix='_meadow',omit_legacy_skyline=True)
+        caps=True,sky_close=True,stone_facing=True,variant_builder=lambda maps:variant(maps,args.original.resolve()),output_suffix='_meadow',omit_legacy_skyline=True)
+    preserve_road_mips(args.original.resolve(),args.out.resolve())
+
+
+def preserve_road_mips(original,out):
+    # The procedural WAD writer regenerates lower mips. Restore all four of the
+    # installed source material's mip levels, changing only its internal name.
+    path=out/'daragoth_expanded_meadow.bsp'
+    bsp=join.BSP.load(path)
+    source=next(t for t in join.BSP.load(original).textures if t.name.lower()=='deraliaroad_2_0')
+    target=next(t for t in bsp.textures if t.name.lower()=='dppath')
+    target.raw=b'DPPATH'.ljust(16,b'\0')+source.raw[16:]
+    bsp.save(path,bsp30ext=True)
+    assert next(t for t in join.BSP.load(path).textures if t.name.lower()=='dppath').raw[16:]==source.raw[16:]
+    report_path=out/'continuous-join-meadow-report.json'
+    report=json.loads(report_path.read_text())
+    report['complete_road_miptex_preserved']=True
+    report['complete_road_miptex_sha256']=join.hashlib.sha256(source.raw[16:]).hexdigest()
+    report['final_map_sha256']=join.sha(path)
+    report['output'].update({'sha256':join.sha(path),'crc32':join.zlib.crc32(path.read_bytes())&0xffffffff,
+        'bytes':path.stat().st_size})
+    report_path.write_text(json.dumps(report,indent=2)+'\n')
 
 
 if __name__=='__main__':main()

@@ -1097,7 +1097,7 @@ void CStudioModelRenderer::StudioSetupBones(void)
 				memcpy(pos[i], pbones[i].value, sizeof(pos[i]));
 			}
 			// Standing origin remains 36 units above feet. The draw transform
-			// adds 56; lowering only the root by 28 seats the pelvis at z=64.
+			// adds RiderLift; lowering the root by 28 keeps hips above the seat.
 			pos[indices[0]][0] = -MSRMountPolicy::RiderForward;
 			pos[indices[0]][1] = 0.0f;
 			pos[indices[0]][2] = -28.0f;

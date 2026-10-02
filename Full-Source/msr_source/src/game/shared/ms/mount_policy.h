@@ -6,7 +6,7 @@ namespace MSRMountPolicy
 constexpr int MountedFlag = 1 << 10;
 constexpr float WalkSpeed = 320.0f;
 constexpr float GallopSpeed = 520.0f;
-constexpr float RiderLift = 56.0f;
+constexpr float RiderLift = 59.0f; // Three units of clearance above the padded saddle.
 constexpr float RiderForward = 16.5f;
 constexpr float ViewHeight = 64.0f;
 

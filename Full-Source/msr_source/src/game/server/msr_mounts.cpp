@@ -13,6 +13,7 @@ namespace
 cvar_t g_Mounts = {"ms_mounts", "0", FCVAR_SERVER};
 int g_PrecachedHorseIndex = 0; // Diagnostics only; never used as a cross-map model handle.
 constexpr const char *kHorseModel = "models/mounts/plains_horse.mdl";
+constexpr const char *kStablemasterModel = "models/npc/human1.mdl";
 constexpr int kBlockedButtons = IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK;
 constexpr int kRestrictions = PLAYER_MOVE_NOATTACK | PLAYER_MOVE_NOJUMP | PLAYER_MOVE_NODUCK;
 
@@ -62,12 +63,27 @@ bool GroundSpot(CBasePlayer *player, const Vector &wanted, Vector &result)
     result = ground.vecEndPos + Vector(0, 0, 1);
     return Dry(result + Vector(0, 0, player->pev->mins.z + 4));
 }
+// A loan is placed in the paddock without relocating the requesting player.
+// Only the pad and its floor must be clear; the NPC may stand between them.
+bool LoanPad(CBasePlayer *player, const Vector &feet, Vector &result)
+{
+    TraceResult ground;
+    const Vector center=feet+Vector(0,0,36);
+    UTIL_TraceHull(center+Vector(0,0,18),center-Vector(0,0,64),
+        dont_ignore_monsters,human_hull,player->edict(),&ground);
+    if (ground.fStartSolid || ground.fAllSolid || ground.flFraction>=1 || ground.vecPlaneNormal.z<0.7f)
+        return false;
+    result=ground.vecEndPos-Vector(0,0,35);
+    return Dry(result+Vector(0,0,4));
+}
 }
 
 class CMSRHorse : public CBaseAnimating
 {
 public:
     EHANDLE m_Rider{};
+    EHANDLE m_Customer{}, m_Stablemaster{};
+    bool m_Assigned = false;
     Vector m_HomeOrigin, m_HomeAngles, m_SavedView;
     int m_SavedPhysicsFlags = 0;
     float m_NextUse = 0;
@@ -110,10 +126,20 @@ public:
         CBaseEntity *entity = m_Rider;
         return entity && entity->IsPlayer() ? (CBasePlayer *)entity : NULL;
     }
+    CBasePlayer *GetCustomer()
+    {
+        CBaseEntity *entity = m_Customer;
+        return entity && entity->IsPlayer() ? (CBasePlayer *)entity : NULL;
+    }
     bool TryMount(CBasePlayer *player, bool quiet = false)
     {
         if (!player)
             return false;
+        if (m_Assigned && GetCustomer() != player)
+        {
+            if (!quiet) Tell(player, "This horse belongs to another rider. Ask the stablemaster for yours.");
+            return false;
+        }
         const MSRMountPolicy::MountGate gate{
             Enabled(), (bool)(int)player->m_hMount, (bool)(int)m_Rider,
             player->IsAlive() != 0, player->m_fInServer && player->m_CharacterState == CHARSTATE_LOADED,
@@ -238,6 +264,17 @@ public:
     }
     void EXPORT HorseThink()
     {
+        if (m_Assigned)
+        {
+            CBasePlayer *customer = GetCustomer();
+            if (!customer || !customer->m_fInServer || !customer->IsAlive() ||
+                customer->m_CharacterState != CHARSTATE_LOADED || !Enabled())
+            {
+                EndRide(true, "customer unavailable", true);
+                UTIL_Remove(this);
+                return;
+            }
+        }
         CBasePlayer *player = GetRider();
         if (player)
         {
@@ -260,6 +297,95 @@ public:
 
 LINK_ENTITY_TO_CLASS(ms_horse, CMSRHorse);
 
+// Per-session loan horses: no character/FN writes and no shared rider slot.
+class CMSRStablemaster : public CBaseAnimating
+{
+public:
+    float m_NextUse = 0;
+    int ObjectCaps() { return (CBaseAnimating::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE; }
+    void Precache() { PRECACHE_MODEL(kStablemasterModel); MSRMounts::Precache(); }
+    void Spawn()
+    {
+        Precache();
+        SET_MODEL(edict(), kStablemasterModel);
+        pev->movetype = MOVETYPE_NONE;
+        pev->solid = SOLID_BBOX;
+        pev->takedamage = DAMAGE_NO;
+        UTIL_SetSize(pev, Vector(-16,-16,0), Vector(16,16,72));
+        UTIL_SetOrigin(pev, pev->origin);
+        m_DisplayName = "Stablemaster";
+        const int idle = LookupSequence("idle1");
+        pev->sequence = idle >= 0 ? idle : 0;
+        pev->framerate = 1;
+        ResetSequenceInfo();
+        SetUse(&CMSRStablemaster::StableUse);
+        SetThink(&CMSRStablemaster::StableThink);
+        pev->nextthink = gpGlobals->time + 0.1f;
+    }
+    CMSRHorse *Request(CBasePlayer *player)
+    {
+        if (!Enabled() || !player || !player->m_fInServer || !player->IsAlive() ||
+            player->m_CharacterState != CHARSTATE_LOADED || !MODEL_INDEX(kHorseModel))
+            return NULL;
+        if ((player->pev->origin - pev->origin).Length() > 112 ||
+            player->InMenu || player->IsActing() || player->IsShielding())
+            return NULL;
+        // Search the authoritative entities, including an unmounted loan horse.
+        for (int index=gpGlobals->maxClients+1; index<gpGlobals->maxEntities; ++index)
+        {
+            edict_t *entity=INDEXENT(index);
+            if (!entity || entity->free || !entity->pvPrivateData || (entity->v.flags & FL_KILLME)) continue;
+            if (!FStrEq(STRING(entity->v.classname), "ms_horse")) continue;
+            CMSRHorse *horse=(CMSRHorse *)CBaseEntity::Instance(entity);
+            if (horse->m_Assigned && horse->GetCustomer()==player)
+            {
+                Tell(player, "Your horse is already waiting. Use it to ride; Use again to dismount.");
+                return horse;
+            }
+        }
+        if ((int)player->m_hMount)
+        {
+            Tell(player, "Dismount before requesting a horse.");
+            return NULL;
+        }
+        for (int pad=0; pad<8; ++pad)
+        {
+            const Vector feet=pev->origin+Vector(180+(pad%4)*220,140+(pad/4)*180,0);
+            bool occupied=false;
+            for (int index=gpGlobals->maxClients+1; index<gpGlobals->maxEntities; ++index)
+            {
+                edict_t *entity=INDEXENT(index);
+                if (!entity || entity->free || !entity->pvPrivateData || (entity->v.flags & FL_KILLME)) continue;
+                if (FStrEq(STRING(entity->v.classname), "ms_horse") &&
+                    (entity->v.origin-feet).Length2D()<155) { occupied=true; break; }
+            }
+            Vector point;
+            if (occupied || !LoanPad(player,feet,point)) continue;
+            CMSRHorse *horse=(CMSRHorse *)CBaseEntity::Create("ms_horse",
+                point,Vector(0,0,0));
+            if (!horse || (horse->pev->flags & FL_KILLME)) return NULL;
+            horse->m_Customer=player;
+            horse->m_Stablemaster=this;
+            horse->m_Assigned=true;
+            Tell(player, "Your horse is ready beside the stable. Use it to mount.");
+            ALERT(at_console,"Stablemaster: player %d assigned horse %d pad=%d.\n",player->entindex(),horse->entindex(),pad);
+            return horse;
+        }
+        Tell(player,"The paddock is full or blocked. Clear some space and ask again.");
+        return NULL;
+    }
+    void EXPORT StableUse(CBaseEntity *activator,CBaseEntity *,USE_TYPE,float)
+    {
+        if (activator && activator->IsPlayer() && gpGlobals->time>=m_NextUse)
+        {
+            m_NextUse=gpGlobals->time+0.25f;
+            Request((CBasePlayer *)activator);
+        }
+    }
+    void EXPORT StableThink() { StudioFrameAdvance(); pev->nextthink=gpGlobals->time+0.1f; }
+};
+LINK_ENTITY_TO_CLASS(ms_stablemaster, CMSRStablemaster);
+
 namespace
 {
 CMSRHorse *Horse(CBaseEntity *entity)
@@ -269,6 +395,24 @@ CMSRHorse *Horse(CBaseEntity *entity)
 CMSRHorse *MountedHorse(CBasePlayer *player)
 {
     return player ? Horse((CBaseEntity *)player->m_hMount) : NULL;
+}
+void StableTestCommand()
+{
+    if (!Cheats()) return;
+    CBasePlayer *first=TestPlayer(), *second=TestPlayer(2);
+    CBaseEntity *entity=UTIL_FindEntityByClassname(NULL,"ms_stablemaster");
+    if (!entity || !first || !second || first==second || (int)first->m_hMount || (int)second->m_hMount)
+    {
+        g_engfuncs.pfnServerPrint("Stablemaster test needs two loaded, unmounted players beside the stablemaster.\n");
+        return;
+    }
+    CMSRStablemaster *stable=(CMSRStablemaster *)entity;
+    CMSRHorse *a=stable->Request(first), *b=stable->Request(second);
+    const bool ok=a && b && a!=b && a->GetCustomer()==first && b->GetCustomer()==second &&
+        stable->Request(first)==a && stable->Request(second)==b &&
+        !a->TryMount(second,true) && !b->TryMount(first,true);
+    g_engfuncs.pfnServerPrint(ok ? "Stablemaster: two customers, distinct horses, repeat reuse and other-rider denial PASS.\n" :
+        "Stablemaster test FAILED.\n");
 }
 void SpawnCommand()
 {
@@ -302,9 +446,10 @@ void StatusCommand()
         if (!horse) continue;
         ++count;
         CBasePlayer *rider = horse->GetRider();
-        ALERT(at_console, "Mount %d rider=%d owner=%d solid=%d xyz=%.1f,%.1f,%.1f seq=%d\n",
+        ALERT(at_console, "Mount %d rider=%d owner=%d solid=%d xyz=%.1f,%.1f,%.1f seq=%d customer=%d\n",
             horse->entindex(), rider ? rider->entindex() : 0, horse->pev->owner ? ENTINDEX(horse->pev->owner) : 0,
-            horse->pev->solid, horse->pev->origin.x, horse->pev->origin.y, horse->pev->origin.z, horse->pev->sequence);
+            horse->pev->solid, horse->pev->origin.x, horse->pev->origin.y, horse->pev->origin.z, horse->pev->sequence,
+            horse->GetCustomer() ? horse->GetCustomer()->entindex() : 0);
         if (rider)
         {
             ALERT(at_console, "  rider status=%d physics=%d view=%.1f speed=%.1f effect-percent=%.1f hull=%.1f..%.1f\n",
@@ -456,6 +601,7 @@ void Init()
     g_engfuncs.pfnAddServerCommand((char *)"ms_mount_status", StatusCommand);
     g_engfuncs.pfnAddServerCommand((char *)"ms_mount_test", LifecycleCommand);
     g_engfuncs.pfnAddServerCommand((char *)"ms_mount_place", PlaceCommand);
+    g_engfuncs.pfnAddServerCommand((char *)"ms_stable_test", StableTestCommand);
 }
 void Precache()
 {
@@ -500,6 +646,18 @@ void Release(CBasePlayer *player, const char *reason)
         ClearBits(player->pev->iuser3, PLAYER_MOVE_MOUNTED | kRestrictions);
         player->pev->view_ofs = Vector(0, 0, 28);
     }
+    if (!strcmp(reason,"disconnect") || !strcmp(reason,"death") || !strcmp(reason,"spawn") || !strcmp(reason,"map end"))
+        for (int index=gpGlobals->maxClients+1; index<gpGlobals->maxEntities; ++index)
+        {
+            edict_t *entity=INDEXENT(index);
+            if (!entity || entity->free || !entity->pvPrivateData) continue;
+            CMSRHorse *loan=Horse(CBaseEntity::Instance(entity));
+            if (loan && loan->m_Assigned && loan->GetCustomer()==player)
+            {
+                loan->EndRide(true,reason,true);
+                UTIL_Remove(loan);
+            }
+        }
 }
 void RecordCommand(CBasePlayer *player, const usercmd_s *command)
 {

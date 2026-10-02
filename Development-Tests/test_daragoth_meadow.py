@@ -113,9 +113,9 @@ def placement_checks(m,exe,folder,offset,scope,source,grassmdl):
     placements=source['scenery']['placements'];failed=[];clearances=[];floorcases=[]
     for p in placements:
         x,y,z=p['origin'];r=p['radius'];kind=p['kind']
-        required=1050 if kind in('oak','birch','pine')else scope['road_width'](y)+120+r
+        required=1050 if kind in('oak','birch','pine','apple')else scope['road_width'](y)+120+r
         road=abs(x-scope['road_x'](y))
-        stable=(1100 if kind in('oak','birch','pine')else 780)+r
+        stable=(1100 if kind in('oak','birch','pine','apple')else 780)+r
         if road<required-.1 or abs(y-scope['RIVER_Y'])<550+r-.1 or max(abs(x-scope['STABLE'][0]),abs(y-scope['STABLE'][1]))<stable-.1:
             failed.append({'clearance':p})
         clearances.append(road-required)
@@ -178,13 +178,18 @@ def village_checks(m,exe,folder,offset,village):
     for building in village['buildings']:
         cx,cy=building['center'];hx,hy=building['half_size']
         front=cx+hx if building['door_facing']=='east'else cx-hx
-        for lateral in(-64,0,64):
+        # Exercise both sides of the actual opening with a16-unit half-width
+        # human hull; the old fixed +/-64 lanes lie in smaller buildings' walls.
+        width=building['door_clear_width'];height=building['door_clear_height']
+        assert width>=64 and height>=90, 'Door must fit standing hull plus18-unit step'
+        lane=min(64,width/2-18) #2-unit margin avoids tracing exactly on jamb planes.
+        for lateral in(-lane,0,lane):
             for x in range(int(front)-128,int(front)+129,8):
                 z=building['floor_z']+36+offset[2]
-                cases.append(((x+offset[0],cy+lateral+offset[1],z+60),(x+offset[0],cy+lateral+offset[1],z-80)))
+                cases.append(((x+offset[0],cy+lateral+offset[1],z+12),(x+offset[0],cy+lateral+offset[1],z-80)))
                 labels.append(('door',building['role'],cx,cy,lateral,x))
         z=building['floor_z']+36+offset[2]
-        cases.append(((cx+offset[0],cy+offset[1],z+60),(cx+offset[0],cy+offset[1],z-80)))
+        cases.append(((cx+offset[0],cy+offset[1],z+12),(cx+offset[0],cy+offset[1],z-80)))
         labels.append(('interior',building['role'],cx,cy))
     for actor in village['residents']:
         points=actor['route']
@@ -202,7 +207,9 @@ def village_checks(m,exe,folder,offset,village):
         if t['fraction']==1 or t['startsolid']or t['allsolid']or t['normal'][2]<.7:
             if len(failed)<30:failed.append({'label':label,'floor':t})
             continue
-        p=t['end'];heads.append((p,(p[0],p[1],p[2]+32)))
+        #12-unit clearance leaves room for normal movement beneath92-unit
+        # doorways. Step traces below separately verify the full18-unit rise.
+        p=t['end'];heads.append((p,(p[0],p[1],p[2]+12)))
         if label[0]=='door':
             for dx in(-8,8):
                 up=(p[0],p[1],p[2]+18);end=(p[0]+dx,p[1],p[2]+18)
@@ -221,7 +228,7 @@ def village_checks(m,exe,folder,offset,village):
         up,across,down=steps[3*i:3*i+3]
         if up['fraction']!=1 or across['fraction']!=1 or any(t['startsolid']or t['allsolid']for t in(up,across,down))or(down['fraction']<1 and down['normal'][2]<.7):
             if len(failed)<30:failed.append({'label':label,'step':[up,across,down]})
-    return {'pass':not failed,'name':village['name'],'enterable_buildings':len(village['buildings']),'residents':len(village['residents']),'floor_probes':len(cases),'headroom_probes':len(heads),'actual_C_step_traces':len(stepcases),'route_segments':sum(len(a['route'])for a in village['residents']),'failure_examples':failed,'scope':'Standing hull1 doors in both directions, interiors, all closed resident route segments at <=8-unit spacing, and additional 32-unit headroom. Actual NPC script behavior is covered by native testing.'}
+    return {'pass':not failed,'name':village['name'],'enterable_buildings':len(village['buildings']),'residents':len(village['residents']),'floor_probes':len(cases),'headroom_probes':len(heads),'actual_C_step_traces':len(stepcases),'route_segments':sum(len(a['route'])for a in village['residents']),'failure_examples':failed,'scope':'Standing hull1 doors in both directions, interiors, all closed resident route segments at <=8-unit spacing,12-unit extra headroom and18-unit step clearance. Actual NPC script behavior is covered by native testing.'}
 
 
 def main():

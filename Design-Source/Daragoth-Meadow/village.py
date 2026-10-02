@@ -16,48 +16,54 @@ ROUTES={
 def add_village(scope,entities,world):
     box=scope['box'];brush=scope['brush'];height=scope['height'];buildings=[]
     for role,cx,cy,hx,hy,facing in BUILDINGS:
-        z=432;floor=z+8;walltop=floor+256
+        # Human models are about70 units tall, with a72-unit standing hull.
+        # Keep the plots/routes fixed while bringing buildings to human scale.
+        hx=round(hx*.6/8)*8;hy=round(hy*.6/8)*8
+        z=432;floor=z+8;walltop=floor+112
+        door_half=40;door_height=92;roof_rise=88
         world.append(box((cx-hx-8,cy-hy-8,z-16),(cx+hx+8,cy+hy+8,floor),'DPROCK',1))
         if role=='farmhouse':
             # The south-entry blend lowers this plot. Two 12-unit rises keep
             # its open doorway within the engine's 18-unit step allowance.
             edge=cx+hx
-            world.append(box((edge+24,cy-112,392),(edge+72,cy+112,416),'DPROCK',1))
-            world.append(box((edge,cy-112,392),(edge+24,cy+112,428),'DPROCK',1))
+            world.append(box((edge+24,cy-64,392),(edge+72,cy+64,416),'DPROCK',1))
+            world.append(box((edge,cy-64,392),(edge+24,cy+64,428),'DPROCK',1))
         # Back and side walls, with a real doorway and lintel at the front.
         back=cx-hx if facing=='east' else cx+hx-24
         world.append(box((back,cy-hy,floor),(back+24,cy+hy,walltop),'DPMASON',1))
         for y in (cy-hy,cy+hy-24):
             world.append(box((cx-hx,y,floor),(cx+hx,y+24,walltop),'DPMASON',1))
         front=cx+hx-24 if facing=='east' else cx-hx
-        for ya,yb in ((cy-hy,cy-96),(cy+96,cy+hy)):
+        for ya,yb in ((cy-hy,cy-door_half),(cy+door_half,cy+hy)):
             world.append(box((front,ya,floor),(front+24,yb,walltop),'DPMASON',1))
-        world.append(box((front,cy-96,floor+176),(front+24,cy+96,walltop),'DPWOOD',1))
+        world.append(box((front,cy-door_half,floor+door_height),(front+24,cy+door_half,walltop),'DPWOOD',1))
         # Half-timber posts and broad eaves make distinct finished silhouettes.
         for x in (cx-hx-4,cx+hx-12):
             for y in (cy-hy-4,cy+hy-12):
                 world.append(box((x,y,floor),(x+16,y+16,walltop+12),'DPWOOD',1))
         for y in (cy-hy-4,cy+hy-8):
             world.append(box((cx-hx-12,y,walltop-20),(cx+hx+12,y+12,walltop+12),'DPWOOD',1))
-        roof=[(cx-hx-28,cy-hy-28,walltop),(cx+hx+28,cy-hy-28,walltop),
-            (cx,cy-hy-28,walltop+180),(cx-hx-28,cy+hy+28,walltop),
-            (cx+hx+28,cy+hy+28,walltop),(cx,cy+hy+28,walltop+180)]
+        roof=[(cx-hx-16,cy-hy-16,walltop),(cx+hx+16,cy-hy-16,walltop),
+            (cx,cy-hy-16,walltop+roof_rise),(cx-hx-16,cy+hy+16,walltop),
+            (cx+hx+16,cy+hy+16,walltop),(cx,cy+hy+16,walltop+roof_rise)]
         world.append(brush(roof,[(0,1,2),(3,5,4),(0,3,4),(1,4,5),(2,5,3)],'DPTHATCH',scale=1))
         # A chimney and lit leaded windows, using our own generated material.
-        world.append(box((cx-96,cy+hy-130,walltop-32),(cx-16,cy+hy-50,walltop+240),'DPMASON',1))
-        for wy in (cy-hy+112,cy+hy-112):
+        world.append(box((cx-56,cy+hy-72,walltop-24),(cx-16,cy+hy-32,walltop+120),'DPMASON',1))
+        window_offset=(hy+door_half)/2
+        for wy in (cy-window_offset,cy+window_offset):
             wx=cx+hx if facing=='east' else cx-hx-6
-            world.append(box((wx,wy-54,floor+76),(wx+6,wy+54,floor+166),'DPWINDOW',.5))
-            for ya in (wy-62,wy+54):
-                world.append(box((wx-2,ya,floor+68),(wx+10,ya+8,floor+174),'DPWOOD',1))
-            for zz in (floor+68,floor+166):
-                world.append(box((wx-2,wy-62,zz),(wx+10,wy+62,zz+8),'DPWOOD',1))
+            world.append(box((wx,wy-32,floor+44),(wx+6,wy+32,floor+84),'DPWINDOW',.25))
+            for ya in (wy-36,wy+32):
+                world.append(box((wx-2,ya,floor+40),(wx+10,ya+4,floor+88),'DPWOOD',1))
+            for zz in (floor+40,floor+84):
+                world.append(box((wx-2,wy-36,zz),(wx+10,wy+36,zz+4),'DPWOOD',1))
         # Interior has headroom, benches and warm point light; doors stay open.
-        world.append(box((cx-150,cy+hy-92,floor),(cx+150,cy+hy-56,floor+36),'DPWOOD',1))
-        entities.append(scope['entity']({'classname':'light','origin':scope['origin'](cx,cy,floor+180),
+        world.append(box((cx-88,cy+hy-64,floor),(cx+88,cy+hy-40,floor+24),'DPWOOD',1))
+        entities.append(scope['entity']({'classname':'light','origin':scope['origin'](cx,cy,floor+88),
             '_light':'255 189 100 140'}))
         buildings.append({'role':role,'center':[cx,cy],'half_size':[hx,hy],'floor_z':floor,
-            'door_facing':facing,'door_clear_width':192,'door_clear_height':176,'roof_top_z':walltop+180})
+            'door_facing':facing,'door_clear_width':2*door_half,'door_clear_height':door_height,
+            'wall_height':112,'roof_rise':roof_rise,'roof_top_z':walltop+roof_rise})
     # Well in the square; a low solid ring and roof, with clear pedestrian lanes.
     cx,cy=TOWN;z=432
     for a,b in [((cx-80,cy-80,z),(cx+80,cy-60,z+48)),

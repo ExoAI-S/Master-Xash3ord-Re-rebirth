@@ -1,0 +1,739 @@
+{
+  "date": "2026-10-01",
+  "status": "validated_private_development_preview",
+  "public_release": false,
+  "map": {
+    "path": "..\\daragoth-development\\meadow-stablemaster\\daragoth_expanded_meadow.bsp",
+    "bytes": 23591524,
+    "sha256": "e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06",
+    "crc32": 1227478611,
+    "version": 30,
+    "extended": true,
+    "disk_clip_bits": 32,
+    "world_bounds": [
+      [
+        -10413.953125,
+        -4000.0,
+        128.0
+      ],
+      [
+        13714.046875,
+        23920.0,
+        6848.0
+      ]
+    ],
+    "entities": 1720,
+    "hulls": [
+      {
+        "hull": 0,
+        "source_head": 0,
+        "remapped_nodes": 12433,
+        "runtime_clip_bits": 16,
+        "native_render_index_range_valid": true,
+        "reachable_original_index_range": [
+          0,
+          12432
+        ]
+      },
+      {
+        "hull": 1,
+        "source_head": 0,
+        "remapped_nodes": 18127,
+        "runtime_clip_bits": 16
+      },
+      {
+        "hull": 2,
+        "source_head": 1,
+        "remapped_nodes": 17045,
+        "runtime_clip_bits": 16
+      },
+      {
+        "hull": 3,
+        "source_head": 2,
+        "remapped_nodes": 18423,
+        "runtime_clip_bits": 16
+      }
+    ]
+  },
+  "static_section_verdicts": {
+    "node_budgets": true,
+    "render": true,
+    "original_preservation_and_seam": true,
+    "field": true,
+    "placements": true,
+    "landmarks": true,
+    "village": true,
+    "natural_boundaries": true
+  },
+  "model": {
+    "pass": true,
+    "sha256": "7b109d3f5228be595ada6f5f23c4cb941cb24bfcafb3f1db9dabb6311089c014",
+    "bytes": 1043852,
+    "version": 10,
+    "bones": 19,
+    "saddle_attachment": [
+      -1.8000012484555619,
+      -2.996550524492214e-06,
+      64.59999942580303
+    ],
+    "forward_axis": "+X",
+    "sequences": [
+      {
+        "index": 0,
+        "name": "idle",
+        "frames": 41,
+        "fps": 20.0,
+        "loop": true,
+        "max_loop_component_error": 0.0,
+        "max_animated_component_range": 0.055440717298552045
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "frames": 25,
+        "fps": 24.0,
+        "loop": true,
+        "max_loop_component_error": 0.0,
+        "max_animated_component_range": 1.6719260215759277
+      },
+      {
+        "index": 2,
+        "name": "gallop",
+        "frames": 21,
+        "fps": 30.0,
+        "loop": true,
+        "max_loop_component_error": 0.0,
+        "max_animated_component_range": 1.4883266687393188
+      }
+    ],
+    "textures": [
+      {
+        "name": "horse_tex_00.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_01.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_02.bmp",
+        "width": 556,
+        "height": 554,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_03.bmp",
+        "width": 556,
+        "height": 554,
+        "masked": true
+      },
+      {
+        "name": "horse_tex_04.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_05.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_06.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      },
+      {
+        "name": "horse_tex_07.bmp",
+        "width": 16,
+        "height": 16,
+        "masked": false
+      }
+    ],
+    "bodyparts": [
+      {
+        "name": "horse_part_00",
+        "vertices": 18,
+        "normals": 18,
+        "meshes": 1,
+        "triangles": 32,
+        "submitted_vertices": 46
+      },
+      {
+        "name": "horse_part_01",
+        "vertices": 18,
+        "normals": 18,
+        "meshes": 1,
+        "triangles": 32,
+        "submitted_vertices": 46
+      },
+      {
+        "name": "horse_part_02",
+        "vertices": 42,
+        "normals": 42,
+        "meshes": 1,
+        "triangles": 80,
+        "submitted_vertices": 96
+      },
+      {
+        "name": "horse_part_03",
+        "vertices": 30,
+        "normals": 29,
+        "meshes": 1,
+        "triangles": 56,
+        "submitted_vertices": 70
+      },
+      {
+        "name": "horse_part_04",
+        "vertices": 20,
+        "normals": 20,
+        "meshes": 1,
+        "triangles": 36,
+        "submitted_vertices": 42
+      },
+      {
+        "name": "horse_part_05",
+        "vertices": 24,
+        "normals": 24,
+        "meshes": 1,
+        "triangles": 44,
+        "submitted_vertices": 56
+      },
+      {
+        "name": "horse_part_06",
+        "vertices": 24,
+        "normals": 24,
+        "meshes": 1,
+        "triangles": 44,
+        "submitted_vertices": 56
+      },
+      {
+        "name": "horse_part_07",
+        "vertices": 2129,
+        "normals": 1596,
+        "meshes": 1,
+        "triangles": 4096,
+        "submitted_vertices": 5152
+      },
+      {
+        "name": "horse_part_08",
+        "vertices": 1732,
+        "normals": 1569,
+        "meshes": 1,
+        "triangles": 3294,
+        "submitted_vertices": 4036
+      },
+      {
+        "name": "horse_part_09",
+        "vertices": 1962,
+        "normals": 1466,
+        "meshes": 1,
+        "triangles": 3920,
+        "submitted_vertices": 5392
+      },
+      {
+        "name": "horse_part_10",
+        "vertices": 901,
+        "normals": 670,
+        "meshes": 1,
+        "triangles": 1756,
+        "submitted_vertices": 2442
+      },
+      {
+        "name": "horse_part_11",
+        "vertices": 945,
+        "normals": 316,
+        "meshes": 1,
+        "triangles": 1768,
+        "submitted_vertices": 1872
+      },
+      {
+        "name": "horse_part_12",
+        "vertices": 299,
+        "normals": 60,
+        "meshes": 1,
+        "triangles": 528,
+        "submitted_vertices": 576
+      },
+      {
+        "name": "horse_part_13",
+        "vertices": 299,
+        "normals": 59,
+        "meshes": 1,
+        "triangles": 528,
+        "submitted_vertices": 576
+      },
+      {
+        "name": "horse_part_14",
+        "vertices": 486,
+        "normals": 201,
+        "meshes": 1,
+        "triangles": 968,
+        "submitted_vertices": 994
+      },
+      {
+        "name": "horse_part_15",
+        "vertices": 30,
+        "normals": 30,
+        "meshes": 1,
+        "triangles": 56,
+        "submitted_vertices": 70
+      },
+      {
+        "name": "horse_part_16",
+        "vertices": 20,
+        "normals": 20,
+        "meshes": 1,
+        "triangles": 36,
+        "submitted_vertices": 42
+      },
+      {
+        "name": "horse_part_17",
+        "vertices": 12,
+        "normals": 12,
+        "meshes": 1,
+        "triangles": 20,
+        "submitted_vertices": 26
+      },
+      {
+        "name": "horse_part_18",
+        "vertices": 12,
+        "normals": 12,
+        "meshes": 1,
+        "triangles": 20,
+        "submitted_vertices": 26
+      },
+      {
+        "name": "horse_part_19",
+        "vertices": 88,
+        "normals": 88,
+        "meshes": 1,
+        "triangles": 172,
+        "submitted_vertices": 218
+      },
+      {
+        "name": "horse_part_20",
+        "vertices": 88,
+        "normals": 88,
+        "meshes": 1,
+        "triangles": 172,
+        "submitted_vertices": 216
+      },
+      {
+        "name": "horse_part_21",
+        "vertices": 36,
+        "normals": 35,
+        "meshes": 1,
+        "triangles": 68,
+        "submitted_vertices": 82
+      },
+      {
+        "name": "horse_part_22",
+        "vertices": 36,
+        "normals": 35,
+        "meshes": 1,
+        "triangles": 68,
+        "submitted_vertices": 82
+      },
+      {
+        "name": "horse_part_23",
+        "vertices": 18,
+        "normals": 18,
+        "meshes": 1,
+        "triangles": 32,
+        "submitted_vertices": 46
+      },
+      {
+        "name": "horse_part_24",
+        "vertices": 18,
+        "normals": 18,
+        "meshes": 1,
+        "triangles": 32,
+        "submitted_vertices": 46
+      },
+      {
+        "name": "horse_part_25",
+        "vertices": 210,
+        "normals": 120,
+        "meshes": 1,
+        "triangles": 416,
+        "submitted_vertices": 450
+      },
+      {
+        "name": "horse_part_26",
+        "vertices": 210,
+        "normals": 120,
+        "meshes": 1,
+        "triangles": 416,
+        "submitted_vertices": 450
+      }
+    ],
+    "triangles": 18690,
+    "scope": "Compiled native format, renderer arrays, palette, direction, seat and looping motion. Skin deformation and rider fit require native visual tests."
+  },
+  "road_material_review": {
+    "geometry_and_complete_original_material_pass": true,
+    "audit_script_sha256": "41212dad75690056170987fb856690d20eb11fc8419fc7d668a4f62d0e083ef5",
+    "full_miptex_except_16_byte_name_exact": true,
+    "miptex_payload_after_name_sha256": "444a3e0d3f92b4afa0869e16bdebf398301e11b42103490acaff4abfbdb67910",
+    "miptex_bytes": 87852,
+    "final_bsp_sha256": "e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06",
+    "source_bsp_sha256": "88c34a065388e89d9f41a3f0f5f2ba0ddfe3a6c6ca1e02fc0ee0e3c167dfc9f6",
+    "new_road_face_count": 83,
+    "entry_world_y": 3216,
+    "entry_world_z": 3072,
+    "entry_width": 256,
+    "old_entry_intervals": [
+      [
+        1400.0,
+        1624.0,
+        186
+      ],
+      [
+        1624.0,
+        1656.0,
+        184
+      ]
+    ],
+    "new_entry_intervals": [
+      [
+        1400.0,
+        1470.0472412109375,
+        15869
+      ],
+      [
+        1470.0472412109375,
+        1656.0,
+        15860
+      ]
+    ],
+    "entry_road_is_closed_without_gap_or_overlap": true,
+    "entry_modular_uv_max_error_texels": [
+      7.075071334838867e-05,
+      0.0
+    ],
+    "all_road_world_v_axes": [
+      0,
+      -1,
+      0,
+      200
+    ],
+    "shared_full_edge_count": 96,
+    "shared_full_edge_uv_max_error_texels": 0.00017529726028442383,
+    "shared_vertex_uv_max_error_texels": 0.00017529726028442383,
+    "mip_level_equality": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "original_mip_level_sha256": [
+      "747b175bd1dad1f9397c475f5481504efb3428f52806adc95ea12cc8340a132d",
+      "a91d05f6add41601d34fc3c7b740fed1510da8b3bc584788885923bf91e31ae1",
+      "849f3d255daedb7d9161c5efd7933c523cd0fbd14576299c7f34ea56c925c2b2",
+      "d278ef87eb47b020a05b6c8df9aceb653d04be4ea0e9391e7bd0a2d2b2148396"
+    ],
+    "final_mip_level_sha256": [
+      "747b175bd1dad1f9397c475f5481504efb3428f52806adc95ea12cc8340a132d",
+      "a91d05f6add41601d34fc3c7b740fed1510da8b3bc584788885923bf91e31ae1",
+      "849f3d255daedb7d9161c5efd7933c523cd0fbd14576299c7f34ea56c925c2b2",
+      "d278ef87eb47b020a05b6c8df9aceb653d04be4ea0e9391e7bd0a2d2b2148396"
+    ],
+    "palette_exact": true,
+    "palette_sha256": "5b9531d8bcd855dc7ed5af4b3b348933d6d6b315b87b46114dbe97ed7ab24566",
+    "limitation": "Native renderer lighting and visual appearance were not tested by this independent audit.",
+    "scope": "Read-only decoded final BSP inspection; all four mip levels, palette, payload and geometry UV checked. No native game launched; no extracted pixels persisted."
+  },
+  "apple_tree": {
+    "source_bsp_sha256": "59b4dc31949fb87a91c12d7c12558be3bc0e13ccd012754b220e1caeb19c40b2",
+    "model_name": "models/plains/edana_apple_tree.mdl",
+    "geometry_bounds": [
+      [
+        -96.0,
+        -95.0,
+        0.0
+      ],
+      [
+        96.0,
+        97.0,
+        256.6000061035156
+      ]
+    ],
+    "horizontal_radius": 97.20798515018879,
+    "compiled": {
+      "pass": true,
+      "version": 10,
+      "bones": 1,
+      "bodyparts": 1,
+      "meshes": 2,
+      "vertices": 120,
+      "normals": 348,
+      "triangles": 139,
+      "submitted_vertices": 381,
+      "bounds": [
+        [
+          -96.0,
+          -95.0,
+          0.0
+        ],
+        [
+          96.0,
+          97.0,
+          256.6000061035156
+        ]
+      ],
+      "maximum_bound_error": 0.0,
+      "maximum_native_normal_alignment": -0.9999982805257639,
+      "maximum_uv_quantization_error_texels": 0.5,
+      "idle_frames": 2,
+      "idle_fps": 1.0,
+      "idle_rle_static": true,
+      "native_triangles_match_source": true,
+      "textures": [
+        {
+          "file": "edana_trunk.bmp",
+          "width": 128,
+          "height": 256,
+          "masked": false,
+          "pixels_exact": true,
+          "palette_exact": true,
+          "index255_pixels": 14
+        },
+        {
+          "file": "edana_canopy_002.bmp",
+          "width": 256,
+          "height": 256,
+          "masked": true,
+          "pixels_exact": true,
+          "palette_exact": true,
+          "index255_pixels": 34683
+        }
+      ],
+      "bytes": 110524,
+      "sha256": "6c2c871c8a34f9e1c128678e41a4d2df150de6183cbf9d94df395bdc299fec14"
+    },
+    "licensing": "Upstream Edana geometry and texture licensing unverified. Derived pixels, SMD, MDL and previews remain private; no publication authorization."
+  },
+  "native": {
+    "six_house_entries_and_returns": [
+      {
+        "role": "inn",
+        "positions": [
+          [
+            -2817.91,
+            5316.03,
+            3184.06
+          ],
+          [
+            -2911.74,
+            5316.03,
+            3192.52
+          ],
+          [
+            -2734.8,
+            5316.03,
+            3184.06
+          ]
+        ],
+        "pass": true
+      },
+      {
+        "role": "workshop",
+        "positions": [
+          [
+            -2873.91,
+            6396.03,
+            3184.06
+          ],
+          [
+            -2967.68,
+            6396.03,
+            3192.5
+          ],
+          [
+            -2790.81,
+            6396.03,
+            3184.06
+          ]
+        ],
+        "pass": true
+      },
+      {
+        "role": "cottage",
+        "positions": [
+          [
+            -1639.91,
+            4956.03,
+            3182.08
+          ],
+          [
+            -1546.1,
+            4956.03,
+            3192.49
+          ],
+          [
+            -1720.29,
+            4955.04,
+            3182.03
+          ]
+        ],
+        "pass": true
+      },
+      {
+        "role": "cottage",
+        "positions": [
+          [
+            -1639.91,
+            6856.03,
+            3184.06
+          ],
+          [
+            -1546.09,
+            6856.03,
+            3192.42
+          ],
+          [
+            -1722.34,
+            6856.03,
+            3184.06
+          ]
+        ],
+        "pass": true
+      },
+      {
+        "role": "bakery",
+        "positions": [
+          [
+            -2929.91,
+            7196.03,
+            3184.06
+          ],
+          [
+            -3023.69,
+            7196.03,
+            3192.36
+          ],
+          [
+            -2849.51,
+            7196.03,
+            3184.06
+          ]
+        ],
+        "pass": true
+      },
+      {
+        "role": "farmhouse",
+        "positions": [
+          [
+            -3083.91,
+            4476.03,
+            3168.06
+          ],
+          [
+            -3177.74,
+            4476.03,
+            3192.25
+          ],
+          [
+            -3002.86,
+            4476.03,
+            3160.48
+          ]
+        ],
+        "pass": true
+      }
+    ],
+    "horse_gaits": [
+      {
+        "name": "idle",
+        "native_sequence": 0,
+        "measured_speed": 0.0,
+        "pass": true
+      },
+      {
+        "name": "walk",
+        "native_sequence": 1,
+        "measured_speed": 320.0,
+        "pass": true
+      },
+      {
+        "name": "gallop",
+        "native_sequence": 2,
+        "measured_speed": 520.0,
+        "pass": true
+      }
+    ],
+    "lifecycle_pass": true,
+    "rider_hips_height_units": 67,
+    "rider_lift_delta_units": 3,
+    "rider_fit_visual_review": true,
+    "continuous_road_forward_and_return_positions": [
+      [
+        1528.03,
+        3100.03,
+        3136.06
+      ],
+      [
+        1528.03,
+        3579.95,
+        3136.06
+      ],
+      [
+        1528.03,
+        3149.63,
+        3136.06
+      ]
+    ],
+    "continuous_road_no_fade": true,
+    "stablemaster_multiplayer": {
+      "map_sha256": "e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06",
+      "server_dll_sha256": "11e7b638ba7eb7c5ff22b1a608c001d9b9f9848ead703dff4f1e37911102a7c6",
+      "checks": {
+        "two_distinct_loans": true,
+        "reuse_and_other_rider_denial": true,
+        "normal_use_and_repeated_use_player_1": true,
+        "normal_use_and_repeated_use_player_2": true,
+        "peer_cleanup_preserves_main_loan": true,
+        "both_loans_removed_shared_horse_retained": true
+      },
+      "scope": "Two real loopback clients with synthetic FN identities; normal client Use, repeated requests, authoritative helper ownership check, real disconnect cleanup. No real profiles or public realms.",
+      "stable_test_response": "Stablemaster: two customers, distinct horses, repeat reuse and other-rider denial PASS.\n",
+      "both_connected_status": "Mount 157 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 188 rider=0 owner=0 solid=0 xyz=120.0,5256.0,3121.0 seq=0 customer=2\nMount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 3 native horses; enabled=1 precached-model=254.\n",
+      "after_peer_disconnect_status": "Mount 157 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 2 native horses; enabled=1 precached-model=254.\n",
+      "after_both_disconnect_status": "Mount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 1 native horses; enabled=1 precached-model=254.\n",
+      "pass": true
+    },
+    "apple_groves": 12,
+    "decorative_apples": 60,
+    "stablemaster_idle_sequence": "idle1",
+    "client_debug_sha256": "e9cd38827b5b120750e5900694e481e0fe5dd0600161e65865ea7f45328b3099",
+    "gait_pass_server_debug_sha256": "3ccd62a00986e8a1b101daa44534ba2e72f375b841b2b7f14cabf4e6d07c587e",
+    "final_customer_pass_server_debug_sha256": "11e7b638ba7eb7c5ff22b1a608c001d9b9f9848ead703dff4f1e37911102a7c6",
+    "final_server_change_after_gait_pass": "Stablemaster idle selection only: walk fallback replaced with idle1.",
+    "private_visual_evidence_sha256": {
+      "runtime/game/msr/scrshots/stable_pass_textured_horse_idle.png": "37abfbd851feb5d76b637134c4498d51c91975495f4cdfb0c0ffcbafa1be8757",
+      "runtime/game/msr/scrshots/stable_pass_textured_horse_walk.png": "d65ac10220bf040e3ad63a6e1bb5507a1cd1d60d900c4204f5d372e941ad6daa",
+      "runtime/game/msr/scrshots/stable_pass_textured_horse_gallop.png": "c04149b9d99d67d366683c015a83865a97ec475dc959434ead3068fba7945e97",
+      "runtime/game/msr/scrshots/stable_pass_original_road.png": "3b226229f7c73c5edb96bf2310cc85e92a42e209cb0a3e838f2c0acd1974eecc",
+      "runtime/game/msr/scrshots/stable_pass_new_road.png": "2db7a5306c39286359fd2665f464b8cf97deca82f377dd4859ab41a97f72086c",
+      "runtime/game/msr/scrshots/stable_pass_stablemaster.png": "b36706356c04be98cd4bb271fda8649e366c6f1830ce75364f427416983ae8db",
+      "runtime/game/msr/scrshots/stable_pass_orchard_4.png": "73dbcdd1359de92714a77e45a95fd419019c29c279bafa2e217e4d9b1be2985b",
+      "runtime/game/msr/scrshots/stable_pass_orchard_8.png": "2d55ec2ba46a98669e0c81027177db3bc46f6baecb59ca57e9c3c100c1736035",
+      "runtime-peer/game/msr/scrshots/stable_multi_observer_rider.png": "ce1ad4735fc8d3362d9fa5acacc37458300761092a2e9ca596a029d6e2c2cb29"
+    }
+  },
+  "limitations": [
+    "Standing-player collision hull; no horse-sized physics.",
+    "Loan horses are per-session; not persistent FN inventory.",
+    "Native remote rider view verified at idle; no remote gallop capture claimed.",
+    "Road/tree derived assets remain private with upstream licensing unverified.",
+    "This freezes the stablemaster map; partner whole-map grass polish is a separate candidate."
+  ],
+  "pass": true
+}

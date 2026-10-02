@@ -1,11 +1,16 @@
 # Daragoth horse prototype
 
+This directory preserves the first generated horse as a rebuildable rollback.
+The current runtime appearance comes from the licensed textured conversion in
+[`Textured-Horse`](Textured-Horse/README.md). The statistics and source files
+below describe the earlier generated model, rather than that replacement.
+
 An original chestnut horse for the first mount experiment: shaped torso and
 long head, articulated legs, mane and tail, sage saddle blanket, leather
 saddle and bridle, reins, stirrups, and brass fittings. Geometry, texture and
 animation were generated locally; no third-party horse assets were used.
 
-The runtime asset is `Portable-Package/game/msr/models/mounts/plains_horse.mdl`.
+The prototype used `Portable-Package/game/msr/models/mounts/plains_horse.mdl`.
 Its texture and three animations are embedded in this one GoldSrc v10 file.
 
 | Runtime sequence | Index | Frames | FPS | Duration |

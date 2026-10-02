@@ -14,6 +14,12 @@ repo = Path(__file__).resolve().parents[1]
 source = repo / "Full-Source/msr_source/src/game/client/render/mounted_rider_pose.h"
 rows = re.findall(r'\{"([^"]+)", \{([^}]+)\}\}', source.read_text())
 angles = {name: [float(v.strip().removesuffix("f")) for v in values.split(",")] for name, values in rows}
+policy = (repo / "Full-Source/msr_source/src/game/shared/ms/mount_policy.h").read_text()
+lift = float(re.search(r'RiderLift = ([\d.]+)f;', policy).group(1))
+renderer = source.with_name('studiomodelrenderer.cpp').read_text()
+root_z = float(re.search(r'pos\[indices\[0\]\]\[2\] = (-?[\d.]+)f;', renderer).group(1))
+saddle_pelvis = 36 + lift + root_z
+assert 66.5 <= saddle_pelvis <= 68, 'hips must clear the padded seat without floating'
 data = Path(sys.argv[1]).read_bytes()
 assert data[:4] == b"IDST", "not a GoldSrc studio model"
 count, index = struct.unpack_from("<2i", data, 140)
@@ -40,7 +46,7 @@ for i in range(count):
     position, local_angles = values[:3], angles.get(name, values[3:])
     if name == "Bip01":
         # Renderer draw offset and standing origin place the root at saddle 64.
-        position = [0.0, 0.0, 64.0]
+        position = [0.0, 0.0, saddle_pelvis]
     matrix = rotation(local_angles)
     if parent >= 0:
         assert parent < i
@@ -53,7 +59,7 @@ for i in range(count):
 assert all(name in names for name in angles), "incompatible skeleton: pose must remain disabled"
 point = lambda name: world[names[name]][1]
 pelvis = point("Bip01 Pelvis")
-assert abs(pelvis[2] - 64) < 0.1
+assert abs(pelvis[2] - saddle_pelvis) < 0.1
 for side, sign in [("L", 1), ("R", -1)]:
     hip, knee, ankle, toe = [point(f"Bip01 {side} {bone}") for bone in ["Leg", "Leg1", "Foot", "Toe0"]]
     assert 3 < hip[1] * sign < 5, (side, "hip width", hip)

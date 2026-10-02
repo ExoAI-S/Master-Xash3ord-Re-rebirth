@@ -37,6 +37,12 @@ NPC walking routes through the square. Their names are Mara, Bren, Tessa, and
 Oren. The resident roles do not yet provide merchant inventories or inn
 services. Horse ownership remains temporary in this development build.
 
+The October1 scale correction reduces building footprints to about60% of the
+initial layout while keeping plots and resident routes fixed. Wall height is
+112units instead of256; roof rise is88instead of180. Doorways are80by92,
+around the villagers'70-unit visual height and72-unit standing hull. Windows,
+benches, chimneys and farmhouse entrance steps follow the smaller proportions.
+
 ## Build privately
 
 Run these from the repository root, using Python 3 and the native PrimeXT map
@@ -113,6 +119,42 @@ interiors, quests, full neighboring-map travel, and
 performance on other PCs still need work. It runs the existing Debug Win32
 Xash renderer and does not claim PrimeXT PBR or modern grass shaders.
 
-The textured replacement horse is still a separate conversion candidate. See
-`Design-Source/Mounts/Free-Horse-Research.md` for verified sources, licenses and
-the remaining rig/animation work; this terrain pass retains the existing mount.
+The October1 private preview also uses the converted CC0 textured horse with
+an attached mane, original saddle and three native gait loops. See
+`Design-Source/Mounts/Textured-Horse/README.md` for provenance and rebuild steps.
+The current stablemaster/orchard BSP SHA-256 is
+`e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06`.
+Its eight static QA sections pass, including all six doorways and16closed
+resident route segments. The earlier September30 terrain/hash reports remain
+historical checkpoints; current native evidence is recorded separately.
+
+The original Daragoth road now continues into the fields at its original
+256-unit width. All four mip levels and the palette of `DeraliaRoad_2_0` are
+read from the supplied original BSP. The texture's world V axis remains
+`[0,-1,0,200]`, preserving its phase across the join. Terrain triangles are
+split along the narrow road edges without changing their surfaces or the
+protected entrance collision. Side paths and village soil remain distinct.
+
+Twelve apple trees form three small groves outside the village and nearby
+fields. `build_edana_apple_tree.py` exports the installed Edana trunk and its
+associated crown as one masked native model, excluding a second orphan crown.
+Five original apple decorations accompany each tree; they are decorative and
+do not implement harvesting. Extracted geometry, textures and models remain
+private because their upstream asset licensing has not been established.
+Only the exporter is included in source control. The reused road has the same
+restriction; the original meadow grass, village geometry and CC0 horse retain
+their separate provenance.
+
+A native `ms_stablemaster` stands beside the stable. Approach and press the
+bound **Use** key to request a loan horse, then use the horse to mount.
+Each connected player can have one loan; repeat requests reuse it and other
+players cannot mount it. Eight clear paddock pads bound the local capacity.
+Loans disappear on character respawn, death, disconnect or map shutdown.
+They are session loans, not persisted FN inventory items. The original public
+prototype horse remains available separately. Mounted hips are raised three
+units to clear the new padded seat; the standing collision hull is unchanged.
+
+The private desktop entry is **MSR - Daragoth Preview**. Normal installation
+and public realm deployment are separate from this development candidate.
+The partner chat's whole-map meadow polish uses a separate candidate and must
+be validated before replacing this checkpoint.

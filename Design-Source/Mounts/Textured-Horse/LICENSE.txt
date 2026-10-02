@@ -1,25 +1,19 @@
-Original generated Daragoth meadow assets
-=========================================
+Horse mesh and original textures: Lyndon Daniels, CC0-1.0.
+Original horse rig: ChadM, CC0-1.0.
 
-Generated model meshes, UVs, palettes, textures, rigs, animation and preview
-images are dedicated to the public domain under the Creative Commons CC0
-1.0 Universal Public Domain Dedication.
-https://creativecommons.org/publicdomain/zero/1.0/
+Primary source listings (both identify CC0):
+https://opengameart.org/content/realtime-ranchers-3d-model-pack
+https://opengameart.org/content/rigged-horse
 
-The included tuft sources were generated locally by generate_foliage.py.
-The new patch, meadow textures and village geometry were generated locally
-by the scripts in this directory.
-This dedication covers the original authored assets included in this directory.
-The optional installed Daragoth road and Edana apple-tree importers produce
-private derived assets with their upstream licensing unchanged. Their extracted
-images and models are not included here and are not covered by this dedication.
+CC0 legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 
-Generating and validation scripts
-================================
+New saddle/blanket/bridle/stirrups, skinning repairs, and idle/walk/gallop
+animations authored for this project are dedicated under CC0-1.0 as well.
+This dedication applies to these conversion assets, not the rest of the game.
 
-MIT License
+The prepare/export Python scripts in this directory are MIT licensed:
 
-Copyright (c) 2026 ExoAI-S contributors
+Copyright (c) 2026 Master-Xash3ord-Re-rebirth contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
