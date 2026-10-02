@@ -73,8 +73,13 @@ natural creek release, same-horse bank remount and logical Q/3 controls passed.
 The root native review SHA-256 is
 `ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4`.
 This retains the separate historical failures and camera exceptions. Physical
-keyboard and mouse interaction are not claimed. Final transaction review and
-installation remain pending; the accepted live map is still unchanged.
+keyboard and mouse interaction are not claimed. The final map and server are now
+installed in both private previews, together with all 57 supported original
+control bindings. Both reviewed transactions, backups, the Daragoth-only FN
+checksum refresh and no-client restart checks passed. Existing settings,
+profiles and FN account/character/revision records were preserved. The requested
+playtest opened after those checks. The installed checkpoint and receipt hashes
+are recorded in `Development-Tests/Reports/daragoth-final-native-20261002.json`.
 
 Example from the repository root, using a fresh isolated output:
 

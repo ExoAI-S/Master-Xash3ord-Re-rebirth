@@ -47,8 +47,13 @@ It links the frozen door base, final horse and logical input checks, independent
 preservation reviews and 72 verified support files. The scope is finite; it
 does not claim native traversal of every point in the map or physical keyboard
 and mouse verification. The full original controls preset and final transaction
-review are separate work.
+also passed their separate reviews.
 
 The builder refuses to overwrite frozen maps or reports and does not launch a
-game or modify a runtime directory. Native acceptance is complete; installation
-remains pending while the human playtest runs.
+game or modify a runtime directory. The accepted successor is now installed in
+both private previews with the reviewed server and 57 original supported control
+bindings. The stopped-session transactions, verified backups, Daragoth-only FN
+checksum refresh and no-client restart checks passed. Existing settings,
+profiles and FN account/character/revision records were preserved. The human's
+requested playtest was opened afterward. The installed checkpoint and receipt
+hashes are recorded in `Development-Tests/Reports/daragoth-final-native-20261002.json`.

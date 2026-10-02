@@ -40,8 +40,11 @@ bush protruding through the wall. `ENTRANCE-BUSH-CLEARANCE.md` describes its
 origin-only successor. The combined server regression and fresh successor views
 are now accepted in the root native review
 `ca70bfb12379af2aead6b18057e51e5380393de9f6225676c548aa9d0660fcc4`.
-The original diagnostic failure remains preserved. Installation is pending;
-the accepted live map remains unchanged while the human playtest is running.
+The original diagnostic failure remains preserved. The accepted bush-clearance
+successor is now installed in both private previews. The reviewed stopped-session
+transactions and no-client map/FN checks passed before the requested playtest
+opened. The installed checkpoint and receipt hashes are recorded in
+`Development-Tests/Reports/daragoth-final-native-20261002.json`.
 
 The builder and checker require fresh output paths and refuse to overwrite
 existing evidence. Neither launches a game nor changes a runtime directory.
