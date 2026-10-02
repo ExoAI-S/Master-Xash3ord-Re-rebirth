@@ -441,7 +441,8 @@ def build_map(out, spacing):
     entities.append(entity({'classname':'ms_horse','origin':origin(*horse_origin),'angles':'0 0 0',
                             'targetname':'plains_stable_horse','model':'models/mounts/plains_horse.mdl'}))
     # Water is a contents brush, separate from the terrain collision.
-    entities.append(entity({'classname':'func_water','rendermode':'2','renderamt':'120','rendercolor':'62 115 121'},
+    entities.append(entity({'classname':'func_water','skin':'-3','spawnflags':'0','WaveHeight':'0',
+                            'rendermode':'2','renderamt':'120','rendercolor':'62 115 121'},
                            [box((-11980,1420,96),(11980,2180,216),'!DPWATER',4)]))
     scenery=add_scenery(entities,world,triangles,spawn_checks)
     entities.insert(0,entity(values,world))
