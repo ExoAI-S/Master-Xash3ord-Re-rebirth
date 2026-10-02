@@ -1,0 +1,339 @@
+{
+  "date": "2026-10-01",
+  "recorded_utc": "2026-10-02T03:46:57.581854+00:00",
+  "status": "validated_private_development_preview",
+  "public_release": false,
+  "scope": "Entire continuous Daragoth valley, entrance join, and expanded fields.",
+  "base_checkpoint": "60c64c69",
+  "base_map_sha256": "e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06",
+  "map": {
+    "path": "../daragoth-development/meadow-whole-map/lighting-corrected/daragoth_meadow_batched.bsp",
+    "sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+    "bytes": 24388822,
+    "entities": 1044,
+    "nongrass_entities": 960,
+    "nonentity_lumps_preserved": 14,
+    "ordered_nongrass_records_preserved": 960
+  },
+  "groundcover": {
+    "field_patches": 840,
+    "original_valley_patches": 80,
+    "patches": 920,
+    "tufts_per_patch": 42,
+    "sector_models": 84,
+    "maximum_height_units": 23.655533059916973,
+    "texture_flags": 65,
+    "fullbright": false,
+    "lighting_anchor_policy": "nearest_patch_to_grid_center_xy_then_index_ground_plus_64_z_rounded_4",
+    "maximum_triangles_per_submodel": 3696,
+    "maximum_submitted_vertices_per_submodel": 7392
+  },
+  "actual_c": {
+    "failure_count": 0,
+    "failures": [],
+    "status": "ran",
+    "root_traces": 154560,
+    "patch_center_traces": 920,
+    "lighting_anchor_traces": 84,
+    "chunk_limit": 5000,
+    "lighting_floor_z_error_range": [
+      0.03115548469213536,
+      0.034310589208871534
+    ],
+    "root_height_above_ground_range": [
+      -10.418320019531166,
+      -0.6800950302122146
+    ],
+    "engine_pm_trace_sha256": "0803d22234a67ddee565610526a5646c97754e4dbf4f3ee31202bd8a50b5421b",
+    "scope": "Actual engine C static world hull0 root and lighting-origin floors and hull1 planted-patch center floors. No movement path, PVS, network packet, dynamic entity, appearance, or performance proof.",
+    "pass": true
+  },
+  "native": {
+    "pass": true,
+    "visual_accepted": true,
+    "views_expected": 22,
+    "views_matched": 22,
+    "datagram_overflows": 0,
+    "connection_errors": 0,
+    "all_installed_inputs_unchanged": true,
+    "movement_sweeps": [
+      {
+        "label": "continuous_join_road",
+        "complete": true,
+        "begin_camera": [
+          1528.03,
+          3350.03,
+          3136.06
+        ],
+        "end_camera": [
+          1528.03,
+          3380.16,
+          3136.06
+        ],
+        "net_xy_displacement": 30.129999999999654
+      },
+      {
+        "label": "field_east",
+        "complete": true,
+        "begin_camera": [
+          10562.8,
+          17047.0,
+          3097.09
+        ],
+        "end_camera": [
+          10534.7,
+          17047.0,
+          3096.52
+        ],
+        "net_xy_displacement": 28.099999999998545
+      },
+      {
+        "label": "field_northwest",
+        "complete": true,
+        "begin_camera": [
+          -6108.92,
+          20764.6,
+          3403.66
+        ],
+        "end_camera": [
+          -6088.47,
+          20778.9,
+          3405.28
+        ],
+        "net_xy_displacement": 24.953807324736555
+      }
+    ],
+    "movement_scope": "20-frame forward/back inputs with begin/end client positions; net displacement does not prove the intermediate path or full-map traversal.",
+    "isolated_test_processes_stopped": true,
+    "screenshots": [
+      {
+        "label": "meadow_whole_old_south_valley",
+        "sha256": "80e2ffdb922ca9eb298f8b11986c086f768e913a8693f1d1225861114f17bd7b"
+      },
+      {
+        "label": "meadow_whole_old_west_valley",
+        "sha256": "8fbe562d6714e888ed75639222fa31c2c92de4453aaef9d9e6a48b4311d0ae73"
+      },
+      {
+        "label": "meadow_whole_old_north_valley",
+        "sha256": "21753cb3bfa19af9421c869de475319c4242bf21566a159ff096ebc0738c73b2"
+      },
+      {
+        "label": "meadow_whole_old_east_valley",
+        "sha256": "94f012d192114ee1b6960d8ef9c8ca8193787c827c8d2b9609135dc25727c272"
+      },
+      {
+        "label": "meadow_whole_old_mid_valley",
+        "sha256": "3843d3c49e3ddadc0b11336b1ab4b4d4b0b87074c423c2cddd94aae6fe592617"
+      },
+      {
+        "label": "meadow_whole_old_road_join",
+        "sha256": "d1227da6e4f4474b11415b05b18c2faaf344c4302d3f942c4b9379e0d0655b81"
+      },
+      {
+        "label": "meadow_whole_continuous_join_road",
+        "sha256": "4d6cf4242c3d7d05ddff4ba3e1d3e34d1ff271611d77a709feb0c783c9675b66"
+      },
+      {
+        "label": "meadow_whole_entry_meadow",
+        "sha256": "fb8a93f2696228eb6e7c33e67837d6cdd8ba5dcbf1f3a1a9ed388b438a25f83b"
+      },
+      {
+        "label": "meadow_whole_village_distant",
+        "sha256": "d0636478725010f914333c5d3983e8bf534fd052a5ac1f2c621bc162547ed52f"
+      },
+      {
+        "label": "meadow_whole_village_west",
+        "sha256": "ff7de7c3c2b0515d8a1df76be2c3c883211169b25dac40afa5e6f4cac7d10318"
+      },
+      {
+        "label": "meadow_whole_field_southwest",
+        "sha256": "508b17c96dc79d71a426e2d6e22d140084696d49170fc8ff729c77c85bd1ed78"
+      },
+      {
+        "label": "meadow_whole_field_southeast",
+        "sha256": "94e7fd39e4020bdcf0bb9275354a6350a2eb87fb2fd34aeb684a97a5baf33c44"
+      },
+      {
+        "label": "meadow_whole_field_west",
+        "sha256": "2233e4e477f9eeb90852fbf40261848e9c862ec2698ad0bdbaace97ea3a4b013"
+      },
+      {
+        "label": "meadow_whole_field_midwest",
+        "sha256": "04b42d8eaebf000cf6ccdaa3e1ce78ccc65b6bee61562d08a17e8f66bb420bf1"
+      },
+      {
+        "label": "meadow_whole_field_center",
+        "sha256": "ea7752d68a6539737475c05da98b9fe6160a6e968fc5dada66c45afb87e25763"
+      },
+      {
+        "label": "meadow_whole_field_mideast",
+        "sha256": "0dea31aa9185d0fb2ef57ca2633b346925a787c38f5817ce07eba10b243f8d04"
+      },
+      {
+        "label": "meadow_whole_field_east",
+        "sha256": "4c951a80117bda73e0afa1fc4c834bf2862b6773b4c5766d1143c2a1052133a6"
+      },
+      {
+        "label": "meadow_whole_field_northwest",
+        "sha256": "bfdf6a1e2a34d6d39760a19d10699605a065c6f1f1d641e61efb5f4b38ea4fd4"
+      },
+      {
+        "label": "meadow_whole_field_north",
+        "sha256": "aa9c7514d1ceb388531e33b9403f9ccb8b46b1101b2119932e63aa587c1759d2"
+      },
+      {
+        "label": "meadow_whole_field_northeast",
+        "sha256": "2723c61a46320e907df1170deaa4b3ee74192c4af4676aeb67132b271e18e03e"
+      },
+      {
+        "label": "meadow_whole_field_grass_detail",
+        "sha256": "32fe3b360d9e164b99c00dc2640dd5a191c72412d2475ec7d280c746086aacaf"
+      },
+      {
+        "label": "meadow_whole_old_valley_return",
+        "sha256": "778ed929f511c944bcaf97d92e4c9b56466d30e718f41d39e896eafbe3bfc088"
+      }
+    ],
+    "client_log_sha256": "6d28796b3b45cdf290cc31370868f6ec3cc8d9f24d00ffc2306b8dcbce9aed5b",
+    "server_log_sha256": "00f23e653aabad84abf318625d2f5b222e8edcae4f6d2d3ace5b77f513fa433f"
+  },
+  "core_asset_sha256": {
+    "scripts": "6af5761670d1d71cf395c224c68d3ae01fadef00b3928295306977a1d39a5ca9",
+    "engine": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e",
+    "renderer": "f7bac8ff83061087d9499248f84bc96e9bf56f047bda063ba95b93f3ce467eea",
+    "executable": "4818d1a9432fa980290785003efb3588b6a35d7915985432aee311c5f75aa0c4",
+    "client": "e9cd38827b5b120750e5900694e481e0fe5dd0600161e65865ea7f45328b3099",
+    "server": "11e7b638ba7eb7c5ff22b1a608c001d9b9f9848ead703dff4f1e37911102a7c6"
+  },
+  "batch_model_sha256": {
+    "models/plains/meadow_sector_000.mdl": "d94a560d04f589c2167d879d2a4a72d0055fd43104a69570047cc07f720b3a8f",
+    "models/plains/meadow_sector_001.mdl": "32fb636351e98ff1b2cf2522ed16e986fe1a070bb8ddb34ac83b388f3f22b614",
+    "models/plains/meadow_sector_002.mdl": "146cec0b08542a59b7fb6bd557a0ad9fdd1b8ab6e7c2040308d1dca197abd99e",
+    "models/plains/meadow_sector_003.mdl": "c41faddbb17cc99a011eae417bff48b8ed1c1907ab1e5c975ab46e983b356ffb",
+    "models/plains/meadow_sector_004.mdl": "270299f6861399a95bee2283f4d272538adaddce897adeac94313fb4b18a46c1",
+    "models/plains/meadow_sector_005.mdl": "2c03e266f23b5bad1f36b936121fe33e989492b8e028606c3cb3339167af2ee2",
+    "models/plains/meadow_sector_006.mdl": "2d2328d8899492a0754b6a26b5d6cb4e71e304e1dd4a3eff116b66979df80a20",
+    "models/plains/meadow_sector_007.mdl": "a6fb673dce91580402294c1572d741314d340e8518af558e5e2c4c178923aa22",
+    "models/plains/meadow_sector_008.mdl": "8fb3bc26eb0a3e35132cd36c9a8b3aee950e444147d4d3507ed2bde0e8002bea",
+    "models/plains/meadow_sector_009.mdl": "4f42a6a2e27ad865e33e06abfcf8dfd2512b6241e6fe9071585a05c2471b9e43",
+    "models/plains/meadow_sector_010.mdl": "25245603a89a423aa855a4e181ccd5b938ab80165ef49356e1decbb40bd6e79e",
+    "models/plains/meadow_sector_011.mdl": "c1e5315bdea6a78d6c11f4d56386efd7f5b65b1c2bf39cadde49f0750723186e",
+    "models/plains/meadow_sector_012.mdl": "9b40f7d75315b172519e233afac49d1e9773198960e8aee83048ec7316132171",
+    "models/plains/meadow_sector_013.mdl": "3618fd4add3bf67078949e922f038e02d34372ab948e67e04ae4ddb26f191853",
+    "models/plains/meadow_sector_014.mdl": "3e6c3271d46da742df6aa2fa27a62e1da880ca4e4d1fe718ea63d74e64fb7474",
+    "models/plains/meadow_sector_015.mdl": "172b2872b5a3ea80a2da2e7b34fd1ec679310112933e593b13f1baa76bbb254d",
+    "models/plains/meadow_sector_016.mdl": "d92c9fac23872ad80022287080ec18db6e84b3fa2e94a80d1faee07cbeda1a71",
+    "models/plains/meadow_sector_017.mdl": "554e44b4c1b7289b29cd2ef1b6d4c332b7c10f9e3a3bd3ab51bec8e1c8cf9bb2",
+    "models/plains/meadow_sector_018.mdl": "e433a0cc05273db576f8106a21188e868d95be66a3b8c3c6d4edb46118e60b83",
+    "models/plains/meadow_sector_019.mdl": "9c460ea5a4b5a6debf91187b017514faf019a78759510d276035452401ab8cec",
+    "models/plains/meadow_sector_020.mdl": "5c94a661b018c15f1a37550d127c92da6f144acd32f4d111ce9a3127c4c1ce5f",
+    "models/plains/meadow_sector_021.mdl": "5849622e135d721aa324c9361520eff4def8fb7088bbaa29a4bfa06adf7f989d",
+    "models/plains/meadow_sector_022.mdl": "d2b82ec527e0da0ffceae2bc2388fd7d1868e772ff8ced5532b5a3792b20bc79",
+    "models/plains/meadow_sector_023.mdl": "44c70f321076225d3b9ff3c5b9d5cd52cd8d03a9d0ca352dcafa044fdd4bc26b",
+    "models/plains/meadow_sector_024.mdl": "3db91426421c42beb6b1e81cfe9cc868e315734c36ccff9fc3b4c5931d4873b4",
+    "models/plains/meadow_sector_025.mdl": "628dc6d02325866ab8c592bd67153742c0b870406f84515ce8cff23482ff4590",
+    "models/plains/meadow_sector_026.mdl": "e2e718dfab910e72e8b43b89f08bd3feff23ee31b4a3669fa3f26296b9da5aa1",
+    "models/plains/meadow_sector_027.mdl": "7e7a468d14caec8d223e352e506f7e0054c0126e8848ce6eb085b21bd377ea58",
+    "models/plains/meadow_sector_028.mdl": "f6548d00a6d8d8c610f1e681d04d54dddea15bf7c26d8cb1ac0cb264b126394f",
+    "models/plains/meadow_sector_029.mdl": "bce0e76d92d03c9088f3422a121276c3a1b9d4956314fe2ab80afa629f7dcb94",
+    "models/plains/meadow_sector_030.mdl": "b4deb1409851378383fb259cd78c6cc6348463f86dd23f746993c77bf54b1c62",
+    "models/plains/meadow_sector_031.mdl": "ac25d6f5dac800b3553a92a03987f9c38520aace85a74cea8381030eb1b4a811",
+    "models/plains/meadow_sector_032.mdl": "2eb7adb54e8282e62fa0f8c6813ff4b2d44bb33bb2fda5ce9a11501c94cecde6",
+    "models/plains/meadow_sector_033.mdl": "1b672e0728d09112d141d339856e6098ea5e24b9cca592253db690028024deee",
+    "models/plains/meadow_sector_034.mdl": "11430abacf9157701dff54ef1cc69cee212033a57ffe426f9463cd2918f75d2e",
+    "models/plains/meadow_sector_035.mdl": "9a22cfdfe073018904453350be943331d7ce4ba988850bdda2f4d31da0f6f0b2",
+    "models/plains/meadow_sector_036.mdl": "2be7e41ee5bce3940b8923eb78c963230d7be916e29c918ed9a66fee78e93b6d",
+    "models/plains/meadow_sector_037.mdl": "48c496651fac1f6c8ce330a9081f41b1cd80b127ebd0859be33f7b26600650e6",
+    "models/plains/meadow_sector_038.mdl": "d24be4db60990f406071fb81f35c97f14d2a8f1dd6dce1471cecc26f72bd86b7",
+    "models/plains/meadow_sector_039.mdl": "667aff8afbff18bc0df34ad5bb38dbdcdc069bac41f85ec79963d3c33f13f679",
+    "models/plains/meadow_sector_040.mdl": "a48fd97664bbc277f8c9226c9aa5d25be4df047b2d3fd8ef57d8d64fb5d25c20",
+    "models/plains/meadow_sector_041.mdl": "e5f046ef5f77f75e742a810b96183c77a1b83cb49822ab735725ba8bfb1c46f0",
+    "models/plains/meadow_sector_042.mdl": "2e59ca7b3f43dda55d2fc8e22bcc61ccf68a57f75e28a6373d6e7cea2444e9ee",
+    "models/plains/meadow_sector_043.mdl": "69c0baaed5660d43029c46917064cc6e741907cdc4df66acfe8a4750bc22089a",
+    "models/plains/meadow_sector_044.mdl": "1cb5baf6be9a4e393e2acc9c27c966aef1fda6d8cda6443fabec81da45ab6e1b",
+    "models/plains/meadow_sector_045.mdl": "2aabc0cb16d9db7f89d49a2488c6753f6a560420ccad553810f97f3649564945",
+    "models/plains/meadow_sector_046.mdl": "05375953a30e7409ae7d015a06253257122e9ba6dca49887824e28eca3460ef3",
+    "models/plains/meadow_sector_047.mdl": "fee1a483c7332b456088729c0fe778a9357122b4eb97d5cb099457fd24111d45",
+    "models/plains/meadow_sector_048.mdl": "6901a9716bfb65d44dbada93dbba85000e8f23c571eee286786f468452bc915f",
+    "models/plains/meadow_sector_049.mdl": "fd2bb04f26c001edc8f0905d00292c91c1524e00484c02c3badb33b4b309b9df",
+    "models/plains/meadow_sector_050.mdl": "1b54f333568ebf58236f1c4454d6a1b429f0d5f52479b1daadb212095f61ebe8",
+    "models/plains/meadow_sector_051.mdl": "ef16b874615002c3a47d5097b24a31ea4d3a08867da878744199a637d94396d9",
+    "models/plains/meadow_sector_052.mdl": "dd6927de20eac7135c7d74c0a83087cf900ba47620931d034e6f08501621f82d",
+    "models/plains/meadow_sector_053.mdl": "ce1bebcd7f4ebe74043001d97e36cac927741e4dc1cd59411d4678becc77e86a",
+    "models/plains/meadow_sector_054.mdl": "54354f45214096c9c12dc7625c489b9a16b3e83e88e8f2d869e4e7fa9eab171b",
+    "models/plains/meadow_sector_055.mdl": "63fdd43c735432d2125d3ca9305d2791ed0dd11fe1d546517d99746c51512104",
+    "models/plains/meadow_sector_056.mdl": "f59e8492f6b018f8c3637205c604d594dd462de2c2f8b4dcd150c67aac85f6fa",
+    "models/plains/meadow_sector_057.mdl": "a06c0b77bf6cbaf1c2054fc9c47dedc3b1f745e6451d022b4a2f1a8709cbd426",
+    "models/plains/meadow_sector_058.mdl": "cf856d5a1484c9128b88f3946510905053f035a1bcadf99ec612094d1dd7e38c",
+    "models/plains/meadow_sector_059.mdl": "00e3f048b5a3756576535df9d1c34ec7b49ba994f9f1e8de79bf1e83d1312d77",
+    "models/plains/meadow_sector_060.mdl": "74286d69d6298e6f63266cf77b8094864551e5fe3f5bdf2a09f57c4f994be7e0",
+    "models/plains/meadow_sector_061.mdl": "18747d2edf5d62daa4ce3ca8f219dd4464384edc0b6f1f9461b76e4362db5973",
+    "models/plains/meadow_sector_062.mdl": "22df0e3b64dd5dd1fc52a647f1f8668b46ffc53077aff96e2b26799ece3902cb",
+    "models/plains/meadow_sector_063.mdl": "966286a12a98f519719a5aadc8a94e3a87858d49c54637f7c9f7f40b478cfee3",
+    "models/plains/meadow_sector_064.mdl": "7eee058c3fab7f50ebe372a15230d1511eaed8e33e29c8d0afa00c3cf9f74c0b",
+    "models/plains/meadow_sector_065.mdl": "040e60ba1a0eb9f0399ff5a7308e0e386085400e5ec4b24adac552abdee87be4",
+    "models/plains/meadow_sector_066.mdl": "a1baac722c60114bc6c44078e3b6fd5eb140baf2253ba9c95ba83581b1f152a1",
+    "models/plains/meadow_sector_067.mdl": "99bf5b3f2c9c56c375cb5a59652321d8a8e7796cffe8fe54500472d2a6591ef4",
+    "models/plains/meadow_sector_068.mdl": "fe87f5bdf7d4e94e1a3bd8bdf42f43e274dddfce3209712e361b251ed09acca5",
+    "models/plains/meadow_sector_069.mdl": "3d7f9fbff39220c8021693293c62a67a3d45ab83875f37db33cb2a2bb78d8892",
+    "models/plains/meadow_sector_070.mdl": "452307ab44785ae8525fc6ebc8fdc5095939dd3698ca7157a997880115711f2a",
+    "models/plains/meadow_sector_071.mdl": "35819b0efa60805e7a58cceb07c4c6ea761919d94a7cd8ef86ac5b50bc8d0a54",
+    "models/plains/meadow_sector_072.mdl": "de717fb637bdba4d8f51a7229daab9d12de38d2fc0bc63e816411f3f24f16e58",
+    "models/plains/meadow_sector_073.mdl": "28658d8c10f49ccacc21c0d9480f6bf137b57c958b35a52975e576400e222e50",
+    "models/plains/meadow_sector_074.mdl": "299ec08cf9f8c49d4025060d5a4a55f27fdc1c7f8dc238ec8159936ba248e0ed",
+    "models/plains/meadow_sector_075.mdl": "7b38559a9398ebe3151d1efaf7fc89d4e15ba8e9389186ce418952b7ac8f5254",
+    "models/plains/meadow_sector_076.mdl": "9ecef14cf2ee0be39be2884d6fd65ff9133f9f0fa1ecc0a5b5ae5227cd7f7601",
+    "models/plains/meadow_sector_077.mdl": "9ccdeca7a15a0f2d8d52c914141627bca97fdd5fcc9344de6ab1b89e3875fea7",
+    "models/plains/meadow_sector_078.mdl": "f83fa8ee7fe8496ae2f6eaaac54ec0cf4647eac252a939216486423d609ffb4a",
+    "models/plains/meadow_sector_079.mdl": "923863d2404a9b4e1c8ced54e452ad62cbf92d7d319ebd2e9c4473236d8d8c46",
+    "models/plains/meadow_sector_080.mdl": "d00f0fc3117dccdec13764794a4c1add96dc09e00a1f7f882fe98647fb72a05e",
+    "models/plains/meadow_sector_081.mdl": "678779278168ac5b94420ffd206aa0f85de0f1ab783a0ffd0590b1660ce4e4db",
+    "models/plains/meadow_sector_082.mdl": "4f2520d8808b32f1e779f92b37616c4f18b9c59dc684c34bd25947dd9de2fae3",
+    "models/plains/meadow_sector_083.mdl": "9ebfe2ecfe6ad4335378790e61f6aa4b852f65bb852080bfe5d61c02ee7d7deb"
+  },
+  "reproduction": {
+    "pass": true,
+    "map_sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+    "reproduced_map_sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+    "models": 84,
+    "model_mismatches": []
+  },
+  "staging": {
+    "main_and_peer_installed": true,
+    "installed_files_verified": 170,
+    "protected_files_unchanged": true,
+    "startup_verified": true,
+    "main_fn_health": true,
+    "map_alias": "daragoth",
+    "staged_utc": "2026-10-02T03:21:45.8390706Z",
+    "rollback_base_preserved": true,
+    "fn_backup_preserved": true
+  },
+  "receipt_sha256": {
+    "batch": "1d86d5ae86ae5672b711b93c81974e0c65a113a851758079e86a55ef0d106e61",
+    "actual_c": "904c5626dcf605682c0804e27ef38076be2fa8b885ce46a020720e063d7586fd",
+    "native": "7a9ec89d0dc3b7cc66c39475edfac8205ad8f3f7c7483d6850482fb9abd10990",
+    "staging": "76a9acbbfa0dcca831a72c3fbf2f1f1493e2badcf0970c7e697d01a5c3451693",
+    "reproduction": "c1bc3ac7453650212d66841f3d089f42b2e0b06a06c0ecfba2ac0e3553118c98"
+  },
+  "limits": [
+    "Root and standing-floor traces verify planted scenery contact, not exhaustive map traversal.",
+    "Native evidence covers 22 views and three short movement sweeps.",
+    "The inherited Edana tree license remains unverified; no public release was performed."
+  ],
+  "sanitized": "No account identifiers, profile records, credentials, or private FN database content included.",
+  "subsequent_mount_integration": {
+    "checkpoint": "81e60fe6",
+    "report": "daragoth-mount-lifecycle-20261001.json",
+    "report_sha256": "8d4d1252a2c9ec0812f3f69c996f332cfce52c87fcee9605e10968ed478548b5",
+    "server_sha256": "99c28cd33b9dad427e499edbfcb4e92fb4dc9015c3ee33e5204b3c2304999211",
+    "meadow_sha256_preserved": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+    "lifecycle_checks": 30,
+    "lifecycle_checks_pass": true,
+    "combined_map_checks": 9,
+    "combined_map_checks_pass": true,
+    "main_and_peer_server_hashes_verified": true,
+    "scope": "Subsequent mount-owned server update; original grass native receipt retains its tested core hashes."
+  }
+}
