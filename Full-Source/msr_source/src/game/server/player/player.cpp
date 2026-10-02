@@ -4282,7 +4282,7 @@ void CBasePlayer::UpdateClientData(void)
 		m_bitsDamageType &= DMG_TIMEBASED;
 	}*/
 
-	MSRMounts::ApplyRestrictions(this);
+	MSRMounts::ApplyRestrictions(this, true);
 
 	if (m_iTrain & TRAIN_NEW)
 	{

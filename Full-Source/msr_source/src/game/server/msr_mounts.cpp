@@ -7,6 +7,9 @@
 #include "usercmd.h"
 #include <cmath>
 #include <cstring>
+#if !defined(NDEBUG)
+#include "ms/script.h"
+#endif
 
 namespace
 {
@@ -86,6 +89,7 @@ public:
     bool m_Assigned = false;
     Vector m_HomeOrigin, m_HomeAngles, m_SavedView;
     int m_SavedPhysicsFlags = 0;
+    int m_EffectRestrictions = 0;
     float m_NextUse = 0;
     usercmd_s m_LastCommand{}; // Read-only diagnostics of actual server input.
     float m_LastCommandTime = 0;
@@ -133,7 +137,7 @@ public:
     }
     bool TryMount(CBasePlayer *player, bool quiet = false)
     {
-        if (!player)
+        if (!player || FBitSet(pev->flags, FL_KILLME))
             return false;
         if (m_Assigned && GetCustomer() != player)
         {
@@ -167,6 +171,7 @@ public:
         }
         m_SavedView = player->pev->view_ofs;
         m_SavedPhysicsFlags = player->pev->iuser3;
+        m_EffectRestrictions = player->m_StatusFlags & kRestrictions;
         m_Rider = player;
         player->m_hMount = this;
         pev->owner = player->edict(); // ordinary entity delta already carries the owner index
@@ -180,7 +185,7 @@ public:
         if (!quiet) Tell(player, "Mounted. Move normally, hold Run to gallop, and Use to dismount.");
         return true;
     }
-    bool EndRide(bool forced, const char *reason, bool quiet = false)
+    bool EndRide(bool forced, const char *reason, bool quiet = false, bool returnHome = true)
     {
         CBasePlayer *player = GetRider();
         if (!player)
@@ -212,7 +217,8 @@ public:
         m_Rider = (CBaseEntity *)NULL;
         pev->owner = NULL;
         player->m_hMount = (CBaseEntity *)NULL;
-        ClearBits(player->m_StatusFlags, PLAYER_MOVE_MOUNTED | PLAYER_MOVE_RUNNING);
+        ClearBits(player->m_StatusFlags, PLAYER_MOVE_MOUNTED | PLAYER_MOVE_RUNNING | kRestrictions);
+        SetBits(player->m_StatusFlags, m_EffectRestrictions);
         player->pev->iuser3 = m_SavedPhysicsFlags;
         player->pev->view_ofs = m_SavedView;
         player->pev->framerate = 1;
@@ -226,7 +232,7 @@ public:
             UTIL_SetOrigin(player->pev, destination);
             player->pev->velocity = player->pev->basevelocity = g_vecZero;
         }
-        else
+        else if (returnHome)
         {
             // Forced release never teleports a player (death, disconnect, water,
             // server teardown). Return the visual to its stable/home instead.
@@ -293,6 +299,13 @@ public:
         pev->nextthink = gpGlobals->time + 0.05f;
     }
     void Deactivate() { EndRide(true, "horse deactivated", true); }
+    void OnDestroy() override
+    {
+        // Engine removals that bypass UTIL_Remove also run this existing virtual
+        // hook. The edict is being freed: don't relink it back to its home.
+        EndRide(true, "horse destroyed", true, false);
+        CBaseAnimating::OnDestroy();
+    }
 };
 
 LINK_ENTITY_TO_CLASS(ms_horse, CMSRHorse);
@@ -590,6 +603,7 @@ void LifecycleCommand()
     g_engfuncs.pfnServerPrint(ok ? "Mount lifecycle: ownership, duplicate denial, airborne denial and cleanup PASS.\n" :
         "Mount lifecycle test FAILED.\n");
 }
+#include "msr_mount_audit.inl"
 }
 
 namespace MSRMounts
@@ -602,6 +616,9 @@ void Init()
     g_engfuncs.pfnAddServerCommand((char *)"ms_mount_test", LifecycleCommand);
     g_engfuncs.pfnAddServerCommand((char *)"ms_mount_place", PlaceCommand);
     g_engfuncs.pfnAddServerCommand((char *)"ms_stable_test", StableTestCommand);
+#if !defined(NDEBUG)
+    g_engfuncs.pfnAddServerCommand((char *)"ms_stable_audit", StableAuditCommand);
+#endif
 }
 void Precache()
 {
@@ -618,11 +635,15 @@ void Precache()
     else
         ALERT(at_console, "MSR mounts: optional asset %s was not found through the game filesystem.\n", kHorseModel);
 }
-void ApplyRestrictions(CBasePlayer *player)
+void ApplyRestrictions(CBasePlayer *player, bool effectsRebuilt)
 {
     if (!player) return;
     CMSRHorse *horse = MountedHorse(player);
     if (!horse || horse->GetRider() != player) return;
+    // UpdateClientData just rebuilt these bits from active effects. Keep them
+    // separate from our own bits so dismount doesn't remove a spell restriction
+    // or restore a spell that expired during the ride.
+    if (effectsRebuilt) horse->m_EffectRestrictions = player->m_StatusFlags & kRestrictions;
     // The server-owned link is authoritative even if an ordinary script rebuilt
     // the player's movement status during the frame.
     SetBits(player->m_StatusFlags, PLAYER_MOVE_MOUNTED | kRestrictions);
@@ -658,6 +679,12 @@ void Release(CBasePlayer *player, const char *reason)
                 UTIL_Remove(loan);
             }
         }
+}
+void Removing(CBaseEntity *entity)
+{
+    // Legacy UpdateOnRemove isn't virtual. Notify before UTIL_Remove marks the
+    // horse for deletion, while its camera/effect snapshot is still available.
+    if (CMSRHorse *horse = Horse(entity)) horse->EndRide(true, "horse removed", true, false);
 }
 void RecordCommand(CBasePlayer *player, const usercmd_s *command)
 {

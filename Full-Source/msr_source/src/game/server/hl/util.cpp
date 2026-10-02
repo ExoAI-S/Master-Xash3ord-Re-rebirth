@@ -32,6 +32,7 @@
 #include "weapons.h"
 #include "gamerules.h"
 #include "msr_regions.h"
+#include "msr_mounts.h"
 
 /*
 =====================
@@ -1955,6 +1956,7 @@ void UTIL_Remove(CBaseEntity *pEntity)
 {
 	if (!pEntity)
 		return;
+	MSRMounts::Removing(pEntity);
 
 #ifdef VALVE_DLL
 	msstring msEntClassName = STRING(pEntity->pev->classname);

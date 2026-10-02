@@ -1,0 +1,128 @@
+{
+  "scope": "Isolated Debug realm 27249 and synthetic FN 5842; no player data/public releases.",
+  "baseline": {
+    "scope": "Synthetic FN, isolated realm 27249, baseline before lifecycle repairs.",
+    "server_sha256": "04a6b0f8b52aec897f233827f8ace8eaf2cb07db47707826f2e119b74cc9c9d0",
+    "responses": {
+      "restore": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 154 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nMSR mounts: rider 1 released (audit restore).\nStable audit: restore FAIL.\n",
+      "remove": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 154 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nStable audit: remove FAIL.\nMSR mounts: rider 1 released (horse deactivated).\n",
+      "pads": "Stable audit: all blocked pads refuse without loan PASS.\nMSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at 120.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 175 pad=2.\nStable audit: blocked first and occupied second pad skipped PASS.\nStable audit: pad audit leaves no loan PASS.\n"
+    }
+  },
+  "checks": {
+    "1: restore (1)": true,
+    "1: remove (1)": true,
+    "1: removed horse rejects remount (1)": true,
+    "1: direct engine removal restores rider (1)": true,
+    "1: expired jump effect cleared and new attack effect preserved (1)": true,
+    "1: effect fixture restored (1)": true,
+    "1: all blocked pads refuse without loan (1)": true,
+    "1: blocked first and occupied second pad skipped (1)": true,
+    "1: pad audit leaves no loan (1)": true,
+    "1: repeat unmounted reuse (1)": true,
+    "1: other player cannot take or move loan (1)": true,
+    "1: repeat mounted reuse (1)": true,
+    "1: moved unmounted loan reuse (1)": true,
+    "existing two-player ownership": true,
+    "same two loans after empty region unload/reload": true,
+    "1: repeat unmounted reuse (2)": true,
+    "1: other player cannot take or move loan (2)": true,
+    "1: repeat mounted reuse (2)": true,
+    "1: moved unmounted loan reuse (2)": true,
+    "1: ride (1)": true,
+    "disabling mounts clears rider and customer loan": true,
+    "1: ride (2)": true,
+    "1: spawn (1)": true,
+    "1: ride (3)": true,
+    "1: death (1)": true,
+    "1: respawn after death (1)": true,
+    "2: ride (1)": true,
+    "mounted peer disconnect removes only peer loan": true,
+    "1: ride (4)": true,
+    "map change removes loans and restores one shared horse": true
+  },
+  "responses": {
+    "restore_1_1": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nMSR mounts: rider 1 released (audit restore).\nStable audit: restore PASS.\n",
+    "remove_1_1": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nMSR mounts: rider 1 released (horse removed).\nStable audit: remove PASS.\nStable audit: removed horse rejects remount PASS.\n",
+    "destroy_1_1": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nMSR mounts: rider 1 released (horse destroyed).\nStable audit: direct engine removal restores rider PASS.\n",
+    "effects_1_1": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -500.0,5164.0,3120.0.\nMSR mounts: rider 1 released (audit effects).\nStable audit: expired jump effect cleared and new attack effect preserved PASS.\nStable audit: effect fixture restored PASS.\n",
+    "pads_1_1": "Stable audit: all blocked pads refuse without loan PASS.\nMSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 215 spawned, model=254 enabled=1 at 120.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 215 pad=2.\nStable audit: blocked first and occupied second pad skipped PASS.\nStable audit: pad audit leaves no loan PASS.\n",
+    "requests_1_1": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -320.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 175 pad=0.\nStable audit: repeat unmounted reuse PASS.\nStable audit: other player cannot take or move loan PASS.\nStable audit: repeat mounted reuse PASS.\nMSR mounts: rider 1 released (audit requests).\nStable audit: moved unmounted loan reuse PASS.\n",
+    "existing_two_player_test": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 189 spawned, model=254 enabled=1 at 120.0,5256.0,3121.0.\nStablemaster: player 2 assigned horse 189 pad=2.\nStablemaster: two customers, distinct horses, repeat reuse and other-rider denial PASS.\n",
+    "regions_initial": "region 0 daragoth: loaded, 402 map entities, 0 no-logout boxes, empty for 11 s | title 'The Plains of Daragoth' diff 'Levels 15-20 / 150-250hp' warnhp 100 sky grnplsnt view 60000 weather now 'clear' of 'clear;clear;clear'\nregion 1 daragoth_plains: loaded, 1231 map entities, 0 no-logout boxes, empty for 0 s | title 'The Expanded Plains of Daragoth' diff 'Riding development preview' warnhp 0 sky grnplsnt view 60000 weather now 'clear' of 'clear;clear;clear'\nedicts in use: 1669 of 4096, stores: 0, unload after 0 s empty\nplayer 1 DaragothStarter: region daragoth_plains at (-500 5164 3156) weather 'clear' sky 'grnplsnt'\nplayer 2 DaragothObserver2: region daragoth_plains at (-444 5116 3156) weather 'clear' sky 'grnplsnt'\nmonsters/NPCs: daragoth=47 daragoth_plains=6 none=1\n",
+    "loans_before_region_unload": "Mount 175 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 189 rider=0 owner=0 solid=0 xyz=120.0,5256.0,3121.0 seq=0 customer=2\nMount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 3 native horses; enabled=1 precached-model=254.\n",
+    "region_unload": "MSR: region daragoth_plains unloaded (command): 6 monsters, 0 items, 0 carried items, 1227 other entities, 0 stores removed in 6 ms\n",
+    "loans_while_region_unloaded": "Mount 175 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 189 rider=0 owner=0 solid=0 xyz=120.0,5256.0,3121.0 seq=0 customer=2\nMSR mounts: 2 native horses; enabled=1 precached-model=254.\n",
+    "region_reload": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 190 spawned, model=254 enabled=1 at -50.0,5316.0,3120.0.\nMSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR: region daragoth_plains ran its game_master game_spawn again\nMSR: region daragoth_plains load time by class (ms): env_model=67 ms_npc=31 ms_horse=1 ms_stablemaster=1 (activate)=0 func_water=0\nMSR: region daragoth_plains loaded (command): 1231 entities re-created, 101 ms of work (scripts 40 files 29 ms, parsing 27) over 1 frames in 0.0 s, longest frame 100 ms\n",
+    "loans_after_region_reload": "Mount 175 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 189 rider=0 owner=0 solid=0 xyz=120.0,5256.0,3121.0 seq=0 customer=2\nMount 190 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 3 native horses; enabled=1 precached-model=254.\n",
+    "requests_1_2": "Stable audit: repeat unmounted reuse PASS.\nStable audit: other player cannot take or move loan PASS.\nStable audit: repeat mounted reuse PASS.\nMSR mounts: rider 1 released (audit requests).\nStable audit: moved unmounted loan reuse PASS.\n",
+    "ride_1_1": "Stable audit: ride PASS.\n",
+    "after_disable": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=0 status=0 physics=0 view=28.0 xyz=-320.0,5256.0,3156.0\n",
+    "ride_1_2": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 175 spawned, model=254 enabled=1 at -320.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 175 pad=0.\nStable audit: ride PASS.\n",
+    "spawn_1_1": "MSR mounts: rider 1 released (spawn).\n>>>>> spawn: m_NextTransition:  m_SpawnTransition:  m_OldTransition: \nPlayer skill 0 doesn't exist!\nStable audit: spawn PASS.\n",
+    "ride_1_3": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 1666 spawned, model=254 enabled=1 at -320.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 1666 pad=0.\nStable audit: ride PASS.\n",
+    "death_1_1": "MSR mounts: rider 1 released (death).\nStable audit: death PASS.\n",
+    "respawn_1_1": ">>>>> spawn: m_NextTransition:  m_SpawnTransition:  m_OldTransition: \nPlayer skill 0 doesn't exist!\nStable audit: respawn after death PASS.\n",
+    "loans_for_disconnect": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 1667 spawned, model=254 enabled=1 at -320.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 1667 pad=0.\nMSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 1668 spawned, model=254 enabled=1 at 120.0,5256.0,3121.0.\nStablemaster: player 2 assigned horse 1668 pad=2.\nStablemaster: two customers, distinct horses, repeat reuse and other-rider denial PASS.\n",
+    "ride_2_1": "Stable audit: ride PASS.\n",
+    "after_mounted_peer_disconnect": "Mount 190 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMount 1667 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 1668 rider=2 owner=2 solid=0 xyz=120.0,5256.0,3120.0 seq=0 customer=2\n  rider status=1136 physics=1136 view=64.0 speed=0.0 effect-percent=0.0 hull=-36.0..36.0\n  rider xyz=120.0470,5256.0000,3156.0312 velocity=0.0000,0.0000,0.0000 view-yaw=90.0000 buttons=0 base-cap=320.0\n  usercmd age=-0.037 msec=26 buttons=0 forward=0.0 side=0.0 up=0.0 yaw=90.0\n  hull flags=0x248 movetype=3 solid=3 deadflag=0 waterlevel=0 watertype=-1 onground=1 ground=0 classname=worldspawn frozen=0 train=0 nomove=0 norun=0\n  bounds mins=-16.0000,-16.0000,-36.0000 maxs=16.0000,16.0000,36.0000 basevelocity=0.0000,0.0000,0.0000 gravity=1.0000 friction=1.0000 contents-origin=-1 contents-feet=-1 sv-stepsize=18.0000\n  TraceHull human_hull: authoritative server API; diagnostic probes, not the PM physent/playertrace list.\n  trace stationary startsolid=0 allsolid=0 fraction=1.000000 end=120.0470,5256.0000,3156.0312 normal=0.0000,0.0000,0.0000 plane-dist=0.0000 hit=-1 class=none solid=-1 movetype=-1 model=none\n  trace forward16 startsolid=0 allsolid=0 fraction=1.000000 end=120.0470,5272.0000,3156.0312 normal=0.0000,0.0000,0.0000 plane-dist=0.0000 hit=-1 class=none solid=-1 movetype=-1 model=none\n  trace stepup18 startsolid=0 allsolid=0 fraction=1.000000 end=120.0470,5256.0000,3174.0312 normal=0.0000,0.0000,0.0000 plane-dist=0.0000 hit=-1 class=none solid=-1 movetype=-1 model=none\n  trace raised-forward16 startsolid=0 allsolid=0 fraction=1.000000 end=120.0470,5272.0000,3174.0312 normal=0.0000,0.0000,0.0000 plane-dist=0.0000 hit=-1 class=none solid=-1 movetype=-1 model=none\n  trace ground-down2 startsolid=0 allsolid=0 fraction=0.000000 end=120.0470,5256.0000,3156.0312 normal=0.0000,0.0000,1.0000 plane-dist=3156.0312 hit=0 class=worldspawn solid=4 movetype=7 model=maps/daragoth.bsp\nMSR mounts: 3 native horses; enabled=1 precached-model=254.\n",
+    "ride_1_4": "Stable audit: ride PASS.\n",
+    "real_map_change": "",
+    "after_map_change": "Mount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 1 native horses; enabled=1 precached-model=254.\n"
+  },
+  "server_sha256": "99c28cd33b9dad427e499edbfcb4e92fb4dc9015c3ee33e5204b3c2304999211",
+  "map_sha256": "e14b54e89f7a5870944c3759a3e8eda4e5e4b4ef962856b5ffbe52fe06da7b06",
+  "pass": true,
+  "disconnect_recheck": {
+    "scope": "Same-binary fresh realm; real peer client scheduled normal disconnect and quit. The following authoritative RCON snapshot was inspected manually in the tool output after peer exit and before primary exit.",
+    "verification_method": "Supervised RCON observation plus client exit logs; this recheck is not claimed as fully automated.",
+    "after_peer_exit": "Mount 159 rider=0 owner=0 solid=0 xyz=-320.0,5256.0,3121.0 seq=0 customer=1\nMount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 2 native horses; enabled=1 precached-model=254.\n",
+    "both_exit_logs_confirmed": {
+      "primary": true,
+      "peer": true
+    },
+    "after_both_exit": "Mount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 1 native horses; enabled=1 precached-model=254.\n",
+    "fixture_notes": [
+      "Initial fixed three-second observation occurred before peer quit.",
+      "UTIL_PlayerByIndex no longer returns a disconnected slot; waiting for that slot to print in-server=0 was invalid.",
+      "The primary later completed its scheduled normal quit too. The final snapshot confirms both customer loans were removed and the shared horse remained."
+    ]
+  },
+  "combined_meadow_smoke": {
+    "scope": "Accepted lifecycle DLL with partner accepted batched meadow in private preview; normal client Use and quit.",
+    "checks": {
+      "restore": true,
+      "remove": true,
+      "removed horse rejects remount": true,
+      "direct engine removal restores rider": true,
+      "ride": true,
+      "ordinary airborne and ownership lifecycle": true,
+      "normal Use loan and normal Use dismount": true,
+      "no snapshot overflow": true,
+      "normal quit cleanup": true
+    },
+    "pass": true,
+    "final_status": "Mount 458 rider=0 owner=0 solid=0 xyz=-50.0,5316.0,3120.0 seq=0 customer=0\nMSR mounts: 1 native horses; enabled=1 precached-model=254.\n",
+    "after_normal_use_server_state": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0\n",
+    "native_check_lines": [
+      "Stable audit: restore PASS.",
+      "Stable audit: remove PASS.",
+      "Stable audit: removed horse rejects remount PASS.",
+      "Stable audit: direct engine removal restores rider PASS.",
+      "Mount lifecycle: ownership, duplicate denial, airborne denial and cleanup PASS.",
+      "Stable audit: ride PASS.",
+      "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0"
+    ]
+  },
+  "installed_server_sha256": "99c28cd33b9dad427e499edbfcb4e92fb4dc9015c3ee33e5204b3c2304999211",
+  "installed_meadow_sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+  "build_configuration": "Win32 Debug, /Od /Zi /RTC1; NDEBUG not defined",
+  "checkpoint_scope": "Mount source, native audit helper and sanitized evidence only. Partner meadow source remains separate. No public release.",
+  "source_lf_sha256": {
+    "msr_mounts.cpp": "e91c996b3c7a465f593202bcfb54633c2e2e428abe688d00386dca377b613545",
+    "msr_mounts.h": "d6d6b0035d3efdf2f5c4d3f0713b7bf8e5700f23aa4c79da1f87814fb25e683d",
+    "msr_mount_audit.inl": "85e085e42944bb95c532873852a9fcc855a609b28dd8276e370be03432ca904e",
+    "hl/util.cpp": "854e9158e108c738c4780fb1a403eff2b3a909e37f96f0c3ca4bb3bffabdf67e",
+    "player/player.cpp": "0c81e333baaac4bd2d32686f86583baad501c69367123071c3a0c85afca00b33"
+  }
+}
