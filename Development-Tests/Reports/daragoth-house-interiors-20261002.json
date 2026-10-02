@@ -1,0 +1,81 @@
+{
+  "schema": "daragoth-house-interiors-root-component-acceptance-v1",
+  "pass": true,
+  "native_visual_accepted": true,
+  "candidate_sha256": "cc879ec6bc9a6929f84ff0b39b04d70860dd89920f3c00c81133e18b4c97a6ab",
+  "installed": false,
+  "stage_eligible": false,
+  "source_component_sha256": "e942e42c6112a11858148ce279c8ffbe39e769059d60cb332c396b9c1020e927",
+  "root_viewed_original_png_count": 12,
+  "root_viewed_contact_sheet": true,
+  "raw_native_strict_pass": false,
+  "raw_native_files_reclassified": false,
+  "pose_exception": {
+    "label": "inn_entry",
+    "planned_pitch_degrees": 15,
+    "actual_pitch_degrees": 7.50001,
+    "other11_actual_pitch_degrees": 13.5,
+    "scope": "Only root presentation acceptance of this actual finite view; all eye/yaw/fresh/air checks retained. The complementary inn_back view covers its table and door. No claim that all12 planned pitch guards passed.",
+    "rationale": "Root inspected all12 original1280x720 PNGs and accepts coherent visible furnishings in each house at the recorded poses; extra identical geometry/core runs add no needed presentation evidence."
+  },
+  "native_observations": {
+    "six_houses": 6,
+    "fresh_views": 12,
+    "strict_pose_matches": 11,
+    "expected_static_decorations": 85,
+    "all85_exact_server_state_each_view": true,
+    "network_errors": {
+      "datagram_overflow": 0,
+      "reliable_overflow": 0,
+      "network_send_error": 0,
+      "connection_error": 0
+    },
+    "positive_primary_model_indices": 22,
+    "model_file_pins": 23,
+    "owned_processes_stopped": true
+  },
+  "static_observations": {
+    "modeled_support_contacts": 42,
+    "floor_or_old_bench_contacts": 43,
+    "above_floor_drawn_vertices_checked": 7517,
+    "standing_route_samples": 30,
+    "old_ordered_entities_preserved": 1053,
+    "nonentity_lumps_preserved": 14,
+    "collision_pvs_lighting_doors_water_grass_preserved": true
+  },
+  "visual_findings": {
+    "inn": "Dining and tea tables, dishes and storage; clear central space.",
+    "workshop": "Work table, manuals, shovel, shelving and tool storage.",
+    "cottage_south": "Wooden bed frame, breakfast setting and books.",
+    "cottage_north": "Wooden bed frame, study table, books and alchemical shelf.",
+    "bakery": "Individual loaves, preparation and serving tables, dishes and food.",
+    "farmhouse": "Wooden bed frame, meal setting, tools and storage."
+  },
+  "limits": [
+    "Diagnostic noclip views establish finite presentation, not ordinary walking or door operation. Static furniture bounds and30 world hull-route points supply clearance evidence.",
+    "All85 exact server states plus visible room screenshots; no individual client-network/pixel identification of every prop.",
+    "Decorative nonsolid original models; no sleeping, fire, pickup, merchant or new lighting behavior. Existing warm interior lighting is retained.",
+    "Earlier a0b support-gap rejection and two blocked checker launch attempts remain separate and immutable. Old Err299 cause is not retrospectively proven.",
+    "One recorded camera pitch misses the raw strict plan; its failure is retained with this explicit root visual exception.",
+    "No human UI/input/memory/player-data/service action, no live installation or public release. Enemies and final combined acceptance remain pending."
+  ],
+  "root_acceptance_sha256": "a69daef6d036e846c6b0fa3671657ea74861c772732590eda156b1ee12a50f7f",
+  "proof_hashes": {
+    "map": "cc879ec6bc9a6929f84ff0b39b04d70860dd89920f3c00c81133e18b4c97a6ab",
+    "build": "97c8573463ea5cfc3c0f224d9c4e430c940aa943183a2ca883df8236aeb66243",
+    "layout": "fc62bec568f01f01e9d7c2a6894691926c89dbbb74077f23bc88afe24ae32cdc",
+    "builder": "68bdbe0529d0870ba3bbfeffed5badd5d43eb1a25ac286ac8517041445586569",
+    "independent_static": "5ee322056871d0c4ebcc5127da197e7a8dedb5a0a56818fe02013f7992a1af69",
+    "independent_builder": "c373dd9a09690ce22c4794480dca9cc08db15874e9a083ebb66f51e97e9ec859",
+    "independent_native": "77ffeb9e22ad28c966acd8f33bdb69b87939ca8270def7093ccc182d19042649",
+    "native_raw": "4972328c0f2c6a9fbaa4be9fd05245a70fd4d627f59fb681d465fdb05fa5c88b",
+    "view_audit": "d57b8299de598995de1069c7b78bd83f9a753d5fdacac44461f9e6ece71f5108",
+    "screenshots_manifest": "249fbf8f281585f356979b2efa121291a286f8e8f7f8ac67423c96cf6a3e2a94",
+    "native_resource": "0931215184af8c6e4b4e19430c61d41fe2f647ec33ae3006000546a78f68132d",
+    "frozen_archive": "2e6bfaf56f8201fd8712fc40f8f73bd1472ceb57d523709ac28e0cb1b77f3bca",
+    "cleanup": "a6687942d4855a75bbeed8af73b8955154fc93b2b1ecfea02cc902399f09f672",
+    "reader_activation": "1755b9c7844e6d691efbf9fcbb108e0bde29547eac8e978c9af4eee4cc76b0a7",
+    "reader_review": "8f6ffafd5a2c8aeb9113963bd073ad0b1f7ab92692e3d1448e2632c27c84bb1d"
+  },
+  "evidence_lab": "Sibling daragoth-development/house-interiors; original raw receipts and66-file archive retained."
+}
