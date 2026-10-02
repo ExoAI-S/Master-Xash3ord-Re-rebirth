@@ -59,6 +59,7 @@
 #include "mslogger.h"
 #include "msr_regions.h"
 #include "msr_mounts.h"
+#include "rotating_door_use.h"
 
 constexpr unsigned int MAX_ENTITIES_TO_SEARCH = 4096;
 static CBaseEntity* g_pEntitiesInBox[MAX_ENTITIES_TO_SEARCH];
@@ -1155,11 +1156,21 @@ void CBasePlayer::PlayerUse(void)
 			// !!!PERFORMANCE- should this check be done on a per case basis AFTER we've determined that
 			// this object is actually usable? This dot is being done for every object within PLAYER_SEARCH_RADIUS
 			// when player hits the use key. How many objects can be in that area, anyway? (sjb)
-			vecLOS = (VecBModelOrigin(pObject->pev) - (pev->origin + pev->view_ofs));
-
-			// This essentially moves the origin of the target to the corner nearest the player to test to see
-			// if it's "hull" is in the view cone
-			vecLOS = UTIL_ClampVectorToBox(vecLOS, pObject->pev->size * 0.5);
+			if (pObject->pev->solid == SOLID_BSP && FClassnameIs(pObject->pev, "func_door_rotating"))
+			{
+				MSRRotatingDoorUse::Basis basis;
+				// Local outputs preserve gpGlobals->v_forward, which is the player's view.
+				EngineFunc::MakeVectors(pObject->pev->angles, &basis.forward, &basis.right, &basis.up);
+				if (!MSRRotatingDoorUse::AimDirection(pev->origin, pev->origin + pev->view_ofs,
+					pObject->pev->origin, pObject->pev->mins, pObject->pev->maxs, basis, PLAYER_SEARCH_RADIUS, vecLOS))
+					continue;
+			}
+			else
+			{
+				vecLOS = (VecBModelOrigin(pObject->pev) - (pev->origin + pev->view_ofs));
+				// Move the target to the nearest box corner for the view cone test.
+				vecLOS = UTIL_ClampVectorToBox(vecLOS, pObject->pev->size * 0.5);
+			}
 
 			flDot = DotProduct(vecLOS, gpGlobals->v_forward);
 			if (flDot > flMaxDot)

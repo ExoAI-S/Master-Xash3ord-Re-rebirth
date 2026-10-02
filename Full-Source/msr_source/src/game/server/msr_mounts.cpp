@@ -88,6 +88,7 @@ public:
     EHANDLE m_Customer{}, m_Stablemaster{};
     bool m_Assigned = false;
     Vector m_HomeOrigin, m_HomeAngles, m_SavedView;
+    Vector m_LastDryOrigin, m_LastDryAngles;
     int m_SavedPhysicsFlags = 0;
     int m_EffectRestrictions = 0;
     float m_NextUse = 0;
@@ -181,6 +182,9 @@ public:
         player->pev->velocity = player->pev->basevelocity = g_vecZero;
         MSRMounts::ApplyRestrictions(player);
         Follow(player);
+        // GroundSpot has just validated this grounded, dry mounting position.
+        m_LastDryOrigin = pev->origin;
+        m_LastDryAngles = pev->angles;
         m_NextUse = gpGlobals->time + 0.35f;
         if (!quiet) Tell(player, "Mounted. Move normally, hold Run to gallop, and Use to dismount.");
         return true;
@@ -234,7 +238,7 @@ public:
         }
         else if (returnHome)
         {
-            // Forced release never teleports a player (death, disconnect, water,
+            // Forced release never teleports a player (death, disconnect,
             // server teardown). Return the visual to its stable/home instead.
             UTIL_SetOrigin(pev, m_HomeOrigin);
             pev->angles = m_HomeAngles;
@@ -252,6 +256,11 @@ public:
     {
         UTIL_SetOrigin(pev, player->pev->origin + Vector(0, 0, player->pev->mins.z));
         pev->angles = Vector(0, player->pev->v_angle.y, 0);
+        if (FBitSet(player->pev->flags, FL_ONGROUND) && Dry(pev->origin + Vector(0, 0, 4)))
+        {
+            m_LastDryOrigin = pev->origin;
+            m_LastDryAngles = pev->angles;
+        }
         const float speed = player->pev->velocity.Length2D();
         const int sequence = speed < 10 ? 0 : speed > MSRMountPolicy::WalkSpeed + 20 ? 2 : 1;
         if (sequence != pev->sequence)
@@ -262,6 +271,14 @@ public:
         }
         pev->framerate = sequence == 0 ? 1 : V_max(0.35f, V_min(1.75f,
             speed / (sequence == 2 ? MSRMountPolicy::GallopSpeed : MSRMountPolicy::WalkSpeed)));
+    }
+    void EndRideInWater(CBasePlayer *player)
+    {
+        Follow(player);
+        EndRide(true, "entered water", true, false);
+        // Keep the horse usable on the nearby bank. The rider stays in place.
+        UTIL_SetOrigin(pev, m_LastDryOrigin);
+        pev->angles = m_LastDryAngles;
     }
     void EXPORT HorseUse(CBaseEntity *activator, CBaseEntity *, USE_TYPE, float)
     {
@@ -702,9 +719,14 @@ void PlayerPreThink(CBasePlayer *player)
         return;
     }
     if (!Enabled() || !player->IsAlive() || player->m_CharacterState != CHARSTATE_LOADED ||
-        player->pev->waterlevel >= 2 || player->pev->movetype != MOVETYPE_WALK)
+        player->pev->movetype != MOVETYPE_WALK)
     {
         Release(player, "mount movement ended");
+        return;
+    }
+    if (player->pev->waterlevel >= 2)
+    {
+        horse->EndRideInWater(player);
         return;
     }
     ApplyRestrictions(player);
