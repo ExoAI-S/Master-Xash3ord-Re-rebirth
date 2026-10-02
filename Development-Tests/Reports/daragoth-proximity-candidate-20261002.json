@@ -1,0 +1,75 @@
+{
+  "schema": "daragoth-proximity-static-candidate-checkpoint-v1",
+  "pass": true,
+  "scope": "Reviewed local map construction and finite static placement; changed-core implementation and native testing remain pending.",
+  "candidate_sha256": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+  "whole_file_crc32": 1139436697,
+  "source_map_sha256": "cc879ec6bc9a6929f84ff0b39b04d70860dd89920f3c00c81133e18b4c97a6ab",
+  "builder_sha256": "9df06f1c68d9dd8fe84a7d10ceb76c9b19af19470ea56aa45f157c0eb4cd6a54",
+  "build_report_sha256": "895f722f22b1c19d8b1d2f9da7e2ee0aeb3597aecee72f870e9b987658071af6",
+  "placement_audit_sha256": "0bbc850f20be4959c5c28fdfae810cb5af478bbefbe3199f2725f90877eb11ca",
+  "placement_checker_sha256": "80782f8721a596ea507f8868858eba70c16943d651ec6f8abd24a3ae6cd01229",
+  "independent_builder_candidate_review_sha256": "165f102135a8ab465a68c0e4fc50dce472b9f558ece62f871c7464320f1f1b57",
+  "independent_candidate_checker_sha256": "819c11e4d4ae2852e760f32d6364739fd9b6eb316fa7b21c50cfcbaed6e1220b",
+  "mapper_api_sha256": "3ec7fe07abcf36192b51e35eceebbdefd72e74bde45cecae79110b749b51fad6",
+  "descriptor_policy_review_sha256": "1e14bee55276a2dd3482c1a28e9a27607c77f1d10e584dc1c51cc8f0b48d0e60",
+  "interior_native_review_sha256": "a69daef6d036e846c6b0fa3671657ea74861c772732590eda156b1ee12a50f7f",
+  "original_asset_availability_review_sha256": "87f7dbe9e5e8c39a69901aca1f8994a2ea1967ba2a393f4933139769cbb21c4c",
+  "scripts_sha256": "6af5761670d1d71cf395c224c68d3ae01fadef00b3928295306977a1d39a5ca9",
+  "inventory": {
+    "old_records_preserved": 1138,
+    "models_preserved": 166,
+    "new_controllers": 30,
+    "new_templates": 163,
+    "total_entities": 1331
+  },
+  "preservation": {
+    "raw_entity_prefix": true,
+    "old_file_prefix_except_entity_descriptor": true,
+    "all_fourteen_nonentity_lumps_and_descriptors": true
+  },
+  "density": {
+    "initial_managed_global_cap": 16,
+    "dense_groups": 2,
+    "templates_each_dense_group": 24,
+    "local_cap_each_dense_group": 16,
+    "other_group_caps": [
+      1,
+      8
+    ],
+    "birth_interval_seconds": 0.2
+  },
+  "species_pool": {
+    "orc_warrior": 26,
+    "orc_archer": 12,
+    "goblin": 54,
+    "skeleton": 18,
+    "troll": 3,
+    "wolf": 17,
+    "wolf_alpha": 2,
+    "spider_mini": 24,
+    "boar": 6,
+    "bear_black": 1
+  },
+  "finite_checks": {
+    "pads": 163,
+    "support_samples": 2934,
+    "body_samples": 8802,
+    "selected_and_standing_queries": 326,
+    "translated_water_volumes": 5,
+    "model_files": 31,
+    "immutable_runtime_copies_hashed": 62,
+    "script_includes_pinned": 29
+  },
+  "native_acceptance": false,
+  "stage_eligible": false,
+  "runtime_installation_performed": false,
+  "limitations": [
+    "Reviewer independently checked the root builder and serialized output; reviewer authored the original placement design, so this is not an independent placement design.",
+    "Finite floor/body samples and effective hull points do not establish continuous walking paths, AI grounding or moving player/mount occupancy.",
+    "Vacancy replenishment is the agreed policy. Finite waves, interwave timers and a two-group limit are not implemented.",
+    "Protected damaged/credited actors may exhaust the managed cap. Core identity, credit, retirement, region replay, two-client and resource tests remain required.",
+    "Old accepted furnishing presentation includes the preserved inn-entry pitch exception; these source checks do not replace changed-core compatibility or native views.",
+    "This uninstalled successor does not replace the historical installed0f8/core306f report."
+  ]
+}

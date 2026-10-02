@@ -1,5 +1,11 @@
 # Plains wilderness encounters
 
+This fixed-eight candidate is retained as a static reference. Its native
+preparation and installation are held after the request for a larger, dynamic
+population. The successor is described in `PROXIMITY-ENCOUNTERS.md` and uses
+`build_proximity_encounters.py` with a new optional core. The planned checks below
+describe the historical fixed-eight scope and have not run for this candidate.
+
 The first encounter pass adds eight existing scripted enemies in four groups:
 two orc warriors and an archer in the eastern meadow, two goblins in the western
 fields, one troll in the northern wilderness, and two skeletons near the eastern
