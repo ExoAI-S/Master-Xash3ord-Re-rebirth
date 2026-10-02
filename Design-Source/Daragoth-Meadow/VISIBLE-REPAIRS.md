@@ -37,8 +37,38 @@ python -B Design-Source/Daragoth-Meadow/build_visible_creek.py --base ../daragot
 python -B Design-Source/Daragoth-Meadow/build_boundary_closure.py --base ../daragoth-development/meadow-visible-creek/daragoth_meadow_visible_creek.bsp --out ../daragoth-development/meadow-boundary-closure
 ```
 
-The builders refuse to overwrite frozen inputs or candidates. The final
+The builders refuse to overwrite frozen inputs or candidates. The boundary
 construction candidate SHA-256 is
 `676afa30a2e050a7dca9d56dfc82e1b40048e11c694d838d8e8b8abbd3224d05`.
+It passed collision and native movement checks, but visual review found a
+remaining flat original cap and a missing bed polygon visible through the water.
+Its rejected native evidence remains preserved.
+
+`build_join_material.py` replaces all 131 remaining original DPROCK seam caps
+with the same embedded original rock and ordinary lighting. Only face material
+and lighting records change; all geometry, references, entities, collision,
+visibility and animated water remain identical. Its construction SHA-256 is
+`a82d997a153543198f01c2d36199b7d78498f309c6a251fa70891abacbf69f29`.
+
+`build_creek_bed.py` restores the exact missing render surface at node8808,
+plane4474. It intersects that plane with its ancestor halfspaces and both child
+trees, then subtracts existing coplanar faces. One upward face fills the remaining
+49,047 square units. Adjacent DPGRASS texture coordinates and its original
+style0 lighting grid are extended at the actual 64-unit lightmap step. Existing
+faces, terrain slopes, collision and water contents remain intact. The face is
+marked in the actual adjacent empty leaf4517 and the existing meadow visibility
+anchors; later references are remapped consistently.
+
+The wider creek survey's 313 missing ground-material results comprise 288
+rendered solid rock banks, 12 rendered solid wooden supports/approaches, and
+13 actual wet-bed omissions. All 13 wet points and 49 finer bridge-opening
+points belong to this same missing surface. A nearby almost coincident plane
+has complete rendered coverage and is preserved. An 8-unit local survey found
+753 missing wet-bed samples before repair and none after, across 3,116 wet-floor
+points. These are finite compiled surveys, not a claim of exhaustive walking.
+
+The bed construction candidate SHA-256 is
+`8388e76d2653f4acc09abc633b25c8ce94b816a9e99fb10743e8838edb37fdc3`.
+
 Independent checks and fresh native visual acceptance are required before
 map-only staging. Building these files does not modify either running preview.
