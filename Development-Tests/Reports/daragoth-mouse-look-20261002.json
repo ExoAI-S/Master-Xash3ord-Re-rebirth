@@ -1,0 +1,511 @@
+{
+  "scope": "Detached Debug realm 27249 / synthetic FN 5842; exact production mouse mapping with synthetic deltas. No OS mouse injection.",
+  "checks": {
+    "cycle0 mounted": true,
+    "cycle0 ordinary Use dismount": true,
+    "cycle1 mounted": true,
+    "cycle1 ordinary Use dismount": true,
+    "cycle2 mounted": true,
+    "cycle2 ordinary Use dismount": true,
+    "baseline reproduces missing mlook and vertical mouse movement": true,
+    "restored vertical look without movement": true,
+    "restored_up vertical look without movement": true,
+    "mounted0 vertical look without movement": true,
+    "mounted0_up vertical look without movement": true,
+    "dismounted0 vertical look without movement": true,
+    "dismounted0_up vertical look without movement": true,
+    "mounted1 vertical look without movement": true,
+    "mounted1_up vertical look without movement": true,
+    "dismounted1 vertical look without movement": true,
+    "dismounted1_up vertical look without movement": true,
+    "mounted2 vertical look without movement": true,
+    "mounted2_up vertical look without movement": true,
+    "dismounted2 vertical look without movement": true,
+    "dismounted2_up vertical look without movement": true,
+    "inverted vertical look without movement": true,
+    "inverted_up vertical look without movement": true,
+    "thirdperson vertical look without movement": true,
+    "thirdperson_up vertical look without movement": true,
+    "firstperson vertical look without movement": true,
+    "firstperson_up vertical look without movement": true,
+    "custom_before retains intentional preferences": true,
+    "custom_mounted retains intentional preferences": true,
+    "custom_after retains intentional preferences": true,
+    "inverted mouse preserved": true,
+    "normal ride cycles preserve sensitivity and pitch": true,
+    "automated client leaves copied interactive config byte-identical": true,
+    "no snapshot overflow": true,
+    "custom settings ride and ordinary dismount confirmed": true
+  },
+  "states": {
+    "baseline": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "restored": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "mounted0": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "dismounted0": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "mounted1": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "dismounted1": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "mounted2": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "dismounted2": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    }
+  },
+  "server_states": {
+    "mount0": "MSR mounts: precached models/mounts/plains_horse.mdl (1043852 bytes), model index=254.\nMSR mounts: horse 152 spawned, model=254 enabled=1 at -320.0,5256.0,3121.0.\nStablemaster: player 1 assigned horse 152 pad=0.\nStable audit: ride PASS.\n",
+    "dismount0": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0\n",
+    "mount1": "Stable audit: ride PASS.\n",
+    "dismount1": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0\n",
+    "mount2": "Stable audit: ride PASS.\n",
+    "dismount2": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0\n",
+    "custom_mount": "Stable audit: ride PASS.\n",
+    "custom_dismount": "Stable audit state: player=1 alive=1 loaded=1 in-server=1 mount=0 loans=1 status=0 physics=0 view=28.0 xyz=-384.0,5256.0,3156.0\n"
+  },
+  "native_lines": [
+    "Mouse probe baseline: mlook=0 strafe=0 pitch=0.0000 forward=-96.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe baseline_up: mlook=0 strafe=0 pitch=0.0000 forward=96.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe restored: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe restored_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted0: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted0_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted0: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted0_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted1: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted1_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted1: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted1_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted2: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe mounted2_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted2: mlook=1 strafe=0 pitch=2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe dismounted2_up: mlook=1 strafe=0 pitch=-2.1120 forward=0.0000 side=0.0000 up=0.0000 sensitivity=3.0000 m_pitch=0.0220",
+    "Mouse probe custom_before: mlook=0 strafe=0 pitch=0.0000 forward=-150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe custom_before_up: mlook=0 strafe=0 pitch=0.0000 forward=150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe custom_mounted: mlook=0 strafe=0 pitch=0.0000 forward=-150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe custom_mounted_up: mlook=0 strafe=0 pitch=0.0000 forward=150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe custom_after: mlook=0 strafe=0 pitch=0.0000 forward=-150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe custom_after_up: mlook=0 strafe=0 pitch=0.0000 forward=150.4000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe inverted: mlook=1 strafe=0 pitch=-4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe inverted_up: mlook=1 strafe=0 pitch=4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe thirdperson: mlook=1 strafe=0 pitch=-4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe thirdperson_up: mlook=1 strafe=0 pitch=4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe firstperson: mlook=1 strafe=0 pitch=-4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310",
+    "Mouse probe firstperson_up: mlook=1 strafe=0 pitch=4.6624 forward=0.0000 side=0.0000 up=0.0000 sensitivity=4.7000 m_pitch=-0.0310"
+  ],
+  "probes": {
+    "baseline": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": -96.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "baseline_up": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": 96.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "restored": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "restored_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted0": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted0_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted0": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted0_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted1": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted1_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted1": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted1_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted2": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "mounted2_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted2": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "dismounted2_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -2.112,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 3.0,
+      "m_pitch": 0.022
+    },
+    "custom_before": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": -150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "custom_before_up": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": 150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "custom_mounted": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": -150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "custom_mounted_up": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": 150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "custom_after": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": -150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "custom_after_up": {
+      "mlook": 0.0,
+      "strafe": 0.0,
+      "pitch": 0.0,
+      "forward": 150.4,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "inverted": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "inverted_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "thirdperson": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "thirdperson_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "firstperson": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": -4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    },
+    "firstperson_up": {
+      "mlook": 1.0,
+      "strafe": 0.0,
+      "pitch": 4.6624,
+      "forward": 0.0,
+      "side": 0.0,
+      "up": 0.0,
+      "sensitivity": 4.7,
+      "m_pitch": -0.031
+    }
+  },
+  "client_sha256": "7331b73f5920572645912ff223e4de4009aaf2dc4fe2d307ff1ee125acb6b316",
+  "server_sha256": "c314b19d4c56305bf7d75bc83ead87ad09dc6d512c51b4e1468514cd9af3a7fa",
+  "map_sha256": "7db33aa84ff9f032d1267e3d37d2795e959e414c262dcb896c83a3169c1e5570",
+  "config_source_and_after_sha256": "bb37c635c5870c6066754b699e40b1cc47978ba263dd4f996f3b0d6747c3aa64",
+  "harness_recovery": "Supervised postprocessing of complete run: quit executes before following echo, so waiting for an acknowledgement after quit timed out. Corrected runner now waits for process exit. Earlier helper-return/stale-log/sign-on failures are preserved locally.",
+  "limitations": [
+    "Synthetic vertical deltas call the exact production native mouse mapping; no physical OS mouse/cursor injection or subjective visual test.",
+    "Normal Use dismount is native; mounts use existing Debug native ride fixture.",
+    "Evidence parser recovery was supervised after the final quit-ack harness defect."
+  ],
+  "pass": true
+}

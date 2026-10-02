@@ -464,6 +464,48 @@ void IN_ScaleMouse(float *x, float *y)
 IN_MouseMove
 ===========
 */
+static void IN_ApplyMouseDelta(float x, float y, usercmd_t *cmd, Vector &viewangles)
+{
+	if ((in_strafe.state & 1) || (lookstrafe->value && (in_mlook.state & 1)))
+		cmd->sidemove += m_side->value * x;
+	else
+		viewangles[YAW] -= m_yaw->value * x;
+
+	if ((in_mlook.state & 1) && !(in_strafe.state & 1))
+	{
+		viewangles[PITCH] += m_pitch->value * y;
+		if (viewangles[PITCH] > cl_pitchdown->value)
+			viewangles[PITCH] = cl_pitchdown->value;
+		if (viewangles[PITCH] < -cl_pitchup->value)
+			viewangles[PITCH] = -cl_pitchup->value;
+	}
+	else if ((in_strafe.state & 1) && gEngfuncs.IsNoClipping())
+		cmd->upmove -= m_forward->value * y;
+	else
+		cmd->forwardmove -= m_forward->value * y;
+}
+
+#if !defined(NDEBUG)
+// Probe the production mapping with synthetic deltas without moving the camera
+// or player, changing a preference, or consuming any held-button state.
+static void IN_MouseProbe_f()
+{
+	if (gEngfuncs.Cmd_Argc() != 3)
+	{
+		gEngfuncs.Con_Printf("Usage: ms_mouse_probe <label> <vertical delta>\n");
+		return;
+	}
+	float x = 0, y = (float)atof(gEngfuncs.Cmd_Argv(2));
+	IN_ScaleMouse(&x, &y);
+	usercmd_t cmd = {};
+	Vector angles(0, 0, 0);
+	IN_ApplyMouseDelta(x, y, &cmd, angles);
+	gEngfuncs.Con_Printf("Mouse probe %s: mlook=%d strafe=%d pitch=%.4f forward=%.4f side=%.4f up=%.4f sensitivity=%.4f m_pitch=%.4f\n",
+		gEngfuncs.Cmd_Argv(1), (in_mlook.state & 1) != 0, (in_strafe.state & 1) != 0,
+		angles[PITCH], cmd.forwardmove, cmd.sidemove, cmd.upmove, sensitivity->value, m_pitch->value);
+}
+#endif
+
 void IN_MouseMove(float frametime, usercmd_t *cmd)
 {
 	int mx, my;
@@ -546,30 +588,7 @@ void IN_MouseMove(float frametime, usercmd_t *cmd)
 		IN_ScaleMouse(&mouse_x, &mouse_y);
 
 		// add mouse X/Y movement to cmd
-		if ((in_strafe.state & 1) || (lookstrafe->value && (in_mlook.state & 1)))
-			cmd->sidemove += m_side->value * mouse_x;
-		else
-			viewangles[YAW] -= m_yaw->value * mouse_x;
-
-		if ((in_mlook.state & 1) && !(in_strafe.state & 1))
-		{
-			viewangles[PITCH] += m_pitch->value * mouse_y;
-			if (viewangles[PITCH] > cl_pitchdown->value)
-				viewangles[PITCH] = cl_pitchdown->value;
-			if (viewangles[PITCH] < -cl_pitchup->value)
-				viewangles[PITCH] = -cl_pitchup->value;
-		}
-		else
-		{
-			if ((in_strafe.state & 1) && gEngfuncs.IsNoClipping())
-			{
-				cmd->upmove -= m_forward->value * mouse_y;
-			}
-			else
-			{
-				cmd->forwardmove -= m_forward->value * mouse_y;
-			}
-		}
+		IN_ApplyMouseDelta(mouse_x, mouse_y, cmd, viewangles);
 
 		// if the mouse has moved, force it to the center, so there's room to move
 		if (mx || my)
@@ -1106,6 +1125,9 @@ void IN_Init(void)
 
 	gEngfuncs.pfnAddCommand("force_centerview", Force_CenterView_f);
 	gEngfuncs.pfnAddCommand("joyadvancedupdate", Joy_AdvancedUpdate_f);
+#if !defined(NDEBUG)
+	gEngfuncs.pfnAddCommand("ms_mouse_probe", IN_MouseProbe_f);
+#endif
 
 	IN_StartupMouse();
 	IN_StartupJoystick();
