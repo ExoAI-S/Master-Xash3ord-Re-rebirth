@@ -35,7 +35,10 @@
     "normal ride cycles preserve sensitivity and pitch": true,
     "automated client leaves copied interactive config byte-identical": true,
     "no snapshot overflow": true,
-    "custom settings ride and ordinary dismount confirmed": true
+    "custom settings ride and ordinary dismount confirmed": true,
+    "saved repair enables actual mlook on a fresh startup": true,
+    "configuration unchanged on automated quit": true,
+    "native client exited normally": true
   },
   "states": {
     "baseline": {
@@ -507,5 +510,31 @@
     "Normal Use dismount is native; mounts use existing Debug native ride fixture.",
     "Evidence parser recovery was supervised after the final quit-ack harness defect."
   ],
-  "pass": true
+  "pass": true,
+  "startup_verification": {
+    "checks": {
+      "saved repair enables actual mlook on a fresh startup": true,
+      "configuration unchanged on automated quit": true,
+      "native client exited normally": true
+    },
+    "buttons": {
+      "in_jlook": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      },
+      "in_mlook": {
+        "down0": -1,
+        "down1": 0,
+        "state": 3
+      },
+      "in_graph": {
+        "down0": 0,
+        "down1": 0,
+        "state": 0
+      }
+    },
+    "pass": true,
+    "method": "Read-only actual client KB_Find memory state after fresh startup with repaired saved config; no runtime +mlook command."
+  }
 }

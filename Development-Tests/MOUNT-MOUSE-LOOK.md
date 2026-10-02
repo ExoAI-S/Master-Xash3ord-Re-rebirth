@@ -22,12 +22,17 @@ There is no evidence attributing the first loss to one particular earlier fixtur
 
 ## Native evidence
 
-`Reports/daragoth-mouse-look-20261002.json` records 35 passing checks in the
+`Reports/daragoth-mouse-look-20261002.json` records 38 passing checks in the
 detached synthetic realm (UDP27249, FN5842). Three real native mounts and normal
 client Use dismounts retained vertical look with zero mouse-generated movement.
 An additional ride preserved intentionally disabled mlook, sensitivity4.7 and
 inverted m_pitch-0.031. First/third-person switches also preserved these settings.
 The test client left the copied interactive config byte-identical after quitting.
+Three additional startup checks applied the actual backed-up repair script to the
+detached config, launched a fresh native client without issuing runtime `+mlook`,
+observed its real mlook button active, and verified a normal quit with unchanged
+config bytes. An earlier main-menu probe ran before useful logging and returned
+no probe lines; the successful startup check uses the independent state reader.
 
 The Debug-only `ms_mouse_probe <label> <vertical delta>` command calls the exact
 production mouse mapping with synthetic deltas. It does not move the OS cursor,
