@@ -17,6 +17,7 @@
 #include "encounter_director.h"
 #include "msr_regions.h"
 #include "msr_mounts.h"
+#include "msr_encounters.h"
 #include "msr_worldstate.h"
 #include "msr_bosses.h"
 
@@ -93,6 +94,7 @@ void GameDLLInit(void)
 	EncounterDirector_Init();
 	MSRegions::Init();
 	MSRMounts::Init();
+	MSREncounters::Init();
 	WorldState::Init();
 	MSBosses::Init();
 	g_psv_gravity = CVAR_GET_POINTER("sv_gravity");

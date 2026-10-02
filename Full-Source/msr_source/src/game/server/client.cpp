@@ -42,6 +42,7 @@
 #include "encounter_director.h"
 #include "msr_regions.h"
 #include "msr_mounts.h"
+#include "msr_encounters.h"
 #include "mscharacter.h"
 #include "global.h"
 #include "pm_shared.h" // PM_GetHullBounds
@@ -1893,6 +1894,7 @@ void ServerDeactivate(void)
 	}
 
 	g_serveractive = 0;
+	MSREncounters::MapEnd();
 	MSRMounts::MapEnd();
 
 	// Peform any shutdown operations here...
@@ -2156,6 +2158,7 @@ void StartFrame(void)
 	if (g_fGameOver)
 		return;
 	EncounterDirector_Frame();
+	MSREncounters::Frame();
 	MSRegions::Frame(); //merged big-world maps: unload regions nobody has visited for a while
 
 	//gpGlobals->teamplay = CVAR_GET_FLOAT("teamplay");

@@ -1,0 +1,247 @@
+{
+  "schema": "optional-proximity-core-review-checkpoint-v2",
+  "frozen_packet": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064",
+  "packet_sha256": "f81af4b4b0c199719e0deac61bce0f529b0a7dd88f024132f0c0b51dd7d4b634",
+  "source_input_count": 802,
+  "changed_source_inputs": [
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\client.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\client.cpp",
+      "sha256": "f6e7b9ae97a6b2221f0b0ccef7b79f6b855c496e9ab538f51917922ba6ad5f13"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\game.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\game.cpp",
+      "sha256": "c40fa440246b70db8a47ad8e65948a23c299202412afcbaddee993a119dbfd85"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\monsters\\msmonsterserver.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\monsters\\msmonsterserver.cpp",
+      "sha256": "623db152c3fc2b76b1e7301e5be47145cba28b8f0a36f83134adfc2d0717b279"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msmapents.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msmapents.cpp",
+      "sha256": "b674f47833d95d5cc94174810fa30bb5814a4bda1fa03b9540848bac22afd8f0"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_allocator.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_allocator.h",
+      "sha256": "dbcdf9f1673ff16e8b1afbd977450b1eaf36970fdd2f0e9cdff0a74fa156839e"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_policy.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_policy.h",
+      "sha256": "9d1958b09d664f5301e776a396e78a6b006657b77d7c7250bf35a578bd4bfac6"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounters.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_encounters.h",
+      "sha256": "290c596d7f74f3e3752665ae8e091d86289ce74b0709ee864e2273226525b8bc"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounters.inc",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_encounters.inc",
+      "sha256": "1052d14dba71a15b9594888069af5291af3c58ed375422152aa72f4a4d4d95f1"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_regions.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_regions.cpp",
+      "sha256": "1d1a19f94d9b036f557d46092d079652ad292ed0eb46dc8b56d259c5b11c5c2c"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_regions.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\msr_regions.h",
+      "sha256": "099c7113e3a9aee4449805bc2db0165d75105814a490b36374a851cf78d96328"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\world.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\server\\world.cpp",
+      "sha256": "fef0b66802ddddac60d6b69d48c221063591f6d14ec3c820265d4ea30218984f"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\shared\\ms\\msmonstershared.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\shared\\ms\\msmonstershared.cpp",
+      "sha256": "0d90a82c4427c9d6d47a2290e5ae246cffa802549ab2a0c54a117e5c6256d64a"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\shared\\weapons\\giattack.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\inputs\\repo\\Full-Source\\msr_source\\src\\game\\shared\\weapons\\giattack.cpp",
+      "sha256": "118fccb5602e01ab64594fab5be6a7c84790ab625a99c2aa7d4e060ad837b790"
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "ms.dll",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\ms.dll",
+      "sha256": "56a68a750b2766198944d14e881ae994a7a70e9b5075aa3e48b8df43199f6222",
+      "bytes": 5652480
+    },
+    {
+      "name": "ms.pdb",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\ms.pdb",
+      "sha256": "172d7b9e54d12792aeb09cf8ed0541f9acef69dacfcd6f6cc518f6d3c6a7ca76",
+      "bytes": 35999744
+    },
+    {
+      "name": "ms.map",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\ms.map",
+      "sha256": "de7c75ed065c88ae8f3c98f1dbfb8b5dad723e7ce50994cf9e47702d8021e085",
+      "bytes": 11602485
+    },
+    {
+      "name": "client.dll",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\client.dll",
+      "sha256": "09514a9f7b92df19cde7622e6b9004bcfdfc397cfc5b04dca1186237db29c09e",
+      "bytes": 4842496
+    },
+    {
+      "name": "client.pdb",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\client.pdb",
+      "sha256": "f3feabb8f24dfa1a2f6335ce3d51568723e176a57a094fb12e5e416524d0ae8d",
+      "bytes": 33148928
+    },
+    {
+      "name": "client.map",
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\artifacts\\client.map",
+      "sha256": "03f78c8d22a033ac2f910dc6b31af2efaa0aaf747bbf5fcd8b3f49191a0b5b17",
+      "bytes": 11252006
+    }
+  ],
+  "symbols": [
+    {
+      "dll": "ms.dll",
+      "codeview": {
+        "guid": "b1daac3c-9941-49c6-93e8-dd14ff1a37a5",
+        "age": 4,
+        "recorded_pdb_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\bp01\\Debug\\msr\\bin\\ms.pdb"
+      },
+      "pdb": {
+        "guid": "b1daac3c-9941-49c6-93e8-dd14ff1a37a5",
+        "age": 4
+      },
+      "match": true
+    },
+    {
+      "dll": "client.dll",
+      "codeview": {
+        "guid": "ae01e538-3828-4fef-8463-93b0b564a306",
+        "age": 2,
+        "recorded_pdb_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\bp01\\Debug\\msr\\bin\\client.pdb"
+      },
+      "pdb": {
+        "guid": "ae01e538-3828-4fef-8463-93b0b564a306",
+        "age": 2
+      },
+      "match": true
+    }
+  ],
+  "build_type": "Debug",
+  "build_flags": "/Zi /Ob0 /Od /RTC1 -std:c++20 -MT /MP /utf-8",
+  "build_exit": 0,
+  "reused_pure_policy": {
+    "header_sha256": "9d1958b09d664f5301e776a396e78a6b006657b77d7c7250bf35a578bd4bfac6",
+    "receipt_sha256": "17b2e0377e5e97876ebaef2114b5f4ab66dc20733bfc5d349a06d82cc28336a9",
+    "groups": 19,
+    "assertions": 126804,
+    "engine_adapter_tested": false
+  },
+  "preserved_sources": [
+    {
+      "source": "server\\player\\player.cpp",
+      "sha256": "d832239add19aad87463a28559f44117787bc16342e20300084896c483522dc4",
+      "matches_306f_source": true
+    },
+    {
+      "source": "server\\player\\rotating_door_use.h",
+      "sha256": "b6363157ff108418fa8c1a7c6af8ac5dbb3904c6c3c32621d66b72f56133568f",
+      "matches_306f_source": true
+    },
+    {
+      "source": "server\\msr_mounts.cpp",
+      "sha256": "c7441175b7acf71911f3881751a11c6f41ca4289a68905b4c3974c25fa8498cf",
+      "matches_306f_source": true
+    },
+    {
+      "source": "shared\\ms\\mount_policy.h",
+      "sha256": "29bc2e6e61c0efead96dc44d223b5509417e2d65f69eb363af8ed8b63b8eab40",
+      "matches_306f_source": true
+    }
+  ],
+  "client_update_required": false,
+  "source_review_accepted": false,
+  "native_acceptance": false,
+  "stage_eligible": false,
+  "runtime_installation_performed": false,
+  "github_push_performed": false,
+  "limitations": [
+    "Postbuild snapshot, Debug compilation and engine-free allocator model only; no changed-core native proof.",
+    "Allocator high-water unavailable; float predecessor and future-time old-map exclusion produce a conservative lower bound and can delay admission.",
+    "The 64 allocator-ready margin applies to probes/primary only; arbitrary later script gear/helpers are not covered.",
+    "Simple carried gear retirement only; containers/wearables and callback aborts held.",
+    "Sticky protection and validated references can starve later zones and pin regions.",
+    "Repeated immediate/delayed skeleton revival/final death, direct GiveHP then healing, postspawn relocation, live collision and rewards/drop coverage require changed-core native characterization."
+  ],
+  "build_log": {
+    "name": "build-v2-attempt05.log",
+    "sha256": "1ebb8a2deba480ffb4d989df9a1f0378923058538e6066ac1d631a548ee01f04"
+  },
+  "superseded_unaccepted_packet_sha256": "5b74c69d480ca5643cd064631e2dd3e47b69630582aec3c94d1f7be250796125",
+  "superseded_independent_source_review": {
+    "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\independent-b4b-source-review.json",
+    "sha256": "6a87550e972ed652dd6ae0b7892d7e1869b25ffd51ecdf453d7be6df5f17c0a5",
+    "complete_review": true,
+    "blockers": 4,
+    "additional_required_checks": 2
+  },
+  "repaired_paths": [
+    "dynamic solid collision query",
+    "probe FL_MONSTERCLIP parity",
+    "same-incarnation skeleton death rearming",
+    "allocator-ready conservative reserve",
+    "fresh actual postspawn minimum player distance",
+    "central accepted Give(HP) loss"
+  ],
+  "allocator_model": {
+    "receipt_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064\\allocator-model-evidence\\receipt.json",
+    "receipt_sha256": "5ca03a029254008e74a225620801f190852585e9cd92599c443f7da85da4e0f8",
+    "groups": 6,
+    "assertions": 53745,
+    "test_exit": 0,
+    "scope": "Engine-free allocator pressure/admission model with independent scan/high-water/growth oracle. No game, services, profiles, FN or native acceptance.",
+    "native_acceptance": false
+  },
+  "test_source_inputs": [
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_allocator.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\msr_encounter_allocator.h",
+      "sha256": "dbcdf9f1673ff16e8b1afbd977450b1eaf36970fdd2f0e9cdff0a74fa156839e"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Full-Source\\msr_source\\src\\game\\server\\msr_encounter_policy.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\msr_encounter_policy.h",
+      "sha256": "9d1958b09d664f5301e776a396e78a6b006657b77d7c7250bf35a578bd4bfac6"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Development-Tests\\test_encounter_allocator.cpp",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\test_encounter_allocator.cpp",
+      "sha256": "7c721a72461065df0db9ac8577022684e61fc340e76cee1ac97aa7509f72c3b8"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\Master-Xash3ord-Re-rebirth-recovery\\Development-Tests\\Run-Encounter-Allocator-Tests.ps1",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\Run-Encounter-Allocator-Tests.ps1",
+      "sha256": "03c8f78313d087c645889242c82f4384a0ac0530c4eb3d4c8120ba7abc9014d7"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\engine-source\\engine\\server\\sv_game.c",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\sv_game.c",
+      "sha256": "7769bc94ea2f0f7369ca97726ce08e55cd897b3482e76226b40837395155abee"
+    },
+    {
+      "original_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\engine-source\\engine\\server\\server.h",
+      "archived_path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\allocator-tests\\run-fab14cb481a349ae8adc72269971ac2c\\inputs\\server.h",
+      "sha256": "0829b66b9920bb1dde56d07af6cb0e51d6a865309bf54ed0a6103dbaeb442003"
+    }
+  ],
+  "source_review_status": "successor-independent-re-review-pending"
+}

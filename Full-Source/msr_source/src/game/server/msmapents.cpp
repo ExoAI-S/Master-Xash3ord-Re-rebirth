@@ -9,10 +9,22 @@
 #include "msr_regions.h"
 #include "msr_worldstate.h"
 #include "msr_bosses.h"
+#include "msr_encounters.h"
+#include "msr_encounter_allocator.h"
+#include "msr_mounts.h"
 #include "ms/angelscript/CAngelScriptManager.h" // For AngelScript map transitions
 
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
+#include <array>
+#include <chrono>
+#include <cmath>
+#include <cstdint>
+#include "weapons/genericitem.h"
+#include "stats/statdefs.h"
+#include <string>
+#include <cstdio>
 
 #ifndef EFFECTS_H
 #include "effects.h"
@@ -787,6 +799,15 @@ struct monster_data_t
 class CAreaMonsterSpawn : public CAreaInvisible
 {
 public:
+	bool m_EncounterRequested = false, m_EncounterBad = false, m_EncounterRegistered = false;
+	bool m_EncounterAttempted = false;
+	MSREncounterPolicy::Config m_EncounterConfig{};
+	std::array<MSREncounterPolicy::Descriptor, 32> m_EncounterDescriptors{};
+	std::array<int, 32> m_EncounterLedger{};
+	unsigned int m_EncounterKeysSeen = 0;
+	bool m_EncounterActive = false;
+	bool InitEncounter();
+	bool EncounterDeathNotice(entvars_t* child);
 	monster_data_t mdSpawnMonster[32];
 	unsigned int iMonstersToSpawn;
 	int iPlayerReq;			//Thothie AUG2007a - adding optional player req
@@ -833,6 +854,13 @@ public:
 	//Triggering this resets it.  It restores monster lives and lets them (re)spawn
 	void ResetUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 	{
+		if (m_EncounterRequested)
+		{
+			// Managed WAIT never resets lives, death delays or a surviving incarnation.
+			SetThink(&CAreaMonsterSpawn::SpawnMonsters);
+			pev->nextthink = pev->ltime + 0.2f;
+			return;
+		}
 		if (m_fActive)
 		{
 			//NOV2014_20 Thothie - attempting to allow changes as to when ms_monsterspawn can respawn mobs 0=when all dead, 1=when any mob dead, 2=whenever triggered
@@ -898,6 +926,51 @@ public:
 
 	void KeyValue(KeyValueData *pkvd)
 	{
+		// Remember malformed stock keys too: encounter may occur later in file
+		// order. Non-opt-in controllers continue through the original parser.
+		if (FStrEq(pkvd->szKeyName, "spawnloc") || FStrEq(pkvd->szKeyName, "spawnstart") ||
+			FStrEq(pkvd->szKeyName, "resetwhen") || FStrEq(pkvd->szKeyName, "nplayers") ||
+			FStrEq(pkvd->szKeyName, "reqhp"))
+		{
+			double supplied = 0;
+			if (!MSREncounterPolicy::ParseNumber(pkvd->szValue, supplied) ||
+				std::floor(supplied) != supplied || supplied < 0 || supplied > 2)
+				m_EncounterBad = true;
+		}
+		if (FStrEq(pkvd->szKeyName, "encounter"))
+		{
+			if (m_EncounterKeysSeen & 1) m_EncounterBad = true;
+			m_EncounterKeysSeen |= 1;
+			double enabled = 0;
+			if (!MSREncounterPolicy::ParseNumber(pkvd->szValue, enabled) || (enabled != 0 && enabled != 1))
+				m_EncounterRequested = m_EncounterBad = true;
+			else if (enabled == 1) m_EncounterRequested = true;
+			else if (m_EncounterRequested) m_EncounterBad = true;
+			if (m_EncounterRequested) MSREncounters::Request();
+			pkvd->fHandled = true; return;
+		}
+		double* encounterNumber = nullptr;
+		if (FStrEq(pkvd->szKeyName, "encounter_radius")) encounterNumber = &m_EncounterConfig.radius;
+		else if (FStrEq(pkvd->szKeyName, "encounter_keep_radius")) encounterNumber = &m_EncounterConfig.keepRadius;
+		else if (FStrEq(pkvd->szKeyName, "encounter_idle_time")) encounterNumber = &m_EncounterConfig.idleSeconds;
+		else if (FStrEq(pkvd->szKeyName, "encounter_min_distance")) encounterNumber = &m_EncounterConfig.minDistance;
+		if (encounterNumber)
+		{
+			const unsigned int keyBit = encounterNumber == &m_EncounterConfig.radius ? 2 :
+				encounterNumber == &m_EncounterConfig.keepRadius ? 4 :
+				encounterNumber == &m_EncounterConfig.idleSeconds ? 8 : 16;
+			if (m_EncounterKeysSeen & keyBit) m_EncounterBad = true;
+			m_EncounterKeysSeen |= keyBit;
+			if (!MSREncounterPolicy::ParseNumber(pkvd->szValue, *encounterNumber)) m_EncounterBad = true;
+			pkvd->fHandled = true; return;
+		}
+		if (FStrEq(pkvd->szKeyName, "encounter_max_active"))
+		{
+			if (m_EncounterKeysSeen & 32) m_EncounterBad = true;
+			m_EncounterKeysSeen |= 32;
+			if (!MSREncounterPolicy::ParseSlotCap(pkvd->szValue, m_EncounterConfig.localCap)) m_EncounterBad = true;
+			pkvd->fHandled = true; return;
+		}
 		if (FStrEq(pkvd->szKeyName, "spawnloc"))
 		{
 			m_SpawnLoc = (spawnloc_e)atoi(pkvd->szValue);
@@ -1007,7 +1080,7 @@ public:
 			return;
 		}
 
-		if ( SpawnLimitReached() ) return; //Thothie OCT2016_18 spawnlimiter
+		if (!m_EncounterRequested && SpawnLimitReached()) return; // Managed real deaths always record their delay.
 
 		//NOV2014_20 - Thothie msmonster_random [begin]
 		if (pMonsterData->m_nRndMobs > 0)
@@ -1146,9 +1219,23 @@ public:
 	{
 		if (!m_pGoalEnt)
 			return;
+		if (iMonstersToSpawn >= 32)
+		{
+			m_EncounterBad = true;
+			ALERT(at_console, "MSR spawner template capacity exceeded; extra template rejected.\n");
+			m_pGoalEnt = NULL;
+			return;
+		}
 		//if ( iPlayerReq < thoth_CountPlayers() && iPlayerReq > 0 ) return; //Thothie AUG2007a - player req for monster spawns (FAIL - but the monster side one works fine)
 
 		CMSMonster *pMonster = (CMSMonster *)m_pGoalEnt;
+		MSREncounterPolicy::Descriptor descriptor;
+		const bool hasDescriptor = MSREncounters::ConsumeDescriptor(pMonster, descriptor);
+		if (m_EncounterRequested)
+		{
+			m_EncounterDescriptors[iMonstersToSpawn] = descriptor;
+			if (!hasDescriptor) m_EncounterBad = true;
+		}
 		msstring parseparams; //Thothie OCT2015_28 - pass additional parameters via monsterspawner
 
 		//NOV2014_20 - Thothie msmonster_random [begin]
@@ -1253,6 +1340,7 @@ public:
 	}
 	void DeathNotice(entvars_t *pevChild)
 	{
+		if (m_EncounterRequested) { EncounterDeathNotice(pevChild); return; }
 		CMSMonster *pMonster = (CMSMonster *)CBaseEntity::Instance(pevChild);
 		if (!pMonster)
 			return;
@@ -1273,6 +1361,12 @@ public:
 	}
 	void SpawnMonsters()
 	{
+		if (m_EncounterRequested)
+		{
+			// The common Frame arbiter grants births. Polling never consumes/depletes slots.
+			pev->nextthink = pev->ltime + 0.2f;
+			return;
+		}
 		if ( SpawnLimitReached() ) return; //Thothie OCT2016_18 spawnlimiter
 		
 		unsigned int i = 0, iDeadMonsters = 0;
@@ -1521,6 +1615,9 @@ static void MSR_ForEachSpawner(void (*fn)(CAreaMonsterSpawn *pSpawn, void *pData
 			fn((CAreaMonsterSpawn *)pEntity, pData);
 	}
 }
+
+// The adapter needs the complete private spawner/slot definitions above.
+#include "msr_encounters.inc"
 
 //msr_bosses.h: the boss slots of every spawner now in the map. A slot's lPrivData can outlive
 //its monster (a script may remove it without a death), so only monsters found alive count.

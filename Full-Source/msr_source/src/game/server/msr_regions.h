@@ -43,6 +43,7 @@ struct msr_region_t
 
 namespace MSRegions
 {
+bool SpawnSlotAvailable(); // Read-only counterpart for optional admission.
 void Clear();											 // new map
 bool Active();											 // map has a region table
 int Count();

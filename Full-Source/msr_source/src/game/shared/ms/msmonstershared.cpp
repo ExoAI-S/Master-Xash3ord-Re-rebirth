@@ -19,6 +19,9 @@
 #include "weapons/weapons.h"
 #include "syntax/syntax.h"
 #include "weapons/genericitem.h"
+#ifdef VALVE_DLL
+#include "msr_encounters.h"
+#endif
 
 #ifndef VALVE_DLL
 #include "vgui_hud.h"
@@ -433,6 +436,9 @@ float CMSMonster::Weight()
 
 void CMSMonster ::DropAllItems()
 {
+#ifdef VALVE_DLL
+	MSREncounters::ObserveLifecycle(this, MSREncounters::Lifecycle::DropAllCall);
+#endif
 	//Drop all items... Called here so it won't crash if I kill myself
 	for (unsigned int i = 0; i < Gear.size(); i++)
 		Gear[i]->Drop();
@@ -446,6 +452,9 @@ bool CMSMonster::CreateStats()
 	CStat::InitStatList(m_Stats);
 
 	m_PlayerDamage.reserve_once(MAXPLAYERS, MAXPLAYERS);
+#ifdef VALVE_DLL
+	MSREncounters::InitializeStatsLedger(this);
+#endif
 	//foreach( i, MAXPLAYERS ) m_PlayerDamage[i] = msnew playerdamage_t;
 
 	//foreach( i, MAXPLAYERS ) memset( m_PlayerDamage[i], 0, sizeof(playerdamage_t) );
@@ -628,4 +637,7 @@ void CMSMonster ::MarkDamage(CBasePlayer * pPlayer, int vStat, int vProp, float 
 	
 	vPlayerDamage.dmgInTotal += vAmount;
 	vPlayerDamage.dmg[vStat][vProp] += vAmount;
+#ifdef VALVE_DLL
+	MSREncounters::AcceptedCredit(this, vAmount);
+#endif
 }

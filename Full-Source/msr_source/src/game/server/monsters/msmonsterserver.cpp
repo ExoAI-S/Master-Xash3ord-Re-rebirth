@@ -29,6 +29,7 @@
 #include "svglobals.h"
 #include "msr_regions.h"
 #include "msr_bigworld.h"
+#include "msr_encounters.h"
 
 #ifdef VALVE_DLL
 
@@ -319,6 +320,7 @@ void CMSMonster::Precache()
 
 void CMSMonster::KeyValue(KeyValueData* pkvd)
 {
+    if (MSREncounters::TemplateKeyValue(this, pkvd)) return;
 	msstring randomdata = pkvd->szKeyName ? pkvd->szKeyName : "null"; //NOV2014_20 - Thothie msmonster_random
 
 	if (FStrEq(pkvd->szKeyName, "killtarget"))
@@ -2009,9 +2011,13 @@ float CMSMonster::Give(givetype_e Type, float Amt)
 	if (AddAmount < 0 && FBitSet(pev->flags, FL_GODMODE))
 		AddAmount = 0;
 
+	const double encounterHPBefore = (Type == GIVE_HP) ? m_HP : 0;
 	*Current += AddAmount;
 	if (Type == GIVE_HP)
+	{
 		pev->health = *Current;
+		MSREncounters::AcceptedDamage(this, encounterHPBefore - m_HP);
+	}
 
 	return AddAmount;
 }
@@ -2438,6 +2444,7 @@ void CMSMonster::CounterEffect(CBaseEntity* pInflictor, int iEffect, void* pExtr
 
 void CMSMonster::Killed(entvars_t* pevAttacker, int iGib)
 {
+	MSREncounters::OrdinaryDeath(this);
 	BOOL DeleteMe = true;
 
 	//NOV2014_21 Thothie - script side XP management option [begin]
@@ -2502,7 +2509,10 @@ void CMSMonster::Killed(entvars_t* pevAttacker, int iGib)
 						//if( xpsend > 0 ) ALERT( at_console, "Gained XP: %f", xpsend );  //Thothie returns XP
 						//if( xpsend > 0 ) ClientPrint( pPlayer->pev, at_console, "Gained XP: %f", xpsend );
 						if (!xp_custom)
+						{
 							pPlayer->LearnSkill(n, r, xp); //NOV2014_21 Thothie - script side XP management option
+							MSREncounters::ObserveLifecycle(this, MSREncounters::Lifecycle::NativeXPDispatch);
+						}
 
 						//NOV2014_21 Thothie - script side XP management option [begin]
 						if (xp_dump)
@@ -2564,6 +2574,7 @@ void CMSMonster::Killed(entvars_t* pevAttacker, int iGib)
 		//if( !thoth_spawner_alive ) CallGibMonster();
 
 		CallScriptEvent("game_predeath"); //Thothie MAY2016_14 - allows fixing of death fx on some mobs
+		MSREncounters::ObserveLifecycle(this, MSREncounters::Lifecycle::PredeathDispatch);
 
 		//I'm dying, create my body
 		if (!FBitSet(pev->effects, EF_NODRAW))
@@ -2589,6 +2600,7 @@ void CMSMonster::Killed(entvars_t* pevAttacker, int iGib)
 
 			//ALERT( at_console, "called game_death\n" );
 			CallScriptEvent("game_death");
+			MSREncounters::ObserveLifecycle(this, MSREncounters::Lifecycle::DeathDispatch);
 			
 			// Fire AngelScript engine event for monster death
 			ASEngineEventManager* pEventManager = ASEngineEventManager::Instance();

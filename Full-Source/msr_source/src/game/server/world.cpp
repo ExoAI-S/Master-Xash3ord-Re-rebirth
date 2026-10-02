@@ -35,6 +35,7 @@
 #include "global.h"
 #include "mslogger.h"
 #include "msr_regions.h"
+#include "msr_encounters.h"
 
 extern CGraph WorldGraph;
 extern CSoundEnt *pSoundEnt;
@@ -407,6 +408,7 @@ void CWorld ::Spawn(void)
 {	
 	MS_INFO("World Spawn...");
 
+	MSREncounters::ResetMap(); // Only worldspawn resets encounter lives/cooldowns.
 	MSRegions::Clear(); //info_msr_region entities of this map follow worldspawn
 
 	g_fGameOver = false;

@@ -22,6 +22,7 @@
 #ifdef VALVE_DLL
 #include "shield.h"
 #include "soundent.h"
+#include "msr_encounters.h"
 #endif
 
 #ifndef M_PI
@@ -350,6 +351,9 @@ bool CGenericItem::StartAttack(int ForceAttackNum)
 	{
 		//Start attack
 		SetBits(m_pOwner->m_StatusFlags, PLAYER_MOVE_ATTACKING);
+#ifdef VALVE_DLL
+		MSREncounters::ObservedAttack(m_pOwner);
+#endif
 		CallScriptEvent(CurrentAttack->CallbackName + "_start");
 		if (!CurrentAttack) return true; //Was canceled at the start
 

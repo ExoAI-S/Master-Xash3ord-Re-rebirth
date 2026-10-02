@@ -10,6 +10,7 @@
 #include "msr_regions.h"
 #include "msr_bigworld.h"
 #include "msr_mounts.h"
+#include "msr_encounters.h"
 
 #include <algorithm>
 #include <chrono>
@@ -28,6 +29,7 @@ extern int g_MSRScriptFiles;
 namespace
 {
 std::vector<msr_region_t> g_Regions;
+float g_LastSpawnSlotTime = -1;
 
 // A map entity as the engine spawned it at load: classname and key/values in file order
 // (after the engine's own rewrites), which is all a fresh copy needs.
@@ -246,6 +248,7 @@ void Clear()
 	g_NextLifecycleCheck = 0;
 	g_Load = load_t();
 	g_Links.clear();
+	g_LastSpawnSlotTime = -1;
 }
 bool Active() { return !g_Regions.empty(); }
 int Count() { return (int)g_Regions.size(); }
@@ -661,12 +664,12 @@ bool Replaying() { return g_Replaying; }
 
 bool TakeSpawnSlot()
 {
-	static float lastSlotTime = -1;
-	if (gpGlobals->time == lastSlotTime) // one per server frame (time is unique per frame)
+	if (!SpawnSlotAvailable()) // one per server frame (time is unique per frame)
 		return false;
-	lastSlotTime = gpGlobals->time;
+	g_LastSpawnSlotTime = gpGlobals->time;
 	return true;
 }
+bool SpawnSlotAvailable() { return gpGlobals->time != g_LastSpawnSlotTime; }
 
 // ---------------------------------------------------------------------------
 // Unloading a region nobody is in
@@ -700,7 +703,7 @@ void RemoveEdict(edict_t *pent)
 bool Unload(int region, const char *why)
 {
 	msr_region_t &R = g_Regions[region];
-	if (!R.loaded || Occupied(region))
+	if (!R.loaded || Occupied(region) || MSREncounters::RetainRegion(region))
 		return false;
 	const auto started = std::chrono::steady_clock::now();
 
