@@ -1,5 +1,5 @@
 {
-  "schema": "optional-proximity-core-review-checkpoint-v2",
+  "schema": "optional-proximity-core-review-checkpoint-v3",
   "frozen_packet": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\candidate-9de2fb15c49b4506bf2a013085c15064",
   "packet_sha256": "f81af4b4b0c199719e0deac61bce0f529b0a7dd88f024132f0c0b51dd7d4b634",
   "source_input_count": 802,
@@ -169,7 +169,7 @@
     }
   ],
   "client_update_required": false,
-  "source_review_accepted": false,
+  "source_review_accepted": true,
   "native_acceptance": false,
   "stage_eligible": false,
   "runtime_installation_performed": false,
@@ -243,5 +243,19 @@
       "sha256": "0829b66b9920bb1dde56d07af6cb0e51d6a865309bf54ed0a6103dbaeb442003"
     }
   ],
-  "source_review_status": "successor-independent-re-review-pending"
+  "source_review_status": "accepted-for-private-fixture-preparation-native-acceptance-pending",
+  "source_review_sidecars": [
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\independent-9de2-source-review.json",
+      "sha256": "c7df3dd40064a09f98a9435b2eb59a043be95fc65bd82b349b42652c79e635aa"
+    },
+    {
+      "path": "C:\\Users\\cptki\\Documents\\Codex\\2026-09-10\\https-github-com-msrevive-masterswordrebirth-https\\work\\daragoth-development\\proximity-encounters\\integration\\root-9de2-source-disposition.json",
+      "sha256": "a80e176631c47c7c2f4ebef9fecf999ebed3539221a4fbfedaae6b6bf80ea17c"
+    }
+  ],
+  "launch_authorized": false,
+  "bootstrap_watcher_accepted": false,
+  "bootstrap_driver_accepted": false,
+  "local_source_commit": "09e49e53ada0bfd8cc7068960da7f28b3cb67aa8"
 }

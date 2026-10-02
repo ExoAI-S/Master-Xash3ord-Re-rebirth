@@ -2,8 +2,9 @@
 
 The new map's 30 encounter controllers can share a bounded population instead of
 spawning all 163 authored reserve slots. This is a **source/build review candidate**.
-Independent implementation review, private native tests and installation remain
-pending. The existing human playtest has not been replaced or restarted.
+Independent implementation review is complete, with no remaining confirmed source
+blockers. Private native tests and installation remain pending. The existing human
+playtest has not been replaced or restarted.
 
 ## Build and source provenance
 
@@ -32,7 +33,15 @@ source review (`independent-b4b-source-review.json`, SHA256
 identified dynamic-solid exclusion, probe monsterclip flags, later skeleton
 death rearming and allocator reuse pressure as blockers. It also required fresh
 post-Spawn separation and centralized accepted GiveHP loss coverage. This successor
-repairs those six paths and awaits independent re-review.
+repairs those six paths. The independent focused re-review covers the complete
+981-line adapter and new 39-line allocator helper, carrying forward only unchanged
+prior findings. Its receipt `independent-9de2-source-review.json` has SHA256
+`c7df3dd40064a09f98a9435b2eb59a043be95fc65bd82b349b42652c79e635aa`.
+The root disposition `root-9de2-source-disposition.json`, SHA256
+`a80e176631c47c7c2f4ebef9fecf999ebed3539221a4fbfedaae6b6bf80ea17c`,
+accepts the core source for preparing a private fixture with a separately reviewed
+harness. Neither review authorizes a launch or establishes native acceptance.
+These later sidecars preserve the original frozen packet and its historical gates.
 
 The allocator model compiled under x86 Debug and passed 6 groups/53745 assertions:
 8000 independent scan/high-water/growth snapshots and 10000 lifecycle actions,
@@ -160,7 +169,7 @@ recent-hole churn at capacity, post-Spawn relocation and
 callback removal/reassignment, external deletion/edict reuse, exact replay and
 postspawn collision behavior before accepting this candidate.
 
-The new map67946ff3 is separate from the human playtest. Both source review and
+The new map67946ff3 is separate from the human playtest. Source review has passed;
 private changed-core native tests remain required, including actual two-client
 presence, separation/occupied pads, genuine death/rewards/cooldowns, finite/replay
 cases, legacy/FN/controls/doors/horse/water regressions and source-timed resource
