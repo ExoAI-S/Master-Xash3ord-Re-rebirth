@@ -29,15 +29,20 @@ Example from the repository root:
 python -B Design-Source/Daragoth-Meadow/build_join_caps.py --base ../daragoth-development/meadow-creek/daragoth_meadow_creek.bsp --out ../daragoth-development/meadow-join-repair
 ```
 
-The deterministic combined water/join candidate SHA-256 is
+The intermediate combined water/join candidate SHA-256 is
 `827f22e886c679f44cdfe8584d339feae841e49b9f43e4ec2da3fb2949b26cf8`.
 The join build report is `meadow-join-repair/join-caps-build-report.json` in the
 private lab. `Development-Tests/test_meadow_join_caps.py` independently checks
 preservation, face winding, lightmaps and directional interface coverage. The
-final candidate passes 32,256 portal samples on a 16-unit grid, 39,585 broader
+intermediate candidate passes 32,256 portal samples on a 16-unit grid, 39,585 broader
 interface samples on a 64-unit grid, four known-gap regressions, and 270
 actual-C standing road sweeps across the join. These finite samples do not
 establish complete foot-by-foot walking coverage. Native before/after views,
 culling and movement remain separate acceptance checks.
 Only matching acceptance receipts authorize preview staging; building this
 candidate does not itself change either private preview.
+
+Native views rejected this intermediate map because the animated water was
+culled and legacy low SKY walls still exposed the removed exterior scenery.
+See `VISIBLE-REPAIRS.md` for the subsequent animated-water and entrance-boundary
+repairs. The failed intermediate receipt remains preserved for comparison.

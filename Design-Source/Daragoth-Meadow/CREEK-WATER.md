@@ -37,3 +37,9 @@ solid floor collision; the new water covers these points. Native waterlevel,
 swimming, rendered seams, mounted bridge travel and region reload remain
 separate acceptance checks. This document does not claim they passed until a
 matching native receipt exists.
+
+The intermediate native run confirmed water contents, swimming, dry bridge
+travel and region replay, but rejected visible acceptance: the stock renderer
+culled the translated animated brush faces. `build_visible_creek.py` addresses
+that additional defect while preserving these world-space fluid results. See
+`VISIBLE-REPAIRS.md` for the final construction chain and visual acceptance gate.
