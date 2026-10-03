@@ -1,7 +1,14 @@
-# MSR
+# MSR Daragoth Plains
 
-Extract the entire ZIP into a writable folder. Open **MSR-Launcher.exe** or
-**Play-MSR.cmd**. There is one game, including Dungeon Master support.
+Extract the entire ZIP into a new writable folder. Open **MSR-Launcher.exe** or
+**Play-MSR.cmd**, then choose **Play local**. **Play-Daragoth.cmd** opens the
+same local play flow directly. New local realms start in expanded Daragoth.
+There is one game, including Dungeon Master support.
+
+Expanded Daragoth, Greenhollow, horses, proximity encounters and scenery fading
+are already installed. No separate BigWorld installation is needed. See
+**Release/Daragoth-2026-10-03.md** for the changes and known limitations.
+Keep your old installation for rollback; do not mix its DLLs or maps into this one.
 
 Press **P** in game for **Inventory**, **Character** and **World Map**. See
 **MENU-GUIDE.md** for armor slots, bag actions and the glowing current-region map.

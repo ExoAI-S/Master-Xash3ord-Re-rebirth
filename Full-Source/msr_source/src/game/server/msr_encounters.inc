@@ -72,6 +72,12 @@ double frameMsTotal = 0, frameMsMax = 0;
 P::Admission lastAdmission;
 
 P::Vec3 Position(const Vector& v) { return {v.x, v.y, v.z}; }
+bool HasEntityString(string_t value)
+{
+    // Xash may allocate a nonzero handle for "". Stock template registration
+    // allocates killtarget/perishtarget even when no output was authored.
+    return value && (*STRING(value) != '\0');
+}
 P::ControllerKey Key(CBaseEntity* entity)
 {
     return entity && entity->edict() ? P::ControllerKey{
@@ -880,7 +886,7 @@ bool CAreaMonsterSpawn::InitEncounter()
     if (m_EncounterBad) return reject("malformed_keys_or_descriptor");
     if (!P::ValidConfig(m_EncounterConfig) || iMonstersToSpawn < 1 || iMonstersToSpawn > P::MaxSlots ||
         m_SpawnLoc != SPAWNLOC_FIXED || m_fSpawnOnTrigger || resetwhen || iPlayerReq || iHPReq_min ||
-        iHPReq_max || m_sTargetAllPerish || !pev->targetname || !*STRING(pev->targetname))
+        iHPReq_max || HasEntityString(m_sTargetAllPerish) || !pev->targetname || !*STRING(pev->targetname))
         return reject("unsupported_controller");
     const auto key = Key(this);
     for (auto& current : controllers)
@@ -898,7 +904,8 @@ bool CAreaMonsterSpawn::InitEncounter()
         if (!P::KnownDescriptor(STRING(md.scriptfile), m_EncounterDescriptors[slot]) ||
             !md.targetname || !*STRING(md.targetname) || md.spawnchance != 100 || md.spawnontrigger ||
             md.nplayers || md.hpreq_min || md.hpreq_max || md.m_nRndMobs || md.bossConfigured ||
-            md.bossOpen || md.target || md.killtarget || md.perishtarget ||
+            HasEntityString(md.bossOpen) || HasEntityString(md.target) ||
+            HasEntityString(md.killtarget) || HasEntityString(md.perishtarget) ||
             (md.lives != -1 && md.lives < 1) || !std::isfinite(md.delaylow) || !std::isfinite(md.delayhigh) ||
             md.delaylow < 0 || md.delayhigh < md.delaylow || !P::ValidPosition(Position(md.origin)))
             return reject("unsupported_template");

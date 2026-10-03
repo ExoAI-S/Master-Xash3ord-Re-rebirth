@@ -1,0 +1,51 @@
+[
+  {
+    "target": "runtime/game/msr/maps/daragoth.bsp",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+    "backup_sha256": "0f8d0e4c429985eda72c8ce17f0480014a687d088f902e50ada1ea9b8c644754"
+  },
+  {
+    "target": "runtime/game/msr/dlls/ms.dll",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "8a09d371260d33aca883c95239b300c5e23d84ef088e79189b35a71a88221cf7",
+    "backup_sha256": "306fb70f432d8f155e1b5faca06b25e7aa9e127f3ebd3670564f9439fa7db8a0"
+  },
+  {
+    "target": "runtime/game/msr/dlls/ms.pdb",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "07233e43397703a7a001a757e30f47827cbfb3487806648d9decdf6dbe4b0cdc",
+    "backup_sha256": "592f26c4af132f5b8e5beb67394498e2aa18fca2d253bebad4e35349f359e6db"
+  },
+  {
+    "target": "runtime-peer/game/msr/maps/daragoth.bsp",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+    "backup_sha256": "0f8d0e4c429985eda72c8ce17f0480014a687d088f902e50ada1ea9b8c644754"
+  },
+  {
+    "target": "runtime-peer/game/msr/dlls/ms.dll",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "8a09d371260d33aca883c95239b300c5e23d84ef088e79189b35a71a88221cf7",
+    "backup_sha256": "306fb70f432d8f155e1b5faca06b25e7aa9e127f3ebd3670564f9439fa7db8a0"
+  },
+  {
+    "target": "runtime-peer/game/msr/dlls/ms.pdb",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "07233e43397703a7a001a757e30f47827cbfb3487806648d9decdf6dbe4b0cdc",
+    "backup_sha256": "592f26c4af132f5b8e5beb67394498e2aa18fca2d253bebad4e35349f359e6db"
+  },
+  {
+    "target": "runtime/FN/content-manifest.json",
+    "installed_match": true,
+    "backup_match": true,
+    "installed_sha256": "00ec328c85636eac5bb8aa301438f70d1fde071c059b64f15456223b34f2f311",
+    "backup_sha256": "2b1a6f3d44ec87211e91bdf7a9675946a682ed362d3cd049d926e47168f191f6"
+  }
+]

@@ -47,6 +47,7 @@
 #include "voice_status.h"
 #include "fmod/soundengine.h"
 #include "mslogger.h"
+#include "render/scenery_distance.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846 // matches value in gcc v2 math.h
@@ -245,6 +246,7 @@ int __MsgFunc_ViewModel(const char *pszName, int iSize, void *pbuf)
 // This is called every time the DLL is loaded
 void CHud::Init(void)
 {
+	MSRSceneryDistanceInit();
 	//MasterSword Initializations:
 	//ClientCmd( "r_shadows 1" );
 	ClientCmd("cl_himodels 0");

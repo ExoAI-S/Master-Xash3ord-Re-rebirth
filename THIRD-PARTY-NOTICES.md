@@ -14,6 +14,8 @@ libraries, tools or assets. Copyright remains with each component's owners.
 | vcpkg | [Full-Source/external/vcpkg/LICENSE.txt](Full-Source/external/vcpkg/LICENSE.txt) and individual port notices |
 | Other engine, SDK and launcher dependencies | Their retained license files, source headers and runtime notices in the full release |
 | Models, textures, maps, music, sounds and other game data | Their respective original authors and applicable notices; not relicensed by the SDK, engine or private FN license |
+| Daragoth riding horse | Lyndon Daniels' horse mesh/textures and ChadM's rig, CC0; conversion, saddle and animations covered in [horse notices](Design-Source/Mounts/Textured-Horse/LICENSE.txt) |
+| New Daragoth foliage and generated scenery | Scope and notices in [foliage](Design-Source/Daragoth-Foliage/LICENSE.txt), [meadow](Design-Source/Daragoth-Meadow/LICENSE.txt) and [plains](Design-Source/Daragoth-Plains/LICENSE.txt); existing game content retains its original rights |
 
 The Valve SDK license permits free distribution subject to its terms; it is
 not an MIT license for the whole project. The private FN MIT notice expressly

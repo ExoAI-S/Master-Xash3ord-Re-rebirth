@@ -63,6 +63,7 @@ set(MSR_AUTHORED_CLIENT_SOURCES
     "${MSR_GAME_ROOT}/client/render/clrenderent.cpp"
     "${MSR_GAME_ROOT}/client/render/clrendermirror.cpp"
     "${MSR_GAME_ROOT}/client/render/gamestudiomodelrenderer.cpp"
+    "${MSR_GAME_ROOT}/client/render/scenery_distance.cpp"
     "${MSR_GAME_ROOT}/client/render/opengl/clopengl.cpp"
     "${MSR_GAME_ROOT}/client/render/studio_util.cpp"
     "${MSR_GAME_ROOT}/client/render/studiomodelrenderer.cpp"

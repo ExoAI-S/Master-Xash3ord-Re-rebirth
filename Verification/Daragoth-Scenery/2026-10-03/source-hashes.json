@@ -1,0 +1,26 @@
+[
+  {
+    "file": "Full-Source/msr_source/src/game/client/render/scenery_distance_policy.h",
+    "sha256": "eb05dab5c6400bdcd113f03fca497d60c41cdb8f1d753e3f57f9b068f17eb44c"
+  },
+  {
+    "file": "Full-Source/msr_source/src/game/client/render/scenery_distance.cpp",
+    "sha256": "4bbe4458da319810ec84b058e1fb85e2505bb971e818eb7cb5946caff2853e16"
+  },
+  {
+    "file": "Full-Source/msr_source/src/game/client/render/scenery_distance.h",
+    "sha256": "66fdd661fc48afc519a528c4075d2d9f0c03843d61018d2e87410902ced80cce"
+  },
+  {
+    "file": "Full-Source/msr_source/src/game/client/render/gamestudiomodelrenderer.cpp",
+    "sha256": "b5f0abf137d604e054d9be6963c63d80fb8baa3bb903d95087458fe69d5a1328"
+  },
+  {
+    "file": "Full-Source/msr_source/src/game/client/hud.cpp",
+    "sha256": "db3ebace9aa773020bb01b4295c760fb17cd72586aba97bfa504880f34ad201f"
+  },
+  {
+    "file": "Development-Tests/test_scenery_distance.cpp",
+    "sha256": "99c04526fb39e0deaaaaefae644de7fe8d186ea2c2effeb20073adc1f0d9a7a5"
+  }
+]

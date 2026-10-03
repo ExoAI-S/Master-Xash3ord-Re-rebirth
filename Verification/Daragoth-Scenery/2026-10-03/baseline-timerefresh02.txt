@@ -1,0 +1,1 @@
+Note: XRcon command: timerefreshNote: XRcon command: echo PREVIEW_DONE_5cef908de20f4802bde467b5471c20ed2.288781 seconds (55.924966 fps)PREVIEW_DONE_5cef908de20f4802bde467b5471c20ed

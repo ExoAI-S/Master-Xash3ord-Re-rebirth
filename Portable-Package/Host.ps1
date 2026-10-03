@@ -121,8 +121,8 @@ function Read-OrCreateSettings {
     $firstRcon = if ($existing -and $existing.rcon_password) { [string]$existing.rcon_password } else { New-Secret }
     @{
         version=2; public=$true; servers=@(
-            @{id='realm-one'; hostname='[FN] MSR Realm One'; port=$FirstPort; map='edana'; maxplayers=10; rcon_password=$firstRcon},
-            @{id='realm-two'; hostname='[FN] MSR Realm Two'; port=($FirstPort+10); map='edana'; maxplayers=10; rcon_password=(New-Secret)}
+            @{id='realm-one'; hostname='[FN] MSR Realm One'; port=$FirstPort; map='daragoth'; maxplayers=10; rcon_password=$firstRcon},
+            @{id='realm-two'; hostname='[FN] MSR Realm Two'; port=($FirstPort+10); map='daragoth'; maxplayers=10; rcon_password=(New-Secret)}
         )
     } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $settingsPath -Encoding UTF8
     Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json

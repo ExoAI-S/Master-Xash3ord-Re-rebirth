@@ -1,0 +1,292 @@
+{
+  "schema": "daragoth-release-source-runtime-provenance-v1",
+  "captured_utc": "2026-10-03T12:37:33.879652+00:00",
+  "scope": "Sanitized source and installed local preview identity record; package construction and package checks pending.",
+  "source_git_head": "3faad51ea66642adbe50d709c26de449ebbee5ea",
+  "source_tree_has_uncommitted_changes": true,
+  "source_pin_scope": "Core files changed since 85fc2db plus target definitions; each current file is pinned below. This is not a complete toolchain or dependency attestation.",
+  "build_targets": [
+    {
+      "target": "msr_server",
+      "build_system": "CMake",
+      "configuration": "x86 Debug",
+      "output": "ms.dll",
+      "observed_build_info": "3faad51-dirty"
+    },
+    {
+      "target": "msr_client",
+      "build_system": "CMake",
+      "configuration": "x86 Debug",
+      "output": "client.dll",
+      "observed_build_info": "3faad51-dirty",
+      "sanitized_build_log": "Verification/Daragoth-Scenery/2026-10-03/build-client-debug02.log"
+    },
+    {
+      "target": "xash",
+      "build_system": "Waf",
+      "configuration": "win32-i386 Debug",
+      "output": "xash.dll",
+      "tracked_trace_source_matches_preview_build_source": true
+    }
+  ],
+  "source_pins": [
+    {
+      "file": "Engine-Source/Xash3D/engine/common/pm_trace.c",
+      "sha256": "0803d22234a67ddee565610526a5646c97754e4dbf4f3ee31202bd8a50b5421b"
+    },
+    {
+      "file": "Engine-Source/Xash3D/engine/wscript",
+      "sha256": "577429827dafcb81fc873213110bf588bb2459a043f43ea61bdd3c588e3f7628"
+    },
+    {
+      "file": "Full-Source/msr_port/CMakeLists.txt",
+      "sha256": "d4905b1c214194e05e62b3426484dfcd014c5d3b8d369b577275881b47b37ae1"
+    },
+    {
+      "file": "Full-Source/msr_port/source_lists.cmake",
+      "sha256": "84b5fab5f1460887690f4745557f5e58d3716b2187273165a90cdc56c088b272"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/CMakeLists.txt",
+      "sha256": "000024c73ec51a2b1a627637be6d8c450bbc3fcbb55e3735e2c8f76f5cae5ce0"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/entity.cpp",
+      "sha256": "a147bb57216a3ab633314934114950a2fa6c0f8e2c2bb8b356ca3ea5dee1a973"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/hud.cpp",
+      "sha256": "db3ebace9aa773020bb01b4295c760fb17cd72586aba97bfa504880f34ad201f"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/inputw32.cpp",
+      "sha256": "694b1a7eeedcfb56081253e5d105b51522b41ac9d7a1ea434f648a5072a27156"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/ms/clplayer.cpp",
+      "sha256": "ff64f2dbe832f329e56f5d58e5a675c527c5c9516a2d937412a8329ede9c7880"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/gamestudiomodelrenderer.cpp",
+      "sha256": "b5f0abf137d604e054d9be6963c63d80fb8baa3bb903d95087458fe69d5a1328"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/mounted_rider_pose.h",
+      "sha256": "115cb3e5e7a1fe2e31246b6fdefb21ab63c9d42f92915a3ece05cf1210dee577"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/scenery_distance.cpp",
+      "sha256": "4bbe4458da319810ec84b058e1fb85e2505bb971e818eb7cb5946caff2853e16"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/scenery_distance.h",
+      "sha256": "66fdd661fc48afc519a528c4075d2d9f0c03843d61018d2e87410902ced80cce"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/scenery_distance_policy.h",
+      "sha256": "eb05dab5c6400bdcd113f03fca497d60c41cdb8f1d753e3f57f9b068f17eb44c"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/client/render/studiomodelrenderer.cpp",
+      "sha256": "96fcfcc6e9788816c9bc19d87cde13db223d13f70ef1711d9fb88dfe91b0276b"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/CMakeLists.txt",
+      "sha256": "f2f044914f9a5c3bc84302d515e8f874d30571e7cda85acd70d9e4959878303b"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/client.cpp",
+      "sha256": "f6e7b9ae97a6b2221f0b0ccef7b79f6b855c496e9ab538f51917922ba6ad5f13"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/game.cpp",
+      "sha256": "c40fa440246b70db8a47ad8e65948a23c299202412afcbaddee993a119dbfd85"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/hl/util.cpp",
+      "sha256": "6a05790f244543e20966ed7e9cd1d63acc3601fd86db0a4432749abeb9e303cc"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/monsters/msmonsterserver.cpp",
+      "sha256": "623db152c3fc2b76b1e7301e5be47145cba28b8f0a36f83134adfc2d0717b279"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msmapents.cpp",
+      "sha256": "b674f47833d95d5cc94174810fa30bb5814a4bda1fa03b9540848bac22afd8f0"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_encounter_allocator.h",
+      "sha256": "dbcdf9f1673ff16e8b1afbd977450b1eaf36970fdd2f0e9cdff0a74fa156839e"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_encounter_policy.h",
+      "sha256": "9d1958b09d664f5301e776a396e78a6b006657b77d7c7250bf35a578bd4bfac6"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_encounters.h",
+      "sha256": "290c596d7f74f3e3752665ae8e091d86289ce74b0709ee864e2273226525b8bc"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_encounters.inc",
+      "sha256": "d7b14d5c0566bc090ef669788e4ce8f1e952f54375dd5086fa29e7b68529c8c0"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_mount_audit.inl",
+      "sha256": "85e085e42944bb95c532873852a9fcc855a609b28dd8276e370be03432ca904e"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_mounts.cpp",
+      "sha256": "c7441175b7acf71911f3881751a11c6f41ca4289a68905b4c3974c25fa8498cf"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_mounts.h",
+      "sha256": "d6d6b0035d3efdf2f5c4d3f0713b7bf8e5700f23aa4c79da1f87814fb25e683d"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_regions.cpp",
+      "sha256": "1d1a19f94d9b036f557d46092d079652ad292ed0eb46dc8b56d259c5b11c5c2c"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/msr_regions.h",
+      "sha256": "099c7113e3a9aee4449805bc2db0165d75105814a490b36374a851cf78d96328"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/player/player.cpp",
+      "sha256": "d832239add19aad87463a28559f44117787bc16342e20300084896c483522dc4"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/player/player.h",
+      "sha256": "5a81b3ac981d9046328323fd57a777634763f5f37cbffef72f34981ad7f87eb0"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/player/playershared.cpp",
+      "sha256": "4cac9ae5dce3ece4407f2f93b18809aedf3c912e88016431ed2b884be0bfa9db"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/player/rotating_door_use.h",
+      "sha256": "b6363157ff108418fa8c1a7c6af8ac5dbb3904c6c3c32621d66b72f56133568f"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/server/world.cpp",
+      "sha256": "fef0b66802ddddac60d6b69d48c221063591f6d14ec3c820265d4ea30218984f"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/shared/movement/pm_shared.cpp",
+      "sha256": "2d0f2cef2397af59d0b8041585a5b0aa1873a674413c548ed0fee2b790f44f69"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/shared/ms/mount_policy.h",
+      "sha256": "29bc2e6e61c0efead96dc44d223b5509417e2d65f69eb363af8ed8b63b8eab40"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/shared/ms/msmonstershared.cpp",
+      "sha256": "0d90a82c4427c9d6d47a2290e5ae246cffa802549ab2a0c54a117e5c6256d64a"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/shared/weapons/genericitem.cpp",
+      "sha256": "b80b986ffc69a8022cdfb599e5925068f0a922bb11c9e19eb23cffddada914ef"
+    },
+    {
+      "file": "Full-Source/msr_source/src/game/shared/weapons/giattack.cpp",
+      "sha256": "118fccb5602e01ab64594fab5be6a7c84790ab625a99c2aa7d4e060ad837b790"
+    }
+  ],
+  "runtime_root_labels": [
+    "runtime",
+    "runtime-peer"
+  ],
+  "runtime_files": [
+    {
+      "file": "game/msr/dlls/ms.dll",
+      "sha256": "8a09d371260d33aca883c95239b300c5e23d84ef088e79189b35a71a88221cf7",
+      "bytes": 5652480,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/msr/dlls/ms.pdb",
+      "sha256": "07233e43397703a7a001a757e30f47827cbfb3487806648d9decdf6dbe4b0cdc",
+      "bytes": 35999744,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/msr/cl_dlls/client.dll",
+      "sha256": "c943dfb3c35624471db0f7b5b7d9030d5b109282115c80f9ac908c66fdcf3fe2",
+      "bytes": 4849152,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/msr/cl_dlls/client.pdb",
+      "sha256": "df7ec3cdfc82be1c203939f7418424bc818dda91b4aeabce79ff8f2e42c77895",
+      "bytes": 33214464,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/xash.dll",
+      "sha256": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e",
+      "bytes": 3918336,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/xash.pdb",
+      "sha256": "a39bb9d5f750c0f6e994ebfe8cb839f62385309217e6778d48b8d954f8dab979",
+      "bytes": 20197376,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/xash3d.exe",
+      "sha256": "4818d1a9432fa980290785003efb3588b6a35d7915985432aee311c5f75aa0c4",
+      "bytes": 768512,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/ref_gl.dll",
+      "sha256": "f7bac8ff83061087d9499248f84bc96e9bf56f047bda063ba95b93f3ce467eea",
+      "bytes": 1127936,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/msr/maps/daragoth.bsp",
+      "sha256": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+      "bytes": 90972699,
+      "both_preview_roots_match": true
+    },
+    {
+      "file": "game/msr/scripts.pak",
+      "sha256": "6af5761670d1d71cf395c224c68d3ae01fadef00b3928295306977a1d39a5ca9",
+      "bytes": 7369533,
+      "both_preview_roots_match": true
+    }
+  ],
+  "map_and_art_provenance": {
+    "map_checkpoint": "Development-Tests/Reports/daragoth-proximity-candidate-20261002.json",
+    "map_candidate_sha256": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+    "map_rebuild_requires_pinned_base_and_audit_inputs": true,
+    "textured_horse_provenance": "Design-Source/Mounts/Textured-Horse/README.md",
+    "textured_horse_license": "Design-Source/Mounts/Textured-Horse/LICENSE.txt",
+    "textured_horse_blend_sha256": "c3e22613337d724dac7b875e26c049947d550bd85f22ca1cb0f75df28e5a14ff",
+    "textured_horse_mdl_sha256": "7b109d3f5228be595ada6f5f23c4cb941cb24bfcafb3f1db9dabb6311089c014",
+    "generated_foliage_provenance": "Design-Source/Daragoth-Foliage/LICENSE.txt"
+  },
+  "native_evidence": {
+    "encounters": "Verification/Daragoth-Encounters/2026-10-02/",
+    "scenery": "Verification/Daragoth-Scenery/2026-10-03/",
+    "encounter_activation_cap_retirement_return_observed": true,
+    "encounter_postdisconnect_unsupported_actor_holds": 1,
+    "full_native_acceptance": false,
+    "limits": [
+      "No multiplayer stress or full traversal of all 30 encounter zones.",
+      "Combat, XP, loot, and ordinary death respawn timing were not verified by the encounter loop.",
+      "One untouched archer retained an Unsupported shape-or-inventory hold; cleanup guards were not weakened.",
+      "Scenery timerefresh is a fixed-view renderer throughput benchmark, not normal gameplay FPS.",
+      "Water reflection and extended mounted scenery traversal remain visually unverified."
+    ]
+  },
+  "package_checks": {
+    "status": "pending",
+    "archive_contents_verified": false,
+    "clean_extraction_verified": false,
+    "packaged_runtime_hashes_verified": false,
+    "packaged_launch_verified": false
+  },
+  "privacy": "No credentials, profile records, saves, FN database content, machine dumps, absolute paths, or personal player identifiers are included."
+}

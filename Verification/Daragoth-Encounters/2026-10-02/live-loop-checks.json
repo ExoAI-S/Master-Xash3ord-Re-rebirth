@@ -1,0 +1,11 @@
+{
+  "no_births_far": true,
+  "near_reached_cap16": true,
+  "first16_retired": true,
+  "return_created_fresh16": true,
+  "ordinary_death_tests_performed": false,
+  "combat_tests_performed": false,
+  "multiplayer_stress_performed": false,
+  "postdisconnect_unsupported_archer_hold": 1,
+  "scope": "Local preview activation/retirement loop only"
+}

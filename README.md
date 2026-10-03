@@ -6,8 +6,8 @@ Master controls.
 
 ## Download and play
 
-Get the [Recovery and Chat Debug update](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.13-recovery-debug).
-Download **MSR-Recovery-Debug-Complete-2026-09-13.zip** and extract it completely
+Get the [Daragoth Plains complete game](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.10.03-daragoth-plains).
+Download **MSR-Daragoth-Complete-2026-10-03.zip** and extract it completely
 into a writable folder. It is one complete ZIP containing one current game.
 
 Open **MSR-Launcher.exe** or **Play-MSR.cmd** inside the extracted MSR folder.
@@ -27,6 +27,17 @@ region, with zoom, centering and a separate transition view. See
 ![Current-region glow on the Daragoth atlas](Docs/images/world-atlas.png)
 
 ## This update
+
+The original Daragoth valley opens into rolling plains, dense foliage and
+Greenhollow village without a loading screen. The stablemaster lends horses,
+thirty wilderness encounter areas activate around players, and distant scenery
+fades to reduce rendering work. New local realms start in Daragoth; existing
+host settings are preserved. The earlier BigWorld regions remain included.
+
+See [release notes and known limitations](Release/Daragoth-2026-10-03.md),
+[encounter verification](Docs/Daragoth-Encounter-Preview-2026-10-02.md) and
+[scenery measurements](Docs/Daragoth-Scenery-Distance-Playtest.md).
+The following profile-recovery and UI improvements remain included.
 
 A fresh installation reuses one unambiguous profile from your saved backups
 or previous MSR desktop shortcuts. Existing profiles stay in place. For a
@@ -58,8 +69,7 @@ gameplay still uses the MScript interpreter. Broader character-model and
 weapon experiments are separate from these completed replacements.
 
 Keep your old release and private save/profile backups before upgrading.
-[The previous UI Debug release](https://github.com/ExoAI-S/Master-Xash3ord-Re-rebirth/releases/tag/v2026.09.12-ui-debug)
-remains available for recovery. Restoring only old DLLs does not restore the
+Use your complete previous installation for recovery. Restoring only old DLLs does not restore the
 old distribution of weapon subskills after a migrated save has been written.
 See [Recovery/README.md](Recovery/README.md).
 

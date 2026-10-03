@@ -1,0 +1,22 @@
+[1/3] Updating build info
+-- Build info up to date: 3faad51-dirty
+[2/3] Building CXX object msr_port\CMakeFiles\msr_client.dir\__\msr_source\src\game\client\render\scenery_distance.cpp.obj
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Label.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Panel.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Dar.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Scheme.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Color.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Cursor.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_MouseCode.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_KeyCode.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_RepaintSignal.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Image.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_LineBorder.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Border.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_ImagePanel.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_BitmapTGA.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Bitmap.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_InputSignal.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+<workspace>\Full-Source\msr_source\lib\include\vgui\VGUI_Button.h(1): warning C4828: The file contains a character starting at offset 0x16 that is not valid in the current source character set (codepage 65001).
+[3/3] Linking CXX shared library Debug\msr\bin\client.dll

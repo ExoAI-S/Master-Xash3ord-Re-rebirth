@@ -26,6 +26,7 @@
 
 #include "studiomodelrenderer.h"
 #include "gamestudiomodelrenderer.h"
+#include "scenery_distance.h"
 
 //
 // Override the StudioModelRender virtual member functions here to implement custom bone
@@ -95,9 +96,14 @@ int CModelMgr::MSStudioDrawModel(int flags, entity_state_t *pplayer)
 		Replaced = true;
 	}
 
-	//Draw a player or regular model, as appropriate
-	int Return = CurrentEnt->player ? g_StudioRenderer.StudioDrawPlayer(flags, pplayer)
-									: g_StudioRenderer.StudioDrawModel(flags);
+	// Distance affects only the render pass of authored static scenery.
+	// Preserve any requested animation events and all authoritative state.
+	MSRSceneryDrawScope scenery(CurrentEnt, flags);
+	const int drawFlags = scenery.Culled() ? flags & ~STUDIO_RENDER : flags;
+	int Return = 0;
+	if (drawFlags)
+		Return = CurrentEnt->player ? g_StudioRenderer.StudioDrawPlayer(drawFlags, pplayer)
+								  : g_StudioRenderer.StudioDrawModel(drawFlags);
 
 	//Set current entity back to normal
 	if (Replaced)

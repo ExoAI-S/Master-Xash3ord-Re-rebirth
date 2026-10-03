@@ -198,7 +198,8 @@ class Host:
         if settings is None and create:
             settings = dict(version=2, public=True, servers=[
                 dict(id='realm-' + suffix, hostname='[FN] MSR Realm ' + label,
-                     port=self.first_port + offset, map='edana', maxplayers=10,
+                     port=self.first_port + offset,
+                     map='edana' if self.version == 'stable' else 'daragoth', maxplayers=10,
                      rcon_password=secrets.token_hex(24))
                 for suffix, label, offset in [('one', 'One', 0), ('two', 'Two', 10)]])
             write_json(self.settings_path, settings)

@@ -1,0 +1,86 @@
+{
+  "schema": "daragoth-portable-dedicated-smoke-v1",
+  "started_utc": "2026-10-03T12:48:46.102230+00:00",
+  "client_launched": false,
+  "stage_modified": false,
+  "bind": "127.0.0.1",
+  "realm_ports": [
+    27325,
+    27335
+  ],
+  "fn_port": 5913,
+  "checks": {
+    "prior_fixture_owned_and_stopped": true,
+    "fresh_smoke_destination": true,
+    "reserved_ports_initially_free": true,
+    "no_copied_profile_or_host_settings": true,
+    "no_copied_fn_database": true,
+    "expected_content_crcs": true,
+    "bundled_host_start": true,
+    "both_realms_ready_message": true,
+    "fresh_realms_daragoth": true,
+    "fresh_realm_ports": true,
+    "fn_private_health": true,
+    "fn_approves_scripts": true,
+    "realm-one_a2s_daragoth": true,
+    "realm-one_password_free": true,
+    "realm-one_ms_mounts": true,
+    "realm-one_ms_dynamic_events": true,
+    "realm-one_ms_region_unload_time": true,
+    "realm-one_ms_reset_time": true,
+    "realm-one_mp_timelimit": true,
+    "realm-one_sv_cheats": true,
+    "realm-one_ms_dev_mode": true,
+    "realm-one_mounts_precached": false,
+    "owned_host_stopped": true,
+    "host_state_removed": true,
+    "smoke_ports_free_after_stop": true
+  },
+  "realms": [
+    {
+      "id": "realm-one",
+      "port": 27325,
+      "map": "daragoth",
+      "players": 0,
+      "password_required": false,
+      "cvars": {
+        "ms_mounts": "1",
+        "ms_dynamic_events": "0",
+        "ms_region_unload_time": "0",
+        "ms_reset_time": "0",
+        "mp_timelimit": "0",
+        "sv_cheats": "0",
+        "ms_dev_mode": "0"
+      },
+      "mounts": null
+    }
+  ],
+  "limitations": [
+    "Dedicated startup only; no connected player, combat, rendering or traversal."
+  ],
+  "prior_attempt": {
+    "fresh_copy_and_startup_passed": true,
+    "failure": {
+      "type": "RuntimeError",
+      "check": "realm-one_ms_timelimit"
+    },
+    "resolution": "ms_timelimit and ms_reset_if_empty are not registered by this DLL; validate effective ms_reset_time and mp_timelimit instead.",
+    "receipt": "portable-smoke-initial.json"
+  },
+  "reuses_own_generated_fixture_state": true,
+  "smoke_only_config_changes": [
+    "FN loopback port 5913"
+  ],
+  "content_crc32": {
+    "scripts": 4199339986,
+    "daragoth": 1139436697
+  },
+  "start_exit_code": 0,
+  "failure": {
+    "type": "RuntimeError",
+    "check": "realm-one_mounts_precached"
+  },
+  "stop_exit_code": 0,
+  "completed_utc": "2026-10-03T12:49:32.557785+00:00",
+  "pass": false
+}

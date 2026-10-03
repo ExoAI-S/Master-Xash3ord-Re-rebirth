@@ -17,10 +17,12 @@ if __name__ == '__main__':
     root = Path(__file__).resolve().parent.parent
     manifest = json.loads((root / 'FN/content-manifest.json').read_text(encoding='utf-8-sig'))
     settings_path = root / 'host-settings.json'
-    maps = {'edana'}
+    maps = {'daragoth'}
     if settings_path.exists():
         settings = json.loads(settings_path.read_text(encoding='utf-8-sig'))
-        maps.update(server['map'] for server in settings.get('servers', []))
+        saved_maps = {server['map'] for server in settings.get('servers', [])}
+        if saved_maps:
+            maps = saved_maps
     errors = validate(root / 'game/msr', manifest, maps)
     if errors:
         raise SystemExit('; '.join(errors))

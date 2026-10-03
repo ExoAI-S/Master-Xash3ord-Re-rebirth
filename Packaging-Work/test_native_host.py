@@ -7,12 +7,15 @@ import hashlib
 from pathlib import Path
 import shutil
 import sqlite3
+import subprocess
+import sys
 from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
+import zlib
 
-SCRIPT = Path(__file__).parent / 'friend-support/Launcher/native_host.py'
+SCRIPT = Path(__file__).resolve().parent.parent / 'Launcher/native_host.py'
 SPEC = importlib.util.spec_from_file_location('native_host', SCRIPT)
 host_module = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(host_module)
@@ -59,6 +62,7 @@ class Lifecycle(unittest.TestCase):
         (self.root / 'FN').mkdir(parents=True)
         (self.root / 'game/msr/maps').mkdir(parents=True)
         (self.root / 'game/msr/maps/edana.bsp').write_bytes(b'test')
+        (self.root / 'game/msr/maps/daragoth.bsp').write_bytes(b'daragoth test')
         host_module.write_json(self.root / 'FN/config.json', dict(bind='127.0.0.1', port=15720, database='data/FN.sqlite3'))
         host_module.write_json(self.root / 'FN/content-manifest.json', dict(scripts_crc32=1234))
         # The module import is real; test query functions are installed below.
@@ -116,6 +120,28 @@ class Lifecycle(unittest.TestCase):
         for server in host_module.read_json(self.host.settings_path)['servers']:
             self.assertNotIn(server['rcon_password'], self.output.getvalue())
 
+    def test_fresh_enhanced_realms_start_in_daragoth(self):
+        self.start()
+        self.assertEqual([server['map'] for server in self.host.settings()], ['daragoth', 'daragoth'])
+        self.assertEqual([server['map'] for server in host_module.read_json(self.host.state_path)['games']],
+                         ['daragoth', 'daragoth'])
+
+    def test_existing_realm_maps_and_credentials_are_preserved(self):
+        settings = dict(version=2, public=True, servers=[
+            dict(id='realm-' + label, hostname='Saved ' + label, port=28945 + offset,
+                 map='edana', maxplayers=4, rcon_password='fixture-secret-' + label)
+            for label, offset in [('one', 0), ('two', 10)]])
+        host_module.write_json(self.host.settings_path, settings)
+        before = self.host.settings_path.read_bytes()
+        self.start()
+        self.assertEqual(self.host.settings_path.read_bytes(), before)
+        self.assertEqual([server['map'] for server in self.host.state['games']], ['edana', 'edana'])
+
+    def test_fresh_stable_realms_keep_edana(self):
+        shutil.copytree(self.root, self.root.parent / 'Stable-Base')
+        stable = host_module.Host(self.root.parent, 'stable', windows=self.win)
+        self.assertEqual([server['map'] for server in stable.settings(create=True)], ['edana', 'edana'])
+
     def test_stop_retains_fn_and_state_for_changed_ownership(self):
         self.start()
         self.host.state['games'][0]['process']['startTicks'] = '1'
@@ -168,6 +194,47 @@ class Lifecycle(unittest.TestCase):
         listen.write_text(manual)
         self.host.stop()
         self.assertEqual(listen.read_text(), manual)
+
+
+class StartingContent(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix='MSR starting content test ')
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name) / 'Portable-Package'
+        (self.root / 'FN').mkdir(parents=True)
+        (self.root / 'game/msr/maps').mkdir(parents=True)
+        source = SCRIPT.parent.parent / 'Portable-Package/FN'
+        for name in ('check_content.py', 'fn_server.py'):
+            shutil.copy2(source / name, self.root / 'FN' / name)
+        (self.root / 'game/msr/scripts.pak').write_bytes(b'approved fixture scripts')
+        self.daragoth = self.root / 'game/msr/maps/daragoth.bsp'
+        self.edana = self.root / 'game/msr/maps/edana.bsp'
+        self.daragoth.write_bytes(b'approved fixture daragoth')
+        self.edana.write_bytes(b'approved fixture edana')
+        host_module.write_json(self.root / 'FN/content-manifest.json', {
+            'scripts_crc32': zlib.crc32(b'approved fixture scripts'),
+            'maps': {'daragoth': zlib.crc32(self.daragoth.read_bytes()),
+                     'edana': zlib.crc32(self.edana.read_bytes())}})
+
+    def check(self):
+        return subprocess.run([sys.executable, str(self.root / 'FN/check_content.py')],
+                              capture_output=True, text=True)
+
+    def test_fresh_content_check_rejects_modified_daragoth(self):
+        self.assertEqual(self.check().returncode, 0)
+        self.daragoth.write_bytes(b'changed fixture map')
+        result = self.check()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('daragoth differs', result.stderr)
+
+    def test_saved_starting_map_is_validated_without_forcing_daragoth(self):
+        host_module.write_json(self.root / 'host-settings.json', {'servers': [{'map': 'edana'}]})
+        self.daragoth.unlink()
+        self.assertEqual(self.check().returncode, 0)
+        self.edana.write_bytes(b'changed fixture map')
+        result = self.check()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('edana differs', result.stderr)
 
 
 class VersionSwitch(unittest.TestCase):

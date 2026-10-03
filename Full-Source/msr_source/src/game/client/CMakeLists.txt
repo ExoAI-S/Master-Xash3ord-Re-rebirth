@@ -248,6 +248,7 @@ set(Render
 	"render/clrenderent.cpp"
 	"render/clrendermirror.cpp"
 	"render/gamestudiomodelrenderer.cpp"
+	"render/scenery_distance.cpp"
 	"render/gamestudiomodelrenderer.h"
 	"render/opengl/clopengl.cpp"
 	"render/opengl/clopengl.h"

@@ -1,0 +1,67 @@
+{
+  "schema": "daragoth-portable-dedicated-smoke-v1",
+  "started_utc": "2026-10-03T12:45:09.284174+00:00",
+  "client_launched": false,
+  "stage_modified": false,
+  "bind": "127.0.0.1",
+  "realm_ports": [
+    27325,
+    27335
+  ],
+  "fn_port": 5913,
+  "checks": {
+    "fresh_smoke_destination": true,
+    "reserved_ports_initially_free": true,
+    "no_copied_profile_or_host_settings": true,
+    "no_copied_fn_database": true,
+    "expected_content_crcs": true,
+    "bundled_host_start": true,
+    "both_realms_ready_message": true,
+    "fresh_realms_daragoth": true,
+    "fresh_realm_ports": true,
+    "fn_private_health": true,
+    "fn_approves_scripts": true,
+    "realm-one_a2s_daragoth": true,
+    "realm-one_ms_mounts": true,
+    "realm-one_ms_dynamic_events": true,
+    "realm-one_ms_region_unload_time": true,
+    "realm-one_ms_reset_time": true,
+    "realm-one_ms_timelimit": false,
+    "owned_host_stopped": true,
+    "host_state_removed": true,
+    "smoke_ports_free_after_stop": true
+  },
+  "realms": [
+    {
+      "id": "realm-one",
+      "port": 27325,
+      "map": "daragoth",
+      "players": 0,
+      "cvars": {
+        "ms_mounts": "1",
+        "ms_dynamic_events": "0",
+        "ms_region_unload_time": "0",
+        "ms_reset_time": "0",
+        "ms_timelimit": null
+      }
+    }
+  ],
+  "limitations": [
+    "Dedicated startup only; no connected player, combat, rendering or traversal."
+  ],
+  "smoke_only_config_changes": [
+    "FN loopback port 5913"
+  ],
+  "content_crc32": {
+    "scripts": 4199339986,
+    "daragoth": 1139436697
+  },
+  "start_exit_code": 0,
+  "failure": {
+    "type": "RuntimeError",
+    "check": "realm-one_ms_timelimit"
+  },
+  "stop_exit_code": 0,
+  "completed_utc": "2026-10-03T12:46:08.394541+00:00",
+  "pass": false
+}
