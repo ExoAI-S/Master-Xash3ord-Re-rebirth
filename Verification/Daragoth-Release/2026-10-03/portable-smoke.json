@@ -57,7 +57,8 @@
     "host_status": true,
     "owned_host_stopped": true,
     "host_state_removed": true,
-    "smoke_ports_free_after_stop": true
+    "smoke_ports_free_after_stop": true,
+    "tested_runtime_inputs_still_match_stage": true
   },
   "realms": [
     {
@@ -237,5 +238,27 @@
   "start_exit_code": 0,
   "stop_exit_code": 0,
   "completed_utc": "2026-10-03T12:52:28.166152+00:00",
-  "pass": true
+  "pass": true,
+  "tested_file_sha256": {
+    "MSR-Launcher.exe": "203a04c388893cc5ec6229789f834c7bca001b77f4fb33f585ece9d82da7918c",
+    "Launcher/native_host.py": "5f51107e7a4eb8672b3c5a49da55359fbdb5b57792f4bd525cc322fb67dd4db5",
+    "Portable-Package/FN/check_content.py": "b0e8efe086441f836300147c6c84d0eff6b03dc65198dcfc53d1a521d580da47",
+    "Portable-Package/FN/fn_server.py": "6579af68a165995ebfca84f12c53369225a954e1eadece69518f40f48b7afce2",
+    "Portable-Package/game/xash.dll": "6b3655350129760f4b2c7dc617c7edcfc918043528c97b843542b16abf24273e",
+    "Portable-Package/game/msr/maps/daragoth.bsp": "67946ff32b0f9ecf1410ca0791c59ded09dfbfd6c34cea6db87be679ff7775b6",
+    "Portable-Package/game/msr/dlls/ms.dll": "8a09d371260d33aca883c95239b300c5e23d84ef088e79189b35a71a88221cf7",
+    "Portable-Package/game/msr/cl_dlls/client.dll": "c943dfb3c35624471db0f7b5b7d9030d5b109282115c80f9ac908c66fdcf3fe2",
+    "Portable-Package/game/msr/scripts.pak": "6af5761670d1d71cf395c224c68d3ae01fadef00b3928295306977a1d39a5ca9",
+    "Portable-Package/game/msr/delta.lst": "d672b06736627abaa325c8dd105a5adaf82ff5e34312e77f83550cd6ca6e496f",
+    "Portable-Package/game/msr/liblist.gam": "86d673fcdaeb6e19af17e868a96070f7a5677986eeb311932b5ee4c5513445ff",
+    "Portable-Package/game/msr/daragoth.cfg": "ea753232769cc1bf822aec32e62e5fa3e3da4a435f26722b6cb76cdf1d49c77e",
+    "Portable-Package/game/msr/maps/daragoth_load.cfg": "5908097b108a71fa277e3b2d59bf2dc1193d584183975402ea43e72897ccac54",
+    "Portable-Package/game/msr/server_msr.cfg": "91be4b15009ce3e396e4c36b85a31c81f7e1120bc5bcd5a8f84e84fe5f3cdd3e",
+    "Portable-Package/game/msr/listenserver.cfg": "7b312c58d93bdaa26592e972042968e7683715f856135f5ab151440757802f97"
+  },
+  "coordinator_launcher_checks": {
+    "reported_by": "release coordinator",
+    "validate_only_host_action_play_exit_code": 0,
+    "self_test_exit_code": 0
+  }
 }
